@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>De Olho na Pele · SoLiz — demonstração</title>
+<meta name="description" content="Demonstração da regra do anel — De Olho na Pele / SoLiz. Roda no navegador; a imagem não sai do computador.">
+<meta name="robots" content="noindex">
+<style>:root{--bg:#fbfaf8;--fg:#1d1d1f;--mut:#6b6b70;--li:#e3e1dc;--az:#1f4e79;--az2:#2a6ba8;
+--ok:#1f6b3a;--no:#9c2b2b;--cx:#ffffff;--av:#fdf3e3;--avb:#c9a227;--cod:#f3f1ec}
+:root:not([data-theme="light"]){@media(prefers-color-scheme:dark){}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--fg:#ececf0;
+--mut:#a0a0aa;--li:#2c2e35;--az:#7fb4e3;--az2:#9ac7ef;--ok:#6fd39a;--no:#ef9a9a;
+--cx:#1c1e24;--av:#2a2418;--avb:#c9a227;--cod:#23252c}}
+:root[data-theme="dark"]{--bg:#15161a;--fg:#ececf0;--mut:#a0a0aa;--li:#2c2e35;--az:#7fb4e3;
+--az2:#9ac7ef;--ok:#6fd39a;--no:#ef9a9a;--cx:#1c1e24;--av:#2a2418;--avb:#c9a227;--cod:#23252c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,
+"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+.w{max-width:860px;margin:0 auto;padding:0 16px}
+header{border-bottom:1px solid var(--li);padding:14px 0;margin-bottom:26px}
+header .w{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.marca{font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--mut)}
+#lng{background:none;border:1px solid var(--li);color:var(--fg);border-radius:6px;
+padding:5px 11px;font-size:13px;cursor:pointer;font-weight:600}
+#lng:hover{border-color:var(--az)}
+h1{font-size:26px;line-height:1.25;margin:0 0 14px;letter-spacing:-.01em}
+h2{font-size:17px;margin:30px 0 10px}
+p{margin:0 0 14px}
+.sub{color:var(--mut)}
+a{color:var(--az)}
+.btns{display:flex;gap:14px;flex-wrap:wrap;margin:26px 0}
+.bg{flex:1 1 300px;display:block;text-decoration:none;background:var(--cx);border:1px solid var(--li);
+border-radius:12px;padding:20px;color:var(--fg);transition:border-color .15s}
+.bg:hover{border-color:var(--az)}
+.bg b{display:block;font-size:19px;margin-bottom:5px;color:var(--az)}
+.bg span{color:var(--mut);font-size:14px}
+.cx{background:var(--cx);border:1px solid var(--li);border-radius:12px;padding:18px;margin:18px 0}
+label{display:block;font-size:13px;font-weight:600;margin:14px 0 5px}
+input[type=number]{width:130px;padding:7px 9px;border:1px solid var(--li);border-radius:7px;
+background:var(--bg);color:var(--fg);font:inherit;font-size:15px}
+.hint{font-size:13px;color:var(--mut);margin:4px 0 0}
+.aviso{background:var(--av);border-left:4px solid var(--avb);border-radius:0 8px 8px 0;
+padding:13px 15px;margin:20px 0;font-size:14.5px}
+button.acao{background:var(--az);color:#fff;border:0;border-radius:9px;padding:12px 26px;
+font:inherit;font-weight:600;font-size:16px;cursor:pointer}
+button.acao:hover{background:var(--az2)}
+button.acao:disabled{opacity:.45;cursor:not-allowed}
+button.min{background:none;border:1px solid var(--li);color:var(--fg);border-radius:7px;
+padding:7px 13px;font:inherit;font-size:14px;cursor:pointer;margin:0 6px 6px 0}
+button.min:hover{border-color:var(--az)}
+button.min.on{border-color:var(--az);background:var(--az);color:#fff}
+.file{display:inline-block;border:1px dashed var(--li);border-radius:9px;padding:11px 16px;
+cursor:pointer;font-size:15px}
+.file:hover{border-color:var(--az)}
+input[type=file]{display:none}
+canvas{max-width:100%;height:auto;border-radius:9px;border:1px solid var(--li);display:block;
+margin:14px 0;background:var(--cod);touch-action:none}
+.prog{height:5px;background:var(--li);border-radius:3px;overflow:hidden;margin:14px 0 6px}
+.prog i{display:block;height:100%;width:0;background:var(--az);transition:width .1s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:12px 0}
+.kv{background:var(--bg);border:1px solid var(--li);border-radius:9px;padding:11px 13px}
+.kv b{display:block;font-size:12px;font-weight:600;color:var(--mut);text-transform:uppercase;
+letter-spacing:.04em;margin-bottom:3px}
+.kv span{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums}
+.kv em{font-style:normal;font-size:13px;color:var(--mut);display:block}
+.recusa{border-left-color:var(--no);background:var(--cx);border:1px solid var(--no);
+border-left-width:4px;border-radius:0 8px 8px 0;padding:14px 16px;margin:16px 0}
+.recusa b{color:var(--no);font-size:17px;display:block;margin-bottom:5px}
+code{background:var(--cod);border-radius:4px;padding:1px 5px;font-size:12.5px;
+font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all}
+pre{background:var(--cod);border:1px solid var(--li);border-radius:9px;padding:13px;
+overflow:auto;font-size:12.5px;line-height:1.5;max-height:460px}
+pre code{background:none;padding:0;word-break:normal}
+footer{border-top:1px solid var(--li);margin-top:44px;padding:26px 0 40px;font-size:13.5px;
+color:var(--mut)}
+footer h3{font-size:14px;color:var(--fg);margin:20px 0 7px;text-transform:uppercase;
+letter-spacing:.05em}
+footer ol{padding-left:20px;margin:8px 0}
+footer li{margin-bottom:7px}
+footer .q{background:var(--cx);border:1px solid var(--li);border-radius:9px;padding:13px 15px;
+margin:10px 0}
+.ok{color:var(--ok)}
+@media(max-width:560px){h1{font-size:22px}.w{padding:0 16px}}</style></head><body>
+<header><div class="w"><span class="marca" data-t="marca"></span>
+<button id="lng" type="button">EN</button></div></header>
+<main class="w">
+<h1 data-t="idx_t"></h1><p class="sub" data-t="idx_p"></p>
+<div class="btns">
+<a class="bg" href="demo_soliz_auto.html"><b data-t="b_auto"></b><span data-t="b_auto_s"></span></a>
+<a class="bg" href="demo_soliz_3pontos.html"><b data-t="b_3p"></b><span data-t="b_3p_s"></span></a>
+</div>
+<div class="aviso" data-t="av37"></div>
+<p style="margin-top:34px"><button class="min" id="bver" type="button" data-t="ver"></button></p>
+</main>
+
+<footer><div class="w">
+<h3 data-t="f_t"></h3>
+<p data-t="f1"></p>
+<div class="q"><p style="margin:0" data-t="f1b"></p></div>
+<p data-t="f2"></p>
+<p data-t="f3"></p>
+<h3 data-t="f_div"></h3>
+<p data-t="f1c"></p>
+<p data-t="f_div_h"></p>
+<ol><li data-t="d1"></li><li data-t="d2"></li><li data-t="d3"></li></ol>
+<div class="q"><p style="margin:0" data-t="d4"></p></div>
+<h3 data-t="f_uso"></h3>
+<p data-t="f_uso_p"></p>
+<h3 data-t="f_hash"></h3>
+<p data-t="f_hash_h"></p>
+<p><code>060ae4cfec9d2681e80b99db28ae48bf25d421cef755d75fe6c24985bc63c6c5</code></p>
+<p><code>sha256sum arquivo.js</code> &nbsp;·&nbsp; <code>shasum -a 256 arquivo.js</code> &nbsp;·&nbsp; <code>certutil -hashfile arquivo.js SHA256</code></p>
+<h3 data-t="f_arq"></h3><p><code>demo_soliz_auto.html f82b06159145c2de19633a14c4b3ab12036ad01bf3aba8f48391c0458147b074  ·  demo_soliz_3pontos.html 97ca727d5baf7c91de175140203b199779e29dd95e2ed05b5ca4c965482bc0c8</code></p><p data-t="f_arq_h"></p>
+<p style="margin-top:22px" data-t="f_doi"></p>
+</div></footer>
+<script type="text/plain" id="fonte">var T = {
+  pt: {
+    lang:'PT', outra:'EN',
+    marca:'De Olho na Pele · SoLiz',
+    idx_t:'A regra do anel, rodando no seu navegador',
+    idx_p:'Esta demonstração executa a regra de borda do estudo — a mesma descrita passo a passo no anexo S3 do manuscrito — sobre uma fotografia que você escolhe. Tudo acontece dentro do navegador: &lt;strong&gt;a imagem não sai do seu computador&lt;/strong&gt;, não há servidor e não há envio. São dois modos: o &lt;strong&gt;automático&lt;/strong&gt;, em que a máquina varre 144 combinações de parâmetros e escolhe sozinha; e o &lt;strong&gt;assistido&lt;/strong&gt;, em que você marca três classes de cor com o mouse e a máquina classifica o que está dentro do laço.',
+    b_auto:'Automático', b_3p:'Três Pontos',
+    b_auto_s:'a máquina decide sozinha, 144 combinações',
+    b_3p_s:'você marca borda, lesão e pele; a máquina classifica',
+    auto_t:'Modo automático',
+    auto_p:'Escolha uma fotografia. A máquina reduz o quadro a 700 × 700, varre as 144 combinações da grade e fica com a de maior nota. Nenhuma referência humana entra na escolha.',
+    p3_t:'Modo assistido · três pontinhos',
+    p3_p:'Escolha uma fotografia, cerque a lesão com o laço e marque três classes de cor: &lt;strong&gt;borda&lt;/strong&gt;, &lt;strong&gt;lesão&lt;/strong&gt; e &lt;strong&gt;pele&lt;/strong&gt;. Repita em quatro lugares diferentes. Cada pixel dentro do laço vai para a classe de menor distância normalizada em CIE Lab.',
+    esc:'Escolher fotografia', nada:'Nenhum arquivo escolhido',
+    priv:'A imagem fica no navegador. Nada é enviado.',
+    diam:'Diâmetro declarado (mm)',
+    diam_h:'Entra no termo de tamanho da nota. É uma &lt;em&gt;declaração&lt;/em&gt; sua, não uma medida.',
+    esca:'Escala (px/mm) — opcional',
+    esca_h:'Sem isto a área sai em pixels. Com isto sai também em mm², rotulada como escala declarada por você.',
+    av37:'Aviso — §3.7 do manuscrito: este método &lt;strong&gt;não foi validado para fotografia clínica&lt;/strong&gt;. No único banco humano testado (ComplexWoundDB, 27 imagens) ele não transferiu. O que você vê aqui é demonstração de um mecanismo, não uma medida clínica.',
+    rodar:'Rodar', rodando:'Rodando…', comb:'combinação',
+    lac:'1 · Laço', lac_h:'Arraste em volta da lesão e solte para fechar.',
+    cls_b:'2 · Borda', cls_l:'3 · Lesão', cls_p:'4 · Pele',
+    cls_h:'Clique em quatro lugares diferentes para cada classe.',
+    limpar:'Limpar', lado:'Margem: FORA · travada nesta demo',
+    res:'Resultado', sem:'MEDIDA RECUSADA',
+    sem_h:'Nenhum dos oito maiores componentes da faixa de transição toca ao mesmo tempo o interior e o exterior. O anel não fechou, e o método não entrega número quando isso acontece.',
+    r_area:'Área', r_nota:'Nota', r_aj:'Ajuste escolhido',
+    r_px:'pixels', r_mm:'mm² · escala declarada por você',
+    r_uni:'unidade', r_fino:'finura', r_comp:'compacidade', r_tam:'tamanho',
+    r_ilhas:'Ilhas: só o maior componente foi mantido.',
+    r_desc:'descartados em ilhas menores',
+    r_def:'A escala digitada vale para a sua fotografia; o motor trabalha num quadro de 700 × 700. A demo converte a escala e ajusta o diâmetro pela mesma identidade algébrica da reauditoria de 28/09 — o motor continua intocado, com 30 px/mm fixos por dentro.',
+    ver:'Ver código-fonte legível', esc_h:'Precisa marcar as três classes antes de rodar.',
+    voltar:'← Voltar',
+    f_t:'O que esta página é, e o que ela não é',
+    f1:'&lt;strong&gt;Implementação JavaScript equivalente.&lt;/strong&gt; As medidas do artigo &lt;strong&gt;não&lt;/strong&gt; vêm daqui: vêm do motor Python v0 registrado (BR 51 2026 008413-0). Esta página reimplementa a mesma regra para que ela possa ser vista funcionando.',
+    f1b:'&lt;strong&gt;Porte validado contra o motor congelado:&lt;/strong&gt; idêntico em 64/64 amostras e na escolha da grade completa (n = 81.458; nota 0,861474), e idêntico também sobre uma imagem real do artigo — a 1323·C do held-out do dia 3 — quando recebe exatamente os mesmos pixels: 61.945 px, 275,4 mm², nota 0,5231, mesmo ajuste. &lt;strong&gt;Esta página reproduz os números publicados quando recebe a mesma entrada.&lt;/strong&gt; Quando ela mesma reduz a fotografia a 700 × 700, aparece uma diferença de cerca de 1 % — &lt;strong&gt;de reamostragem de imagem, não de motor&lt;/strong&gt;: o &lt;code&gt;drawImage&lt;/code&gt; do navegador e o LANCZOS do PIL não dão os mesmos pixels. Tudo em &lt;code&gt;VALIDACAO_PORTE_JS_30SET.md&lt;/code&gt;, SHA-256 &lt;code&gt;12af713de1fdc32ef409f8638e65b452c37da1c97b4865893037c9fbb3783761&lt;/code&gt;.',
+    f1c:'As três divergências conhecidas abaixo referem-se à &lt;strong&gt;bancada v106&lt;/strong&gt; usada no desenvolvimento (S3) e &lt;strong&gt;não se aplicam a esta implementação&lt;/strong&gt;. A quarta permanece, de propósito.',
+    f2:'Patente depositada: &lt;strong&gt;BR 10 2026 024571 2&lt;/strong&gt;.',
+    f3:'Fonte da regra: &lt;code&gt;06_MOTOR_DE_REGISTRO\\v0_congelado_2026-09-22\\rodar.py&lt;/code&gt;, SHA-256 &lt;code&gt;78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732&lt;/code&gt;, dentro de &lt;code&gt;MOTOR_v0_congelado.zip&lt;/code&gt;, SHA-256 &lt;code&gt;03ce6b7f7391a113714106af62b7c7865a6558cc84b8a13622c1cad47b0d27ee&lt;/code&gt;.',
+    f_div:'Divergências conhecidas entre a bancada em JavaScript e o motor Python',
+    f_div_h:'As três primeiras estão copiadas palavra por palavra de &lt;code&gt;v0_congelado_2026-09-22\\_LEIA.md&lt;/code&gt;, seção “O QUE JÁ SE SABE QUE ESTÁ ERRADO”, onde foram apontadas em 22/09/2026. A quarta é desta demonstração.',
+    d1:'&lt;strong&gt;O conta-gotas da bancada pinta sobre o mapa, não sobre a foto.&lt;/strong&gt; Este motor pinta sobre a foto.',
+    d2:'&lt;strong&gt;A área da bancada sai de um polígono de 30 pontos&lt;/strong&gt;, não da máscara de pixels. Este motor conta pixels.',
+    d3:'&lt;strong&gt;Quando o anel falha, a bancada cai em silêncio para Otsu.&lt;/strong&gt; Este motor devolve falha.',
+    d4:'&lt;strong&gt;Nisto a demo difere da bancada de desenvolvimento, de propósito:&lt;/strong&gt; aqui, anel que não fecha é medida recusada, como no motor registrado.',
+    f_uso:'Uso em bancos de terceiros',
+    f_uso_p:'Ninguém roda esta demonstração em &lt;strong&gt;FUSeg, AZH, DFUC, Medetec ou UNESP&lt;/strong&gt; sem pré-registro publicado.',
+    f_hash:'SHA-256 do JavaScript desta página',
+    f_hash_h:'Calculado na montagem. Para conferir, extraia o conteúdo da tag &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; principal e rode:',
+    f_doi:'Preprint: <a href=https://doi.org/10.5281/zenodo.23062849 target=_blank>doi:10.5281/zenodo.23062849</a>',
+    f_arq:'Hash dos arquivos da demonstração',
+    f_arq_h:'O hash do próprio &lt;code&gt;index.html&lt;/code&gt; está em &lt;code&gt;_HASHES.txt&lt;/code&gt;, na mesma pasta — uma página não consegue conter o seu próprio hash.'
+  },
+  en: {
+    lang:'EN', outra:'PT',
+    marca:'De Olho na Pele · SoLiz',
+    idx_t:'The ring rule, running in your browser',
+    idx_p:'This demonstration runs the study’s edge rule — the same one transcribed step by step in Supplement S3 — on a photograph you choose. Everything happens inside the browser: &lt;strong&gt;the image never leaves your computer&lt;/strong&gt;, there is no server and nothing is uploaded. Two modes: &lt;strong&gt;automatic&lt;/strong&gt;, in which the machine sweeps 144 parameter combinations and picks one on its own; and &lt;strong&gt;assisted&lt;/strong&gt;, in which you mark three colour classes with the mouse and the machine classifies what is inside the lasso.',
+    b_auto:'Automatic', b_3p:'Three Dots',
+    b_auto_s:'the machine decides alone, 144 combinations',
+    b_3p_s:'you mark edge, lesion and skin; the machine classifies',
+    auto_t:'Automatic mode',
+    auto_p:'Choose a photograph. The machine reduces the frame to 700 × 700, sweeps the 144 combinations of the grid and keeps the highest-scoring one. No human reference enters the choice.',
+    p3_t:'Assisted mode · three dots',
+    p3_p:'Choose a photograph, enclose the lesion with the lasso and mark three colour classes: &lt;strong&gt;edge&lt;/strong&gt;, &lt;strong&gt;lesion&lt;/strong&gt; and &lt;strong&gt;skin&lt;/strong&gt;. Repeat at four different places. Every pixel inside the lasso goes to the class of smallest normalised CIE Lab distance.',
+    esc:'Choose photograph', nada:'No file chosen',
+    priv:'The image stays in the browser. Nothing is uploaded.',
+    diam:'Declared diameter (mm)',
+    diam_h:'It enters the size term of the score. It is &lt;em&gt;your declaration&lt;/em&gt;, not a measurement.',
+    esca:'Scale (px/mm) — optional',
+    esca_h:'Without it the area is reported in pixels. With it, also in mm², labelled as a scale you declared.',
+    av37:'Warning — §3.7 of the manuscript: this method has &lt;strong&gt;not been validated for clinical photography&lt;/strong&gt;. On the only human dataset tested (ComplexWoundDB, 27 images) it did not transfer. What you see here demonstrates a mechanism, not a clinical measurement.',
+    rodar:'Run', rodando:'Running…', comb:'combination',
+    lac:'1 · Lasso', lac_h:'Drag around the lesion and release to close.',
+    cls_b:'2 · Edge', cls_l:'3 · Lesion', cls_p:'4 · Skin',
+    cls_h:'Click at four different places for each class.',
+    limpar:'Clear', lado:'Margin: OUTER · locked in this demo',
+    res:'Result', sem:'MEASUREMENT REFUSED',
+    sem_h:'None of the eight largest components of the transition band touches the interior and the exterior at the same time. The ring did not close, and the method returns no number when that happens.',
+    r_area:'Area', r_nota:'Score', r_aj:'Chosen setting',
+    r_px:'pixels', r_mm:'mm² · scale declared by you',
+    r_uni:'unity', r_fino:'thinness', r_comp:'compactness', r_tam:'size',
+    r_ilhas:'Islands: only the largest component was kept.',
+    r_desc:'discarded in smaller islands',
+    r_def:'The scale you typed refers to your photograph; the engine works on a 700 × 700 frame. The demo converts the scale and adjusts the diameter by the same algebraic identity used in the 28 Sep re-audit — the engine itself is untouched, with 30 px/mm fixed inside.',
+    ver:'View readable source', esc_h:'Mark the three classes before running.',
+    voltar:'← Back',
+    f_t:'What this page is, and what it is not',
+    f1:'&lt;strong&gt;Equivalent JavaScript implementation.&lt;/strong&gt; The measurements in the article do &lt;strong&gt;not&lt;/strong&gt; come from here: they come from the registered Python v0 engine (BR 51 2026 008413-0). This page reimplements the same rule so that it can be seen working.',
+    f1b:'&lt;strong&gt;Port validated against the frozen engine:&lt;/strong&gt; identical on 64/64 samples and on the full-grid choice (n = 81,458; score 0.861474), and identical too on a real image from the article — wound 1323·C of the day-3 held-out — when given exactly the same pixels: 61,945 px, 275.4 mm², score 0.5231, same setting. &lt;strong&gt;This page reproduces the published numbers when it receives the same input.&lt;/strong&gt; When it reduces the photograph to 700 × 700 itself, a difference of about 1 % appears — &lt;strong&gt;from image resampling, not from the engine&lt;/strong&gt;: the browser’s &lt;code&gt;drawImage&lt;/code&gt; and PIL’s LANCZOS do not yield the same pixels. All of it in &lt;code&gt;VALIDACAO_PORTE_JS_30SET.md&lt;/code&gt;, SHA-256 &lt;code&gt;12af713de1fdc32ef409f8638e65b452c37da1c97b4865893037c9fbb3783761&lt;/code&gt;.',
+    f1c:'The three known divergences below refer to the &lt;strong&gt;v106 bench&lt;/strong&gt; used during development (S3) and &lt;strong&gt;do not apply to this implementation&lt;/strong&gt;. The fourth remains, on purpose.',
+    f2:'Patent filed: &lt;strong&gt;BR 10 2026 024571 2&lt;/strong&gt;.',
+    f3:'Source of the rule: &lt;code&gt;06_MOTOR_DE_REGISTRO\\v0_congelado_2026-09-22\\rodar.py&lt;/code&gt;, SHA-256 &lt;code&gt;78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732&lt;/code&gt;, inside &lt;code&gt;MOTOR_v0_congelado.zip&lt;/code&gt;, SHA-256 &lt;code&gt;03ce6b7f7391a113714106af62b7c7865a6558cc84b8a13622c1cad47b0d27ee&lt;/code&gt;.',
+    f_div:'Known divergences between the JavaScript bench and the Python engine',
+    f_div_h:'The first three are copied word for word from &lt;code&gt;v0_congelado_2026-09-22\\_LEIA.md&lt;/code&gt;, section “WHAT IS ALREADY KNOWN TO BE WRONG”, where they were raised on 22 Sep 2026. The fourth belongs to this demonstration.',
+    d1:'&lt;strong&gt;The bench’s dropper samples the map, not the photograph.&lt;/strong&gt; This engine samples the photograph.',
+    d2:'&lt;strong&gt;The bench’s area comes from a 30-point polygon&lt;/strong&gt;, not from the pixel mask. This engine counts pixels.',
+    d3:'&lt;strong&gt;When the ring fails, the bench falls silently back to Otsu.&lt;/strong&gt; This engine returns failure.',
+    d4:'&lt;strong&gt;In this the demo differs from the development bench on purpose:&lt;/strong&gt; here, a ring that does not close is a refused measurement, as in the registered engine.',
+    f_uso:'Use on third-party datasets',
+    f_uso_p:'No one runs this demonstration on &lt;strong&gt;FUSeg, AZH, DFUC, Medetec or UNESP&lt;/strong&gt; without a published pre-registration.',
+    f_hash:'SHA-256 of this page’s JavaScript',
+    f_hash_h:'Computed at build time. To verify, extract the contents of the main &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tag and run:',
+    f_doi:'Preprint: <a href=https://doi.org/10.5281/zenodo.23062849 target=_blank>doi:10.5281/zenodo.23062849</a>',
+    f_arq:'Hash of the demonstration files',
+    f_arq_h:'The hash of &lt;code&gt;index.html&lt;/code&gt; itself is in &lt;code&gt;_HASHES.txt&lt;/code&gt;, in the same folder — a page cannot contain its own hash.'
+  }
+};
+if (typeof module !== 'undefined' &amp;&amp; module.exports) module.exports = T;
+
+
+document.getElementById('lng').onclick=trocaIdioma;
+function ligaFonte(){var b=document.getElementById('bver'),p=document.getElementById('fonte');
+b.onclick=function(){var pre=document.getElementById('prefonte');
+if(pre){pre.remove();return;}pre=document.createElement('pre');pre.id='prefonte';
+var c=document.createElement('code');c.textContent=p.textContent;pre.appendChild(c);
+b.parentNode.insertBefore(pre,b.nextSibling);};}
+var IDI='pt';
+function tr(){var d=T[IDI],i;document.documentElement.lang=IDI==='pt'?'pt-BR':'en';
+var e=document.querySelectorAll('[data-t]');for(i=0;i&lt;e.length;i++){
+var k=e[i].getAttribute('data-t');if(d[k]!==undefined)e[i].innerHTML=d[k];}
+document.getElementById('lng').textContent=d.outra;}
+function trocaIdioma(){IDI=(IDI==='pt'?'en':'pt');tr();}
+ligaFonte();tr();</script>
+<script>var T={pt:{lang:"PT",outra:"EN",marca:"De Olho na Pele · SoLiz",idx_t:"A regra do anel, rodando no seu navegador",idx_p:"Esta demonstração executa a regra de borda do estudo — a mesma descrita passo a passo no anexo S3 do manuscrito — sobre uma fotografia que você escolhe. Tudo acontece dentro do navegador: <strong>a imagem não sai do seu computador</strong>, não há servidor e não há envio. São dois modos: o <strong>automático</strong>, em que a máquina varre 144 combinações de parâmetros e escolhe sozinha; e o <strong>assistido</strong>, em que você marca três classes de cor com o mouse e a máquina classifica o que está dentro do laço.",b_auto:"Automático",b_3p:"Três Pontos",b_auto_s:"a máquina decide sozinha, 144 combinações",b_3p_s:"você marca borda, lesão e pele; a máquina classifica",auto_t:"Modo automático",auto_p:"Escolha uma fotografia. A máquina reduz o quadro a 700 × 700, varre as 144 combinações da grade e fica com a de maior nota. Nenhuma referência humana entra na escolha.",p3_t:"Modo assistido · três pontinhos",p3_p:"Escolha uma fotografia, cerque a lesão com o laço e marque três classes de cor: <strong>borda</strong>, <strong>lesão</strong> e <strong>pele</strong>. Repita em quatro lugares diferentes. Cada pixel dentro do laço vai para a classe de menor distância normalizada em CIE Lab.",esc:"Escolher fotografia",nada:"Nenhum arquivo escolhido",priv:"A imagem fica no navegador. Nada é enviado.",diam:"Diâmetro declarado (mm)",diam_h:"Entra no termo de tamanho da nota. É uma <em>declaração</em> sua, não uma medida.",esca:"Escala (px/mm) — opcional",esca_h:"Sem isto a área sai em pixels. Com isto sai também em mm², rotulada como escala declarada por você.",av37:"Aviso — §3.7 do manuscrito: este método <strong>não foi validado para fotografia clínica</strong>. No único banco humano testado (ComplexWoundDB, 27 imagens) ele não transferiu. O que você vê aqui é demonstração de um mecanismo, não uma medida clínica.",rodar:"Rodar",rodando:"Rodando…",comb:"combinação",lac:"1 · Laço",lac_h:"Arraste em volta da lesão e solte para fechar.",cls_b:"2 · Borda",cls_l:"3 · Lesão",cls_p:"4 · Pele",cls_h:"Clique em quatro lugares diferentes para cada classe.",limpar:"Limpar",lado:"Margem: FORA · travada nesta demo",res:"Resultado",sem:"MEDIDA RECUSADA",sem_h:"Nenhum dos oito maiores componentes da faixa de transição toca ao mesmo tempo o interior e o exterior. O anel não fechou, e o método não entrega número quando isso acontece.",r_area:"Área",r_nota:"Nota",r_aj:"Ajuste escolhido",r_px:"pixels",r_mm:"mm² · escala declarada por você",r_uni:"unidade",r_fino:"finura",r_comp:"compacidade",r_tam:"tamanho",r_ilhas:"Ilhas: só o maior componente foi mantido.",r_desc:"descartados em ilhas menores",r_def:"A escala digitada vale para a sua fotografia; o motor trabalha num quadro de 700 × 700. A demo converte a escala e ajusta o diâmetro pela mesma identidade algébrica da reauditoria de 28/09 — o motor continua intocado, com 30 px/mm fixos por dentro.",ver:"Ver código-fonte legível",esc_h:"Precisa marcar as três classes antes de rodar.",voltar:"← Voltar",f_t:"O que esta página é, e o que ela não é",f1:"<strong>Implementação JavaScript equivalente.</strong> As medidas do artigo <strong>não</strong> vêm daqui: vêm do motor Python v0 registrado (BR 51 2026 008413-0). Esta página reimplementa a mesma regra para que ela possa ser vista funcionando.",f1b:"<strong>Porte validado contra o motor congelado:</strong> idêntico em 64/64 amostras e na escolha da grade completa (n = 81.458; nota 0,861474), e idêntico também sobre uma imagem real do artigo — a 1323·C do held-out do dia 3 — quando recebe exatamente os mesmos pixels: 61.945 px, 275,4 mm², nota 0,5231, mesmo ajuste. <strong>Esta página reproduz os números publicados quando recebe a mesma entrada.</strong> Quando ela mesma reduz a fotografia a 700 × 700, aparece uma diferença de cerca de 1 % — <strong>de reamostragem de imagem, não de motor</strong>: o <code>drawImage</code> do navegador e o LANCZOS do PIL não dão os mesmos pixels. Tudo em <code>VALIDACAO_PORTE_JS_30SET.md</code>, SHA-256 <code>12af713de1fdc32ef409f8638e65b452c37da1c97b4865893037c9fbb3783761</code>.",f1c:"As três divergências conhecidas abaixo referem-se à <strong>bancada v106</strong> usada no desenvolvimento (S3) e <strong>não se aplicam a esta implementação</strong>. A quarta permanece, de propósito.",f2:"Patente depositada: <strong>BR 10 2026 024571 2</strong>.",f3:"Fonte da regra: <code>06_MOTOR_DE_REGISTRO\\v0_congelado_2026-09-22\\rodar.py</code>, SHA-256 <code>78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732</code>, dentro de <code>MOTOR_v0_congelado.zip</code>, SHA-256 <code>03ce6b7f7391a113714106af62b7c7865a6558cc84b8a13622c1cad47b0d27ee</code>.",f_div:"Divergências conhecidas entre a bancada em JavaScript e o motor Python",f_div_h:"As três primeiras estão copiadas palavra por palavra de <code>v0_congelado_2026-09-22\\_LEIA.md</code>, seção “O QUE JÁ SE SABE QUE ESTÁ ERRADO”, onde foram apontadas em 22/09/2026. A quarta é desta demonstração.",d1:"<strong>O conta-gotas da bancada pinta sobre o mapa, não sobre a foto.</strong> Este motor pinta sobre a foto.",d2:"<strong>A área da bancada sai de um polígono de 30 pontos</strong>, não da máscara de pixels. Este motor conta pixels.",d3:"<strong>Quando o anel falha, a bancada cai em silêncio para Otsu.</strong> Este motor devolve falha.",d4:"<strong>Nisto a demo difere da bancada de desenvolvimento, de propósito:</strong> aqui, anel que não fecha é medida recusada, como no motor registrado.",f_uso:"Uso em bancos de terceiros",f_uso_p:"Ninguém roda esta demonstração em <strong>FUSeg, AZH, DFUC, Medetec ou UNESP</strong> sem pré-registro publicado.",f_hash:"SHA-256 do JavaScript desta página",f_hash_h:"Calculado na montagem. Para conferir, extraia o conteúdo da tag <code>&lt;script&gt;</code> principal e rode:",f_doi:"Preprint: <a href=https://doi.org/10.5281/zenodo.23062849 target=_blank>doi:10.5281/zenodo.23062849</a>",f_arq:"Hash dos arquivos da demonstração",f_arq_h:"O hash do próprio <code>index.html</code> está em <code>_HASHES.txt</code>, na mesma pasta — uma página não consegue conter o seu próprio hash."},en:{lang:"EN",outra:"PT",marca:"De Olho na Pele · SoLiz",idx_t:"The ring rule, running in your browser",idx_p:"This demonstration runs the study’s edge rule — the same one transcribed step by step in Supplement S3 — on a photograph you choose. Everything happens inside the browser: <strong>the image never leaves your computer</strong>, there is no server and nothing is uploaded. Two modes: <strong>automatic</strong>, in which the machine sweeps 144 parameter combinations and picks one on its own; and <strong>assisted</strong>, in which you mark three colour classes with the mouse and the machine classifies what is inside the lasso.",b_auto:"Automatic",b_3p:"Three Dots",b_auto_s:"the machine decides alone, 144 combinations",b_3p_s:"you mark edge, lesion and skin; the machine classifies",auto_t:"Automatic mode",auto_p:"Choose a photograph. The machine reduces the frame to 700 × 700, sweeps the 144 combinations of the grid and keeps the highest-scoring one. No human reference enters the choice.",p3_t:"Assisted mode · three dots",p3_p:"Choose a photograph, enclose the lesion with the lasso and mark three colour classes: <strong>edge</strong>, <strong>lesion</strong> and <strong>skin</strong>. Repeat at four different places. Every pixel inside the lasso goes to the class of smallest normalised CIE Lab distance.",esc:"Choose photograph",nada:"No file chosen",priv:"The image stays in the browser. Nothing is uploaded.",diam:"Declared diameter (mm)",diam_h:"It enters the size term of the score. It is <em>your declaration</em>, not a measurement.",esca:"Scale (px/mm) — optional",esca_h:"Without it the area is reported in pixels. With it, also in mm², labelled as a scale you declared.",av37:"Warning — §3.7 of the manuscript: this method has <strong>not been validated for clinical photography</strong>. On the only human dataset tested (ComplexWoundDB, 27 images) it did not transfer. What you see here demonstrates a mechanism, not a clinical measurement.",rodar:"Run",rodando:"Running…",comb:"combination",lac:"1 · Lasso",lac_h:"Drag around the lesion and release to close.",cls_b:"2 · Edge",cls_l:"3 · Lesion",cls_p:"4 · Skin",cls_h:"Click at four different places for each class.",limpar:"Clear",lado:"Margin: OUTER · locked in this demo",res:"Result",sem:"MEASUREMENT REFUSED",sem_h:"None of the eight largest components of the transition band touches the interior and the exterior at the same time. The ring did not close, and the method returns no number when that happens.",r_area:"Area",r_nota:"Score",r_aj:"Chosen setting",r_px:"pixels",r_mm:"mm² · scale declared by you",r_uni:"unity",r_fino:"thinness",r_comp:"compactness",r_tam:"size",r_ilhas:"Islands: only the largest component was kept.",r_desc:"discarded in smaller islands",r_def:"The scale you typed refers to your photograph; the engine works on a 700 × 700 frame. The demo converts the scale and adjusts the diameter by the same algebraic identity used in the 28 Sep re-audit — the engine itself is untouched, with 30 px/mm fixed inside.",ver:"View readable source",esc_h:"Mark the three classes before running.",voltar:"← Back",f_t:"What this page is, and what it is not",f1:"<strong>Equivalent JavaScript implementation.</strong> The measurements in the article do <strong>not</strong> come from here: they come from the registered Python v0 engine (BR 51 2026 008413-0). This page reimplements the same rule so that it can be seen working.",f1b:"<strong>Port validated against the frozen engine:</strong> identical on 64/64 samples and on the full-grid choice (n = 81,458; score 0.861474), and identical too on a real image from the article — wound 1323·C of the day-3 held-out — when given exactly the same pixels: 61,945 px, 275.4 mm², score 0.5231, same setting. <strong>This page reproduces the published numbers when it receives the same input.</strong> When it reduces the photograph to 700 × 700 itself, a difference of about 1 % appears — <strong>from image resampling, not from the engine</strong>: the browser’s <code>drawImage</code> and PIL’s LANCZOS do not yield the same pixels. All of it in <code>VALIDACAO_PORTE_JS_30SET.md</code>, SHA-256 <code>12af713de1fdc32ef409f8638e65b452c37da1c97b4865893037c9fbb3783761</code>.",f1c:"The three known divergences below refer to the <strong>v106 bench</strong> used during development (S3) and <strong>do not apply to this implementation</strong>. The fourth remains, on purpose.",f2:"Patent filed: <strong>BR 10 2026 024571 2</strong>.",f3:"Source of the rule: <code>06_MOTOR_DE_REGISTRO\\v0_congelado_2026-09-22\\rodar.py</code>, SHA-256 <code>78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732</code>, inside <code>MOTOR_v0_congelado.zip</code>, SHA-256 <code>03ce6b7f7391a113714106af62b7c7865a6558cc84b8a13622c1cad47b0d27ee</code>.",f_div:"Known divergences between the JavaScript bench and the Python engine",f_div_h:"The first three are copied word for word from <code>v0_congelado_2026-09-22\\_LEIA.md</code>, section “WHAT IS ALREADY KNOWN TO BE WRONG”, where they were raised on 22 Sep 2026. The fourth belongs to this demonstration.",d1:"<strong>The bench’s dropper samples the map, not the photograph.</strong> This engine samples the photograph.",d2:"<strong>The bench’s area comes from a 30-point polygon</strong>, not from the pixel mask. This engine counts pixels.",d3:"<strong>When the ring fails, the bench falls silently back to Otsu.</strong> This engine returns failure.",d4:"<strong>In this the demo differs from the development bench on purpose:</strong> here, a ring that does not close is a refused measurement, as in the registered engine.",f_uso:"Use on third-party datasets",f_uso_p:"No one runs this demonstration on <strong>FUSeg, AZH, DFUC, Medetec or UNESP</strong> without a published pre-registration.",f_hash:"SHA-256 of this page’s JavaScript",f_hash_h:"Computed at build time. To verify, extract the contents of the main <code>&lt;script&gt;</code> tag and run:",f_doi:"Preprint: <a href=https://doi.org/10.5281/zenodo.23062849 target=_blank>doi:10.5281/zenodo.23062849</a>",f_arq:"Hash of the demonstration files",f_arq_h:"The hash of <code>index.html</code> itself is in <code>_HASHES.txt</code>, in the same folder — a page cannot contain its own hash."}};function ligaFonte(){var e=document.getElementById("bver"),o=document.getElementById("fonte");e.onclick=function(){var a=document.getElementById("prefonte");if(a)a.remove();else{(a=document.createElement("pre")).id="prefonte";var t=document.createElement("code");t.textContent=o.textContent,a.appendChild(t),e.parentNode.insertBefore(a,e.nextSibling)}}}"undefined"!=typeof module&&module.exports&&(module.exports=T),document.getElementById("lng").onclick=trocaIdioma;var IDI="pt";function tr(){var e,o=T[IDI];document.documentElement.lang="pt"===IDI?"pt-BR":"en";var a=document.querySelectorAll("[data-t]");for(e=0;e<a.length;e++){var t=a[e].getAttribute("data-t");void 0!==o[t]&&(a[e].innerHTML=o[t])}document.getElementById("lng").textContent=o.outra}function trocaIdioma(){IDI="pt"===IDI?"en":"pt",tr()}ligaFonte(),tr();</script>
+</body></html>

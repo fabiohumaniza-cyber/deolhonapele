@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modo assistido · três pontinhos · De Olho na Pele</title>
+<meta name="description" content="Demonstração da regra do anel — De Olho na Pele / SoLiz. Roda no navegador; a imagem não sai do computador.">
+<meta name="robots" content="noindex">
+<style>:root{--bg:#fbfaf8;--fg:#1d1d1f;--mut:#6b6b70;--li:#e3e1dc;--az:#1f4e79;--az2:#2a6ba8;
+--ok:#1f6b3a;--no:#9c2b2b;--cx:#ffffff;--av:#fdf3e3;--avb:#c9a227;--cod:#f3f1ec}
+:root:not([data-theme="light"]){@media(prefers-color-scheme:dark){}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161a;--fg:#ececf0;
+--mut:#a0a0aa;--li:#2c2e35;--az:#7fb4e3;--az2:#9ac7ef;--ok:#6fd39a;--no:#ef9a9a;
+--cx:#1c1e24;--av:#2a2418;--avb:#c9a227;--cod:#23252c}}
+:root[data-theme="dark"]{--bg:#15161a;--fg:#ececf0;--mut:#a0a0aa;--li:#2c2e35;--az:#7fb4e3;
+--az2:#9ac7ef;--ok:#6fd39a;--no:#ef9a9a;--cx:#1c1e24;--av:#2a2418;--avb:#c9a227;--cod:#23252c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,
+"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+.w{max-width:860px;margin:0 auto;padding:0 16px}
+header{border-bottom:1px solid var(--li);padding:14px 0;margin-bottom:26px}
+header .w{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.marca{font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--mut)}
+#lng{background:none;border:1px solid var(--li);color:var(--fg);border-radius:6px;
+padding:5px 11px;font-size:13px;cursor:pointer;font-weight:600}
+#lng:hover{border-color:var(--az)}
+h1{font-size:26px;line-height:1.25;margin:0 0 14px;letter-spacing:-.01em}
+h2{font-size:17px;margin:30px 0 10px}
+p{margin:0 0 14px}
+.sub{color:var(--mut)}
+a{color:var(--az)}
+.btns{display:flex;gap:14px;flex-wrap:wrap;margin:26px 0}
+.bg{flex:1 1 300px;display:block;text-decoration:none;background:var(--cx);border:1px solid var(--li);
+border-radius:12px;padding:20px;color:var(--fg);transition:border-color .15s}
+.bg:hover{border-color:var(--az)}
+.bg b{display:block;font-size:19px;margin-bottom:5px;color:var(--az)}
+.bg span{color:var(--mut);font-size:14px}
+.cx{background:var(--cx);border:1px solid var(--li);border-radius:12px;padding:18px;margin:18px 0}
+label{display:block;font-size:13px;font-weight:600;margin:14px 0 5px}
+input[type=number]{width:130px;padding:7px 9px;border:1px solid var(--li);border-radius:7px;
+background:var(--bg);color:var(--fg);font:inherit;font-size:15px}
+.hint{font-size:13px;color:var(--mut);margin:4px 0 0}
+.aviso{background:var(--av);border-left:4px solid var(--avb);border-radius:0 8px 8px 0;
+padding:13px 15px;margin:20px 0;font-size:14.5px}
+button.acao{background:var(--az);color:#fff;border:0;border-radius:9px;padding:12px 26px;
+font:inherit;font-weight:600;font-size:16px;cursor:pointer}
+button.acao:hover{background:var(--az2)}
+button.acao:disabled{opacity:.45;cursor:not-allowed}
+button.min{background:none;border:1px solid var(--li);color:var(--fg);border-radius:7px;
+padding:7px 13px;font:inherit;font-size:14px;cursor:pointer;margin:0 6px 6px 0}
+button.min:hover{border-color:var(--az)}
+button.min.on{border-color:var(--az);background:var(--az);color:#fff}
+.file{display:inline-block;border:1px dashed var(--li);border-radius:9px;padding:11px 16px;
+cursor:pointer;font-size:15px}
+.file:hover{border-color:var(--az)}
+input[type=file]{display:none}
+canvas{max-width:100%;height:auto;border-radius:9px;border:1px solid var(--li);display:block;
+margin:14px 0;background:var(--cod);touch-action:none}
+.prog{height:5px;background:var(--li);border-radius:3px;overflow:hidden;margin:14px 0 6px}
+.prog i{display:block;height:100%;width:0;background:var(--az);transition:width .1s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:12px 0}
+.kv{background:var(--bg);border:1px solid var(--li);border-radius:9px;padding:11px 13px}
+.kv b{display:block;font-size:12px;font-weight:600;color:var(--mut);text-transform:uppercase;
+letter-spacing:.04em;margin-bottom:3px}
+.kv span{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums}
+.kv em{font-style:normal;font-size:13px;color:var(--mut);display:block}
+.recusa{border-left-color:var(--no);background:var(--cx);border:1px solid var(--no);
+border-left-width:4px;border-radius:0 8px 8px 0;padding:14px 16px;margin:16px 0}
+.recusa b{color:var(--no);font-size:17px;display:block;margin-bottom:5px}
+code{background:var(--cod);border-radius:4px;padding:1px 5px;font-size:12.5px;
+font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all}
+pre{background:var(--cod);border:1px solid var(--li);border-radius:9px;padding:13px;
+overflow:auto;font-size:12.5px;line-height:1.5;max-height:460px}
+pre code{background:none;padding:0;word-break:normal}
+footer{border-top:1px solid var(--li);margin-top:44px;padding:26px 0 40px;font-size:13.5px;
+color:var(--mut)}
+footer h3{font-size:14px;color:var(--fg);margin:20px 0 7px;text-transform:uppercase;
+letter-spacing:.05em}
+footer ol{padding-left:20px;margin:8px 0}
+footer li{margin-bottom:7px}
+footer .q{background:var(--cx);border:1px solid var(--li);border-radius:9px;padding:13px 15px;
+margin:10px 0}
+.ok{color:var(--ok)}
+@media(max-width:560px){h1{font-size:22px}.w{padding:0 16px}}</style></head><body>
+<header><div class="w"><span class="marca" data-t="marca"></span>
+<button id="lng" type="button">EN</button></div></header>
+<main class="w">
+<p><a href="index.html" data-t="voltar"></a></p>
+<h1 data-t="p3_t"></h1><p class="sub" data-t="p3_p"></p>
+<div class="cx">
+<label class="file" for="arq"><span data-t="esc"></span></label>
+<input type="file" id="arq" accept="image/*">
+<span class="hint" id="nomearq" data-t="nada" style="margin-left:10px"></span>
+<p class="hint" data-t="priv"></p>
+<label data-t="esca"></label><input type="number" id="escala" min="0" step="0.1" placeholder="—">
+<p class="hint" data-t="esca_h"></p>
+</div>
+<p style="margin-top:20px">
+<button class="min" id="blaco" type="button" data-t="lac"></button>
+<button class="min" id="bborda" type="button" data-t="cls_b"></button>
+<button class="min" id="blesao" type="button" data-t="cls_l"></button>
+<button class="min" id="bpele" type="button" data-t="cls_p"></button>
+<button class="min" id="blimpar" type="button" data-t="limpar"></button></p>
+<p class="hint" data-t="lac_h"></p><p class="hint" data-t="cls_h"></p>
+<p class="hint"><strong data-t="lado"></strong></p>
+<canvas id="cv" style="display:none"></canvas>
+<div class="aviso" data-t="av37"></div>
+<p class="hint" id="avisomarca" data-t="esc_h"></p>
+<p><button class="acao" id="brodar" type="button" disabled data-t="rodar"></button></p>
+<h2 data-t="res"></h2><div id="res"></div>
+<p style="margin-top:34px"><button class="min" id="bver" type="button" data-t="ver"></button></p>
+</main>
+
+<footer><div class="w">
+<h3 data-t="f_t"></h3>
+<p data-t="f1"></p>
+<div class="q"><p style="margin:0" data-t="f1b"></p></div>
+<p data-t="f2"></p>
+<p data-t="f3"></p>
+<h3 data-t="f_div"></h3>
+<p data-t="f1c"></p>
+<p data-t="f_div_h"></p>
+<ol><li data-t="d1"></li><li data-t="d2"></li><li data-t="d3"></li></ol>
+<div class="q"><p style="margin:0" data-t="d4"></p></div>
+<h3 data-t="f_uso"></h3>
+<p data-t="f_uso_p"></p>
+<h3 data-t="f_hash"></h3>
+<p data-t="f_hash_h"></p>
+<p><code>5e277a53d14555c2943cc193d359060ca44c5845c7e048a42200cf7954ddb1b5</code></p>
+<p><code>sha256sum arquivo.js</code> &nbsp;·&nbsp; <code>shasum -a 256 arquivo.js</code> &nbsp;·&nbsp; <code>certutil -hashfile arquivo.js SHA256</code></p>
+
+<p style="margin-top:22px" data-t="f_doi"></p>
+</div></footer>
+<script type="text/plain" id="fonte">/* ============================================================================
+   SoLiz · De Olho na Pele — NUCLEO DA REGRA DO ANEL, em JavaScript
+   ---------------------------------------------------------------------------
+   Porte fiel do `rodar.py` do v0 congelado (2026-09-22),
+   SHA-256 78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732,
+   transcrito passo a passo no anexo S3 do manuscrito.
+
+   ESTA IMPLEMENTACAO NAO PRODUZIU NENHUM NUMERO DO ARTIGO.
+   As medidas publicadas vem do Python registrado (BR 51 2026 008413-0).
+   Diferencas conhecidas estao declaradas no rodape das paginas.
+
+   L = 700, identico ao Python. Grade de 144 combinacoes. Sem limiar de
+   rejeicao por nota: o maximo da grade vence, e se nenhum anel fecha a
+   medida e RECUSADA (aqui nao ha queda silenciosa para Otsu).
+   ========================================================================= */
+'use strict';
+
+var SOLIZ = (function () {
+
+  var L = 700;
+
+  /* ---------- canais ---------- */
+
+  function clareia(rgb, g) {          // gama, igual ao Python
+    if (g === 1.0) return rgb;
+    var o = new Uint8ClampedArray(rgb.length), i;
+    var lut = new Uint8ClampedArray(256);
+    for (i = 0; i &lt; 256; i++) lut[i] = Math.floor(255 * Math.pow(i / 255, g));  // astype(uint8) trunca
+    for (i = 0; i &lt; rgb.length; i += 4) {
+      o[i] = lut[rgb[i]]; o[i + 1] = lut[rgb[i + 1]];
+      o[i + 2] = lut[rgb[i + 2]]; o[i + 3] = 255;
+    }
+    return o;
+  }
+
+  function verm(rgb, n) {             // R - (G+B)/2
+    var a = new Float64Array(n), i, j;
+    for (i = 0, j = 0; i &lt; n; i++, j += 4)
+      a[i] = rgb[j] - (rgb[j + 1] + rgb[j + 2]) / 2;
+    return a;
+  }
+
+  function lstar(rgb, n) {            // CIE L*, escalado por 2.55 como no Python
+    var a = new Float64Array(n), i, j, R, G, B, Y, f;
+    function lin(c) { return c &gt; 0.04045 ? Math.pow((c + 0.055) / 1.055, 2.4) : c / 12.92; }
+    var lut = new Float64Array(256);
+    for (i = 0; i &lt; 256; i++) lut[i] = lin(i / 255);
+    for (i = 0, j = 0; i &lt; n; i++, j += 4) {
+      R = lut[rgb[j]]; G = lut[rgb[j + 1]]; B = lut[rgb[j + 2]];
+      Y = R * 0.2126 + G * 0.7152 + B * 0.0722;
+      f = Y &gt; 0.008856 ? Math.cbrt(Y) : 7.787 * Y + 16 / 116;
+      a[i] = (116 * f - 16) * 2.55;
+    }
+    return a;
+  }
+
+  /* ---------- filtro de media, borda 'reflect' como o scipy ---------- */
+
+  function uniform(A, w, h, r) {
+    var tmp = new Float64Array(w * h), out = new Float64Array(w * h);
+    var k = 2 * r + 1, x, y, i, s, idx;
+    for (y = 0; y &lt; h; y++) {
+      idx = y * w; s = 0;
+      for (i = -r; i &lt;= r; i++) s += A[idx + refl(i, w)];
+      tmp[idx] = s / k;
+      for (x = 1; x &lt; w; x++) {
+        s += A[idx + refl(x + r, w)] - A[idx + refl(x - r - 1, w)];
+        tmp[idx + x] = s / k;
+      }
+    }
+    for (x = 0; x &lt; w; x++) {
+      s = 0;
+      for (i = -r; i &lt;= r; i++) s += tmp[refl(i, h) * w + x];
+      out[x] = s / k;
+      for (y = 1; y &lt; h; y++) {
+        s += tmp[refl(y + r, h) * w + x] - tmp[refl(y - r - 1, h) * w + x];
+        out[y * w + x] = s / k;
+      }
+    }
+    return out;
+  }
+  function refl(i, n) {               // modo 'reflect' do scipy: d c b a | a b c d
+    if (i &lt; 0) i = -i - 1;
+    if (i &gt;= n) i = 2 * n - i - 1;
+    return i &lt; 0 ? 0 : (i &gt;= n ? n - 1 : i);
+  }
+
+  /* ---------- mediana e percentil ---------- */
+
+  function mediana(v) {
+    var s = Float64Array.from(v); s.sort();
+    var m = s.length &gt;&gt; 1;
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  }
+  function percentil(v, p) {          // interpolacao linear, igual ao numpy
+    var s = Float64Array.from(v); s.sort();
+    var pos = (s.length - 1) * p / 100, lo = Math.floor(pos), hi = Math.ceil(pos);
+    return lo === hi ? s[lo] : s[lo] + (s[hi] - s[lo]) * (pos - lo);
+  }
+
+  /* ---------- PASSO 0 · mapa de transicao ---------- */
+
+  function mapaT(A, w, h, g, ds, al, sv) {
+    if (sv === undefined) sv = 4;
+    if (sv &gt; 0) A = uniform(A, w, h, sv);
+    var kk = Math.floor(Math.min(w, h) * 0.08), x, y, i;
+    var borda = [];
+    for (y = 0; y &lt; h; y++)
+      for (x = 0; x &lt; w; x++)
+        if (y &lt; kk || y &gt;= h - kk || x &lt; kk || x &gt;= w - kk) borda.push(A[y * w + x]);
+    var pele = mediana(borda);
+    var dif = new Float64Array(w * h);
+    for (i = 0; i &lt; dif.length; i++) dif[i] = Math.abs(A[i] - pele);
+    var e = percentil(dif, 98) || 1;
+    var t = new Float64Array(w * h), den = Math.max(0.01, al / 100);
+    for (i = 0; i &lt; t.length; i++) {
+      var v = (dif[i] / e * (g / 100) + ds / 100) / den;
+      t[i] = v &lt; 0 ? 0 : (v &gt; 1 ? 1 : v);
+    }
+    return t;
+  }
+
+  /* ---------- morfologia binaria ---------- */
+
+  function dilata(M, w, h, r) {        // quadrado (2r+1), fora do quadro = 0
+    var a = new Uint8Array(w * h), b = new Uint8Array(w * h), x, y, i, s;
+    var k = 2 * r + 1;
+    for (y = 0; y &lt; h; y++) {          // horizontal
+      for (x = 0; x &lt; w; x++) {
+        s = 0;
+        for (i = -r; i &lt;= r; i++) { var xx = x + i; if (xx &gt;= 0 &amp;&amp; xx &lt; w &amp;&amp; M[y * w + xx]) { s = 1; break; } }
+        a[y * w + x] = s;
+      }
+    }
+    for (x = 0; x &lt; w; x++) {          // vertical
+      for (y = 0; y &lt; h; y++) {
+        s = 0;
+        for (i = -r; i &lt;= r; i++) { var yy = y + i; if (yy &gt;= 0 &amp;&amp; yy &lt; h &amp;&amp; a[yy * w + x]) { s = 1; break; } }
+        b[y * w + x] = s;
+      }
+    }
+    return b;
+  }
+  function erode(M, w, h, r) {         // quadrado (2r+1), fora do quadro = 0
+    var a = new Uint8Array(w * h), b = new Uint8Array(w * h), x, y, i, s;
+    for (y = 0; y &lt; h; y++) {
+      for (x = 0; x &lt; w; x++) {
+        s = 1;
+        for (i = -r; i &lt;= r; i++) { var xx = x + i; if (xx &lt; 0 || xx &gt;= w || !M[y * w + xx]) { s = 0; break; } }
+        a[y * w + x] = s;
+      }
+    }
+    for (x = 0; x &lt; w; x++) {
+      for (y = 0; y &lt; h; y++) {
+        s = 1;
+        for (i = -r; i &lt;= r; i++) { var yy = y + i; if (yy &lt; 0 || yy &gt;= h || !a[yy * w + x]) { s = 0; break; } }
+        b[y * w + x] = s;
+      }
+    }
+    return b;
+  }
+  function fecha(M, w, h, r) { return erode(dilata(M, w, h, r), w, h, r); }
+
+  /* ---------- rotulagem por union-find ---------- */
+
+  function rotula(M, w, h, conn8) {
+    var lab = new Int32Array(w * h), pai = [0], n = 0, x, y, i;
+    function find(a) { while (pai[a] !== a) { pai[a] = pai[pai[a]]; a = pai[a]; } return a; }
+    function une(a, b) { a = find(a); b = find(b); if (a !== b) pai[Math.max(a, b)] = Math.min(a, b); }
+    for (y = 0; y &lt; h; y++) for (x = 0; x &lt; w; x++) {
+      i = y * w + x; if (!M[i]) continue;
+      var viz = [];
+      if (x &gt; 0 &amp;&amp; M[i - 1]) viz.push(lab[i - 1]);
+      if (y &gt; 0 &amp;&amp; M[i - w]) viz.push(lab[i - w]);
+      if (conn8) {
+        if (x &gt; 0 &amp;&amp; y &gt; 0 &amp;&amp; M[i - w - 1]) viz.push(lab[i - w - 1]);
+        if (x &lt; w - 1 &amp;&amp; y &gt; 0 &amp;&amp; M[i - w + 1]) viz.push(lab[i - w + 1]);
+      }
+      if (!viz.length) { n++; pai[n] = n; lab[i] = n; }
+      else {
+        var mn = viz[0], j;
+        for (j = 1; j &lt; viz.length; j++) if (viz[j] &lt; mn) mn = viz[j];
+        lab[i] = mn;
+        for (j = 0; j &lt; viz.length; j++) une(mn, viz[j]);
+      }
+    }
+    var mapa = new Int32Array(n + 1), k = 0;
+    for (i = 1; i &lt;= n; i++) if (find(i) === i) mapa[i] = ++k;
+    for (i = 1; i &lt;= n; i++) if (find(i) !== i) mapa[i] = mapa[find(i)];
+    for (i = 0; i &lt; lab.length; i++) if (lab[i]) lab[i] = mapa[lab[i]];
+    return { lab: lab, n: k };
+  }
+
+  /* quem escapa pela borda do quadro (PASSOS 3 e 5) */
+  function escapa(M, w, h) {
+    var r = rotula(M, w, h, false), lab = r.lab;
+    var toca = new Uint8Array(r.n + 1), x, y, i;
+    for (x = 0; x &lt; w; x++) { if (lab[x]) toca[lab[x]] = 1; if (lab[(h - 1) * w + x]) toca[lab[(h - 1) * w + x]] = 1; }
+    for (y = 0; y &lt; h; y++) { if (lab[y * w]) toca[lab[y * w]] = 1; if (lab[y * w + w - 1]) toca[lab[y * w + w - 1]] = 1; }
+    var fora = new Uint8Array(w * h);
+    for (i = 0; i &lt; lab.length; i++) if (lab[i] &amp;&amp; toca[lab[i]]) fora[i] = 1;
+    return fora;
+  }
+
+  /* ---------- PASSOS 1 a 6 · o anel e a nota ---------- */
+
+  function anel(t, w, h, lo, hi, diam) {
+    var N = w * h, i;
+
+    var am = new Uint8Array(N), nam = 0;                 // PASSO 1 · a faixa
+    for (i = 0; i &lt; N; i++) if (t[i] &gt;= lo &amp;&amp; t[i] &lt;= hi) { am[i] = 1; nam++; }
+    if (nam &lt; 80) return null;
+
+    var fe = fecha(am, w, h, 3);                         // PASSO 2 · fechamento 7x7
+
+    var nfe = new Uint8Array(N);                         // PASSO 3 · dentro e fora
+    for (i = 0; i &lt; N; i++) nfe[i] = fe[i] ? 0 : 1;
+    var fora = escapa(nfe, w, h);
+    var dentro = new Uint8Array(N), ndentro = 0;
+    for (i = 0; i &lt; N; i++) if (nfe[i] &amp;&amp; !fora[i]) { dentro[i] = 1; ndentro++; }
+    if (ndentro &lt; 80) return null;
+
+    var R = rotula(fe, w, h, true);                      // PASSO 4 · a escolha do anel
+    if (R.n === 0) return null;
+    var tam = new Float64Array(R.n + 1);
+    for (i = 0; i &lt; N; i++) if (R.lab[i]) tam[R.lab[i]]++;
+    var ordem = [];
+    for (i = 1; i &lt;= R.n; i++) ordem.push(i);
+    ordem.sort(function (a, b) { return tam[b] - tam[a]; });
+
+    var esc = 0;
+    for (var q = 0; q &lt; Math.min(8, ordem.length); q++) {
+      var c = ordem[q], mm = new Uint8Array(N);
+      for (i = 0; i &lt; N; i++) if (R.lab[i] === c) mm[i] = 1;
+      var dil = dilata(mm, w, h, 1), tocaD = false, tocaF = false;
+      for (i = 0; i &lt; N; i++) {
+        if (!dil[i] || mm[i]) continue;                  // vizinhanca = dilatacao menos ele proprio
+        if (dentro[i]) tocaD = true;
+        if (fora[i]) tocaF = true;
+        if (tocaD &amp;&amp; tocaF) break;
+      }
+      if (tocaD &amp;&amp; tocaF) { esc = c; break; }
+    }
+    if (!esc) return null;                               // nenhum dos oito fecha: SEM MEDIDA
+
+    var an = new Uint8Array(N), nan = 0;
+    for (i = 0; i &lt; N; i++) if (R.lab[i] === esc) { an[i] = 1; nan++; }
+
+    var nan_ = new Uint8Array(N);                        // PASSO 5 · preenchimento
+    for (i = 0; i &lt; N; i++) nan_[i] = an[i] ? 0 : 1;
+    var f2 = escapa(nan_, w, h);
+    var m = new Uint8Array(N), n = 0;
+    for (i = 0; i &lt; N; i++) if (!f2[i]) { m[i] = 1; n++; }
+
+    if (n &lt; 200 || n &gt; 0.6 * N) return null;             // PASSO 6 · sanidade
+
+    var er = erode(m, w, h, 1), per = 0;                 // a nota
+    for (i = 0; i &lt; N; i++) if (m[i] &amp;&amp; !er[i]) per++;
+    var uni = Math.min(1, nan / Math.max(1, nam));
+    var fino = Math.min(1, per / Math.max(1, nan));
+    var comp = Math.min(1, 4 * Math.PI * n / Math.max(1, per * per));
+    var resp = Math.PI * Math.pow(diam / 2 * 30 * L / 1380, 2);
+    var tam_ok = 1 - Math.min(1, Math.abs(n - resp) / resp);
+    var nota = (0.25 * uni + 0.15 * fino + 0.25 * comp + 0.20 * tam_ok) / 0.85;
+    return { m: m, n: n, anel: an, nota: nota, uni: uni, fino: fino, comp: comp, tam_ok: tam_ok, per: per };
+  }
+
+  /* ---------- a grade de 144 ---------- */
+
+  var GAMAS = [1.0, 0.70, 0.55], CANAIS = ['verm', 'lstar'],
+      GANHOS = [80, 130], DESL = [-35, 0], PATAMAR = [50, 80],
+      FAIXAS = [[0.35, 0.75], [0.45, 0.85], [0.62, 0.86]];
+
+  function grade() {
+    var g = [];
+    GAMAS.forEach(function (ga) { CANAIS.forEach(function (ca) { GANHOS.forEach(function (gn) {
+      DESL.forEach(function (ds) { PATAMAR.forEach(function (al) { FAIXAS.forEach(function (fx) {
+        g.push([ga, ca, gn, ds, al, fx[0], fx[1]]);
+      }); }); }); }); }); });
+    return g;
+  }
+
+  /* roda a grade inteira; `passo` recebe (feitos, total) para a barra */
+  function roda(rgb, w, h, diam, passo) {
+    var N = w * h, cacheC = {}, cacheM = {}, G = grade(), mel = null, i;
+    for (i = 0; i &lt; G.length; i++) {
+      var p = G[i], kc = p[0] + '|' + p[1];
+      if (!cacheC[kc]) {
+        var cl = clareia(rgb, p[0]);
+        cacheC[kc] = p[1] === 'verm' ? verm(cl, N) : lstar(cl, N);
+      }
+      var km = kc + '|' + p[2] + '|' + p[3] + '|' + p[4];
+      if (!cacheM[km]) cacheM[km] = mapaT(cacheC[kc], w, h, p[2], p[3], p[4], 4);
+      var r = anel(cacheM[km], w, h, p[5], p[6], diam);
+      if (r &amp;&amp; (!mel || r.nota &gt; mel.nota)) { r.ajuste = p; mel = r; }
+      if (passo) passo(i + 1, G.length);
+    }
+    return mel;                                           // null = MEDIDA RECUSADA
+  }
+
+  return { L: L, roda: roda, anel: anel, mapaT: mapaT, clareia: clareia,
+           verm: verm, lstar: lstar, grade: grade, rotula: rotula,
+           uniform: uniform, fecha: fecha, dilata: dilata, erode: erode,
+           mediana: mediana, percentil: percentil, escapa: escapa };
+})();
+
+if (typeof module !== 'undefined' &amp;&amp; module.exports) module.exports = SOLIZ;
+
+/* ============================================================================
+   SoLiz · De Olho na Pele — MODO ASSISTIDO (laço + 3 classes), em JavaScript
+   ---------------------------------------------------------------------------
+   Porte das rotinas da bancada de desenvolvimento v70 (arquivo
+   `bancada_humanas_v70.html`): amostragem dos "três pontinhos", combinação dos
+   modelos, classificação por menor distância normalizada em CIE Lab e escolha
+   da margem da faixa pelo LADO declarado.
+
+   Nesta demo o LADO está TRAVADO EM 'fora' (contorno na fronteira faixa|pele),
+   e a máscara final é o MAIOR COMPONENTE da classe alvo — as ilhas menores são
+   descartadas, e isso está escrito na página.
+   ========================================================================= */
+'use strict';
+
+var SOLIZ3P = (function () {
+
+  /* CIE Lab, verbatim da bancada v70 */
+  function rgb2lab(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    r = r &gt; 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
+    g = g &gt; 0.04045 ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
+    b = b &gt; 0.04045 ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
+    var X = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047;
+    var Y = (r * 0.2126 + g * 0.7152 + b * 0.0722);
+    var Z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883;
+    function f(t) { return t &gt; 0.008856 ? Math.cbrt(t) : (7.787 * t + 16 / 116); }
+    X = f(X); Y = f(Y); Z = f(Z);
+    return [116 * Y - 16, 500 * (X - Y), 200 * (Y - Z)];
+  }
+
+  function med(a) { var t = a.slice().sort(function (p, q) { return p - q; }); return t[t.length &gt;&gt; 1]; }
+  function dp(a, m) { var t = 0; a.forEach(function (v) { t += (v - m) * (v - m); }); return Math.sqrt(t / a.length) || 1; }
+
+  /* um pontinho: o pixel e os 4 vizinhos que couberem no quadro.
+     Pisos de 4,0 / 2,5 / 2,5 — ponto pequeno dá desvio pequeno. (v70) */
+  function amostra(d, W, H, cx, cy) {
+    var Lv = [], Av = [], Bv = [];
+    [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (o) {
+      var x = cx + o[0], y = cy + o[1];
+      if (x &lt; 0 || y &lt; 0 || x &gt;= W || y &gt;= H) return;
+      var ii = (y * W + x) * 4, lb = rgb2lab(d[ii], d[ii + 1], d[ii + 2]);
+      Lv.push(lb[0]); Av.push(lb[1]); Bv.push(lb[2]);
+    });
+    if (!Lv.length) return null;
+    var m1 = med(Lv), m2 = med(Av), m3 = med(Bv);
+    return { mL: m1, mA: m2, mB: m3,
+             sL: Math.max(4.0, dp(Lv, m1)), sA: Math.max(2.5, dp(Av, m2)), sB: Math.max(2.5, dp(Bv, m3)),
+             n: Lv.length };
+  }
+
+  /* combina as amostras de uma classe: mediana por eixo, pisos 2,0 / 1,0 / 1,0 (v70) */
+  function combina(lista) {
+    if (!lista || !lista.length) return null;
+    var mL = [], mA = [], mB = [], sL = [], sA = [], sB = [], n = 0;
+    lista.forEach(function (r) {
+      if (!r) return;
+      mL.push(r.mL); mA.push(r.mA); mB.push(r.mB);
+      sL.push(r.sL); sA.push(r.sA); sB.push(r.sB); n += r.n || 0;
+    });
+    if (!mL.length) return null;
+    return { mL: med(mL), mA: med(mA), mB: med(mB),
+             sL: Math.max(2.0, med(sL)), sA: Math.max(1.0, med(sA)), sB: Math.max(1.0, med(sB)), n: n };
+  }
+
+  function dist3(lb, M) {
+    return Math.sqrt(Math.pow((lb[0] - M.mL) / M.sL, 2) +
+                     Math.pow((lb[1] - M.mA) / M.sA, 2) +
+                     Math.pow((lb[2] - M.mB) / M.sB, 2));
+  }
+
+  /* ponto dentro do polígono (laço), por cruzamentos */
+  function noLaco(px, py, poly) {
+    var d = false, i, j;
+    for (i = 0, j = poly.length - 1; i &lt; poly.length; j = i++) {
+      if (((poly[i].y &gt; py) !== (poly[j].y &gt; py)) &amp;&amp;
+          (px &lt; (poly[j].x - poly[i].x) * (py - poly[i].y) / (poly[j].y - poly[i].y) + poly[i].x)) d = !d;
+    }
+    return d;
+  }
+
+  /* classifica e devolve a máscara. LADO travado em 'fora'. */
+  function segmenta(d, W, H, poly, MB, MD, MP) {
+    var N = W * H, cls = new Uint8Array(N), dentroLaco = new Uint8Array(N), x, y, k, i;
+    if (!MB || !MD || !MP) return { erro: 'modelos' };
+
+    for (y = 0; y &lt; H; y++) for (x = 0; x &lt; W; x++) {
+      k = y * W + x;
+      if (!noLaco(x, y, poly)) continue;
+      dentroLaco[k] = 1;
+      var ii = k * 4, lb = rgb2lab(d[ii], d[ii + 1], d[ii + 2]);
+      var dP = dist3(lb, MP), dB = dist3(lb, MB), dD = dist3(lb, MD);
+      cls[k] = (dD &lt;= dP &amp;&amp; dD &lt;= dB) ? 3 : ((dB &lt;= dP) ? 2 : 1);   // 1 pele · 2 borda · 3 lesão
+    }
+
+    /* LADO = 'fora': a máscara é lesão MAIS a faixa de borda */
+    var alvo = new Uint8Array(N), nalvo = 0;
+    for (k = 0; k &lt; N; k++) if (dentroLaco[k] &amp;&amp; (cls[k] === 3 || cls[k] === 2)) { alvo[k] = 1; nalvo++; }
+    if (!nalvo) return { erro: 'vazio' };
+
+    /* maior componente, 4-conectado (v70) — as ilhas menores caem */
+    var lab = new Int32Array(N), na = 0, tam = [0], pil = [];
+    for (y = 0; y &lt; H; y++) for (x = 0; x &lt; W; x++) {
+      var q0 = y * W + x;
+      if (!alvo[q0] || lab[q0]) continue;
+      na++; tam.push(0); pil.length = 0; pil.push(q0); lab[q0] = na;
+      while (pil.length) {
+        var qq = pil.pop(); tam[na]++;
+        var qx = qq % W, qy = (qq / W) | 0;
+        for (var v = 0; v &lt; 4; v++) {
+          var nx = qx + [1, -1, 0, 0][v], ny = qy + [0, 0, 1, -1][v];
+          if (nx &lt; 0 || ny &lt; 0 || nx &gt;= W || ny &gt;= H) continue;
+          var np = ny * W + nx;
+          if (alvo[np] &amp;&amp; !lab[np]) { lab[np] = na; pil.push(np); }
+        }
+      }
+    }
+    var melA = 0, melT = 0;
+    for (k = 1; k &lt;= na; k++) if (tam[k] &gt; melT) { melT = tam[k]; melA = k; }
+    if (!melA || melT &lt;= 200) return { erro: 'pequeno', ilhas: na };
+
+    var m = new Uint8Array(N), n = 0;
+    for (k = 0; k &lt; N; k++) if (lab[k] === melA) { m[k] = 1; n++; }
+    var descartado = nalvo - n;
+    return { m: m, n: n, cls: cls, ilhas: na, descartado_px: descartado };
+  }
+
+  return { rgb2lab: rgb2lab, amostra: amostra, combina: combina,
+           dist3: dist3, noLaco: noLaco, segmenta: segmenta };
+})();
+
+if (typeof module !== 'undefined' &amp;&amp; module.exports) module.exports = SOLIZ3P;
+
+var T = {
+  pt: {
+    lang:'PT', outra:'EN',
+    marca:'De Olho na Pele · SoLiz',
+    idx_t:'A regra do anel, rodando no seu navegador',
+    idx_p:'Esta demonstração executa a regra de borda do estudo — a mesma descrita passo a passo no anexo S3 do manuscrito — sobre uma fotografia que você escolhe. Tudo acontece dentro do navegador: &lt;strong&gt;a imagem não sai do seu computador&lt;/strong&gt;, não há servidor e não há envio. São dois modos: o &lt;strong&gt;automático&lt;/strong&gt;, em que a máquina varre 144 combinações de parâmetros e escolhe sozinha; e o &lt;strong&gt;assistido&lt;/strong&gt;, em que você marca três classes de cor com o mouse e a máquina classifica o que está dentro do laço.',
+    b_auto:'Automático', b_3p:'Três Pontos',
+    b_auto_s:'a máquina decide sozinha, 144 combinações',
+    b_3p_s:'você marca borda, lesão e pele; a máquina classifica',
+    auto_t:'Modo automático',
+    auto_p:'Escolha uma fotografia. A máquina reduz o quadro a 700 × 700, varre as 144 combinações da grade e fica com a de maior nota. Nenhuma referência humana entra na escolha.',
+    p3_t:'Modo assistido · três pontinhos',
+    p3_p:'Escolha uma fotografia, cerque a lesão com o laço e marque três classes de cor: &lt;strong&gt;borda&lt;/strong&gt;, &lt;strong&gt;lesão&lt;/strong&gt; e &lt;strong&gt;pele&lt;/strong&gt;. Repita em quatro lugares diferentes. Cada pixel dentro do laço vai para a classe de menor distância normalizada em CIE Lab.',
+    esc:'Escolher fotografia', nada:'Nenhum arquivo escolhido',
+    priv:'A imagem fica no navegador. Nada é enviado.',
+    diam:'Diâmetro declarado (mm)',
+    diam_h:'Entra no termo de tamanho da nota. É uma &lt;em&gt;declaração&lt;/em&gt; sua, não uma medida.',
+    esca:'Escala (px/mm) — opcional',
+    esca_h:'Sem isto a área sai em pixels. Com isto sai também em mm², rotulada como escala declarada por você.',
+    av37:'Aviso — §3.7 do manuscrito: este método &lt;strong&gt;não foi validado para fotografia clínica&lt;/strong&gt;. No único banco humano testado (ComplexWoundDB, 27 imagens) ele não transferiu. O que você vê aqui é demonstração de um mecanismo, não uma medida clínica.',
+    rodar:'Rodar', rodando:'Rodando…', comb:'combinação',
+    lac:'1 · Laço', lac_h:'Arraste em volta da lesão e solte para fechar.',
+    cls_b:'2 · Borda', cls_l:'3 · Lesão', cls_p:'4 · Pele',
+    cls_h:'Clique em quatro lugares diferentes para cada classe.',
+    limpar:'Limpar', lado:'Margem: FORA · travada nesta demo',
+    res:'Resultado', sem:'MEDIDA RECUSADA',
+    sem_h:'Nenhum dos oito maiores componentes da faixa de transição toca ao mesmo tempo o interior e o exterior. O anel não fechou, e o método não entrega número quando isso acontece.',
+    r_area:'Área', r_nota:'Nota', r_aj:'Ajuste escolhido',
+    r_px:'pixels', r_mm:'mm² · escala declarada por você',
+    r_uni:'unidade', r_fino:'finura', r_comp:'compacidade', r_tam:'tamanho',
+    r_ilhas:'Ilhas: só o maior componente foi mantido.',
+    r_desc:'descartados em ilhas menores',
+    r_def:'A escala digitada vale para a sua fotografia; o motor trabalha num quadro de 700 × 700. A demo converte a escala e ajusta o diâmetro pela mesma identidade algébrica da reauditoria de 28/09 — o motor continua intocado, com 30 px/mm fixos por dentro.',
+    ver:'Ver código-fonte legível', esc_h:'Precisa marcar as três classes antes de rodar.',
+    voltar:'← Voltar',
+    f_t:'O que esta página é, e o que ela não é',
+    f1:'&lt;strong&gt;Implementação JavaScript equivalente.&lt;/strong&gt; As medidas do artigo &lt;strong&gt;não&lt;/strong&gt; vêm daqui: vêm do motor Python v0 registrado (BR 51 2026 008413-0). Esta página reimplementa a mesma regra para que ela possa ser vista funcionando.',
+    f1b:'&lt;strong&gt;Porte validado contra o motor congelado:&lt;/strong&gt; idêntico em 64/64 amostras e na escolha da grade completa (n = 81.458; nota 0,861474), e idêntico também sobre uma imagem real do artigo — a 1323·C do held-out do dia 3 — quando recebe exatamente os mesmos pixels: 61.945 px, 275,4 mm², nota 0,5231, mesmo ajuste. &lt;strong&gt;Esta página reproduz os números publicados quando recebe a mesma entrada.&lt;/strong&gt; Quando ela mesma reduz a fotografia a 700 × 700, aparece uma diferença de cerca de 1 % — &lt;strong&gt;de reamostragem de imagem, não de motor&lt;/strong&gt;: o &lt;code&gt;drawImage&lt;/code&gt; do navegador e o LANCZOS do PIL não dão os mesmos pixels. Tudo em &lt;code&gt;VALIDACAO_PORTE_JS_30SET.md&lt;/code&gt;, SHA-256 &lt;code&gt;12af713de1fdc32ef409f8638e65b452c37da1c97b4865893037c9fbb3783761&lt;/code&gt;.',
+    f1c:'As três divergências conhecidas abaixo referem-se à &lt;strong&gt;bancada v106&lt;/strong&gt; usada no desenvolvimento (S3) e &lt;strong&gt;não se aplicam a esta implementação&lt;/strong&gt;. A quarta permanece, de propósito.',
+    f2:'Patente depositada: &lt;strong&gt;BR 10 2026 024571 2&lt;/strong&gt;.',
+    f3:'Fonte da regra: &lt;code&gt;06_MOTOR_DE_REGISTRO\\v0_congelado_2026-09-22\\rodar.py&lt;/code&gt;, SHA-256 &lt;code&gt;78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732&lt;/code&gt;, dentro de &lt;code&gt;MOTOR_v0_congelado.zip&lt;/code&gt;, SHA-256 &lt;code&gt;03ce6b7f7391a113714106af62b7c7865a6558cc84b8a13622c1cad47b0d27ee&lt;/code&gt;.',
+    f_div:'Divergências conhecidas entre a bancada em JavaScript e o motor Python',
+    f_div_h:'As três primeiras estão copiadas palavra por palavra de &lt;code&gt;v0_congelado_2026-09-22\\_LEIA.md&lt;/code&gt;, seção “O QUE JÁ SE SABE QUE ESTÁ ERRADO”, onde foram apontadas em 22/09/2026. A quarta é desta demonstração.',
+    d1:'&lt;strong&gt;O conta-gotas da bancada pinta sobre o mapa, não sobre a foto.&lt;/strong&gt; Este motor pinta sobre a foto.',
+    d2:'&lt;strong&gt;A área da bancada sai de um polígono de 30 pontos&lt;/strong&gt;, não da máscara de pixels. Este motor conta pixels.',
+    d3:'&lt;strong&gt;Quando o anel falha, a bancada cai em silêncio para Otsu.&lt;/strong&gt; Este motor devolve falha.',
+    d4:'&lt;strong&gt;Nisto a demo difere da bancada de desenvolvimento, de propósito:&lt;/strong&gt; aqui, anel que não fecha é medida recusada, como no motor registrado.',
+    f_uso:'Uso em bancos de terceiros',
+    f_uso_p:'Ninguém roda esta demonstração em &lt;strong&gt;FUSeg, AZH, DFUC, Medetec ou UNESP&lt;/strong&gt; sem pré-registro publicado.',
+    f_hash:'SHA-256 do JavaScript desta página',
+    f_hash_h:'Calculado na montagem. Para conferir, extraia o conteúdo da tag &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; principal e rode:',
+    f_doi:'Preprint: <a href=https://doi.org/10.5281/zenodo.23062849 target=_blank>doi:10.5281/zenodo.23062849</a>',
+    f_arq:'Hash dos arquivos da demonstração',
+    f_arq_h:'O hash do próprio &lt;code&gt;index.html&lt;/code&gt; está em &lt;code&gt;_HASHES.txt&lt;/code&gt;, na mesma pasta — uma página não consegue conter o seu próprio hash.'
+  },
+  en: {
+    lang:'EN', outra:'PT',
+    marca:'De Olho na Pele · SoLiz',
+    idx_t:'The ring rule, running in your browser',
+    idx_p:'This demonstration runs the study’s edge rule — the same one transcribed step by step in Supplement S3 — on a photograph you choose. Everything happens inside the browser: &lt;strong&gt;the image never leaves your computer&lt;/strong&gt;, there is no server and nothing is uploaded. Two modes: &lt;strong&gt;automatic&lt;/strong&gt;, in which the machine sweeps 144 parameter combinations and picks one on its own; and &lt;strong&gt;assisted&lt;/strong&gt;, in which you mark three colour classes with the mouse and the machine classifies what is inside the lasso.',
+    b_auto:'Automatic', b_3p:'Three Dots',
+    b_auto_s:'the machine decides alone, 144 combinations',
+    b_3p_s:'you mark edge, lesion and skin; the machine classifies',
+    auto_t:'Automatic mode',
+    auto_p:'Choose a photograph. The machine reduces the frame to 700 × 700, sweeps the 144 combinations of the grid and keeps the highest-scoring one. No human reference enters the choice.',
+    p3_t:'Assisted mode · three dots',
+    p3_p:'Choose a photograph, enclose the lesion with the lasso and mark three colour classes: &lt;strong&gt;edge&lt;/strong&gt;, &lt;strong&gt;lesion&lt;/strong&gt; and &lt;strong&gt;skin&lt;/strong&gt;. Repeat at four different places. Every pixel inside the lasso goes to the class of smallest normalised CIE Lab distance.',
+    esc:'Choose photograph', nada:'No file chosen',
+    priv:'The image stays in the browser. Nothing is uploaded.',
+    diam:'Declared diameter (mm)',
+    diam_h:'It enters the size term of the score. It is &lt;em&gt;your declaration&lt;/em&gt;, not a measurement.',
+    esca:'Scale (px/mm) — optional',
+    esca_h:'Without it the area is reported in pixels. With it, also in mm², labelled as a scale you declared.',
+    av37:'Warning — §3.7 of the manuscript: this method has &lt;strong&gt;not been validated for clinical photography&lt;/strong&gt;. On the only human dataset tested (ComplexWoundDB, 27 images) it did not transfer. What you see here demonstrates a mechanism, not a clinical measurement.',
+    rodar:'Run', rodando:'Running…', comb:'combination',
+    lac:'1 · Lasso', lac_h:'Drag around the lesion and release to close.',
+    cls_b:'2 · Edge', cls_l:'3 · Lesion', cls_p:'4 · Skin',
+    cls_h:'Click at four different places for each class.',
+    limpar:'Clear', lado:'Margin: OUTER · locked in this demo',
+    res:'Result', sem:'MEASUREMENT REFUSED',
+    sem_h:'None of the eight largest components of the transition band touches the interior and the exterior at the same time. The ring did not close, and the method returns no number when that happens.',
+    r_area:'Area', r_nota:'Score', r_aj:'Chosen setting',
+    r_px:'pixels', r_mm:'mm² · scale declared by you',
+    r_uni:'unity', r_fino:'thinness', r_comp:'compactness', r_tam:'size',
+    r_ilhas:'Islands: only the largest component was kept.',
+    r_desc:'discarded in smaller islands',
+    r_def:'The scale you typed refers to your photograph; the engine works on a 700 × 700 frame. The demo converts the scale and adjusts the diameter by the same algebraic identity used in the 28 Sep re-audit — the engine itself is untouched, with 30 px/mm fixed inside.',
+    ver:'View readable source', esc_h:'Mark the three classes before running.',
+    voltar:'← Back',
+    f_t:'What this page is, and what it is not',
+    f1:'&lt;strong&gt;Equivalent JavaScript implementation.&lt;/strong&gt; The measurements in the article do &lt;strong&gt;not&lt;/strong&gt; come from here: they come from the registered Python v0 engine (BR 51 2026 008413-0). This page reimplements the same rule so that it can be seen working.',
+    f1b:'&lt;strong&gt;Port validated against the frozen engine:&lt;/strong&gt; identical on 64/64 samples and on the full-grid choice (n = 81,458; score 0.861474), and identical too on a real image from the article — wound 1323·C of the day-3 held-out — when given exactly the same pixels: 61,945 px, 275.4 mm², score 0.5231, same setting. &lt;strong&gt;This page reproduces the published numbers when it receives the same input.&lt;/strong&gt; When it reduces the photograph to 700 × 700 itself, a difference of about 1 % appears — &lt;strong&gt;from image resampling, not from the engine&lt;/strong&gt;: the browser’s &lt;code&gt;drawImage&lt;/code&gt; and PIL’s LANCZOS do not yield the same pixels. All of it in &lt;code&gt;VALIDACAO_PORTE_JS_30SET.md&lt;/code&gt;, SHA-256 &lt;code&gt;12af713de1fdc32ef409f8638e65b452c37da1c97b4865893037c9fbb3783761&lt;/code&gt;.',
+    f1c:'The three known divergences below refer to the &lt;strong&gt;v106 bench&lt;/strong&gt; used during development (S3) and &lt;strong&gt;do not apply to this implementation&lt;/strong&gt;. The fourth remains, on purpose.',
+    f2:'Patent filed: &lt;strong&gt;BR 10 2026 024571 2&lt;/strong&gt;.',
+    f3:'Source of the rule: &lt;code&gt;06_MOTOR_DE_REGISTRO\\v0_congelado_2026-09-22\\rodar.py&lt;/code&gt;, SHA-256 &lt;code&gt;78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732&lt;/code&gt;, inside &lt;code&gt;MOTOR_v0_congelado.zip&lt;/code&gt;, SHA-256 &lt;code&gt;03ce6b7f7391a113714106af62b7c7865a6558cc84b8a13622c1cad47b0d27ee&lt;/code&gt;.',
+    f_div:'Known divergences between the JavaScript bench and the Python engine',
+    f_div_h:'The first three are copied word for word from &lt;code&gt;v0_congelado_2026-09-22\\_LEIA.md&lt;/code&gt;, section “WHAT IS ALREADY KNOWN TO BE WRONG”, where they were raised on 22 Sep 2026. The fourth belongs to this demonstration.',
+    d1:'&lt;strong&gt;The bench’s dropper samples the map, not the photograph.&lt;/strong&gt; This engine samples the photograph.',
+    d2:'&lt;strong&gt;The bench’s area comes from a 30-point polygon&lt;/strong&gt;, not from the pixel mask. This engine counts pixels.',
+    d3:'&lt;strong&gt;When the ring fails, the bench falls silently back to Otsu.&lt;/strong&gt; This engine returns failure.',
+    d4:'&lt;strong&gt;In this the demo differs from the development bench on purpose:&lt;/strong&gt; here, a ring that does not close is a refused measurement, as in the registered engine.',
+    f_uso:'Use on third-party datasets',
+    f_uso_p:'No one runs this demonstration on &lt;strong&gt;FUSeg, AZH, DFUC, Medetec or UNESP&lt;/strong&gt; without a published pre-registration.',
+    f_hash:'SHA-256 of this page’s JavaScript',
+    f_hash_h:'Computed at build time. To verify, extract the contents of the main &lt;code&gt;&amp;lt;script&amp;gt;&lt;/code&gt; tag and run:',
+    f_doi:'Preprint: <a href=https://doi.org/10.5281/zenodo.23062849 target=_blank>doi:10.5281/zenodo.23062849</a>',
+    f_arq:'Hash of the demonstration files',
+    f_arq_h:'The hash of &lt;code&gt;index.html&lt;/code&gt; itself is in &lt;code&gt;_HASHES.txt&lt;/code&gt;, in the same folder — a page cannot contain its own hash.'
+  }
+};
+if (typeof module !== 'undefined' &amp;&amp; module.exports) module.exports = T;
+
+/* ---------- idioma, tema e utilidades comuns às três páginas ---------- */
+var IDI = 'pt';
+function tr() {
+  var d = T[IDI], i;
+  document.documentElement.lang = IDI === 'pt' ? 'pt-BR' : 'en';
+  var els = document.querySelectorAll('[data-t]');
+  for (i = 0; i &lt; els.length; i++) {
+    var k = els[i].getAttribute('data-t');
+    if (d[k] !== undefined) els[i].innerHTML = d[k];
+  }
+  var b = document.getElementById('lng');
+  if (b) b.textContent = d.outra;
+  if (window.aoTrocarIdioma) window.aoTrocarIdioma();
+}
+function trocaIdioma() { IDI = (IDI === 'pt' ? 'en' : 'pt'); tr(); }
+
+/* reduz a fotografia a 700 x 700: recorte quadrado central e reescala */
+function preparaImagem(img, L) {
+  var lado = Math.min(img.naturalWidth, img.naturalHeight);
+  var sx = (img.naturalWidth - lado) / 2, sy = (img.naturalHeight - lado) / 2;
+  var c = document.createElement('canvas'); c.width = c.height = L;
+  var g = c.getContext('2d', { willReadFrequently: true });
+  g.drawImage(img, sx, sy, lado, lado, 0, 0, L, L);
+  return { canvas: c, ctx: g, dados: g.getImageData(0, 0, L, L), lado: lado };
+}
+
+/* desenha a foto e por cima o contorno da máscara */
+function pinta(cv, base, m, L, cor) {
+  var g = cv.getContext('2d');
+  g.putImageData(base, 0, 0);
+  if (!m) return;
+  var im = g.getImageData(0, 0, L, L), d = im.data, x, y, k;
+  for (y = 0; y &lt; L; y++) for (x = 0; x &lt; L; x++) {
+    k = y * L + x;
+    if (!m[k]) continue;
+    var borda = (x === 0 || y === 0 || x === L - 1 || y === L - 1 ||
+                 !m[k - 1] || !m[k + 1] || !m[k - L] || !m[k + L]);
+    var j = k * 4;
+    if (borda) { d[j] = cor[0]; d[j + 1] = cor[1]; d[j + 2] = cor[2]; }
+    else { d[j] = d[j] * 0.78 + cor[0] * 0.22; d[j + 1] = d[j + 1] * 0.78 + cor[1] * 0.22;
+           d[j + 2] = d[j + 2] * 0.78 + cor[2] * 0.22; }
+  }
+  g.putImageData(im, 0, 0);
+}
+
+function num(v, casas) {
+  return v.toLocaleString(IDI === 'pt' ? 'pt-BR' : 'en-US',
+    { minimumFractionDigits: casas, maximumFractionDigits: casas });
+}
+function esperaQuadro() { return new Promise(function (r) { setTimeout(r, 0); }); }
+
+function ligaFonte() {
+  var b = document.getElementById('bver'), p = document.getElementById('fonte');
+  if (!b || !p) return;
+  b.onclick = function () {
+    var pre = document.getElementById('prefonte');
+    if (pre) { pre.remove(); return; }
+    pre = document.createElement('pre'); pre.id = 'prefonte';
+    var c = document.createElement('code');
+    c.textContent = p.textContent;
+    pre.appendChild(c); b.parentNode.insertBefore(pre, b.nextSibling);
+    pre.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+}
+
+/* ---------- modo assistido · laço + três classes ---------- */
+var L = SOLIZ.L, BASE = null, IMGOK = false, RES = null, LADO = 0;
+var LACO = [], DESENHANDO = false, MODO = null;
+var AM = { borda: [], lesao: [], pele: [] };
+var CORES = { borda: '#ffd166', lesao: '#ef5b5b', pele: '#6fd39a' };
+
+document.getElementById('lng').onclick = trocaIdioma;
+ligaFonte();
+
+document.getElementById('arq').onchange = function (ev) {
+  var f = ev.target.files &amp;&amp; ev.target.files[0];
+  if (!f) return;
+  document.getElementById('nomearq').textContent = f.name;
+  var img = new Image();
+  img.onload = function () {
+    var p = preparaImagem(img, L);
+    BASE = p.dados; LADO = p.lado;
+    var cv = document.getElementById('cv'); cv.width = cv.height = L;
+    cv.style.display = 'block';
+    IMGOK = true; RES = null; LACO = []; AM = { borda: [], lesao: [], pele: [] };
+    document.getElementById('res').innerHTML = '';
+    redesenha(); atualiza();
+    URL.revokeObjectURL(img.src);
+  };
+  img.src = URL.createObjectURL(f);
+};
+
+function pos(ev) {
+  var cv = document.getElementById('cv'), r = cv.getBoundingClientRect();
+  var t = ev.touches ? ev.touches[0] : ev;
+  return { x: Math.round((t.clientX - r.left) / r.width * L),
+           y: Math.round((t.clientY - r.top) / r.height * L) };
+}
+
+var cv = document.getElementById('cv');
+function inicio(ev) {
+  if (!IMGOK) return;
+  ev.preventDefault();
+  var q = pos(ev);
+  if (MODO === 'laco') { DESENHANDO = true; LACO = [q]; RES = null; }
+  else if (MODO) {
+    var a = SOLIZ3P.amostra(BASE.data, L, L, q.x, q.y);
+    if (a) { a.x = q.x; a.y = q.y; AM[MODO].push(a); }
+    RES = null; redesenha(); atualiza();
+  }
+}
+function move(ev) {
+  if (!DESENHANDO) return;
+  ev.preventDefault();
+  LACO.push(pos(ev)); redesenha();
+}
+function fim() { if (DESENHANDO) { DESENHANDO = false; redesenha(); atualiza(); } }
+cv.addEventListener('mousedown', inicio); cv.addEventListener('mousemove', move);
+window.addEventListener('mouseup', fim);
+cv.addEventListener('touchstart', inicio); cv.addEventListener('touchmove', move);
+window.addEventListener('touchend', fim);
+
+['laco', 'borda', 'lesao', 'pele'].forEach(function (m) {
+  document.getElementById('b' + m).onclick = function () {
+    MODO = (MODO === m ? null : m); atualiza();
+  };
+});
+document.getElementById('blimpar').onclick = function () {
+  LACO = []; AM = { borda: [], lesao: [], pele: [] }; RES = null; MODO = null;
+  document.getElementById('res').innerHTML = '';
+  redesenha(); atualiza();
+};
+
+function atualiza() {
+  ['laco', 'borda', 'lesao', 'pele'].forEach(function (m) {
+    var b = document.getElementById('b' + m);
+    b.className = 'min' + (MODO === m ? ' on' : '');
+    if (m !== 'laco') {
+      var n = AM[m].length;
+      b.setAttribute('data-n', n);
+      var base = T[IDI]['cls_' + (m === 'borda' ? 'b' : m === 'lesao' ? 'l' : 'p')];
+      b.innerHTML = base + (n ? ' &lt;span class="ok"&gt;· ' + n + '&lt;/span&gt;' : '');
+    }
+  });
+  var pronto = LACO.length &gt; 7 &amp;&amp; AM.borda.length &amp;&amp; AM.lesao.length &amp;&amp; AM.pele.length;
+  document.getElementById('brodar').disabled = !pronto;
+  document.getElementById('avisomarca').style.display = pronto ? 'none' : 'block';
+}
+
+function redesenha() {
+  if (!BASE) return;
+  var g = cv.getContext('2d');
+  if (RES &amp;&amp; RES.m) pinta(cv, BASE, RES.m, L, [31, 120, 200]);
+  else g.putImageData(BASE, 0, 0);
+  if (LACO.length &gt; 1) {
+    g.save(); g.strokeStyle = '#1f78c8'; g.lineWidth = 3;
+    g.setLineDash(DESENHANDO ? [8, 6] : []);
+    g.beginPath(); g.moveTo(LACO[0].x, LACO[0].y);
+    for (var i = 1; i &lt; LACO.length; i++) g.lineTo(LACO[i].x, LACO[i].y);
+    if (!DESENHANDO) g.closePath();
+    g.stroke(); g.restore();
+  }
+  ['borda', 'lesao', 'pele'].forEach(function (m) {
+    AM[m].forEach(function (a) {
+      g.save(); g.fillStyle = CORES[m]; g.strokeStyle = '#000'; g.lineWidth = 2;
+      g.beginPath(); g.arc(a.x, a.y, 7, 0, 6.2832); g.fill(); g.stroke(); g.restore();
+    });
+  });
+}
+
+document.getElementById('brodar').onclick = async function () {
+  var d = T[IDI], bt = this;
+  bt.disabled = true; bt.textContent = d.rodando;
+  await esperaQuadro();
+  var MB = SOLIZ3P.combina(AM.borda), MD = SOLIZ3P.combina(AM.lesao), MP = SOLIZ3P.combina(AM.pele);
+  var r = SOLIZ3P.segmenta(BASE.data, L, L, LACO, MB, MD, MP);
+  bt.disabled = false; bt.textContent = d.rodar;
+  RES = (r &amp;&amp; r.m) ? r : null;
+  redesenha(); mostra(r);
+};
+
+function mostra(r) {
+  var d = T[IDI], alvo = document.getElementById('res');
+  if (!r || !r.m) {
+    alvo.innerHTML = '&lt;div class="recusa"&gt;&lt;b&gt;' + d.sem + '&lt;/b&gt;' + d.sem_h + '&lt;/div&gt;';
+    return;
+  }
+  var e = parseFloat(document.getElementById('escala').value);
+  var s700 = (e &amp;&amp; e &gt; 0 &amp;&amp; LADO) ? e * 1380 / LADO * L / 1380 : 0;
+  var mm = s700 ? '&lt;em&gt;' + num(r.n / (s700 * s700), 1) + ' ' + d.r_mm + '&lt;/em&gt;' : '';
+  alvo.innerHTML =
+    '&lt;div class="grid"&gt;' +
+      '&lt;div class="kv"&gt;&lt;b&gt;' + d.r_area + '&lt;/b&gt;&lt;span&gt;' + num(r.n, 0) + '&lt;/span&gt;&lt;em&gt;' + d.r_px + '&lt;/em&gt;' + mm + '&lt;/div&gt;' +
+    '&lt;/div&gt;' +
+    '&lt;p class="hint"&gt;' + d.r_ilhas + ' ' + (r.ilhas &gt; 1
+      ? (r.ilhas - 1) + ' · ' + num(r.descartado_px, 0) + ' px ' + d.r_desc : '') + '&lt;/p&gt;';
+}
+window.aoTrocarIdioma = function () { atualiza(); if (RES) mostra(RES); };
+tr(); atualiza();
+</script>
+<script>"use strict";var SOLIZ=function(){function e(e,a){if(1===a)return e;var o,t=new Uint8ClampedArray(e.length),r=new Uint8ClampedArray(256);for(o=0;o<256;o++)r[o]=Math.floor(255*Math.pow(o/255,a));for(o=0;o<e.length;o+=4)t[o]=r[e[o]],t[o+1]=r[e[o+1]],t[o+2]=r[e[o+2]],t[o+3]=255;return t}function a(e,a){var o,t,r=new Float64Array(a);for(o=0,t=0;o<a;o++,t+=4)r[o]=e[t]-(e[t+1]+e[t+2])/2;return r}function o(e,a){var o,t,r,n,s=new Float64Array(a);function i(e){return e>.04045?Math.pow((e+.055)/1.055,2.4):e/12.92}var d=new Float64Array(256);for(o=0;o<256;o++)d[o]=i(o/255);for(o=0,t=0;o<a;o++,t+=4)n=(r=.2126*d[e[t]]+.7152*d[e[t+1]]+.0722*d[e[t+2]])>.008856?Math.cbrt(r):7.787*r+16/116,s[o]=2.55*(116*n-16);return s}function t(e,a,o,t){var n,s,i,d,c,m=new Float64Array(a*o),l=new Float64Array(a*o),u=2*t+1;for(s=0;s<o;s++){for(c=s*a,d=0,i=-t;i<=t;i++)d+=e[c+r(i,a)];for(m[c]=d/u,n=1;n<a;n++)d+=e[c+r(n+t,a)]-e[c+r(n-t-1,a)],m[c+n]=d/u}for(n=0;n<a;n++){for(d=0,i=-t;i<=t;i++)d+=m[r(i,o)*a+n];for(l[n]=d/u,s=1;s<o;s++)d+=m[r(s+t,o)*a+n]-m[r(s-t-1,o)*a+n],l[s*a+n]=d/u}return l}function r(e,a){return e<0&&(e=-e-1),e>=a&&(e=2*a-e-1),e<0?0:e>=a?a-1:e}function n(e){var a=Float64Array.from(e);a.sort();var o=a.length>>1;return a.length%2?a[o]:(a[o-1]+a[o])/2}function s(e,a){var o=Float64Array.from(e);o.sort();var t=(o.length-1)*a/100,r=Math.floor(t),n=Math.ceil(t);return r===n?o[r]:o[r]+(o[n]-o[r])*(t-r)}function i(e,a,o,r,i,d,c){void 0===c&&(c=4),c>0&&(e=t(e,a,o,c));var m,l,u,h=Math.floor(.08*Math.min(a,o)),f=[];for(l=0;l<o;l++)for(m=0;m<a;m++)(l<h||l>=o-h||m<h||m>=a-h)&&f.push(e[l*a+m]);var p=n(f),g=new Float64Array(a*o);for(u=0;u<g.length;u++)g[u]=Math.abs(e[u]-p);var v=s(g,98)||1,b=new Float64Array(a*o),A=Math.max(.01,d/100);for(u=0;u<b.length;u++){var _=(g[u]/v*(r/100)+i/100)/A;b[u]=_<0?0:_>1?1:_}return b}function d(e,a,o,t){var r,n,s,i,d=new Uint8Array(a*o),c=new Uint8Array(a*o);for(n=0;n<o;n++)for(r=0;r<a;r++){for(i=0,s=-t;s<=t;s++){var m=r+s;if(m>=0&&m<a&&e[n*a+m]){i=1;break}}d[n*a+r]=i}for(r=0;r<a;r++)for(n=0;n<o;n++){for(i=0,s=-t;s<=t;s++){var l=n+s;if(l>=0&&l<o&&d[l*a+r]){i=1;break}}c[n*a+r]=i}return c}function c(e,a,o,t){var r,n,s,i,d=new Uint8Array(a*o),c=new Uint8Array(a*o);for(n=0;n<o;n++)for(r=0;r<a;r++){for(i=1,s=-t;s<=t;s++){var m=r+s;if(m<0||m>=a||!e[n*a+m]){i=0;break}}d[n*a+r]=i}for(r=0;r<a;r++)for(n=0;n<o;n++){for(i=1,s=-t;s<=t;s++){var l=n+s;if(l<0||l>=o||!d[l*a+r]){i=0;break}}c[n*a+r]=i}return c}function m(e,a,o,t){return c(d(e,a,o,t),a,o,t)}function l(e,a,o,t){var r,n,s,i=new Int32Array(a*o),d=[0],c=0;function m(e){for(;d[e]!==e;)d[e]=d[d[e]],e=d[e];return e}function l(e,a){(e=m(e))!==(a=m(a))&&(d[Math.max(e,a)]=Math.min(e,a))}for(n=0;n<o;n++)for(r=0;r<a;r++)if(e[s=n*a+r]){var u=[];if(r>0&&e[s-1]&&u.push(i[s-1]),n>0&&e[s-a]&&u.push(i[s-a]),t&&(r>0&&n>0&&e[s-a-1]&&u.push(i[s-a-1]),r<a-1&&n>0&&e[s-a+1]&&u.push(i[s-a+1])),u.length){var h,f=u[0];for(h=1;h<u.length;h++)u[h]<f&&(f=u[h]);for(i[s]=f,h=0;h<u.length;h++)l(f,u[h])}else c++,d[c]=c,i[s]=c}var p=new Int32Array(c+1),g=0;for(s=1;s<=c;s++)m(s)===s&&(p[s]=++g);for(s=1;s<=c;s++)m(s)!==s&&(p[s]=p[m(s)]);for(s=0;s<i.length;s++)i[s]&&(i[s]=p[i[s]]);return{lab:i,n:g}}function u(e,a,o){var t,r,n,s=l(e,a,o,!1),i=s.lab,d=new Uint8Array(s.n+1);for(t=0;t<a;t++)i[t]&&(d[i[t]]=1),i[(o-1)*a+t]&&(d[i[(o-1)*a+t]]=1);for(r=0;r<o;r++)i[r*a]&&(d[i[r*a]]=1),i[r*a+a-1]&&(d[i[r*a+a-1]]=1);var c=new Uint8Array(a*o);for(n=0;n<i.length;n++)i[n]&&d[i[n]]&&(c[n]=1);return c}function h(e,a,o,t,r,n){var s,i=a*o,h=new Uint8Array(i),f=0;for(s=0;s<i;s++)e[s]>=t&&e[s]<=r&&(h[s]=1,f++);if(f<80)return null;var p=m(h,a,o,3),g=new Uint8Array(i);for(s=0;s<i;s++)g[s]=p[s]?0:1;var v=u(g,a,o),b=new Uint8Array(i),A=0;for(s=0;s<i;s++)g[s]&&!v[s]&&(b[s]=1,A++);if(A<80)return null;var _=l(p,a,o,!0);if(0===_.n)return null;var E=new Float64Array(_.n+1);for(s=0;s<i;s++)_.lab[s]&&E[_.lab[s]]++;var y=[];for(s=1;s<=_.n;s++)y.push(s);y.sort(function(e,a){return E[a]-E[e]});for(var S=0,w=0;w<Math.min(8,y.length);w++){var I=y[w],O=new Uint8Array(i);for(s=0;s<i;s++)_.lab[s]===I&&(O[s]=1);var x=d(O,a,o,1),L=!1,M=!1;for(s=0;s<i&&(!x[s]||O[s]||(b[s]&&(L=!0),v[s]&&(M=!0),!L||!M));s++);if(L&&M){S=I;break}}if(!S)return null;var D=new Uint8Array(i),T=0;for(s=0;s<i;s++)_.lab[s]===S&&(D[s]=1,T++);var C=new Uint8Array(i);for(s=0;s<i;s++)C[s]=D[s]?0:1;var R=u(C,a,o),B=new Uint8Array(i),q=0;for(s=0;s<i;s++)R[s]||(B[s]=1,q++);if(q<200||q>.6*i)return null;var k=c(B,a,o,1),N=0;for(s=0;s<i;s++)B[s]&&!k[s]&&N++;var U=Math.min(1,T/Math.max(1,f)),P=Math.min(1,N/Math.max(1,T)),H=Math.min(1,4*Math.PI*q/Math.max(1,N*N)),F=Math.PI*Math.pow(n/2*30*700/1380,2),z=1-Math.min(1,Math.abs(q-F)/F);return{m:B,n:q,anel:D,nota:(.25*U+.15*P+.25*H+.2*z)/.85,uni:U,fino:P,comp:H,tam_ok:z,per:N}}var f=[1,.7,.55],p=["verm","lstar"],g=[80,130],v=[-35,0],b=[50,80],A=[[.35,.75],[.45,.85],[.62,.86]];function _(){var e=[];return f.forEach(function(a){p.forEach(function(o){g.forEach(function(t){v.forEach(function(r){b.forEach(function(n){A.forEach(function(s){e.push([a,o,t,r,n,s[0],s[1]])})})})})})}),e}return{L:700,roda:function(t,r,n,s,d){var c,m=r*n,l={},u={},f=_(),p=null;for(c=0;c<f.length;c++){var g=f[c],v=g[0]+"|"+g[1];if(!l[v]){var b=e(t,g[0]);l[v]="verm"===g[1]?a(b,m):o(b,m)}var A=v+"|"+g[2]+"|"+g[3]+"|"+g[4];u[A]||(u[A]=i(l[v],r,n,g[2],g[3],g[4],4));var E=h(u[A],r,n,g[5],g[6],s);E&&(!p||E.nota>p.nota)&&(E.ajuste=g,p=E),d&&d(c+1,f.length)}return p},anel:h,mapaT:i,clareia:e,verm:a,lstar:o,grade:_,rotula:l,uniform:t,fecha:m,dilata:d,erode:c,mediana:n,percentil:s,escapa:u}}();"undefined"!=typeof module&&module.exports&&(module.exports=SOLIZ);var SOLIZ3P=function(){function e(e,a,o){a/=255,o/=255;var t=(.4124*(e=(e/=255)>.04045?Math.pow((e+.055)/1.055,2.4):e/12.92)+.3576*(a=a>.04045?Math.pow((a+.055)/1.055,2.4):a/12.92)+.1805*(o=o>.04045?Math.pow((o+.055)/1.055,2.4):o/12.92))/.95047,r=.2126*e+.7152*a+.0722*o,n=(.0193*e+.1192*a+.9505*o)/1.08883;function s(e){return e>.008856?Math.cbrt(e):7.787*e+16/116}return t=s(t),[116*(r=s(r))-16,500*(t-r),200*(r-(n=s(n)))]}function a(e){var a=e.slice().sort(function(e,a){return e-a});return a[a.length>>1]}function o(e,a){var o=0;return e.forEach(function(e){o+=(e-a)*(e-a)}),Math.sqrt(o/e.length)||1}function t(e,a){return Math.sqrt(Math.pow((e[0]-a.mL)/a.sL,2)+Math.pow((e[1]-a.mA)/a.sA,2)+Math.pow((e[2]-a.mB)/a.sB,2))}function r(e,a,o){var t,r,n=!1;for(t=0,r=o.length-1;t<o.length;r=t++)o[t].y>a!=o[r].y>a&&e<(o[r].x-o[t].x)*(a-o[t].y)/(o[r].y-o[t].y)+o[t].x&&(n=!n);return n}return{rgb2lab:e,amostra:function(t,r,n,s,i){var d=[],c=[],m=[];if([[0,0],[1,0],[-1,0],[0,1],[0,-1]].forEach(function(a){var o=s+a[0],l=i+a[1];if(!(o<0||l<0||o>=r||l>=n)){var u=4*(l*r+o),h=e(t[u],t[u+1],t[u+2]);d.push(h[0]),c.push(h[1]),m.push(h[2])}}),!d.length)return null;var l=a(d),u=a(c),h=a(m);return{mL:l,mA:u,mB:h,sL:Math.max(4,o(d,l)),sA:Math.max(2.5,o(c,u)),sB:Math.max(2.5,o(m,h)),n:d.length}},combina:function(e){if(!e||!e.length)return null;var o=[],t=[],r=[],n=[],s=[],i=[],d=0;return e.forEach(function(e){e&&(o.push(e.mL),t.push(e.mA),r.push(e.mB),n.push(e.sL),s.push(e.sA),i.push(e.sB),d+=e.n||0)}),o.length?{mL:a(o),mA:a(t),mB:a(r),sL:Math.max(2,a(n)),sA:Math.max(1,a(s)),sB:Math.max(1,a(i)),n:d}:null},dist3:t,noLaco:r,segmenta:function(a,o,n,s,i,d,c){var m,l,u,h=o*n,f=new Uint8Array(h),p=new Uint8Array(h);if(!i||!d||!c)return{erro:"modelos"};for(l=0;l<n;l++)for(m=0;m<o;m++)if(u=l*o+m,r(m,l,s)){p[u]=1;var g=4*u,v=e(a[g],a[g+1],a[g+2]),b=t(v,c),A=t(v,i),_=t(v,d);f[u]=_<=b&&_<=A?3:A<=b?2:1}var E=new Uint8Array(h),y=0;for(u=0;u<h;u++)!p[u]||3!==f[u]&&2!==f[u]||(E[u]=1,y++);if(!y)return{erro:"vazio"};var S=new Int32Array(h),w=0,I=[0],O=[];for(l=0;l<n;l++)for(m=0;m<o;m++){var x=l*o+m;if(E[x]&&!S[x])for(w++,I.push(0),O.length=0,O.push(x),S[x]=w;O.length;){var L=O.pop();I[w]++;for(var M=L%o,D=L/o|0,T=0;T<4;T++){var C=M+[1,-1,0,0][T],R=D+[0,0,1,-1][T];if(!(C<0||R<0||C>=o||R>=n)){var B=R*o+C;E[B]&&!S[B]&&(S[B]=w,O.push(B))}}}}var q=0,k=0;for(u=1;u<=w;u++)I[u]>k&&(k=I[u],q=u);if(!q||k<=200)return{erro:"pequeno",ilhas:w};var N=new Uint8Array(h),U=0;for(u=0;u<h;u++)S[u]===q&&(N[u]=1,U++);return{m:N,n:U,cls:f,ilhas:w,descartado_px:y-U}}}}();"undefined"!=typeof module&&module.exports&&(module.exports=SOLIZ3P);var T={pt:{lang:"PT",outra:"EN",marca:"De Olho na Pele · SoLiz",idx_t:"A regra do anel, rodando no seu navegador",idx_p:"Esta demonstração executa a regra de borda do estudo — a mesma descrita passo a passo no anexo S3 do manuscrito — sobre uma fotografia que você escolhe. Tudo acontece dentro do navegador: <strong>a imagem não sai do seu computador</strong>, não há servidor e não há envio. São dois modos: o <strong>automático</strong>, em que a máquina varre 144 combinações de parâmetros e escolhe sozinha; e o <strong>assistido</strong>, em que você marca três classes de cor com o mouse e a máquina classifica o que está dentro do laço.",b_auto:"Automático",b_3p:"Três Pontos",b_auto_s:"a máquina decide sozinha, 144 combinações",b_3p_s:"você marca borda, lesão e pele; a máquina classifica",auto_t:"Modo automático",auto_p:"Escolha uma fotografia. A máquina reduz o quadro a 700 × 700, varre as 144 combinações da grade e fica com a de maior nota. Nenhuma referência humana entra na escolha.",p3_t:"Modo assistido · três pontinhos",p3_p:"Escolha uma fotografia, cerque a lesão com o laço e marque três classes de cor: <strong>borda</strong>, <strong>lesão</strong> e <strong>pele</strong>. Repita em quatro lugares diferentes. Cada pixel dentro do laço vai para a classe de menor distância normalizada em CIE Lab.",esc:"Escolher fotografia",nada:"Nenhum arquivo escolhido",priv:"A imagem fica no navegador. Nada é enviado.",diam:"Diâmetro declarado (mm)",diam_h:"Entra no termo de tamanho da nota. É uma <em>declaração</em> sua, não uma medida.",esca:"Escala (px/mm) — opcional",esca_h:"Sem isto a área sai em pixels. Com isto sai também em mm², rotulada como escala declarada por você.",av37:"Aviso — §3.7 do manuscrito: este método <strong>não foi validado para fotografia clínica</strong>. No único banco humano testado (ComplexWoundDB, 27 imagens) ele não transferiu. O que você vê aqui é demonstração de um mecanismo, não uma medida clínica.",rodar:"Rodar",rodando:"Rodando…",comb:"combinação",lac:"1 · Laço",lac_h:"Arraste em volta da lesão e solte para fechar.",cls_b:"2 · Borda",cls_l:"3 · Lesão",cls_p:"4 · Pele",cls_h:"Clique em quatro lugares diferentes para cada classe.",limpar:"Limpar",lado:"Margem: FORA · travada nesta demo",res:"Resultado",sem:"MEDIDA RECUSADA",sem_h:"Nenhum dos oito maiores componentes da faixa de transição toca ao mesmo tempo o interior e o exterior. O anel não fechou, e o método não entrega número quando isso acontece.",r_area:"Área",r_nota:"Nota",r_aj:"Ajuste escolhido",r_px:"pixels",r_mm:"mm² · escala declarada por você",r_uni:"unidade",r_fino:"finura",r_comp:"compacidade",r_tam:"tamanho",r_ilhas:"Ilhas: só o maior componente foi mantido.",r_desc:"descartados em ilhas menores",r_def:"A escala digitada vale para a sua fotografia; o motor trabalha num quadro de 700 × 700. A demo converte a escala e ajusta o diâmetro pela mesma identidade algébrica da reauditoria de 28/09 — o motor continua intocado, com 30 px/mm fixos por dentro.",ver:"Ver código-fonte legível",esc_h:"Precisa marcar as três classes antes de rodar.",voltar:"← Voltar",f_t:"O que esta página é, e o que ela não é",f1:"<strong>Implementação JavaScript equivalente.</strong> As medidas do artigo <strong>não</strong> vêm daqui: vêm do motor Python v0 registrado (BR 51 2026 008413-0). Esta página reimplementa a mesma regra para que ela possa ser vista funcionando.",f1b:"<strong>Porte validado contra o motor congelado:</strong> idêntico em 64/64 amostras e na escolha da grade completa (n = 81.458; nota 0,861474), e idêntico também sobre uma imagem real do artigo — a 1323·C do held-out do dia 3 — quando recebe exatamente os mesmos pixels: 61.945 px, 275,4 mm², nota 0,5231, mesmo ajuste. <strong>Esta página reproduz os números publicados quando recebe a mesma entrada.</strong> Quando ela mesma reduz a fotografia a 700 × 700, aparece uma diferença de cerca de 1 % — <strong>de reamostragem de imagem, não de motor</strong>: o <code>drawImage</code> do navegador e o LANCZOS do PIL não dão os mesmos pixels. Tudo em <code>VALIDACAO_PORTE_JS_30SET.md</code>, SHA-256 <code>12af713de1fdc32ef409f8638e65b452c37da1c97b4865893037c9fbb3783761</code>.",f1c:"As três divergências conhecidas abaixo referem-se à <strong>bancada v106</strong> usada no desenvolvimento (S3) e <strong>não se aplicam a esta implementação</strong>. A quarta permanece, de propósito.",f2:"Patente depositada: <strong>BR 10 2026 024571 2</strong>.",f3:"Fonte da regra: <code>06_MOTOR_DE_REGISTRO\\v0_congelado_2026-09-22\\rodar.py</code>, SHA-256 <code>78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732</code>, dentro de <code>MOTOR_v0_congelado.zip</code>, SHA-256 <code>03ce6b7f7391a113714106af62b7c7865a6558cc84b8a13622c1cad47b0d27ee</code>.",f_div:"Divergências conhecidas entre a bancada em JavaScript e o motor Python",f_div_h:"As três primeiras estão copiadas palavra por palavra de <code>v0_congelado_2026-09-22\\_LEIA.md</code>, seção “O QUE JÁ SE SABE QUE ESTÁ ERRADO”, onde foram apontadas em 22/09/2026. A quarta é desta demonstração.",d1:"<strong>O conta-gotas da bancada pinta sobre o mapa, não sobre a foto.</strong> Este motor pinta sobre a foto.",d2:"<strong>A área da bancada sai de um polígono de 30 pontos</strong>, não da máscara de pixels. Este motor conta pixels.",d3:"<strong>Quando o anel falha, a bancada cai em silêncio para Otsu.</strong> Este motor devolve falha.",d4:"<strong>Nisto a demo difere da bancada de desenvolvimento, de propósito:</strong> aqui, anel que não fecha é medida recusada, como no motor registrado.",f_uso:"Uso em bancos de terceiros",f_uso_p:"Ninguém roda esta demonstração em <strong>FUSeg, AZH, DFUC, Medetec ou UNESP</strong> sem pré-registro publicado.",f_hash:"SHA-256 do JavaScript desta página",f_hash_h:"Calculado na montagem. Para conferir, extraia o conteúdo da tag <code>&lt;script&gt;</code> principal e rode:",f_doi:"Preprint: <a href=https://doi.org/10.5281/zenodo.23062849 target=_blank>doi:10.5281/zenodo.23062849</a>",f_arq:"Hash dos arquivos da demonstração",f_arq_h:"O hash do próprio <code>index.html</code> está em <code>_HASHES.txt</code>, na mesma pasta — uma página não consegue conter o seu próprio hash."},en:{lang:"EN",outra:"PT",marca:"De Olho na Pele · SoLiz",idx_t:"The ring rule, running in your browser",idx_p:"This demonstration runs the study’s edge rule — the same one transcribed step by step in Supplement S3 — on a photograph you choose. Everything happens inside the browser: <strong>the image never leaves your computer</strong>, there is no server and nothing is uploaded. Two modes: <strong>automatic</strong>, in which the machine sweeps 144 parameter combinations and picks one on its own; and <strong>assisted</strong>, in which you mark three colour classes with the mouse and the machine classifies what is inside the lasso.",b_auto:"Automatic",b_3p:"Three Dots",b_auto_s:"the machine decides alone, 144 combinations",b_3p_s:"you mark edge, lesion and skin; the machine classifies",auto_t:"Automatic mode",auto_p:"Choose a photograph. The machine reduces the frame to 700 × 700, sweeps the 144 combinations of the grid and keeps the highest-scoring one. No human reference enters the choice.",p3_t:"Assisted mode · three dots",p3_p:"Choose a photograph, enclose the lesion with the lasso and mark three colour classes: <strong>edge</strong>, <strong>lesion</strong> and <strong>skin</strong>. Repeat at four different places. Every pixel inside the lasso goes to the class of smallest normalised CIE Lab distance.",esc:"Choose photograph",nada:"No file chosen",priv:"The image stays in the browser. Nothing is uploaded.",diam:"Declared diameter (mm)",diam_h:"It enters the size term of the score. It is <em>your declaration</em>, not a measurement.",esca:"Scale (px/mm) — optional",esca_h:"Without it the area is reported in pixels. With it, also in mm², labelled as a scale you declared.",av37:"Warning — §3.7 of the manuscript: this method has <strong>not been validated for clinical photography</strong>. On the only human dataset tested (ComplexWoundDB, 27 images) it did not transfer. What you see here demonstrates a mechanism, not a clinical measurement.",rodar:"Run",rodando:"Running…",comb:"combination",lac:"1 · Lasso",lac_h:"Drag around the lesion and release to close.",cls_b:"2 · Edge",cls_l:"3 · Lesion",cls_p:"4 · Skin",cls_h:"Click at four different places for each class.",limpar:"Clear",lado:"Margin: OUTER · locked in this demo",res:"Result",sem:"MEASUREMENT REFUSED",sem_h:"None of the eight largest components of the transition band touches the interior and the exterior at the same time. The ring did not close, and the method returns no number when that happens.",r_area:"Area",r_nota:"Score",r_aj:"Chosen setting",r_px:"pixels",r_mm:"mm² · scale declared by you",r_uni:"unity",r_fino:"thinness",r_comp:"compactness",r_tam:"size",r_ilhas:"Islands: only the largest component was kept.",r_desc:"discarded in smaller islands",r_def:"The scale you typed refers to your photograph; the engine works on a 700 × 700 frame. The demo converts the scale and adjusts the diameter by the same algebraic identity used in the 28 Sep re-audit — the engine itself is untouched, with 30 px/mm fixed inside.",ver:"View readable source",esc_h:"Mark the three classes before running.",voltar:"← Back",f_t:"What this page is, and what it is not",f1:"<strong>Equivalent JavaScript implementation.</strong> The measurements in the article do <strong>not</strong> come from here: they come from the registered Python v0 engine (BR 51 2026 008413-0). This page reimplements the same rule so that it can be seen working.",f1b:"<strong>Port validated against the frozen engine:</strong> identical on 64/64 samples and on the full-grid choice (n = 81,458; score 0.861474), and identical too on a real image from the article — wound 1323·C of the day-3 held-out — when given exactly the same pixels: 61,945 px, 275.4 mm², score 0.5231, same setting. <strong>This page reproduces the published numbers when it receives the same input.</strong> When it reduces the photograph to 700 × 700 itself, a difference of about 1 % appears — <strong>from image resampling, not from the engine</strong>: the browser’s <code>drawImage</code> and PIL’s LANCZOS do not yield the same pixels. All of it in <code>VALIDACAO_PORTE_JS_30SET.md</code>, SHA-256 <code>12af713de1fdc32ef409f8638e65b452c37da1c97b4865893037c9fbb3783761</code>.",f1c:"The three known divergences below refer to the <strong>v106 bench</strong> used during development (S3) and <strong>do not apply to this implementation</strong>. The fourth remains, on purpose.",f2:"Patent filed: <strong>BR 10 2026 024571 2</strong>.",f3:"Source of the rule: <code>06_MOTOR_DE_REGISTRO\\v0_congelado_2026-09-22\\rodar.py</code>, SHA-256 <code>78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732</code>, inside <code>MOTOR_v0_congelado.zip</code>, SHA-256 <code>03ce6b7f7391a113714106af62b7c7865a6558cc84b8a13622c1cad47b0d27ee</code>.",f_div:"Known divergences between the JavaScript bench and the Python engine",f_div_h:"The first three are copied word for word from <code>v0_congelado_2026-09-22\\_LEIA.md</code>, section “WHAT IS ALREADY KNOWN TO BE WRONG”, where they were raised on 22 Sep 2026. The fourth belongs to this demonstration.",d1:"<strong>The bench’s dropper samples the map, not the photograph.</strong> This engine samples the photograph.",d2:"<strong>The bench’s area comes from a 30-point polygon</strong>, not from the pixel mask. This engine counts pixels.",d3:"<strong>When the ring fails, the bench falls silently back to Otsu.</strong> This engine returns failure.",d4:"<strong>In this the demo differs from the development bench on purpose:</strong> here, a ring that does not close is a refused measurement, as in the registered engine.",f_uso:"Use on third-party datasets",f_uso_p:"No one runs this demonstration on <strong>FUSeg, AZH, DFUC, Medetec or UNESP</strong> without a published pre-registration.",f_hash:"SHA-256 of this page’s JavaScript",f_hash_h:"Computed at build time. To verify, extract the contents of the main <code>&lt;script&gt;</code> tag and run:",f_doi:"Preprint: <a href=https://doi.org/10.5281/zenodo.23062849 target=_blank>doi:10.5281/zenodo.23062849</a>",f_arq:"Hash of the demonstration files",f_arq_h:"The hash of <code>index.html</code> itself is in <code>_HASHES.txt</code>, in the same folder — a page cannot contain its own hash."}};"undefined"!=typeof module&&module.exports&&(module.exports=T);var IDI="pt";function tr(){var e,a=T[IDI];document.documentElement.lang="pt"===IDI?"pt-BR":"en";var o=document.querySelectorAll("[data-t]");for(e=0;e<o.length;e++){var t=o[e].getAttribute("data-t");void 0!==a[t]&&(o[e].innerHTML=a[t])}var r=document.getElementById("lng");r&&(r.textContent=a.outra),window.aoTrocarIdioma&&window.aoTrocarIdioma()}function trocaIdioma(){IDI="pt"===IDI?"en":"pt",tr()}function preparaImagem(e,a){var o=Math.min(e.naturalWidth,e.naturalHeight),t=(e.naturalWidth-o)/2,r=(e.naturalHeight-o)/2,n=document.createElement("canvas");n.width=n.height=a;var s=n.getContext("2d",{willReadFrequently:!0});return s.drawImage(e,t,r,o,o,0,0,a,a),{canvas:n,ctx:s,dados:s.getImageData(0,0,a,a),lado:o}}function pinta(e,a,o,t,r){var n=e.getContext("2d");if(n.putImageData(a,0,0),o){var s,i,d,c=n.getImageData(0,0,t,t),m=c.data;for(i=0;i<t;i++)for(s=0;s<t;s++)if(o[d=i*t+s]){var l=4*d;!(0!==s&&0!==i&&s!==t-1&&i!==t-1&&o[d-1]&&o[d+1]&&o[d-t]&&o[d+t])?(m[l]=r[0],m[l+1]=r[1],m[l+2]=r[2]):(m[l]=.78*m[l]+.22*r[0],m[l+1]=.78*m[l+1]+.22*r[1],m[l+2]=.78*m[l+2]+.22*r[2])}n.putImageData(c,0,0)}}function num(e,a){return e.toLocaleString("pt"===IDI?"pt-BR":"en-US",{minimumFractionDigits:a,maximumFractionDigits:a})}function esperaQuadro(){return new Promise(function(e){setTimeout(e,0)})}function ligaFonte(){var e=document.getElementById("bver"),a=document.getElementById("fonte");e&&a&&(e.onclick=function(){var o=document.getElementById("prefonte");if(o)o.remove();else{(o=document.createElement("pre")).id="prefonte";var t=document.createElement("code");t.textContent=a.textContent,o.appendChild(t),e.parentNode.insertBefore(o,e.nextSibling),o.scrollIntoView({behavior:"smooth",block:"nearest"})}})}var L=SOLIZ.L,BASE=null,IMGOK=!1,RES=null,LADO=0,LACO=[],DESENHANDO=!1,MODO=null,AM={borda:[],lesao:[],pele:[]},CORES={borda:"#ffd166",lesao:"#ef5b5b",pele:"#6fd39a"};function pos(e){var a=document.getElementById("cv").getBoundingClientRect(),o=e.touches?e.touches[0]:e;return{x:Math.round((o.clientX-a.left)/a.width*L),y:Math.round((o.clientY-a.top)/a.height*L)}}document.getElementById("lng").onclick=trocaIdioma,ligaFonte(),document.getElementById("arq").onchange=function(e){var a=e.target.files&&e.target.files[0];if(a){document.getElementById("nomearq").textContent=a.name;var o=new Image;o.onload=function(){var e=preparaImagem(o,L);BASE=e.dados,LADO=e.lado;var a=document.getElementById("cv");a.width=a.height=L,a.style.display="block",IMGOK=!0,RES=null,LACO=[],AM={borda:[],lesao:[],pele:[]},document.getElementById("res").innerHTML="",redesenha(),atualiza(),URL.revokeObjectURL(o.src)},o.src=URL.createObjectURL(a)}};var cv=document.getElementById("cv");function inicio(e){if(IMGOK){e.preventDefault();var a=pos(e);if("laco"===MODO)DESENHANDO=!0,LACO=[a],RES=null;else if(MODO){var o=SOLIZ3P.amostra(BASE.data,L,L,a.x,a.y);o&&(o.x=a.x,o.y=a.y,AM[MODO].push(o)),RES=null,redesenha(),atualiza()}}}function move(e){DESENHANDO&&(e.preventDefault(),LACO.push(pos(e)),redesenha())}function fim(){DESENHANDO&&(DESENHANDO=!1,redesenha(),atualiza())}function atualiza(){["laco","borda","lesao","pele"].forEach(function(e){var a=document.getElementById("b"+e);if(a.className="min"+(MODO===e?" on":""),"laco"!==e){var o=AM[e].length;a.setAttribute("data-n",o);var t=T[IDI]["cls_"+("borda"===e?"b":"lesao"===e?"l":"p")];a.innerHTML=t+(o?' <span class="ok">· '+o+"</span>":"")}});var e=LACO.length>7&&AM.borda.length&&AM.lesao.length&&AM.pele.length;document.getElementById("brodar").disabled=!e,document.getElementById("avisomarca").style.display=e?"none":"block"}function redesenha(){if(BASE){var e=cv.getContext("2d");if(RES&&RES.m?pinta(cv,BASE,RES.m,L,[31,120,200]):e.putImageData(BASE,0,0),LACO.length>1){e.save(),e.strokeStyle="#1f78c8",e.lineWidth=3,e.setLineDash(DESENHANDO?[8,6]:[]),e.beginPath(),e.moveTo(LACO[0].x,LACO[0].y);for(var a=1;a<LACO.length;a++)e.lineTo(LACO[a].x,LACO[a].y);DESENHANDO||e.closePath(),e.stroke(),e.restore()}["borda","lesao","pele"].forEach(function(a){AM[a].forEach(function(o){e.save(),e.fillStyle=CORES[a],e.strokeStyle="#000",e.lineWidth=2,e.beginPath(),e.arc(o.x,o.y,7,0,6.2832),e.fill(),e.stroke(),e.restore()})})}}function mostra(e){var a=T[IDI],o=document.getElementById("res");if(e&&e.m){var t=parseFloat(document.getElementById("escala").value),r=t&&t>0&&LADO?1380*t/LADO*L/1380:0,n=r?"<em>"+num(e.n/(r*r),1)+" "+a.r_mm+"</em>":"";o.innerHTML='<div class="grid"><div class="kv"><b>'+a.r_area+"</b><span>"+num(e.n,0)+"</span><em>"+a.r_px+"</em>"+n+'</div></div><p class="hint">'+a.r_ilhas+" "+(e.ilhas>1?e.ilhas-1+" · "+num(e.descartado_px,0)+" px "+a.r_desc:"")+"</p>"}else o.innerHTML='<div class="recusa"><b>'+a.sem+"</b>"+a.sem_h+"</div>"}cv.addEventListener("mousedown",inicio),cv.addEventListener("mousemove",move),window.addEventListener("mouseup",fim),cv.addEventListener("touchstart",inicio),cv.addEventListener("touchmove",move),window.addEventListener("touchend",fim),["laco","borda","lesao","pele"].forEach(function(e){document.getElementById("b"+e).onclick=function(){MODO=MODO===e?null:e,atualiza()}}),document.getElementById("blimpar").onclick=function(){LACO=[],AM={borda:[],lesao:[],pele:[]},RES=null,MODO=null,document.getElementById("res").innerHTML="",redesenha(),atualiza()},document.getElementById("brodar").onclick=async function(){var e=T[IDI],a=this;a.disabled=!0,a.textContent=e.rodando,await esperaQuadro();var o=SOLIZ3P.combina(AM.borda),t=SOLIZ3P.combina(AM.lesao),r=SOLIZ3P.combina(AM.pele),n=SOLIZ3P.segmenta(BASE.data,L,L,LACO,o,t,r);a.disabled=!1,a.textContent=e.rodar,RES=n&&n.m?n:null,redesenha(),mostra(n)},window.aoTrocarIdioma=function(){atualiza(),RES&&mostra(RES)},tr(),atualiza();</script>
+</body></html>
