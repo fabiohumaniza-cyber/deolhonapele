@@ -248,7 +248,11 @@ def main(pasta, saida, recortes=None):
     def mostra_referencia(nome):
         """Recorte publicado pelos autores do banco, so para o operador saber
         QUAL anel e o desta imagem. Nao e medida e nao entra em conta.
-        Canto superior direito, ABAIXO da lupa; tecla h esconde e mostra."""
+
+        v5: vai para a FAIXA LIVRE a direita da foto desenhada, quando ela
+        couber — assim nao tapa nada da imagem. So quando nao ha faixa (foto
+        larga, ou zoom ligado) ele volta a sobrepor, no canto superior direito,
+        abaixo da lupa. A tecla h esconde e mostra em qualquer um dos dois."""
         tela.delete('ref')
         est['ref'] = None
         if not recortes or not est['ref_on']:
@@ -259,8 +263,15 @@ def main(pasta, saida, recortes=None):
         im = Image.open(p).convert('RGB')
         im.thumbnail((REF_LADO, REF_LADO), Image.LANCZOS)
         est['ref'] = ImageTk.PhotoImage(im)
-        rx = larg - im.size[0] - 10
-        ry = 10 + LUPA_LADO + 26
+        _ox, _oy, ww, wh, e = janela()
+        dir_foto = int(ww * e)                      # onde a foto desenhada acaba
+        livre = larg - dir_foto - 20
+        if livre >= im.size[0]:                     # cabe fora da foto
+            rx = dir_foto + 12
+            ry = 10 + LUPA_LADO + 26 if rx + im.size[0] > larg - LUPA_LADO - 20 else 10 + 16
+        else:                                       # sem faixa: sobrepoe
+            rx = larg - im.size[0] - 10
+            ry = 10 + LUPA_LADO + 26
         tela.create_text(rx, ry - 14, anchor='w', fill='#ffcc00',
                          font=('Consolas', 10, 'bold'), tags='ref',
                          text='referencia do banco — e ESTA ferida  [h]')
