@@ -8,7 +8,7 @@ sintética e hasheado ANTES de qualquer byte de imagem do banco ser baixado.
 Não contém nenhuma constante do motor v0 e não altera nenhuma. O motor entra
 por motor_v0_funcoes.py, extração verbatim de v0_congelado_2026-09-22/rodar.py.
 
-TRÊS ETAPAS, NESTA ORDEM, SEM EXCEÇÃO
+QUATRO ETAPAS, NESTA ORDEM, SEM EXCEÇÃO
   1  detectar  — detector do anel em todas as imagens; grava deteccao.json e,
                  se houver falha, PENDENTES_ESCALA_MANUAL.txt.
   2  medir     — o operador informa o diâmetro do anel em px das pendentes.
@@ -68,16 +68,52 @@ def lista(pasta):
     return sorted(f for f in os.listdir(pasta) if f.lower().endswith(EXT))
 
 
+def abre_rgb8(p):
+    """Abre a imagem e PARA se nao for RGB de 8 bits.
+
+    Regra fixada antes do download: formato inesperado -> parado, nunca
+    conversao improvisada. `Image.convert('RGB')` num TIFF de 16 bits satura em
+    branco, e num TIFF em tons de cinza zera o canal 'verm' (R-(G+B)/2 = 0).
+    Os dois estragam em silencio. O modo lido vai para o JSON."""
+    im = Image.open(p)
+    modo = im.mode
+    if modo != 'RGB':
+        sys.exit('PARADO: %s tem modo PIL %r, esperado RGB de 8 bits.\n'
+                 'Formato inesperado nao se converte no improviso — e decisao do '
+                 'Fabio, com emenda datada, antes de qualquer medida.' % (os.path.basename(p), modo))
+    a = np.asarray(im)
+    if a.dtype != np.uint8 or a.ndim != 3 or a.shape[2] != 3:
+        sys.exit('PARADO: %s tem dtype %s e forma %s, esperado uint8 HxWx3.'
+                 % (os.path.basename(p), a.dtype, a.shape))
+    return a, modo
+
+
+def exige_mapa(saida):
+    """O mapa ferida-dia vem da convencao de nomes do README e e fixado ANTES
+    de qualquer deteccao. A etapa 1 exige o arquivo e grava o SHA-256 dele; a
+    etapa 4 recusa se o hash tiver mudado."""
+    pm = os.path.join(saida, 'MAPA_FERIDA_DIA.tsv')
+    if not os.path.isfile(pm):
+        sys.exit('PARADO: falta %s.\nEle vem da convencao de nomes do README, e '
+                 'fixado ANTES da etapa 1 e nunca inferido do resultado.' % pm)
+    return sha256(pm)
+
+
 # ------------------------------------------------------------------ etapa 1
 def etapa_detectar(pasta, saida):
     os.makedirs(saida, exist_ok=True)
+    h_mapa = exige_mapa(saida)
     arqs = lista(pasta)
-    print('%d imagens' % len(arqs))
-    reg = {}
+    print('%d imagens | SHA-256 do mapa %s' % (len(arqs), h_mapa[:16] + '…'))
+    reg = {'_meta': {'sha256_mapa_ferida_dia': h_mapa,
+                     'quando': datetime.datetime.now().astimezone()
+                     .isoformat(timespec='seconds')}}
     for i, a in enumerate(arqs, 1):
         p = os.path.join(pasta, a)
-        r = detecta(p)
-        reg[a] = {'arquivo': a, 'sha256': sha256(p), 'deteccao': r,
+        arr, modo = abre_rgb8(p)
+        r = detecta(arr)
+        reg[a] = {'arquivo': a, 'sha256': sha256(p), 'modo_pil': modo,
+                  'deteccao': r,
                   'px_mm': (px_por_mm(r) if r['ok'] else None),
                   'escala_manual': False}
         print('%4d/%d  %-40s %s' % (i, len(arqs), a,
@@ -127,9 +163,18 @@ def etapa_medir(saida, medidas):
             reg[nome]['px_mm'] = d / ANEL_MM
             reg[nome]['quando_medido'] = quando
             n_ok += 1
+    faltam = [a for a, v in reg.items()
+              if not a.startswith('_') and not v['deteccao']['ok']
+              and not v.get('escala_manual') and v.get('estrato') != 'sem escala propria']
+    if faltam:
+        sys.exit('PARADO: %d pendencia(s) sem linha em MEDIDAS.txt: %s\n'
+                 'Regra 3.2: TODA pendente recebe linha — diametro+centro ou '
+                 'SEM_ANEL. Omitir uma seria escolha por imagem.'
+                 % (len(faltam), ', '.join(faltam[:5]) + ('…' if len(faltam) > 5 else '')))
     json.dump(reg, open(os.path.join(saida, 'deteccao_camundongo_com_manual.json'), 'w'),
               indent=1)
-    print('medidas manuais: %d | marcadas SEM_ANEL: %d' % (n_ok, n_sem))
+    print('medidas manuais: %d | marcadas SEM_ANEL: %d | pendencias abertas: 0'
+          % (n_ok, n_sem))
 
 
 # --------------------------------------------------------- recorte (item 3.3)
@@ -187,23 +232,27 @@ def etapa_rodar(pasta, saida):
     pj = os.path.join(saida, 'deteccao_camundongo_com_manual.json')
     if not os.path.isfile(pj):
         pj = os.path.join(saida, 'deteccao_camundongo.json')
-        reg = json.load(open(pj))
-        if any(not v['deteccao']['ok'] and not v.get('escala_manual')
-               and v.get('estrato') != 'sem escala propria' for v in reg.values()):
-            sys.exit('PARADO: ha pendencias de escala e a etapa 2 nao foi feita.\n'
-                     'Regra 3.2: medida manual do anel antes de o motor rodar.')
     reg = json.load(open(pj))
+    # a checagem roda em QUALQUER json carregado, nao so quando falta o manual
+    abertas = [a for a, v in reg.items()
+               if not a.startswith('_') and not v['deteccao']['ok']
+               and not v.get('escala_manual') and v.get('estrato') != 'sem escala propria']
+    if abertas:
+        sys.exit('PARADO: %d pendencia(s) de escala sem resposta: %s\n'
+                 'Regra 3.2: medida manual do anel antes de o motor rodar nela.'
+                 % (len(abertas), ', '.join(abertas[:5]) + ('…' if len(abertas) > 5 else '')))
 
     # razao_pxmm contra a MEDIANA DO BANCO: precisa de todas as escalas antes
-    escalas = [v['px_mm'] for v in reg.values() if v['px_mm']]
+    itens = {a: v for a, v in reg.items() if not a.startswith('_')}
+    escalas = [v['px_mm'] for v in itens.values() if v['px_mm']]
     med = float(np.median(escalas)) if escalas else None
     print('mediana de px/mm do banco: %s' % ('%.4f' % med if med else '—'))
 
     res = {}
-    for i, (a, v) in enumerate(sorted(reg.items()), 1):
+    for i, (a, v) in enumerate(sorted(itens.items()), 1):
         p = os.path.join(pasta, a)
-        im = np.asarray(Image.open(p).convert('RGB'))
-        linha = {'arquivo': a, 'sha256': v['sha256'],
+        im, modo = abre_rgb8(p)
+        linha = {'arquivo': a, 'sha256': v['sha256'], 'modo_pil': modo,
                  'escala_manual': bool(v.get('escala_manual')),
                  'diam_anel_px': (v.get('diam_anel_px_manual')
                                   or (v['deteccao'].get('diam_px') if v['deteccao']['ok'] else None)),
@@ -249,8 +298,11 @@ def etapa_rodar(pasta, saida):
                                   bool(abs(area - AREA_SPLINT_MM2) / AREA_SPLINT_MM2
                                        <= TOL_SPLINT)})
         res[a] = linha
-        print('%4d  %-40s %s' % (i, a, _resumo(linha)))
+        # NAO se imprime area, nota, px/mm nem se a medida saiu: isso e a
+        # resposta da P3. So o contador. O detalhe vai para o JSON.
+        print('\r%4d/%d' % (i, len(itens)), end='', flush=True)
 
+    print()
     saidas = {'_meta': {'quando': datetime.datetime.now().astimezone()
                         .isoformat(timespec='seconds'),
                         'recorte_mm': RECORTE_MM, 'lado_1380': LADO_1380,
@@ -258,12 +310,32 @@ def etapa_rodar(pasta, saida):
                         's_1380_px_mm': S_1380, 'semente': SEMENTE,
                         'bootstrap': BOOT, 'mediana_pxmm_banco': med,
                         'sha256_motor_origem':
-                            '78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732'},
+                            '78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732',
+                        'sha256_codigo': _hashes_codigo(),
+                        'sha256_mapa_ferida_dia': reg.get('_meta', {})
+                            .get('sha256_mapa_ferida_dia'),
+                        'versoes': _versoes()},
               'imagens': res}
     pout = os.path.join(saida, 'camundongo_v0.json')
     json.dump(saidas, open(pout, 'w'), indent=1)
     print('\n%s  SHA-256 %s' % (pout, sha256(pout)))
     return saidas
+
+
+def _hashes_codigo():
+    """SHA-256 dos tres .py do caminho da medida, gravados na propria saida"""
+    d = {}
+    for f in ('detecta_anel_camundongo.py', 'motor_v0_funcoes.py', 'roda_camundongo.py'):
+        q = os.path.join(AQUI, f)
+        d[f] = sha256(q) if os.path.isfile(q) else None
+    return d
+
+
+def _versoes():
+    import platform, numpy, scipy, skimage, PIL
+    return {'python': platform.python_version(), 'numpy': numpy.__version__,
+            'scipy': scipy.__version__, 'skimage': skimage.__version__,
+            'Pillow': PIL.__version__, 'plataforma': platform.platform()}
 
 
 def _comp(m):
@@ -308,6 +380,13 @@ def etapa_relatorio(saida):
     if not os.path.isfile(pmapa):
         sys.exit('PARADO: falta MAPA_FERIDA_DIA.tsv (nome<TAB>dia<TAB>animal<TAB>lado).\n'
                  'Ele vem da convencao de nomes do README e e fixado ANTES da etapa 3.')
+    h_agora = sha256(pmapa)
+    h_etapa1 = dados['_meta'].get('sha256_mapa_ferida_dia')
+    if h_etapa1 and h_agora != h_etapa1:
+        sys.exit('PARADO: MAPA_FERIDA_DIA.tsv mudou depois da etapa 1.\n'
+                 '  etapa 1: %s\n  agora  : %s\n'
+                 'O mapa e fixado antes de qualquer medida e nao se altera depois.'
+                 % (h_etapa1, h_agora))
     mapa = {}
     for linha in open(pmapa, encoding='utf-8'):
         if linha.startswith('#') or not linha.strip():
@@ -330,6 +409,7 @@ def etapa_relatorio(saida):
     com_anel = [a for a, l in imgs.items() if l['estrato'] != 'sem escala propria']
     obtidas = [a for a in com_anel if imgs[a]['obtida']]
     p1 = len(obtidas) / len(com_anel) if com_anel else float('nan')
+    p1_aval = bool(com_anel)
     p1_lo, p1_hi = ic([1.0 if imgs[a]['obtida'] else 0.0 for a in com_anel], np.mean)
 
     por_dia = {}
@@ -388,17 +468,28 @@ def etapa_relatorio(saida):
     rel.append('## PREDIÇÕES\n')
     rel.append('| | predição | resultado | |')
     rel.append('|---|---|---|---|')
-    rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
-               '**%.1f %%** (%d de %d) · IC95 [%.1f; %.1f] | %s |'
-               % (100 * p1, len(obtidas), len(com_anel), 100 * p1_lo, 100 * p1_hi,
-                  '✅ **confirmada**' if p1 >= 0.5 else '❌ **FALHOU**'))
-    rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **%.4f** (%d dias com n ≥ 8) | %s |'
-               % (p2, len(dias), '✅ **confirmada**' if p2 <= -0.8 else '❌ **FALHOU**'))
+    if not p1_aval:
+        rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
+                   '**não avaliável** — nenhuma imagem com anel visível | '
+                   '⏳ **não avaliada** |')
+    else:
+        rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
+                   '**%.1f %%** (%d de %d) · IC95 [%.1f; %.1f] | %s |'
+                   % (100 * p1, len(obtidas), len(com_anel), 100 * p1_lo, 100 * p1_hi,
+                      '✅ **confirmada**' if p1 >= 0.5 else '❌ **FALHOU**'))
+    if len(dias) < 3 or not np.isfinite(p2):
+        rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | '
+                   '**não avaliável** — só %d dia(s) com n ≥ 8, e o coeficiente '
+                   'exige 3 | ⏳ **não avaliada** |' % len(dias))
+    else:
+        rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **%.4f** '
+                   '(%d dias com n ≥ 8) | %s |'
+                   % (p2, len(dias), '✅ **confirmada**' if p2 <= -0.8 else '❌ **FALHOU**'))
     rel.append('| **P3** | revisor cego acerta ≥ 75 %% dos pares | '
                'painel de %d pares emitido; a preencher | ⏳ pendente |' % len(painel))
     rel.append('| **P4** | falha dominante = referência de pele contaminada | '
-               'assinatura "anel do splint" em **%.1f %%** das obtidas | %s |'
-               % (100 * p4_assin, 'ver modos abaixo'))
+               'assinatura "anel do splint" em **%s** das obtidas | ver modos abaixo |'
+               % ('%.1f %%' % (100 * p4_assin) if obtidas else 'não avaliável'))
     rel.append('\n## TABELA POR DIA\n')
     rel.extend(linhas)
     rel.append('\n## MODOS DE FALHA\n')

@@ -10,17 +10,18 @@ Semente 20260928.
 import os, sys, shutil, json, subprocess
 import numpy as np
 from PIL import Image
-sys.path.insert(0, '/home/claude/cam')
+AQUI = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, AQUI)
 
 RNG = np.random.default_rng(20260928)
-BASE = '/home/claude/cam/ensaio'
+BASE = os.path.join(AQUI, 'ensaio')
 TIF, SAI = BASE + '/tiffs', BASE + '/saida'
 for d in (TIF, SAI):
     shutil.rmtree(d, ignore_errors=True); os.makedirs(d)
 
-DIAS = [0, 3, 6, 9, 12, 15]
+DIAS = [0, 6, 12]
 FER = [('A8-%d' % i, s) for i in (1, 3) for s in ('L', 'R')] + \
-      [('Y8-%d' % i, s) for i in (1, 2) for s in ('L', 'R')]
+      [('Y8-%d' % i, s) for i in (1, 2) for s in ('L', 'R')]   # 8 feridas
 mapa = []
 
 
@@ -46,22 +47,23 @@ for dia in DIAS:
         H = W = int(a * 2 * 1.9)
         cx, cy = W / 2, H / 2
         com_anel = True
-        if dia == 9 and k == 0:                        # 1 sem anel -> estrato 3.1
+        if dia == 6 and k == 0:                        # 1 sem anel -> estrato 3.1
             com_anel = False
         if dia == 12 and k == 1:                        # anel na beira -> replicacao
             cx = a * 1.05
         im = cena(H, W, cx, cy, a, a * float(RNG.uniform(0.90, 1.0)),
                   np.deg2rad(RNG.uniform(-15, 15)), d_fer, pxmm, com_anel)
         nome = 'D%02d_%s_%s.tif' % (dia, an, lado)
-        Image.fromarray(im).save(os.path.join(TIF, nome))
+        Image.fromarray(im).save(os.path.join(TIF, nome))   # RGB 8 bits
         mapa.append('%s\t%d\t%s\t%s' % (nome, dia, an, lado))
         n += 1
 with open(os.path.join(SAI, 'MAPA_FERIDA_DIA.tsv'), 'w') as f:
     f.write('# nome\tdia\tanimal\tlado\n' + '\n'.join(mapa) + '\n')
 print('banco sintetico: %d imagens\n' % n)
 
-R = lambda *a: subprocess.run([sys.executable, '/home/claude/cam/roda_camundongo.py'] + list(a),
-                              capture_output=True, text=True)
+R = lambda *a: subprocess.run(
+    [sys.executable, os.path.join(AQUI, 'roda_camundongo.py')] + list(a),
+    capture_output=True, text=True)
 
 print('=== etapa 1 detectar ===')
 o = R('detectar', TIF, SAI); print(o.stdout.strip().splitlines()[-1]); print(o.stderr.strip()[-200:])
@@ -70,19 +72,50 @@ print('\n=== etapa 3 SEM a etapa 2 (tem de parar) ===')
 o = R('rodar', TIF, SAI)
 print('saiu com codigo %d | %s' % (o.returncode, (o.stdout + o.stderr).strip().splitlines()[-1][:90]))
 
+print('\n=== etapa 2 com MEDIDAS.txt incompleto (tem de parar) ===')
+reg0 = json.load(open(os.path.join(SAI, 'deteccao_camundongo.json')))
+pend0 = [a for a, v in reg0.items() if not a.startswith('_') and not v['deteccao']['ok']]
+open(os.path.join(SAI, 'MEDIDAS_VAZIO.txt'), 'w').write('# nenhuma linha\n')
+o = R('medir', SAI, os.path.join(SAI, 'MEDIDAS_VAZIO.txt'))
+print('saiu com codigo %d | %s' % (o.returncode, (o.stdout + o.stderr).strip().splitlines()[-1][:95]))
+
 print('\n=== etapa 2 medir ===')
-reg = json.load(open(os.path.join(SAI, 'deteccao_camundongo.json')))
-pend = [a for a, v in reg.items() if not v['deteccao']['ok']]
+pend = pend0
 with open(os.path.join(SAI, 'MEDIDAS.txt'), 'w') as f:
     for a in pend:
         f.write('%s\tSEM_ANEL\n' % a)        # o operador declarou sem anel visivel
 print('pendentes declarados SEM_ANEL: %d' % len(pend))
 o = R('medir', SAI, os.path.join(SAI, 'MEDIDAS.txt')); print(o.stdout.strip())
 
+print('\n=== etapa 3 com pendencia reaberta no _com_manual (tem de parar) ===')
+pm = os.path.join(SAI, 'deteccao_camundongo_com_manual.json')
+bk = json.load(open(pm))
+import copy
+sab = copy.deepcopy(bk)
+if pend:
+    sab[pend[0]].pop('estrato', None)            # pendencia volta a ficar aberta
+    json.dump(sab, open(pm, 'w'), indent=1)
+    o = R('rodar', TIF, SAI)
+    print('saiu com codigo %d | %s' % (o.returncode, (o.stdout + o.stderr).strip().splitlines()[-1][:95]))
+    json.dump(bk, open(pm, 'w'), indent=1)
+
 print('\n=== etapa 3 rodar ===')
 o = R('rodar', TIF, SAI)
 ls = o.stdout.strip().splitlines()
 print('\n'.join(ls[:3])); print('…'); print('\n'.join(ls[-3:])); print(o.stderr.strip()[-300:])
+
+print('\n=== TIFF de 16 bits (tem de parar) ===')
+import numpy as _np
+d16 = os.path.join(BASE, 'tiff16'); shutil.rmtree(d16, ignore_errors=True); os.makedirs(d16)
+Image.fromarray((_np.ones((600, 600)) * 30000).astype('uint16')).save(os.path.join(d16, 'x.tif'))
+shutil.copy(os.path.join(SAI, 'MAPA_FERIDA_DIA.tsv'), os.path.join(d16, 'MAPA_FERIDA_DIA.tsv'))
+o = R('detectar', d16, d16)
+print('saiu com codigo %d | %s' % (o.returncode, (o.stdout + o.stderr).strip().splitlines()[-1][:95]))
+
+print('\n=== etapa 1 sem o mapa (tem de parar) ===')
+d0 = os.path.join(BASE, 'sem_mapa'); shutil.rmtree(d0, ignore_errors=True); os.makedirs(d0)
+o = R('detectar', TIF, d0)
+print('saiu com codigo %d | %s' % (o.returncode, (o.stdout + o.stderr).strip().splitlines()[-1][:95]))
 
 print('\n=== etapa 4 relatorio ===')
 o = R('relatorio', SAI)

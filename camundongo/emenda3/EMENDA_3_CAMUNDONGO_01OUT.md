@@ -1,120 +1,200 @@
 # EMENDA 3 · pré-registro do camundongo — o driver da rodada
+### versão 2 · substitui a de 06h40, antes de confirmação e sem download
 
-**01/10/2026, 06h40 (Brasília). Escrita ANTES de qualquer byte de imagem do banco
+**01/10/2026, 07h00 (Brasília). Escrita ANTES de qualquer byte de imagem do banco
 Dryad 10.25338/B84W8Q ser baixado ou aberto.**
 
-Cadeia: `PRE_REGISTRO_CAMUNDONGO_30SET.md` `d0989cf7…` → `EMENDA_1` `161e1d78…` →
-`EMENDA_2_CAMUNDONGO_01OUT.md` **`5af2ca99d59d77b0757958c7138f4f0e78de7d515996f9b982e137ce9bebb8ca`**.
+> **Nota de substituição.** A versão anterior desta emenda, SHA-256
+> `5c03d88f16011275ce84d974cc06134d524253ca57960a0df0068aa5ce9fdc11`, foi
+> substituída **antes de ter hash confirmado pelo Fabio** e **sem nenhum
+> download**, após revisão do Fable que achou seis defeitos no driver — dois
+> deles bloqueantes. A versão anterior está no histórico do repositório, commit
+> `20fae0d21e6ac5cbe6f7d5e9b48fc1b5d45a6ed4`. Nada do que ela dizia foi apagado:
+> o que mudou está na seção 1.
+
+Cadeia: `PRE_REGISTRO` `d0989cf7…` → `EMENDA_1` `161e1d78…` → `EMENDA_2`
+**`5af2ca99d59d77b0757958c7138f4f0e78de7d515996f9b982e137ce9bebb8ca`**.
 A Emenda 2 **não é alterada por esta**; seu hash segue de pé.
 
 ---
 
-## POR QUE ESTA EMENDA EXISTE
+## 1 · OS SEIS DEFEITOS E O QUE MUDOU
 
-Revisão do Fable sobre a Emenda 2 achou dois buracos, ambos procedentes:
+**🔴 1. A trava da regra 3.2 tinha porta dos fundos.** `medir` processava só o
+que estivesse em `MEDIDAS.txt`; e `rodar` só checava pendências **quando o
+`_com_manual.json` não existia**. Logo, uma pendente sem linha passava: virava
+"sem escala própria" **por omissão**, sem `SEM_ANEL` declarado. Escolha por
+imagem, que é exatamente o que esta série de emendas existe para impedir.
+→ `medir` **para** se qualquer pendente ficar sem linha; `rodar` **re-checa
+pendências em qualquer JSON que carregar**, não só na ausência do manual.
 
-1. **O driver da rodada real não existia.** O `teste_cadeia.py` prova a cadeia em
-   cena sintética, mas calcula `cai_fora` e **não faz nada com ele** — e o
-   `.crop()` do PIL preenche o que falta com **preto, não com réplica da borda**.
-   Ou seja: a regra 3.3 da Emenda 2 estava escrita e não implementada em lugar
-   nenhum. Faltavam também JSON de saída, `razao_pxmm`, estratos, fallback
-   manual, bootstrap e P1–P4. Tudo isso é código novo no caminho da medida —
-   pelo argumento da própria Emenda 2, precisa existir e ter hash antes do
-   download.
+**🔴 2. Profundidade de bits.** `Image.open(...).convert('RGB')` num TIFF de
+16 bits **satura tudo em branco**; num TIFF em tons de cinza, R=G=B e o canal
+`verm` do motor (`R − (G+B)/2`) **zera**. Os dois estragam em silêncio e a
+rodada sairia com números que pareceriam válidos.
+→ Função `abre_rgb8`: confere `im.mode` e o dtype, grava `modo_pil` no JSON e
+**PARA** se não for RGB de 8 bits. *Formato inesperado não se converte no
+improviso — é decisão do Fabio, com emenda datada, antes de qualquer medida.*
 
-2. **As regras 3.1 e 3.2 não tinham regra de escolha.** "O operador *pode* medir
-   à mão" é decisão por imagem, tomada depois de ver a foto e — pior — podendo
-   ver o resultado. Isso é o vazamento que as emendas existem para fechar.
+**3. "Mapa fixado antes da etapa 3" era promessa, não programa.** A etapa 4 só
+conferia se o arquivo existia.
+→ A **etapa 1 exige** o `MAPA_FERIDA_DIA.tsv` e grava o SHA-256 dele; a **etapa 4
+recusa** se o hash tiver mudado. O mapa passa a ser anterior a qualquer detecção,
+não só a qualquer medida.
 
----
+**4. `teste_driver.py` tinha três caminhos fixos** (linhas 13, 16, 63) — não
+rodava no PC do Fabio sem editar, e editar mataria o hash.
+→ Tudo relativo a `AQUI`, como o próprio driver já fazia.
 
-## 1 · A REGRA QUE FALTAVA (fecha o item 2)
+**5. `_meta` do JSON era incompleto.**
+→ Passa a trazer os **SHA-256 dos três `.py` do caminho da medida**, o hash do
+mapa e as **versões** de Python, numpy, scipy, skimage e Pillow, mais a
+plataforma. O ambiente do executor fica registrado na saída.
 
-> **Detector falha → medida manual do anel, SEMPRE, antes de o motor rodar
-> naquela imagem. Anel não visível → estrato "sem escala própria" (3.1).
-> Sem exceção e sem escolha caso a caso.**
+**6. A docstring dizia "TRÊS ETAPAS" e listava quatro.** Corrigida.
 
-E a regra não fica dependendo de disciplina: **está na forma do programa**. O
-driver tem quatro etapas, e a etapa 3 **recusa-se a rodar** enquanto houver
-pendência de escala sem resposta — ensaiado, sai com código 1 e a mensagem
-*"Regra 3.2: medida manual do anel antes de o motor rodar"*. Quando o operador
-mede, o motor **ainda não rodou em imagem nenhuma do banco**: não há resultado
-que ele possa ter visto.
-
-**Acréscimo do executor:** a medida manual exige **diâmetro em px e também o
-centro (x, y)**. A escala sozinha não define o recorte de 24 mm, e usar o centro
-do quadro como substituto seria inventar um centro. Três números ou `SEM_ANEL`;
-o driver recusa linha incompleta.
+**🔴 Um sétimo, achado ao corrigir o quinto: a etapa 3 vazava a resposta da P3.**
+Ela imprimia área, nota e estrato por nome de arquivo no console — e o painel da
+P3 pede que um revisor cego diga **qual das duas falhou**. Quem acompanhasse a
+rodada pelo terminal já teria a resposta.
+→ A etapa 3 agora imprime **só o contador** (`17/255`). Todo o detalhe vai para o
+JSON. Isso não resolve sozinho a questão de quem é o revisor — ver a seção 4.
 
 ---
 
 ## 2 · O DRIVER
 
-`roda_camundongo.py` — SHA-256 `adb63c9b36e65cf87445b454b748a315ec9aa0279e33e6cd8c94d8bc9adc3e2b` (21092 bytes). Verbatim no anexo.
+`roda_camundongo.py` — SHA-256 `0c7c7be2ef9948ad8f75c6b764778f7bf69aaf7d9a4c4624cc382b9838e2813e` (25675 bytes). Verbatim no anexo.
 
-| etapa | o que faz | saída |
-|---|---|---|
-| 1 `detectar` | detector da Emenda 2 em todas as imagens | `deteccao_camundongo.json` · `PENDENTES_ESCALA_MANUAL.txt` |
-| 2 `medir` | operador informa diâmetro e centro das pendentes | `deteccao_camundongo_com_manual.json` |
-| 3 `rodar` | recorte, motor congelado, por imagem | `camundongo_v0.json` |
-| 4 `relatorio` | P1–P4, tabela por dia, IC bootstrap, painel da P3 | `CAMUNDONGO_V0_RELATORIO.md` · `PAINEL_P3.txt` · `CHAVE_P3_NAO_ABRIR.json` |
+| etapa | o que faz | exige antes | saída |
+|---|---|---|---|
+| 1 `detectar` | detector da Emenda 2 em todas as imagens | `MAPA_FERIDA_DIA.tsv` · todas RGB 8 bits | `deteccao_camundongo.json` · `PENDENTES_ESCALA_MANUAL.txt` |
+| 2 `medir` | diâmetro **e centro** das pendentes, ou `SEM_ANEL` | linha para **toda** pendente | `deteccao_camundongo_com_manual.json` |
+| 3 `rodar` | recorte, motor congelado | zero pendência aberta | `camundongo_v0.json` |
+| 4 `relatorio` | P1–P4, tabela por dia, IC, painel da P3 | hash do mapa inalterado | `CAMUNDONGO_V0_RELATORIO.md` · `PAINEL_P3.txt` · `CHAVE_P3_NAO_ABRIR.json` |
 
-**Recorte (3.3, agora implementado).** Se o quadrado de 24 mm não couber no
-quadro, a imagem é estendida com `numpy.pad(mode='edge')` — **réplica da borda**,
-nunca preto, nunca encolhendo o recorte — e a `fracao_replicada` vai para o JSON,
-no estrato `recorte incompleto`.
+A regra 3.2 **está na forma do programa**, não na disciplina de quem roda:
 
-**Sem escala própria (3.1).** Maior quadrado central → 1380 → 700, saída em
-**px²**, com o critério **`sec`** do próprio motor congelado — o critério sem o
-termo de tamanho, que já existe no código lacrado. É o que o item 3 do
-pré-registro manda quando não há nominal utilizável.
+> Detector falha → medida manual do anel, **sempre**, antes de o motor rodar
+> naquela imagem. Anel não visível → `SEM_ANEL`, estrato 3.1. Sem exceção.
+> A medida manual exige **diâmetro em px e centro (x, y)** — a escala sozinha não
+> define o recorte de 24 mm, e o centro do quadro não substitui o centro do anel.
 
-**`razao_pxmm`.** px/mm da imagem ÷ **mediana do banco**. Exige as escalas todas
-antes de qualquer medida, e é por isso que a etapa 1 é separada da 3. Fora de
-[0,80; 1,25] a imagem entra marcada no relatório — **contada, nunca removida**.
+**Recorte (3.3).** Fora do quadro → `numpy.pad(mode='edge')`, réplica de borda,
+nunca preto, nunca encolhendo; `fracao_replicada` no JSON, estrato
+`recorte incompleto`. **Sem escala (3.1).** Maior quadrado central → 1380 → 700,
+saída em **px²**, critério **`sec`** do motor congelado. **`razao_pxmm`.** px/mm ÷
+mediana do banco; fora de [0,80; 1,25] entra marcada — contada, nunca removida.
 
-**Duas regras que ficam fixadas aqui, antes de ver o banco:**
+**Fixadas aqui, antes de ver o banco:** assinatura da P4 =
+|área − 201,06 mm²|/201,06 ≤ **0,15**; "plausível" para o painel da P3 = obtida,
+sem assinatura do splint e com razão dentro da faixa.
 
-- **Assinatura da P4**: `parece_anel_do_splint` = |área − 201,06 mm²| / 201,06 ≤ **0,15**
-  (201,06 = π·8², o disco de 16 mm). É o teste da predição do item 5 da Emenda 1.
-- **"Plausível" para o painel da P3**: medida obtida, sem a assinatura do splint e
-  com `razao_pxmm` dentro da faixa. O painel pareia uma plausível com uma falhada
-  **do mesmo dia**, ordem sorteada com a semente 20260928; a chave sai em arquivo
-  separado, que não se abre antes das respostas.
-
-**`MAPA_FERIDA_DIA.tsv`** (nome, dia, animal, lado) vem da **convenção de nomes
-do README** e é fixado **antes da etapa 3**. A etapa 4 recusa-se a rodar sem ele.
-Nunca é inferido do resultado. Nenhuma imagem do banco foi vista para escrevê-lo —
-ele ainda não existe, e quem o escrever o faz a partir do README, não das saídas.
+**Predição não avaliável não é predição falhada.** Se faltarem dias com n ≥ 8, a
+P2 sai como **não avaliada**, não como falhada.
 
 ---
 
 ## 3 · O ENSAIO
 
-`teste_driver.py` — SHA-256 `51dd407f2479457a06ab16e80f132d0ffd3f2ca888451d8061c6deda2fdccf9d` (4428 bytes). Banco **sintético** de 48 imagens
-(6 dias × 8 feridas), desenhado por código, com ferida encolhendo, uma imagem sem
-anel e uma com o anel na beira do quadro. Semente 20260928.
+`teste_driver.py` — SHA-256 `b49bbdc9bbf5cb14147621b728dc3567a7dfb0c61372f39d990893f7cad56202` (6103 bytes). Banco **sintético** de 24
+imagens (3 dias × 8 feridas), desenhado por código, com ferida encolhendo, uma
+sem anel e uma com o anel na beira. Semente 20260928.
 
-| conferência | resultado |
-|---|---|
-| etapa 3 barrada sem a etapa 2 | ✅ código 1, mensagem da regra 3.2 |
-| recorte que não cabe | ✅ 1 imagem, `fracao_replicada` 0,150, por réplica de borda |
-| estrato "sem escala própria" | ✅ 1 imagem, unidade `px²`, critério `sec` |
-| JSON por imagem | ✅ arquivo, SHA-256, px/mm, centro, área, nota, canal, componentes, ajuste, estrato, razão |
-| bootstrap, tabela por dia, painel P3 | ✅ os três saem |
+```
+banco sintetico: 24 imagens
 
-🔴 **No ensaio sintético o motor devolveu a assinatura do splint em 89,4 % das
-imagens e a P2 FALHOU** (Spearman +0,30). É a mesma assinatura que a Emenda 2 já
-registrou em 4 de 5 cenas — agora num banco inteiro e com a P2 medida.
+=== etapa 1 detectar ===
+pendentes de escala manual: 1 de 24
 
-**Isto não é resultado sobre o banco real e não autoriza mexer em nada.** É o
-ensaio mostrando que o caminho inteiro corre e que a predição do item 5 da
-Emenda 1 tem como aparecer. Fica declarado antes do download, em cima do que já
-estava declarado.
+
+=== etapa 3 SEM a etapa 2 (tem de parar) ===
+saiu com codigo 1 | Regra 3.2: medida manual do anel antes de o motor rodar nela.
+
+=== etapa 2 com MEDIDAS.txt incompleto (tem de parar) ===
+saiu com codigo 1 | Regra 3.2: TODA pendente recebe linha — diametro+centro ou SEM_ANEL. Omitir uma seria escolha p
+
+=== etapa 2 medir ===
+pendentes declarados SEM_ANEL: 1
+medidas manuais: 0 | marcadas SEM_ANEL: 1 | pendencias abertas: 0
+
+=== etapa 3 com pendencia reaberta no _com_manual (tem de parar) ===
+saiu com codigo 1 | Regra 3.2: medida manual do anel antes de o motor rodar nela.
+
+=== etapa 3 rodar ===
+mediana de px/mm do banco: 40.3654
+
+   1/24
+…
+  24/24
+
+/home/claude/cam/ensaio/saida/camundongo_v0.json  SHA-256 34c7fb38d5c887a98ffa43bfff0a1d412449af4247beb1691d44e38e5b1bd669
+
+
+=== TIFF de 16 bits (tem de parar) ===
+saiu com codigo 1 | Formato inesperado nao se converte no improviso — e decisao do Fabio, com emenda datada, antes 
+
+=== etapa 1 sem o mapa (tem de parar) ===
+saiu com codigo 1 | Ele vem da convencao de nomes do README, e fixado ANTES da etapa 1 e nunca inferido do resultad
+
+=== etapa 4 relatorio ===
+# CAMUNDONGO · motor v0 congelado · relatório da rodada
+
+Banco Dryad 10.25338/B84W8Q · 24 imagens · motor intocado (origem SHA-256 78b193014577a451…)
+
+Diâmetro nominal 6 mm · efetivo passado ao motor **11.5 mm** (s = 57.5 px/mm no quadro de 1380) · semente 20260928 · bootstrap 10000
+
+## PREDIÇÕES
+
+| | predição | resultado | |
+|---|---|---|---|
+| **P1** | medida obtida em ≥ 50 % das imagens com anel visível | **100.0 %** (23 de 23) · IC95 [100.0; 100.0] | ✅ **confirmada** |
+| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **não avaliável** — só 2 dia(s) com n ≥ 8, e o coeficiente exige 3 | ⏳ **não avaliada** |
+| **P3** | revisor cego acerta ≥ 75 % dos pares | painel de 0 pares emitido; a preencher | ⏳ pendente |
+| **P4** | falha dominante = referência de pele contaminada | assinatura "anel do splint" em **78.3 %** das obtidas | ver modos abaixo |
+
+## TABELA POR DIA
+
+| dia | n medidas | área mediana | mínimo | máximo |
+|---|---|---|---|---|
+| 0 | 8 | 189.35 | 29.39 | 195.69 |
+
+/home/claude/cam/ensaio/saida/CAMUNDONGO_V0_RELATORIO.md
+
+
+--- conferencias do driver ---
+imagens com recorte replicado : 1  (fracao max 0.150)
+imagens no estrato sem escala : 1  (unidade px2, criterio sec)
+imagens com medida obtida     : 24 de 24
+painel P3 emitido             : True
+```
+
+**Cinco tentativas de furar o protocolo, cinco bloqueios com código 1:** etapa 3
+sem a etapa 2 · `MEDIDAS.txt` incompleto · pendência reaberta no JSON manual ·
+TIFF de 16 bits · etapa 1 sem o mapa.
+
+🔴 A assinatura do anel do splint aparece em **78,3 %** das imagens do ensaio —
+o mesmo que a Emenda 2 viu em 4 de 5 cenas. Continua sendo cena sintética, e
+continua não autorizando mexer em nada.
 
 ---
 
-## 4 · O QUE CONTINUA VALENDO
+## 4 · DECISÃO QUE É DO FABIO, ANTES DO DOWNLOAD
+
+**Quem é o revisor cego da P3?** A etapa 3 não imprime mais nada que vaze a
+resposta, mas isso não basta se o revisor for a mesma pessoa que roda. Duas
+saídas, e o pré-registro não escolhe entre elas:
+
+- **outra pessoa** preenche o `PAINEL_P3.txt` — o Emílio foi observador 2 no
+  porco e já fez esse papel; ou
+- **o Fabio preenche o painel ANTES de abrir `camundongo_v0.json` e o
+  relatório**, e declara a ordem no log.
+
+Fica registrado que a escolha foi feita antes de qualquer imagem ser vista.
+
+---
+
+## 5 · O QUE CONTINUA VALENDO
 
 Tudo do pré-registro, da Emenda 1 e da Emenda 2: uma rodada · nenhuma exclusão
 por resultado · nenhuma constante do v0 tocada · P1–P4 como escritas · estratos
@@ -137,7 +217,7 @@ sintética e hasheado ANTES de qualquer byte de imagem do banco ser baixado.
 Não contém nenhuma constante do motor v0 e não altera nenhuma. O motor entra
 por motor_v0_funcoes.py, extração verbatim de v0_congelado_2026-09-22/rodar.py.
 
-TRÊS ETAPAS, NESTA ORDEM, SEM EXCEÇÃO
+QUATRO ETAPAS, NESTA ORDEM, SEM EXCEÇÃO
   1  detectar  — detector do anel em todas as imagens; grava deteccao.json e,
                  se houver falha, PENDENTES_ESCALA_MANUAL.txt.
   2  medir     — o operador informa o diâmetro do anel em px das pendentes.
@@ -197,16 +277,52 @@ def lista(pasta):
     return sorted(f for f in os.listdir(pasta) if f.lower().endswith(EXT))
 
 
+def abre_rgb8(p):
+    """Abre a imagem e PARA se nao for RGB de 8 bits.
+
+    Regra fixada antes do download: formato inesperado -> parado, nunca
+    conversao improvisada. `Image.convert('RGB')` num TIFF de 16 bits satura em
+    branco, e num TIFF em tons de cinza zera o canal 'verm' (R-(G+B)/2 = 0).
+    Os dois estragam em silencio. O modo lido vai para o JSON."""
+    im = Image.open(p)
+    modo = im.mode
+    if modo != 'RGB':
+        sys.exit('PARADO: %s tem modo PIL %r, esperado RGB de 8 bits.\n'
+                 'Formato inesperado nao se converte no improviso — e decisao do '
+                 'Fabio, com emenda datada, antes de qualquer medida.' % (os.path.basename(p), modo))
+    a = np.asarray(im)
+    if a.dtype != np.uint8 or a.ndim != 3 or a.shape[2] != 3:
+        sys.exit('PARADO: %s tem dtype %s e forma %s, esperado uint8 HxWx3.'
+                 % (os.path.basename(p), a.dtype, a.shape))
+    return a, modo
+
+
+def exige_mapa(saida):
+    """O mapa ferida-dia vem da convencao de nomes do README e e fixado ANTES
+    de qualquer deteccao. A etapa 1 exige o arquivo e grava o SHA-256 dele; a
+    etapa 4 recusa se o hash tiver mudado."""
+    pm = os.path.join(saida, 'MAPA_FERIDA_DIA.tsv')
+    if not os.path.isfile(pm):
+        sys.exit('PARADO: falta %s.\nEle vem da convencao de nomes do README, e '
+                 'fixado ANTES da etapa 1 e nunca inferido do resultado.' % pm)
+    return sha256(pm)
+
+
 # ------------------------------------------------------------------ etapa 1
 def etapa_detectar(pasta, saida):
     os.makedirs(saida, exist_ok=True)
+    h_mapa = exige_mapa(saida)
     arqs = lista(pasta)
-    print('%d imagens' % len(arqs))
-    reg = {}
+    print('%d imagens | SHA-256 do mapa %s' % (len(arqs), h_mapa[:16] + '…'))
+    reg = {'_meta': {'sha256_mapa_ferida_dia': h_mapa,
+                     'quando': datetime.datetime.now().astimezone()
+                     .isoformat(timespec='seconds')}}
     for i, a in enumerate(arqs, 1):
         p = os.path.join(pasta, a)
-        r = detecta(p)
-        reg[a] = {'arquivo': a, 'sha256': sha256(p), 'deteccao': r,
+        arr, modo = abre_rgb8(p)
+        r = detecta(arr)
+        reg[a] = {'arquivo': a, 'sha256': sha256(p), 'modo_pil': modo,
+                  'deteccao': r,
                   'px_mm': (px_por_mm(r) if r['ok'] else None),
                   'escala_manual': False}
         print('%4d/%d  %-40s %s' % (i, len(arqs), a,
@@ -256,9 +372,18 @@ def etapa_medir(saida, medidas):
             reg[nome]['px_mm'] = d / ANEL_MM
             reg[nome]['quando_medido'] = quando
             n_ok += 1
+    faltam = [a for a, v in reg.items()
+              if not a.startswith('_') and not v['deteccao']['ok']
+              and not v.get('escala_manual') and v.get('estrato') != 'sem escala propria']
+    if faltam:
+        sys.exit('PARADO: %d pendencia(s) sem linha em MEDIDAS.txt: %s\n'
+                 'Regra 3.2: TODA pendente recebe linha — diametro+centro ou '
+                 'SEM_ANEL. Omitir uma seria escolha por imagem.'
+                 % (len(faltam), ', '.join(faltam[:5]) + ('…' if len(faltam) > 5 else '')))
     json.dump(reg, open(os.path.join(saida, 'deteccao_camundongo_com_manual.json'), 'w'),
               indent=1)
-    print('medidas manuais: %d | marcadas SEM_ANEL: %d' % (n_ok, n_sem))
+    print('medidas manuais: %d | marcadas SEM_ANEL: %d | pendencias abertas: 0'
+          % (n_ok, n_sem))
 
 
 # --------------------------------------------------------- recorte (item 3.3)
@@ -316,23 +441,27 @@ def etapa_rodar(pasta, saida):
     pj = os.path.join(saida, 'deteccao_camundongo_com_manual.json')
     if not os.path.isfile(pj):
         pj = os.path.join(saida, 'deteccao_camundongo.json')
-        reg = json.load(open(pj))
-        if any(not v['deteccao']['ok'] and not v.get('escala_manual')
-               and v.get('estrato') != 'sem escala propria' for v in reg.values()):
-            sys.exit('PARADO: ha pendencias de escala e a etapa 2 nao foi feita.\n'
-                     'Regra 3.2: medida manual do anel antes de o motor rodar.')
     reg = json.load(open(pj))
+    # a checagem roda em QUALQUER json carregado, nao so quando falta o manual
+    abertas = [a for a, v in reg.items()
+               if not a.startswith('_') and not v['deteccao']['ok']
+               and not v.get('escala_manual') and v.get('estrato') != 'sem escala propria']
+    if abertas:
+        sys.exit('PARADO: %d pendencia(s) de escala sem resposta: %s\n'
+                 'Regra 3.2: medida manual do anel antes de o motor rodar nela.'
+                 % (len(abertas), ', '.join(abertas[:5]) + ('…' if len(abertas) > 5 else '')))
 
     # razao_pxmm contra a MEDIANA DO BANCO: precisa de todas as escalas antes
-    escalas = [v['px_mm'] for v in reg.values() if v['px_mm']]
+    itens = {a: v for a, v in reg.items() if not a.startswith('_')}
+    escalas = [v['px_mm'] for v in itens.values() if v['px_mm']]
     med = float(np.median(escalas)) if escalas else None
     print('mediana de px/mm do banco: %s' % ('%.4f' % med if med else '—'))
 
     res = {}
-    for i, (a, v) in enumerate(sorted(reg.items()), 1):
+    for i, (a, v) in enumerate(sorted(itens.items()), 1):
         p = os.path.join(pasta, a)
-        im = np.asarray(Image.open(p).convert('RGB'))
-        linha = {'arquivo': a, 'sha256': v['sha256'],
+        im, modo = abre_rgb8(p)
+        linha = {'arquivo': a, 'sha256': v['sha256'], 'modo_pil': modo,
                  'escala_manual': bool(v.get('escala_manual')),
                  'diam_anel_px': (v.get('diam_anel_px_manual')
                                   or (v['deteccao'].get('diam_px') if v['deteccao']['ok'] else None)),
@@ -378,8 +507,11 @@ def etapa_rodar(pasta, saida):
                                   bool(abs(area - AREA_SPLINT_MM2) / AREA_SPLINT_MM2
                                        <= TOL_SPLINT)})
         res[a] = linha
-        print('%4d  %-40s %s' % (i, a, _resumo(linha)))
+        # NAO se imprime area, nota, px/mm nem se a medida saiu: isso e a
+        # resposta da P3. So o contador. O detalhe vai para o JSON.
+        print('\r%4d/%d' % (i, len(itens)), end='', flush=True)
 
+    print()
     saidas = {'_meta': {'quando': datetime.datetime.now().astimezone()
                         .isoformat(timespec='seconds'),
                         'recorte_mm': RECORTE_MM, 'lado_1380': LADO_1380,
@@ -387,12 +519,32 @@ def etapa_rodar(pasta, saida):
                         's_1380_px_mm': S_1380, 'semente': SEMENTE,
                         'bootstrap': BOOT, 'mediana_pxmm_banco': med,
                         'sha256_motor_origem':
-                            '78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732'},
+                            '78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732',
+                        'sha256_codigo': _hashes_codigo(),
+                        'sha256_mapa_ferida_dia': reg.get('_meta', {})
+                            .get('sha256_mapa_ferida_dia'),
+                        'versoes': _versoes()},
               'imagens': res}
     pout = os.path.join(saida, 'camundongo_v0.json')
     json.dump(saidas, open(pout, 'w'), indent=1)
     print('\n%s  SHA-256 %s' % (pout, sha256(pout)))
     return saidas
+
+
+def _hashes_codigo():
+    """SHA-256 dos tres .py do caminho da medida, gravados na propria saida"""
+    d = {}
+    for f in ('detecta_anel_camundongo.py', 'motor_v0_funcoes.py', 'roda_camundongo.py'):
+        q = os.path.join(AQUI, f)
+        d[f] = sha256(q) if os.path.isfile(q) else None
+    return d
+
+
+def _versoes():
+    import platform, numpy, scipy, skimage, PIL
+    return {'python': platform.python_version(), 'numpy': numpy.__version__,
+            'scipy': scipy.__version__, 'skimage': skimage.__version__,
+            'Pillow': PIL.__version__, 'plataforma': platform.platform()}
 
 
 def _comp(m):
@@ -437,6 +589,13 @@ def etapa_relatorio(saida):
     if not os.path.isfile(pmapa):
         sys.exit('PARADO: falta MAPA_FERIDA_DIA.tsv (nome<TAB>dia<TAB>animal<TAB>lado).\n'
                  'Ele vem da convencao de nomes do README e e fixado ANTES da etapa 3.')
+    h_agora = sha256(pmapa)
+    h_etapa1 = dados['_meta'].get('sha256_mapa_ferida_dia')
+    if h_etapa1 and h_agora != h_etapa1:
+        sys.exit('PARADO: MAPA_FERIDA_DIA.tsv mudou depois da etapa 1.\n'
+                 '  etapa 1: %s\n  agora  : %s\n'
+                 'O mapa e fixado antes de qualquer medida e nao se altera depois.'
+                 % (h_etapa1, h_agora))
     mapa = {}
     for linha in open(pmapa, encoding='utf-8'):
         if linha.startswith('#') or not linha.strip():
@@ -459,6 +618,7 @@ def etapa_relatorio(saida):
     com_anel = [a for a, l in imgs.items() if l['estrato'] != 'sem escala propria']
     obtidas = [a for a in com_anel if imgs[a]['obtida']]
     p1 = len(obtidas) / len(com_anel) if com_anel else float('nan')
+    p1_aval = bool(com_anel)
     p1_lo, p1_hi = ic([1.0 if imgs[a]['obtida'] else 0.0 for a in com_anel], np.mean)
 
     por_dia = {}
@@ -517,17 +677,28 @@ def etapa_relatorio(saida):
     rel.append('## PREDIÇÕES\n')
     rel.append('| | predição | resultado | |')
     rel.append('|---|---|---|---|')
-    rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
-               '**%.1f %%** (%d de %d) · IC95 [%.1f; %.1f] | %s |'
-               % (100 * p1, len(obtidas), len(com_anel), 100 * p1_lo, 100 * p1_hi,
-                  '✅ **confirmada**' if p1 >= 0.5 else '❌ **FALHOU**'))
-    rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **%.4f** (%d dias com n ≥ 8) | %s |'
-               % (p2, len(dias), '✅ **confirmada**' if p2 <= -0.8 else '❌ **FALHOU**'))
+    if not p1_aval:
+        rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
+                   '**não avaliável** — nenhuma imagem com anel visível | '
+                   '⏳ **não avaliada** |')
+    else:
+        rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
+                   '**%.1f %%** (%d de %d) · IC95 [%.1f; %.1f] | %s |'
+                   % (100 * p1, len(obtidas), len(com_anel), 100 * p1_lo, 100 * p1_hi,
+                      '✅ **confirmada**' if p1 >= 0.5 else '❌ **FALHOU**'))
+    if len(dias) < 3 or not np.isfinite(p2):
+        rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | '
+                   '**não avaliável** — só %d dia(s) com n ≥ 8, e o coeficiente '
+                   'exige 3 | ⏳ **não avaliada** |' % len(dias))
+    else:
+        rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **%.4f** '
+                   '(%d dias com n ≥ 8) | %s |'
+                   % (p2, len(dias), '✅ **confirmada**' if p2 <= -0.8 else '❌ **FALHOU**'))
     rel.append('| **P3** | revisor cego acerta ≥ 75 %% dos pares | '
                'painel de %d pares emitido; a preencher | ⏳ pendente |' % len(painel))
     rel.append('| **P4** | falha dominante = referência de pele contaminada | '
-               'assinatura "anel do splint" em **%.1f %%** das obtidas | %s |'
-               % (100 * p4_assin, 'ver modos abaixo'))
+               'assinatura "anel do splint" em **%s** das obtidas | ver modos abaixo |'
+               % ('%.1f %%' % (100 * p4_assin) if obtidas else 'não avaliável'))
     rel.append('\n## TABELA POR DIA\n')
     rel.extend(linhas)
     rel.append('\n## MODOS DE FALHA\n')
@@ -572,5 +743,5 @@ if __name__ == '__main__':
 
 ---
 
-*Escrita pelo Opus em 01/10/2026, sobre a revisão do Fable. Nenhuma imagem do
-banco foi baixada, aberta ou inspecionada até esta linha.*
+*Escrita pelo Opus em 01/10/2026, sobre a segunda revisão do Fable. Nenhuma
+imagem do banco foi baixada, aberta ou inspecionada até esta linha.*
