@@ -23,7 +23,10 @@ cair a luz ou apertar q nao perde o que ja foi medido. Ao reabrir, as imagens
 que ja tem linha no MEDIDAS.txt sao puladas.
 
 Na tela:
-    clique 4 pontos na borda EXTERNA do splint — esquerda, direita, cima, baixo
+    clique 4 pontos na borda EXTERNA do splint, bem espalhados pela volta.
+    A ORDEM NAO IMPORTA: o diametro e a media das duas maiores entre as seis
+    distancias dos quatro pontos. Se os quatro ficarem amontoados de um lado,
+    a barra avisa.
     Enter      grava e vai para a proxima
     n          grava SEM_ANEL (anel nao visivel) e vai para a proxima
     r          apaga os 4 cliques desta imagem e recomeca
@@ -44,22 +47,45 @@ LUPA_ZOOM = 3.0         # aumento sobre a imagem ORIGINAL
 
 # --------------------------------------------------------------- a aritmetica
 def calcula(pontos):
-    """4 pontos (esquerda, direita, cima, baixo) em px da imagem ORIGINAL.
+    """4 pontos na borda externa do splint, em px da imagem ORIGINAL.
 
-    diametro = media das duas cordas    corda1 = |p0 p1|, corda2 = |p2 p3|
+    diametro = media das DUAS MAIORES entre as 6 distancias dos 4 pontos
     centro   = media dos 4 pontos
 
-    Nao ajusta elipse, nao pondera, nao descarta ponto. Quatro cliques, duas
-    distancias, uma media — para que a conta seja conferivel a mao."""
+    A ORDEM DO CLIQUE NAO IMPORTA — e o reparo do Fable, 01/10/2026. A versao
+    anterior (42e77a0d…) fazia corda1 = |p1 p2| e corda2 = |p3 p4|: clicar
+    esquerda-cima-direita-baixo transformava as duas cordas em diagonais, o
+    diametro saia ~30 % menor, e o aviso de diferenca entre cordas nao acusava,
+    porque as duas diagonais sao iguais. Em 255 imagens uma troca de ordem
+    passaria despercebida.
+
+    Com as duas maiores, num circulo as duas diametrais ganham das quatro
+    laterais (D contra 0,707·D) e o resultado independe da ordem. Numa elipse,
+    as duas maiores sao os dois eixos — enquanto b/a > 1/raiz(3) = 0,577, que e
+    um splint visto a ~55 graus. Abaixo disso a lateral passa o eixo menor e a
+    conta degrada; o ensaio mede esse limite e ele esta declarado na nota.
+
+    Nao ajusta elipse, nao pondera, nao descarta ponto: seis distancias, duas
+    maiores, uma media — conferivel a mao a partir do log dos cliques.
+
+    Devolve tambem a TERCEIRA maior: se ela passar de 0,80 do diametro, os
+    quatro pontos estao mal distribuidos (amontoados num lado) e a barra avisa."""
     if len(pontos) != 4:
         raise ValueError('sao exatamente 4 pontos')
-    (x0, y0), (x1, y1), (x2, y2), (x3, y3) = pontos
-    c1 = math.hypot(x1 - x0, y1 - y0)
-    c2 = math.hypot(x3 - x2, y3 - y2)
+    dists = []
+    for i in range(4):
+        for j in range(i + 1, 4):
+            dists.append(math.hypot(pontos[j][0] - pontos[i][0],
+                                    pontos[j][1] - pontos[i][1]))
+    dists.sort(reverse=True)
+    c1, c2, c3 = dists[0], dists[1], dists[2]
     diam = (c1 + c2) / 2.0
-    cx = (x0 + x1 + x2 + x3) / 4.0
-    cy = (y0 + y1 + y2 + y3) / 4.0
-    return diam, cx, cy, c1, c2
+    cx = sum(p[0] for p in pontos) / 4.0
+    cy = sum(p[1] for p in pontos) / 4.0
+    return diam, cx, cy, c1, c2, c3
+
+
+FRAC_3A = 0.80          # 3a maior acima disso = pontos mal distribuidos
 
 
 # ------------------------------------------------------------------- arquivos
@@ -130,12 +156,19 @@ def main(pasta, saida):
         n = est['i'] + 1
         nome = fila[est['i']]
         msg = '%d/%d  %s   cliques: %d/4' % (n, len(fila), nome, len(est['pts']))
+        aviso = ''
         if len(est['pts']) == 4:
-            d, cx, cy, c1, c2 = calcula(est['pts'])
+            d, cx, cy, c1, c2, c3 = calcula(est['pts'])
             dif = abs(c1 - c2) / d * 100 if d else 0
-            msg += '   diametro %.1f px   px/mm %.3f   cordas diferem %.1f%%' % (
+            msg += '   diametro %.1f px   px/mm %.3f   as duas maiores diferem %.1f%%' % (
                 d, d / ANEL_MM, dif)
+            if d and c3 > FRAC_3A * d:
+                aviso = ('ATENCAO: a 3a maior distancia e %.0f%% do diametro (limite %.0f%%) — '
+                         'os 4 pontos parecem amontoados de um lado. r para refazer.'
+                         % (c3 / d * 100, FRAC_3A * 100))
         msg += '    [Enter grava · n SEM_ANEL · r refaz · Backspace apaga · q sai]'
+        if aviso:
+            msg += '\n' + aviso
         if extra:
             msg += '\n' + extra
         barra.config(text=msg)
@@ -172,11 +205,13 @@ def main(pasta, saida):
                                               text=str(len(est['pts'])),
                                               fill='#00ff88', font=('Consolas', 12, 'bold')))
         if len(est['pts']) == 4:
+            # desenha as DUAS MAIORES distancias — as mesmas que entram na conta
             p = [(a * est['fator'], b * est['fator']) for a, b in est['pts']]
-            est['marcas'].append(tela.create_line(p[0][0], p[0][1], p[1][0], p[1][1],
-                                                  fill='#00ff88', width=1))
-            est['marcas'].append(tela.create_line(p[2][0], p[2][1], p[3][0], p[3][1],
-                                                  fill='#00ff88', width=1))
+            pares = sorted(((math.hypot(p[j][0] - p[i][0], p[j][1] - p[i][1]), i, j)
+                            for i in range(4) for j in range(i + 1, 4)), reverse=True)
+            for _d, i, j in pares[:2]:
+                est['marcas'].append(tela.create_line(p[i][0], p[i][1], p[j][0], p[j][1],
+                                                      fill='#00ff88', width=1))
         status()
 
     def move(ev):
@@ -237,7 +272,7 @@ def main(pasta, saida):
                 status('faltam %d clique(s) — sao 4 na borda EXTERNA do splint'
                        % (4 - len(est['pts'])))
                 return
-            d, cx, cy, _c1, _c2 = calcula(est['pts'])
+            d, cx, cy, _c1, _c2, _c3 = calcula(est['pts'])
             grava('%s\t%.3f\t%.3f\t%.3f\n' % (nome, d, cx, cy),
                   '%s\t%s\t%.6f\t%s\n'
                   % (nome,
