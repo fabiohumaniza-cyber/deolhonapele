@@ -37,6 +37,8 @@ Na tela:
     Enter      grava e vai para a proxima
     n          grava SEM_ANEL (anel nao visivel) e vai para a proxima
     d          marca/desmarca "ha mais de um anel neste quadro"
+    z          liga/desliga o zoom 2x, centrado em onde o mouse estava
+    h          esconde/mostra a referencia do banco
     r          apaga os 4 cliques desta imagem e recomeca
     Backspace  apaga o ultimo clique
     q          sai; da proxima vez retoma de onde parou
@@ -44,6 +46,11 @@ Na tela:
 A tecla d nao muda medida nenhuma: ela grava um fato sobre a FOTO no
 MEDIDAS_LOG.tsv, para que o numero de imagens com dois splints no quadro seja
 conhecido em vez de suposto.
+
+O que grava e a COORDENADA DO CURSOR, nao o circulo verde — o circulo e so
+desenho. E o zoom e so vista: toda a geometria vive em px da imagem ORIGINAL, a
+tela e uma janela com deslocamento inteiro e escala conhecida, e os cliques
+voltam para px da original pela mesma conta, com ou sem zoom.
 
 A LUPA do canto e so para enxergar: ela mostra um pedaco da imagem ORIGINAL em
 volta do cursor, e nao registra, nao altera e nao entra em conta nenhuma. E o
@@ -54,7 +61,8 @@ import os, sys, math, datetime
 ANEL_MM = 16.0          # diametro externo do splint, README do banco
 EXT = ('.tif', '.tiff')
 LUPA_LADO = 180         # lado do quadro da lupa, em px de tela
-LUPA_ZOOM = 3.0         # aumento sobre a imagem ORIGINAL
+LUPA_ZOOM = 4.0         # aumento da lupa sobre a imagem ORIGINAL
+ZOOM_Z = 2.0            # aumento da tecla z sobre a vista inteira
 
 
 # --------------------------------------------------------------- a aritmetica
@@ -98,6 +106,30 @@ def calcula(pontos):
 
 
 FRAC_3A = 0.80          # 3a maior acima disso = pontos mal distribuidos
+
+
+# ------------------------------------------------ a vista (zoom e deslocamento)
+# Estas tres funcoes sao o unico lugar onde tela e imagem se encontram. Ficam
+# fora da janela, no nivel do modulo, para poderem ser testadas sem abrir tela.
+#
+# Toda a geometria vive em px da imagem ORIGINAL. A tela e uma JANELA: canto
+# (ox, oy) inteiro, escala efetiva e = fator x zoom. Como ox e oy sao inteiros e
+# e e conhecida, ida e volta sao exatas, e o zoom nao pode mexer em medida.
+def janela_de(W, H, larg, alt, fator, z, off):
+    """Devolve (ox, oy, ww, wh, e) da janela visivel, ja presa dentro da imagem."""
+    e = fator * z
+    ww = int(min(W, larg / e)); wh = int(min(H, alt / e))
+    ox = int(min(max(0, off[0]), W - ww))
+    oy = int(min(max(0, off[1]), H - wh))
+    return ox, oy, ww, wh, e
+
+
+def tela_para_orig(sx, sy, ox, oy, e):
+    return ox + sx / e, oy + sy / e
+
+
+def orig_para_tela(x, y, ox, oy, e):
+    return (x - ox) * e, (y - oy) * e
 
 
 # ------------------------------------------------------------------- arquivos
@@ -162,17 +194,64 @@ def main(pasta, saida, recortes=None):
     tela = tk.Canvas(raiz, width=larg, height=alt, bg='#202020', highlightthickness=0)
     tela.pack()
 
-    est = {'i': 0, 'pts': [], 'img': None, 'tk': None, 'fator': 1.0,
-           'orig': None, 'lupa': None, 'marcas': [], 'dois': False, 'ref': None}
+    est = {'i': 0, 'pts': [], 'tk': None, 'fator': 1.0, 'z': 1.0, 'off': (0, 0),
+           'orig': None, 'lupa': None, 'dois': False, 'ref': None,
+           'ref_on': True, 'mouse': (0.0, 0.0)}
 
-    REF_LADO = 260
+    REF_LADO = 240
+
+    # ---------------------------------------------------- janela visivel
+    # Toda a geometria vive em px da imagem ORIGINAL. A tela e so uma vista:
+    # deslocamento inteiro (off) e escala efetiva (fator x zoom). Por isso o
+    # zoom NAO altera medida nenhuma — ele muda o que se ve, nunca o que se
+    # grava, e os cliques voltam para px da original pela mesma conta.
+    def janela():
+        W, H = est['orig'].size
+        ox, oy, ww, wh, e = janela_de(W, H, larg, alt, est['fator'], est['z'], est['off'])
+        est['off'] = (ox, oy)
+        return ox, oy, ww, wh, e
+
+    def para_tela(x, y):
+        ox, oy, _ww, _wh, e = janela()
+        return orig_para_tela(x, y, ox, oy, e)
+
+    def para_orig(sx, sy):
+        ox, oy, _ww, _wh, e = janela()
+        return tela_para_orig(sx, sy, ox, oy, e)
+
+    def desenha_fundo():
+        ox, oy, ww, wh, e = janela()
+        cai = est['orig'].crop((ox, oy, ox + ww, oy + wh))
+        cai = cai.resize((max(1, int(ww * e)), max(1, int(wh * e))), Image.LANCZOS)
+        est['tk'] = ImageTk.PhotoImage(cai)
+        tela.delete('fundo')
+        tela.create_image(0, 0, anchor='nw', image=est['tk'], tags='fundo')
+        tela.tag_lower('fundo')
+
+    def desenha_marcas():
+        tela.delete('marca')
+        p = [para_tela(a, b) for a, b in est['pts']]
+        for i, (sx, sy) in enumerate(p):
+            r = 6
+            tela.create_oval(sx - r, sy - r, sx + r, sy + r,
+                             outline='#00ff88', width=2, tags='marca')
+            tela.create_text(sx + 12, sy - 12, text=str(i + 1), fill='#00ff88',
+                             font=('Consolas', 12, 'bold'), tags='marca')
+        if len(p) == 4:
+            # as DUAS MAIORES distancias — as mesmas que entram na conta
+            pares = sorted(((math.hypot(p[j][0] - p[i][0], p[j][1] - p[i][1]), i, j)
+                            for i in range(4) for j in range(i + 1, 4)), reverse=True)
+            for _d, i, j in pares[:2]:
+                tela.create_line(p[i][0], p[i][1], p[j][0], p[j][1],
+                                 fill='#00ff88', width=1, tags='marca')
 
     def mostra_referencia(nome):
         """Recorte publicado pelos autores do banco, so para o operador saber
-        QUAL anel e o desta imagem. Nao e medida e nao entra em conta."""
+        QUAL anel e o desta imagem. Nao e medida e nao entra em conta.
+        Canto superior direito, ABAIXO da lupa; tecla h esconde e mostra."""
         tela.delete('ref')
         est['ref'] = None
-        if not recortes:
+        if not recortes or not est['ref_on']:
             return
         p = os.path.join(recortes, os.path.splitext(nome)[0] + '.png')
         if not os.path.isfile(p):
@@ -180,13 +259,14 @@ def main(pasta, saida, recortes=None):
         im = Image.open(p).convert('RGB')
         im.thumbnail((REF_LADO, REF_LADO), Image.LANCZOS)
         est['ref'] = ImageTk.PhotoImage(im)
-        ry = alt - im.size[1] - 10
-        tela.create_image(10, ry, anchor='nw', image=est['ref'], tags='ref')
-        tela.create_rectangle(10, ry, 10 + im.size[0], ry + im.size[1],
-                              outline='#ffcc00', width=2, tags='ref')
-        tela.create_text(14, ry - 10, anchor='w', fill='#ffcc00',
+        rx = larg - im.size[0] - 10
+        ry = 10 + LUPA_LADO + 26
+        tela.create_text(rx, ry - 14, anchor='w', fill='#ffcc00',
                          font=('Consolas', 10, 'bold'), tags='ref',
-                         text='referencia do banco — e ESTA ferida')
+                         text='referencia do banco — e ESTA ferida  [h]')
+        tela.create_image(rx, ry, anchor='nw', image=est['ref'], tags='ref')
+        tela.create_rectangle(rx, ry, rx + im.size[0], ry + im.size[1],
+                              outline='#ffcc00', width=2, tags='ref')
 
     def status(extra=''):
         n = est['i'] + 1
@@ -203,7 +283,10 @@ def main(pasta, saida, recortes=None):
                 aviso = ('ATENCAO: a 3a maior distancia e %.0f%% do diametro (limite %.0f%%) — '
                          'os 4 pontos parecem amontoados de um lado. r para refazer.'
                          % (c3 / d * 100, FRAC_3A * 100))
-        msg += '    [Enter grava · n SEM_ANEL · d dois aneis · r refaz · Backspace apaga · q sai]'
+        if est['z'] > 1.0:
+            msg += '   [z] ZOOM %gx' % est['z']
+        msg += ('    [Enter grava · n SEM_ANEL · d dois aneis · z zoom · h referencia'
+                ' · r refaz · Backspace apaga · q sai]')
         if aviso:
             msg += '\n' + aviso
         if extra:
@@ -211,46 +294,27 @@ def main(pasta, saida, recortes=None):
         barra.config(text=msg)
 
     def carrega():
-        for m in est['marcas']:
-            tela.delete(m)
-        est['marcas'] = []
         est['pts'] = []
         est['dois'] = False
+        est['z'] = 1.0
+        est['off'] = (0, 0)
+        tela.delete('marca')
         nome = fila[est['i']]
         barra.config(text='carregando %s …' % nome)
         raiz.update_idletasks()
         im = Image.open(os.path.join(pasta, nome))
         est['orig'] = im
         W, H = im.size
-        fator = min(larg / float(W), alt / float(H), 1.0)
-        est['fator'] = fator
-        vis = im.resize((max(1, int(W * fator)), max(1, int(H * fator))), Image.LANCZOS)
-        est['tk'] = ImageTk.PhotoImage(vis)
-        tela.delete('fundo')
-        tela.create_image(0, 0, anchor='nw', image=est['tk'], tags='fundo')
-        tela.tag_lower('fundo')
+        est['fator'] = min(larg / float(W), alt / float(H), 1.0)
+        desenha_fundo()
         mostra_referencia(nome)
         status()
 
     def clique(ev):
         if len(est['pts']) >= 4:
             return
-        x = ev.x / est['fator']; y = ev.y / est['fator']
-        est['pts'].append((x, y))
-        r = 6
-        est['marcas'].append(tela.create_oval(ev.x - r, ev.y - r, ev.x + r, ev.y + r,
-                                              outline='#00ff88', width=2))
-        est['marcas'].append(tela.create_text(ev.x + 12, ev.y - 12,
-                                              text=str(len(est['pts'])),
-                                              fill='#00ff88', font=('Consolas', 12, 'bold')))
-        if len(est['pts']) == 4:
-            # desenha as DUAS MAIORES distancias — as mesmas que entram na conta
-            p = [(a * est['fator'], b * est['fator']) for a, b in est['pts']]
-            pares = sorted(((math.hypot(p[j][0] - p[i][0], p[j][1] - p[i][1]), i, j)
-                            for i in range(4) for j in range(i + 1, 4)), reverse=True)
-            for _d, i, j in pares[:2]:
-                est['marcas'].append(tela.create_line(p[i][0], p[i][1], p[j][0], p[j][1],
-                                                      fill='#00ff88', width=1))
+        est['pts'].append(para_orig(ev.x, ev.y))
+        desenha_marcas()
         status()
 
     def move(ev):
@@ -258,8 +322,10 @@ def main(pasta, saida, recortes=None):
         im = est['orig']
         if im is None:
             return
+        x, y = para_orig(ev.x, ev.y)
+        est['mouse'] = (x, y)
+        x = int(x); y = int(y)
         lado = int(LUPA_LADO / LUPA_ZOOM)
-        x = int(ev.x / est['fator']); y = int(ev.y / est['fator'])
         cai = im.crop((x - lado // 2, y - lado // 2, x + lado // 2, y + lado // 2))
         cai = cai.resize((LUPA_LADO, LUPA_LADO), Image.NEAREST)
         est['lupa'] = ImageTk.PhotoImage(cai)
@@ -297,12 +363,24 @@ def main(pasta, saida, recortes=None):
         elif k == 'backspace':
             if est['pts']:
                 est['pts'].pop()
-                for _ in range(2):
-                    if est['marcas']:
-                        tela.delete(est['marcas'].pop())
+                desenha_marcas()
                 status()
         elif k == 'd':
             est['dois'] = not est['dois']
+            status()
+        elif k == 'h':
+            est['ref_on'] = not est['ref_on']
+            mostra_referencia(nome)
+        elif k == 'z':
+            # zoom centrado no ultimo ponto do mouse. So vista: os cliques ja
+            # gravados estao em px da original e sao redesenhados no lugar.
+            est['z'] = ZOOM_Z if est['z'] == 1.0 else 1.0
+            W, H = est['orig'].size
+            e = est['fator'] * est['z']
+            ww = int(min(W, larg / e)); wh = int(min(H, alt / e))
+            mx, my = est['mouse']
+            est['off'] = (int(mx - ww / 2), int(my - wh / 2))
+            desenha_fundo(); desenha_marcas(); mostra_referencia(nome)
             status()
         elif k == 'n':
             grava('%s\tSEM_ANEL\n' % nome,

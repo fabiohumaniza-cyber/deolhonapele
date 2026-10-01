@@ -11,7 +11,8 @@ O tkinter nao e importado: no mede_anel.py ele fica dentro de main().
 import os, sys, json, math, shutil, subprocess, tempfile, itertools
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
-from mede_anel import calcula, le_pendentes, le_feitas, ANEL_MM, FRAC_3A
+from mede_anel import (calcula, le_pendentes, le_feitas, ANEL_MM, FRAC_3A,
+                       janela_de, tela_para_orig, orig_para_tela, ZOOM_Z)
 
 print('=== 1. aritmetica dos 4 cliques ===')
 print('%-34s %-22s %-22s' % ('caso', 'diametro', 'centro'))
@@ -86,6 +87,57 @@ for nome, pts in (('4 pontos bem espalhados', cardeais(0, 0, 350, 350)),
     frac = c3 / d
     print('%-26s diametro %7.1f   3a maior %7.1f  = %.0f%% -> %s'
           % (nome, d, c3, frac * 100, 'AVISA' if frac > FRAC_3A else 'nao avisa'))
+
+print('\n=== 1e. O ZOOM NAO PODE MUDAR NADA DO QUE SE GRAVA ===')
+W, H = 3000, 4000
+larg, alt = 1860, 880
+fator = min(larg / W, alt / H, 1.0)
+alvos = [(1500.0, 2000.0), (1537.4, 2992.8), (120.0, 90.0), (2880.0, 3910.0)]
+print('imagem %dx%d | tela %dx%d | fator %.6f  (reducao %.2fx)'
+      % (W, H, larg, alt, fator, 1 / fator))
+pior = 0.0
+for z in (1.0, ZOOM_Z):
+    for ax, ay in alvos:
+        # a janela que a tecla z monta: centrada no alvo
+        e0 = fator * z
+        ww0 = int(min(W, larg / e0)); wh0 = int(min(H, alt / e0))
+        off = (int(ax - ww0 / 2), int(ay - wh0 / 2))
+        ox, oy, ww, wh, e = janela_de(W, H, larg, alt, fator, z, off)
+        sx, sy = orig_para_tela(ax, ay, ox, oy, e)
+        if not (0 <= sx <= larg and 0 <= sy <= alt):
+            print('  z=%g  alvo (%7.1f,%7.1f) fica FORA da tela (borda da imagem)' % (z, ax, ay))
+            continue
+        vx, vy = tela_para_orig(sx, sy, ox, oy, e)
+        err = math.hypot(vx - ax, vy - ay)
+        pior = max(pior, err)
+        print('  z=%g  alvo (%7.1f,%7.1f) -> tela (%7.1f,%7.1f) -> volta (%7.1f,%7.1f)  erro %.2e px'
+              % (z, ax, ay, sx, sy, vx, vy, err))
+print('pior erro de ida e volta: %.2e px da ORIGINAL' % pior)
+ok &= (pior < 1e-9)
+
+# e o que de fato importa: o diametro calculado nao pode depender do zoom
+pts_orig = cardeais(1500, 2000, 350, 300)
+medidos = {}
+for z in (1.0, ZOOM_Z):
+    e0 = fator * z
+    ww0 = int(min(W, larg / e0)); wh0 = int(min(H, alt / e0))
+    ox, oy, ww, wh, e = janela_de(W, H, larg, alt, fator, z,
+                                  (int(1500 - ww0 / 2), int(2000 - wh0 / 2)))
+    # o operador clica no mesmo lugar da imagem, com a tela no zoom z
+    cliques = [tela_para_orig(*orig_para_tela(x, y, ox, oy, e), ox=ox, oy=oy, e=e)
+               for x, y in pts_orig]
+    medidos[z] = calcula(cliques)[0]
+print('diametro medido com zoom 1x: %.9f px' % medidos[1.0])
+print('diametro medido com zoom %gx: %.9f px' % (ZOOM_Z, medidos[ZOOM_Z]))
+print('diferenca: %.2e px' % abs(medidos[1.0] - medidos[ZOOM_Z]))
+ok &= abs(medidos[1.0] - medidos[ZOOM_Z]) < 1e-9
+
+print('\n=== 1f. um pixel de erro de clique, em diametro de 2.000 px ===')
+d0 = calcula(cardeais(0, 0, 1000, 1000))[0]
+tort = [(-1000 + 1, 0), (1000, 0), (0, -1000), (0, 1000)]
+d1 = calcula(tort)[0]
+print('diametro exato %.1f px | com 1 px de erro num ponto: %.1f px | %.3f %% | em area: %.3f %%'
+      % (d0, d1, (d1 / d0 - 1) * 100, ((d1 / d0) ** 2 - 1) * 100))
 
 print('\n=== 2. o formato e aceito pela etapa 2 do driver? ===')
 TMP = tempfile.mkdtemp(prefix='med_')
