@@ -12,7 +12,14 @@ vindo dele. Ela registra ONDE O OPERADOR CLICOU, e converte para px da imagem
 original. Todo o resto e aritmetica de quatro pontos.
 
 Uso:
-    python mede_anel.py <pasta_plano> <pasta_saida>
+    python mede_anel.py <pasta_plano> <pasta_saida> [<pasta_Cropped_images>]
+
+O terceiro argumento e opcional e e a pasta "Cropped images" do proprio banco.
+Quando ele e dado, a ferramenta mostra no canto, como REFERENCIA, o recorte que
+os autores do banco publicaram para esta mesma ferida-dia (Day N_<animal>-<L|R>
+.png). Serve para o operador saber QUAL anel medir nas fotos em que o animal
+aparece inteiro, com os dois splints no quadro. A referencia e so para ver: nao
+e medida, nao e clicavel e nao entra em conta nenhuma.
 
 Le   : <saida>/PENDENTES_ESCALA_MANUAL.txt
 Grava: <saida>/MEDIDAS.txt      nome<TAB>diam<TAB>cx<TAB>cy   (ou nome<TAB>SEM_ANEL)
@@ -29,9 +36,14 @@ Na tela:
     a barra avisa.
     Enter      grava e vai para a proxima
     n          grava SEM_ANEL (anel nao visivel) e vai para a proxima
+    d          marca/desmarca "ha mais de um anel neste quadro"
     r          apaga os 4 cliques desta imagem e recomeca
     Backspace  apaga o ultimo clique
     q          sai; da proxima vez retoma de onde parou
+
+A tecla d nao muda medida nenhuma: ela grava um fato sobre a FOTO no
+MEDIDAS_LOG.tsv, para que o numero de imagens com dois splints no quadro seja
+conhecido em vez de suposto.
 
 A LUPA do canto e so para enxergar: ela mostra um pedaco da imagem ORIGINAL em
 volta do cursor, e nao registra, nao altera e nao entra em conta nenhuma. E o
@@ -112,7 +124,7 @@ def le_feitas(p):
     return feitas
 
 
-def main(pasta, saida):
+def main(pasta, saida, recortes=None):
     import tkinter as tk
     from PIL import Image, ImageTk
 
@@ -136,8 +148,9 @@ def main(pasta, saida):
         f_med.write('# nome\tdiametro_px\tcentro_x_px\tcentro_y_px   (ou SEM_ANEL)\n')
         f_med.flush()
     if novo_log:
-        f_log.write('# nome\tx1\ty1\tx2\ty2\tx3\ty3\tx4\ty4\tfator_reducao\tquando_iso\n')
+        f_log.write('# nome\tx1\ty1\tx2\ty2\tx3\ty3\tx4\ty4\tfator_reducao\tquando_iso\tmais_de_um_anel\n')
         f_log.write('# cliques em px da imagem ORIGINAL; fator = lado_tela / lado_original\n')
+        f_log.write('# mais_de_um_anel: fato sobre a FOTO declarado pelo operador (tecla d), nao medida\n')
         f_log.flush()
 
     raiz = tk.Tk()
@@ -150,12 +163,36 @@ def main(pasta, saida):
     tela.pack()
 
     est = {'i': 0, 'pts': [], 'img': None, 'tk': None, 'fator': 1.0,
-           'orig': None, 'lupa': None, 'marcas': []}
+           'orig': None, 'lupa': None, 'marcas': [], 'dois': False, 'ref': None}
+
+    REF_LADO = 260
+
+    def mostra_referencia(nome):
+        """Recorte publicado pelos autores do banco, so para o operador saber
+        QUAL anel e o desta imagem. Nao e medida e nao entra em conta."""
+        tela.delete('ref')
+        est['ref'] = None
+        if not recortes:
+            return
+        p = os.path.join(recortes, os.path.splitext(nome)[0] + '.png')
+        if not os.path.isfile(p):
+            return
+        im = Image.open(p).convert('RGB')
+        im.thumbnail((REF_LADO, REF_LADO), Image.LANCZOS)
+        est['ref'] = ImageTk.PhotoImage(im)
+        ry = alt - im.size[1] - 10
+        tela.create_image(10, ry, anchor='nw', image=est['ref'], tags='ref')
+        tela.create_rectangle(10, ry, 10 + im.size[0], ry + im.size[1],
+                              outline='#ffcc00', width=2, tags='ref')
+        tela.create_text(14, ry - 10, anchor='w', fill='#ffcc00',
+                         font=('Consolas', 10, 'bold'), tags='ref',
+                         text='referencia do banco — e ESTA ferida')
 
     def status(extra=''):
         n = est['i'] + 1
         nome = fila[est['i']]
-        msg = '%d/%d  %s   cliques: %d/4' % (n, len(fila), nome, len(est['pts']))
+        msg = '%d/%d  %s   cliques: %d/4%s' % (n, len(fila), nome, len(est['pts']),
+                                               '   [d] MAIS DE UM ANEL' if est['dois'] else '')
         aviso = ''
         if len(est['pts']) == 4:
             d, cx, cy, c1, c2, c3 = calcula(est['pts'])
@@ -166,7 +203,7 @@ def main(pasta, saida):
                 aviso = ('ATENCAO: a 3a maior distancia e %.0f%% do diametro (limite %.0f%%) — '
                          'os 4 pontos parecem amontoados de um lado. r para refazer.'
                          % (c3 / d * 100, FRAC_3A * 100))
-        msg += '    [Enter grava · n SEM_ANEL · r refaz · Backspace apaga · q sai]'
+        msg += '    [Enter grava · n SEM_ANEL · d dois aneis · r refaz · Backspace apaga · q sai]'
         if aviso:
             msg += '\n' + aviso
         if extra:
@@ -178,6 +215,7 @@ def main(pasta, saida):
             tela.delete(m)
         est['marcas'] = []
         est['pts'] = []
+        est['dois'] = False
         nome = fila[est['i']]
         barra.config(text='carregando %s …' % nome)
         raiz.update_idletasks()
@@ -191,6 +229,7 @@ def main(pasta, saida):
         tela.delete('fundo')
         tela.create_image(0, 0, anchor='nw', image=est['tk'], tags='fundo')
         tela.tag_lower('fundo')
+        mostra_referencia(nome)
         status()
 
     def clique(ev):
@@ -262,10 +301,15 @@ def main(pasta, saida):
                     if est['marcas']:
                         tela.delete(est['marcas'].pop())
                 status()
+        elif k == 'd':
+            est['dois'] = not est['dois']
+            status()
         elif k == 'n':
             grava('%s\tSEM_ANEL\n' % nome,
-                  '%s\t\t\t\t\t\t\t\t\t%.6f\t%s\n'
-                  % (nome, est['fator'], datetime.datetime.now().astimezone().isoformat(timespec='seconds')))
+                  '%s\t\t\t\t\t\t\t\t\t%.6f\t%s\t%d\n'
+                  % (nome, est['fator'],
+                     datetime.datetime.now().astimezone().isoformat(timespec='seconds'),
+                     int(est['dois'])))
             proxima()
         elif k == 'return':
             if len(est['pts']) != 4:
@@ -274,11 +318,12 @@ def main(pasta, saida):
                 return
             d, cx, cy, _c1, _c2, _c3 = calcula(est['pts'])
             grava('%s\t%.3f\t%.3f\t%.3f\n' % (nome, d, cx, cy),
-                  '%s\t%s\t%.6f\t%s\n'
+                  '%s\t%s\t%.6f\t%s\t%d\n'
                   % (nome,
                      '\t'.join('%.3f\t%.3f' % p for p in est['pts']),
                      est['fator'],
-                     datetime.datetime.now().astimezone().isoformat(timespec='seconds')))
+                     datetime.datetime.now().astimezone().isoformat(timespec='seconds'),
+                     int(est['dois'])))
             proxima()
 
     tela.bind('<Button-1>', clique)
@@ -290,6 +335,6 @@ def main(pasta, saida):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
+    if len(sys.argv) not in (3, 4):
         sys.exit(__doc__)
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], sys.argv[3] if len(sys.argv) == 4 else None)
