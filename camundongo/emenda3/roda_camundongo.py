@@ -198,6 +198,16 @@ def recorta(im, cx, cy, pxmm):
     return np.asarray(q700.convert('RGB')), float(frac)
 
 
+def mascara_nula(lado_px):
+    """Nulo geometrico da REGRA 4 do pre-registro: circulo do diametro declarado
+    (6 mm) no CENTRO DO ANEL. No recorte de 24 mm o centro do anel e o centro do
+    quadro por construcao. Devolve a mascara no quadro de trabalho de 700."""
+    r_px = (DIAM_MM / 2) * S_1380 * (lado_px / LADO_1380)
+    yy, xx = np.mgrid[0:lado_px, 0:lado_px]
+    c = (lado_px - 1) / 2.0
+    return np.hypot(xx - c, yy - c) <= r_px
+
+
 def quadrado_central(im):
     """estrato 'sem escala propria': maior quadrado central -> 1380 -> 700"""
     H, W = im.shape[:2]
@@ -291,9 +301,13 @@ def etapa_rodar(pasta, saida):
                               'parece_anel_do_splint': None})
             else:
                 area = float(m.sum() * (LADO_1380 / M.L) ** 2 / (S_1380 ** 2))
+                nulo = mascara_nula(M.L)
+                area_nulo = float(nulo.sum() * (LADO_1380 / M.L) ** 2 / (S_1380 ** 2))
                 linha.update({'obtida': True, 'area': area, 'nota': float(nota),
                               'ajuste': list(aj), 'canal': aj[1],
                               'componentes': int(_comp(m)),
+                              'area_nulo_mm2': area_nulo,
+                              'dice_motor_vs_nulo': float(M.dice(m, nulo)),
                               'parece_anel_do_splint':
                                   bool(abs(area - AREA_SPLINT_MM2) / AREA_SPLINT_MM2
                                        <= TOL_SPLINT)})
@@ -465,13 +479,17 @@ def etapa_relatorio(saida):
     rel.append('Diâmetro nominal %.0f mm · efetivo passado ao motor **%.1f mm** '
                '(s = %.1f px/mm no quadro de 1380) · semente %d · bootstrap %d\n'
                % (DIAM_MM, DIAM_EF, S_1380, SEMENTE, BOOT))
+    rel.append('> **Executor declarado:** o pré-registro dizia "executor Opus, no PC '
+               'do Fabio". Na prática a rodada é executada pelo **Fabio, no cmd do '
+               'seu PC**, com scripts escritos e hasheados pelo Opus e revisados pelo '
+               'Fable. Declarado antes do download.\n')
     rel.append('## PREDIÇÕES\n')
     rel.append('| | predição | resultado | |')
     rel.append('|---|---|---|---|')
     if not p1_aval:
         rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
-                   '**não avaliável** — nenhuma imagem com anel visível | '
-                   '⏳ **não avaliada** |')
+                   '**não avaliável** — nenhuma imagem com anel visível (n = 0) | '
+                   '⏳ **não avaliável** |')
     else:
         rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
                    '**%.1f %%** (%d de %d) · IC95 [%.1f; %.1f] | %s |'
@@ -479,17 +497,76 @@ def etapa_relatorio(saida):
                       '✅ **confirmada**' if p1 >= 0.5 else '❌ **FALHOU**'))
     if len(dias) < 3 or not np.isfinite(p2):
         rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | '
-                   '**não avaliável** — só %d dia(s) com n ≥ 8, e o coeficiente '
-                   'exige 3 | ⏳ **não avaliada** |' % len(dias))
+                   '**não avaliável** — %d dia(s) com n ≥ 8; o coeficiente exige '
+                   '≥ 3 | ⏳ **não avaliável** |' % len(dias))
     else:
         rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **%.4f** '
                    '(%d dias com n ≥ 8) | %s |'
                    % (p2, len(dias), '✅ **confirmada**' if p2 <= -0.8 else '❌ **FALHOU**'))
     rel.append('| **P3** | revisor cego acerta ≥ 75 %% dos pares | '
-               'painel de %d pares emitido; a preencher | ⏳ pendente |' % len(painel))
+               '%s | ⏳ **%s** |'
+               % (('painel de %d pares emitido; a preencher' % len(painel)) if painel
+                  else 'nenhum par possível — não houve falha para parear (n = 0)',
+                  'pendente' if painel else 'não avaliável'))
     rel.append('| **P4** | falha dominante = referência de pele contaminada | '
-               'assinatura "anel do splint" em **%s** das obtidas | ver modos abaixo |'
-               % ('%.1f %%' % (100 * p4_assin) if obtidas else 'não avaliável'))
+               'assinatura "anel do splint" em **%s** das obtidas | 📋 **descritiva** |'
+               % ('%.1f %%' % (100 * p4_assin) if obtidas else 'não avaliável (n = 0)'))
+    rel.append('\n> Três estados, fixados antes do banco: **confirmada** · '
+               '**FALHOU** · **não avaliável**, este sempre com o motivo e os '
+               'números. "Não avaliável" é resultado publicável: não entra no '
+               'placar como confirmação nem como falha. A **P4 é descritiva** e '
+               'não tem veredito automático.\n')
+    # ---- comparador nulo geometrico, pareado (regra 4 do pre-registro) ----
+    par = [(imgs[a]['area'], imgs[a]['area_nulo_mm2']) for a in obtidas
+           if imgs[a].get('area_nulo_mm2') is not None]
+    rel.append('\n## COMPARADOR NULO GEOMÉTRICO (regra 4 do pré-registro)\n')
+    rel.append('Círculo de %.0f mm no centro do anel, pareado por imagem. '
+               'Área do nulo: **%.2f mm²** (constante por construção).\n'
+               % (DIAM_MM, np.pi * (DIAM_MM / 2) ** 2))
+    if len(par) >= 3:
+        am = np.array([x[0] for x in par]); an_ = np.array([x[1] for x in par])
+        dif = am - an_
+        dices = np.array([imgs[a]['dice_motor_vs_nulo'] for a in obtidas
+                          if imgs[a].get('dice_motor_vs_nulo') is not None])
+        lo, hi = ic(dif, np.median)
+        try:
+            from scipy.stats import wilcoxon
+            pw = float(wilcoxon(am, an_).pvalue)
+            spw = '%.4g' % pw
+        except Exception:
+            spw = 'não calculado'
+        rel.append('| | mediana | mínimo | máximo |')
+        rel.append('|---|---|---|---|')
+        rel.append('| área do motor | %.2f | %.2f | %.2f |' % (np.median(am), am.min(), am.max()))
+        rel.append('| área do nulo | %.2f | %.2f | %.2f |' % (np.median(an_), an_.min(), an_.max()))
+        rel.append('| diferença (motor − nulo) | %.2f | %.2f | %.2f |'
+                   % (np.median(dif), dif.min(), dif.max()))
+        rel.append('| Dice motor × nulo | %.4f | %.4f | %.4f |'
+                   % (np.median(dices), dices.min(), dices.max()))
+        rel.append('\nIC95 da diferença mediana: [%.2f; %.2f] · Wilcoxon pareado p = %s · n = %d\n'
+                   % (lo, hi, spw, len(par)))
+    else:
+        rel.append('**não avaliável** — %d imagem(ns) com nulo pareável; exige ≥ 3.\n' % len(par))
+
+    # ---- estratos descritivos (Emenda 1, item 6) ----
+    def tabela(chave, titulo, rot):
+        gr = {}
+        for a in obtidas:
+            gr.setdefault(rot(mapa[a]), []).append(imgs[a]['area'])
+        out = ['\n### %s\n' % titulo, '| estrato | n | área mediana | mínimo | máximo |',
+               '|---|---|---|---|---|']
+        for k in sorted(gr):
+            v = gr[k]
+            out.append('| %s | %d | %.2f | %.2f | %.2f |'
+                       % (k, len(v), np.median(v), min(v), max(v)))
+        return out
+    rel.append('\n## ESTRATOS DESCRITIVOS (Emenda 1, item 6)\n')
+    rel.append('Pré-declarados como **descritivos**: nenhum teste confirmatório '
+               'entre estratos nesta rodada.')
+    rel.extend(tabela('idade', 'Idade (A × Y)', lambda m_:
+                      'A (idoso)' if m_['animal'].upper().startswith('A') else 'Y (jovem)'))
+    rel.extend(tabela('lado', 'Lado (L × R)', lambda m_: m_['lado'].upper()))
+
     rel.append('\n## TABELA POR DIA\n')
     rel.extend(linhas)
     rel.append('\n## MODOS DE FALHA\n')

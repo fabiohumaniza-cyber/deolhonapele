@@ -1,16 +1,15 @@
 # EMENDA 3 · pré-registro do camundongo — o driver da rodada
-### versão 2 · substitui a de 06h40, antes de confirmação e sem download
+### versão 3 · substitui as de 06h40 e 07h00, antes de confirmação e sem download
 
-**01/10/2026, 07h00 (Brasília). Escrita ANTES de qualquer byte de imagem do banco
+**01/10/2026, 07h20 (Brasília). Escrita ANTES de qualquer byte de imagem do banco
 Dryad 10.25338/B84W8Q ser baixado ou aberto.**
 
-> **Nota de substituição.** A versão anterior desta emenda, SHA-256
-> `5c03d88f16011275ce84d974cc06134d524253ca57960a0df0068aa5ce9fdc11`, foi
-> substituída **antes de ter hash confirmado pelo Fabio** e **sem nenhum
-> download**, após revisão do Fable que achou seis defeitos no driver — dois
-> deles bloqueantes. A versão anterior está no histórico do repositório, commit
-> `20fae0d21e6ac5cbe6f7d5e9b48fc1b5d45a6ed4`. Nada do que ela dizia foi apagado:
-> o que mudou está na seção 1.
+> **Nota de substituição.** Esta emenda substitui, em ordem:
+> `5c03d88f16011275ce84d974cc06134d524253ca57960a0df0068aa5ce9fdc11` (06h40,
+> commit `20fae0d2…`) e `54c76d35389ee75bc15f54812595de02f1ab50655c59e6afed5efe84fbee0eed`
+> (07h00, commit `5b913222…`). **Nenhuma das duas chegou a ter hash confirmado
+> pelo Fabio, e nenhum download ocorreu entre elas.** As duas ficam no histórico
+> do repositório. O que mudou está na seção 1.
 
 Cadeia: `PRE_REGISTRO` `d0989cf7…` → `EMENDA_1` `161e1d78…` → `EMENDA_2`
 **`5af2ca99d59d77b0757958c7138f4f0e78de7d515996f9b982e137ce9bebb8ca`**.
@@ -18,88 +17,111 @@ A Emenda 2 **não é alterada por esta**; seu hash segue de pé.
 
 ---
 
-## 1 · OS SEIS DEFEITOS E O QUE MUDOU
+## 1 · OS ONZE PONTOS DA REVISÃO
 
-**🔴 1. A trava da regra 3.2 tinha porta dos fundos.** `medir` processava só o
-que estivesse em `MEDIDAS.txt`; e `rodar` só checava pendências **quando o
-`_com_manual.json` não existia**. Logo, uma pendente sem linha passava: virava
-"sem escala própria" **por omissão**, sem `SEM_ANEL` declarado. Escolha por
-imagem, que é exatamente o que esta série de emendas existe para impedir.
+Duas rodadas de revisão do Fable, sobre o driver e sobre as emendas lidas
+contra o pré-registro e a Emenda 1. **Onze pontos; os quatro marcados 🔴 eram
+bloqueantes.**
+
+**🔴 1. A trava da regra 3.2 tinha porta dos fundos.** `medir` processava só o que
+estivesse em `MEDIDAS.txt`; `rodar` só checava pendências **quando o
+`_com_manual.json` não existia**. Uma pendente sem linha virava "sem escala
+própria" **por omissão**, sem `SEM_ANEL` declarado — escolha por imagem.
 → `medir` **para** se qualquer pendente ficar sem linha; `rodar` **re-checa
-pendências em qualquer JSON que carregar**, não só na ausência do manual.
+pendências em qualquer JSON que carregar**.
 
 **🔴 2. Profundidade de bits.** `Image.open(...).convert('RGB')` num TIFF de
-16 bits **satura tudo em branco**; num TIFF em tons de cinza, R=G=B e o canal
-`verm` do motor (`R − (G+B)/2`) **zera**. Os dois estragam em silêncio e a
-rodada sairia com números que pareceriam válidos.
-→ Função `abre_rgb8`: confere `im.mode` e o dtype, grava `modo_pil` no JSON e
-**PARA** se não for RGB de 8 bits. *Formato inesperado não se converte no
-improviso — é decisão do Fabio, com emenda datada, antes de qualquer medida.*
+16 bits **satura em branco**; num TIFF em tons de cinza, R=G=B e o canal `verm`
+do motor (`R − (G+B)/2`) **zera**. Os dois estragam em silêncio.
+→ `abre_rgb8` confere `im.mode` e o dtype, grava `modo_pil` no JSON e **PARA**
+se não for RGB de 8 bits.
+⚠️ **O que o README diz de formato:** a Emenda 1, que é o único registro que
+temos dele, descreve o banco como "TIFFs brutos por ferida-dia e PNGs recortados
+por YOLO" e **não diz profundidade nem modo de cor**. Portanto não há base
+documental para presumir 8 bits — e é exatamente por isso que a regra é parar,
+não converter. Formato inesperado vira emenda datada e decisão do Fabio.
 
-**3. "Mapa fixado antes da etapa 3" era promessa, não programa.** A etapa 4 só
-conferia se o arquivo existia.
+**🔴 3. O comparador nulo geométrico não existia.** É a **regra 4 do
+pré-registro** e faltava inteiro no driver. Sem ele a rodada não cumpre o
+pré-registro.
+→ Máscara nula = círculo de **6 mm no centro do anel** (que no recorte de 24 mm é
+o centro do quadro, por construção). Por imagem com escala vão ao JSON
+`area_nulo_mm2` e `dice_motor_vs_nulo`, este com a função `dice` **do próprio
+motor congelado**. No relatório, comparação **pareada**: medianas de motor, nulo
+e diferença, Dice, IC95 bootstrap da diferença mediana e Wilcoxon pareado.
+
+**🔴 4. Vazamento da P3.** A etapa 3 imprimia área, nota e estrato por nome de
+arquivo no console — e o painel da P3 pede que um revisor cego diga **qual das
+duas falhou**. Quem acompanhasse pelo terminal já teria a resposta.
+→ A etapa 3 imprime **só o contador**. O detalhe vai para o JSON. Não resolve
+sozinho quem é o revisor: ver a seção 4.
+
+**5. "Mapa fixado antes da etapa 3" era promessa, não programa.**
 → A **etapa 1 exige** o `MAPA_FERIDA_DIA.tsv` e grava o SHA-256 dele; a **etapa 4
-recusa** se o hash tiver mudado. O mapa passa a ser anterior a qualquer detecção,
-não só a qualquer medida.
+recusa** se o hash mudou.
 
-**4. `teste_driver.py` tinha três caminhos fixos** (linhas 13, 16, 63) — não
+**6. Estratos de idade e lado não eram usados** (Emenda 1, item 6).
+→ Duas tabelas **descritivas**, A×Y e L×R, sem nenhum teste confirmatório. A
+regra "animal começando em A é idoso, em Y é jovem" vem da Emenda 1, que lista
+os oito animais — não é inferida dos nomes do banco.
+
+**7. Predição não avaliável saía como falhada.** A P2 com menos de 3 dias dava
+`nan`, e `nan ≤ −0,8` é falso, então o relatório marcava **FALHOU**.
+→ **Três estados, para as quatro predições**: **confirmada** · **FALHOU** ·
+**não avaliável**, este sempre com motivo e números. P1 não avaliável sem imagem
+com anel; P2 com menos de 3 dias com n ≥ 8; P3 pendente até o painel ser
+respondido, ou não avaliável se não houver par; **P4 é descritiva e não tem
+veredito automático**. "Não avaliável" é resultado publicável: não entra no
+placar como confirmação nem como falha.
+
+**8. `teste_driver.py` tinha três caminhos fixos** (linhas 13, 16, 63) — não
 rodava no PC do Fabio sem editar, e editar mataria o hash.
-→ Tudo relativo a `AQUI`, como o próprio driver já fazia.
+→ Tudo relativo a `AQUI`.
 
-**5. `_meta` do JSON era incompleto.**
-→ Passa a trazer os **SHA-256 dos três `.py` do caminho da medida**, o hash do
-mapa e as **versões** de Python, numpy, scipy, skimage e Pillow, mais a
-plataforma. O ambiente do executor fica registrado na saída.
+**9. `_meta` do JSON era incompleto.**
+→ Traz os **SHA-256 dos três `.py` do caminho da medida**, o hash do mapa e as
+**versões** de Python, numpy, scipy, skimage e Pillow, mais a plataforma.
 
-**6. A docstring dizia "TRÊS ETAPAS" e listava quatro.** Corrigida.
+**10. A docstring dizia "TRÊS ETAPAS" e listava quatro.** Corrigida.
 
-**🔴 Um sétimo, achado ao corrigir o quinto: a etapa 3 vazava a resposta da P3.**
-Ela imprimia área, nota e estrato por nome de arquivo no console — e o painel da
-P3 pede que um revisor cego diga **qual das duas falhou**. Quem acompanhasse a
-rodada pelo terminal já teria a resposta.
-→ A etapa 3 agora imprime **só o contador** (`17/255`). Todo o detalhe vai para o
-JSON. Isso não resolve sozinho a questão de quem é o revisor — ver a seção 4.
+**11. Troca de executor, declarada.** O pré-registro diz "executor Opus, no PC do
+Fabio". Na prática a rodada é executada pelo **Fabio, no cmd do seu PC**, com
+scripts escritos e hasheados pelo Opus e revisados pelo Fable. A linha sai
+impressa no cabeçalho do próprio relatório.
 
 ---
 
 ## 2 · O DRIVER
 
-`roda_camundongo.py` — SHA-256 `0c7c7be2ef9948ad8f75c6b764778f7bf69aaf7d9a4c4624cc382b9838e2813e` (25675 bytes). Verbatim no anexo.
+`roda_camundongo.py` — SHA-256 `2e926368283b56b396bdad532c715cbc7d41e8fc001fe684d917e705ffc5481a` (30085 bytes). Verbatim no anexo.
 
 | etapa | o que faz | exige antes | saída |
 |---|---|---|---|
 | 1 `detectar` | detector da Emenda 2 em todas as imagens | `MAPA_FERIDA_DIA.tsv` · todas RGB 8 bits | `deteccao_camundongo.json` · `PENDENTES_ESCALA_MANUAL.txt` |
 | 2 `medir` | diâmetro **e centro** das pendentes, ou `SEM_ANEL` | linha para **toda** pendente | `deteccao_camundongo_com_manual.json` |
-| 3 `rodar` | recorte, motor congelado | zero pendência aberta | `camundongo_v0.json` |
-| 4 `relatorio` | P1–P4, tabela por dia, IC, painel da P3 | hash do mapa inalterado | `CAMUNDONGO_V0_RELATORIO.md` · `PAINEL_P3.txt` · `CHAVE_P3_NAO_ABRIR.json` |
+| 3 `rodar` | recorte, motor congelado, nulo pareado | zero pendência aberta | `camundongo_v0.json` |
+| 4 `relatorio` | P1–P4, nulo, estratos, dias, IC, painel P3 | hash do mapa inalterado | `CAMUNDONGO_V0_RELATORIO.md` · `PAINEL_P3.txt` · `CHAVE_P3_NAO_ABRIR.json` |
 
-A regra 3.2 **está na forma do programa**, não na disciplina de quem roda:
-
-> Detector falha → medida manual do anel, **sempre**, antes de o motor rodar
-> naquela imagem. Anel não visível → `SEM_ANEL`, estrato 3.1. Sem exceção.
-> A medida manual exige **diâmetro em px e centro (x, y)** — a escala sozinha não
-> define o recorte de 24 mm, e o centro do quadro não substitui o centro do anel.
+> **Regra 3.2, na forma do programa:** detector falha → medida manual do anel,
+> **sempre**, antes de o motor rodar naquela imagem; anel não visível →
+> `SEM_ANEL`, estrato 3.1. A medida manual exige **diâmetro em px e centro
+> (x, y)** — a escala sozinha não define o recorte, e o centro do quadro não
+> substitui o centro do anel.
 
 **Recorte (3.3).** Fora do quadro → `numpy.pad(mode='edge')`, réplica de borda,
-nunca preto, nunca encolhendo; `fracao_replicada` no JSON, estrato
-`recorte incompleto`. **Sem escala (3.1).** Maior quadrado central → 1380 → 700,
-saída em **px²**, critério **`sec`** do motor congelado. **`razao_pxmm`.** px/mm ÷
-mediana do banco; fora de [0,80; 1,25] entra marcada — contada, nunca removida.
-
-**Fixadas aqui, antes de ver o banco:** assinatura da P4 =
-|área − 201,06 mm²|/201,06 ≤ **0,15**; "plausível" para o painel da P3 = obtida,
-sem assinatura do splint e com razão dentro da faixa.
-
-**Predição não avaliável não é predição falhada.** Se faltarem dias com n ≥ 8, a
-P2 sai como **não avaliada**, não como falhada.
+nunca preto, nunca encolhendo; `fracao_replicada` no JSON. **Sem escala (3.1).**
+Maior quadrado central → 1380 → 700, saída em **px²**, critério **`sec`** do motor
+congelado. **`razao_pxmm`** = px/mm ÷ mediana do banco; fora de [0,80; 1,25] entra
+marcada — contada, nunca removida. **Assinatura da P4** =
+|área − 201,06 mm²|/201,06 ≤ 0,15. **"Plausível" no painel da P3** = obtida, sem
+assinatura do splint, razão dentro da faixa.
 
 ---
 
 ## 3 · O ENSAIO
 
 `teste_driver.py` — SHA-256 `b49bbdc9bbf5cb14147621b728dc3567a7dfb0c61372f39d990893f7cad56202` (6103 bytes). Banco **sintético** de 24
-imagens (3 dias × 8 feridas), desenhado por código, com ferida encolhendo, uma
-sem anel e uma com o anel na beira. Semente 20260928.
+imagens (3 dias × 8 feridas), desenhado por código. Semente 20260928.
 
 ```
 banco sintetico: 24 imagens
@@ -128,7 +150,7 @@ mediana de px/mm do banco: 40.3654
 …
   24/24
 
-/home/claude/cam/ensaio/saida/camundongo_v0.json  SHA-256 34c7fb38d5c887a98ffa43bfff0a1d412449af4247beb1691d44e38e5b1bd669
+/home/claude/cam/ensaio/saida/camundongo_v0.json  SHA-256 21aa7881c9e35c1598fe44352333dd0ecab669dd48c43b6b981dc3a01b741d89
 
 
 === TIFF de 16 bits (tem de parar) ===
@@ -144,20 +166,24 @@ Banco Dryad 10.25338/B84W8Q · 24 imagens · motor intocado (origem SHA-256 78b1
 
 Diâmetro nominal 6 mm · efetivo passado ao motor **11.5 mm** (s = 57.5 px/mm no quadro de 1380) · semente 20260928 · bootstrap 10000
 
+> **Executor declarado:** o pré-registro dizia "executor Opus, no PC do Fabio". Na prática a rodada é executada pelo **Fabio, no cmd do seu PC**, com scripts escritos e hasheados pelo Opus e revisados pelo Fable. Declarado antes do download.
+
 ## PREDIÇÕES
 
 | | predição | resultado | |
 |---|---|---|---|
 | **P1** | medida obtida em ≥ 50 % das imagens com anel visível | **100.0 %** (23 de 23) · IC95 [100.0; 100.0] | ✅ **confirmada** |
-| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **não avaliável** — só 2 dia(s) com n ≥ 8, e o coeficiente exige 3 | ⏳ **não avaliada** |
-| **P3** | revisor cego acerta ≥ 75 % dos pares | painel de 0 pares emitido; a preencher | ⏳ pendente |
-| **P4** | falha dominante = referência de pele contaminada | assinatura "anel do splint" em **78.3 %** das obtidas | ver modos abaixo |
+| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **não avaliável** — 2 dia(s) com n ≥ 8; o coeficiente exige ≥ 3 | ⏳ **não avaliável** |
+| **P3** | revisor cego acerta ≥ 75 % dos pares | nenhum par possível — não houve falha para parear (n = 0) | ⏳ **não avaliável** |
+| **P4** | falha dominante = referência de pele contaminada | assinatura "anel do splint" em **78.3 %** das obtidas | 📋 **descritiva** |
 
-## TABELA POR DIA
+> Três estados, fixados antes do banco: **confirmada** · **FALHOU** · **não avaliável**, este sempre com o motivo e os números. "Não avaliável" é resultado publicável: não entra no placar como confirmação nem como falha. A **P4 é descritiva** e não tem veredito automático.
 
-| dia | n medidas | área mediana | mínimo | máximo |
-|---|---|---|---|---|
-| 0 | 8 | 189.35 | 29.39 | 195.69 |
+
+## COMPARADOR NULO GEOMÉTRICO (regra 4 do pré-registro)
+
+Círculo de 6 mm no centro do anel, pareado por imagem. Área do nulo: **28.27 mm²** (constante por construção).
+
 
 /home/claude/cam/ensaio/saida/CAMUNDONGO_V0_RELATORIO.md
 
@@ -173,17 +199,53 @@ painel P3 emitido             : True
 sem a etapa 2 · `MEDIDAS.txt` incompleto · pendência reaberta no JSON manual ·
 TIFF de 16 bits · etapa 1 sem o mapa.
 
-🔴 A assinatura do anel do splint aparece em **78,3 %** das imagens do ensaio —
-o mesmo que a Emenda 2 viu em 4 de 5 cenas. Continua sendo cena sintética, e
-continua não autorizando mexer em nada.
+**O comparador nulo e os estratos, no ensaio:**
+
+```
+## COMPARADOR NULO GEOMÉTRICO (regra 4 do pré-registro)
+
+Círculo de 6 mm no centro do anel, pareado por imagem. Área do nulo: **28.27 mm²** (constante por construção).
+
+| | mediana | mínimo | máximo |
+|---|---|---|---|
+| área do motor | 190.89 | 13.29 | 201.46 |
+| área do nulo | 28.24 | 28.24 | 28.24 |
+| diferença (motor − nulo) | 162.64 | -14.95 | 173.22 |
+| Dice motor × nulo | 0.2545 | 0.0000 | 0.9800 |
+
+IC95 da diferença mediana: [154.96; 166.13] · Wilcoxon pareado p = 2.098e-05 · n = 23
+
+
+## ESTRATOS DESCRITIVOS (Emenda 1, item 6)
+
+Pré-declarados como **descritivos**: nenhum teste confirmatório entre estratos nesta rodada.
+
+### Idade (A × Y)
+
+| estrato | n | área mediana | mínimo | máximo |
+|---|---|---|---|---|
+| A (idoso) | 11 | 192.71 | 26.33 | 201.46 |
+| Y (jovem) | 12 | 189.46 | 13.29 | 198.50 |
+
+### Lado (L × R)
+
+| estrato | n | área mediana | mínimo | máximo |
+|---|---|---|---|---|
+| L | 11 | 188.04 | 13.29 | 201.46 |
+| R | 12 | 192.74 | 26.50 | 200.71 |
+```
+
+🔴 A assinatura do anel do splint aparece em **78,3 %** das imagens do ensaio, e o
+Dice mediano contra o nulo é **0,25** — o motor não está medindo a ferida de 6 mm
+nessas cenas. Mesma assinatura que a Emenda 2 viu em 4 de 5 cenas. Continua sendo
+cena sintética, e continua não autorizando mexer em nada.
 
 ---
 
 ## 4 · DECISÃO QUE É DO FABIO, ANTES DO DOWNLOAD
 
 **Quem é o revisor cego da P3?** A etapa 3 não imprime mais nada que vaze a
-resposta, mas isso não basta se o revisor for a mesma pessoa que roda. Duas
-saídas, e o pré-registro não escolhe entre elas:
+resposta, mas isso não basta se o revisor for quem roda. Duas saídas:
 
 - **outra pessoa** preenche o `PAINEL_P3.txt` — o Emílio foi observador 2 no
   porco e já fez esse papel; ou
@@ -197,10 +259,10 @@ Fica registrado que a escolha foi feita antes de qualquer imagem ser vista.
 ## 5 · O QUE CONTINUA VALENDO
 
 Tudo do pré-registro, da Emenda 1 e da Emenda 2: uma rodada · nenhuma exclusão
-por resultado · nenhuma constante do v0 tocada · P1–P4 como escritas · estratos
-de idade e lado só descritivos · IC bootstrap 10 000, semente 20260928 · diâmetro
-efetivo **11,5 mm** pela identidade da reauditoria d3 · dias 7/16/19 do porco
-fechados · CWDB intocado · v2 do Zenodo não se publica aqui.
+por resultado · nenhuma constante do v0 tocada · P1–P4 como escritas · IC
+bootstrap 10 000, semente 20260928 · diâmetro efetivo **11,5 mm** pela identidade
+da reauditoria d3 · dias 7/16/19 do porco fechados · CWDB intocado · v2 do Zenodo
+não se publica aqui.
 
 ---
 
@@ -407,6 +469,16 @@ def recorta(im, cx, cy, pxmm):
     return np.asarray(q700.convert('RGB')), float(frac)
 
 
+def mascara_nula(lado_px):
+    """Nulo geometrico da REGRA 4 do pre-registro: circulo do diametro declarado
+    (6 mm) no CENTRO DO ANEL. No recorte de 24 mm o centro do anel e o centro do
+    quadro por construcao. Devolve a mascara no quadro de trabalho de 700."""
+    r_px = (DIAM_MM / 2) * S_1380 * (lado_px / LADO_1380)
+    yy, xx = np.mgrid[0:lado_px, 0:lado_px]
+    c = (lado_px - 1) / 2.0
+    return np.hypot(xx - c, yy - c) <= r_px
+
+
 def quadrado_central(im):
     """estrato 'sem escala propria': maior quadrado central -> 1380 -> 700"""
     H, W = im.shape[:2]
@@ -500,9 +572,13 @@ def etapa_rodar(pasta, saida):
                               'parece_anel_do_splint': None})
             else:
                 area = float(m.sum() * (LADO_1380 / M.L) ** 2 / (S_1380 ** 2))
+                nulo = mascara_nula(M.L)
+                area_nulo = float(nulo.sum() * (LADO_1380 / M.L) ** 2 / (S_1380 ** 2))
                 linha.update({'obtida': True, 'area': area, 'nota': float(nota),
                               'ajuste': list(aj), 'canal': aj[1],
                               'componentes': int(_comp(m)),
+                              'area_nulo_mm2': area_nulo,
+                              'dice_motor_vs_nulo': float(M.dice(m, nulo)),
                               'parece_anel_do_splint':
                                   bool(abs(area - AREA_SPLINT_MM2) / AREA_SPLINT_MM2
                                        <= TOL_SPLINT)})
@@ -674,13 +750,17 @@ def etapa_relatorio(saida):
     rel.append('Diâmetro nominal %.0f mm · efetivo passado ao motor **%.1f mm** '
                '(s = %.1f px/mm no quadro de 1380) · semente %d · bootstrap %d\n'
                % (DIAM_MM, DIAM_EF, S_1380, SEMENTE, BOOT))
+    rel.append('> **Executor declarado:** o pré-registro dizia "executor Opus, no PC '
+               'do Fabio". Na prática a rodada é executada pelo **Fabio, no cmd do '
+               'seu PC**, com scripts escritos e hasheados pelo Opus e revisados pelo '
+               'Fable. Declarado antes do download.\n')
     rel.append('## PREDIÇÕES\n')
     rel.append('| | predição | resultado | |')
     rel.append('|---|---|---|---|')
     if not p1_aval:
         rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
-                   '**não avaliável** — nenhuma imagem com anel visível | '
-                   '⏳ **não avaliada** |')
+                   '**não avaliável** — nenhuma imagem com anel visível (n = 0) | '
+                   '⏳ **não avaliável** |')
     else:
         rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
                    '**%.1f %%** (%d de %d) · IC95 [%.1f; %.1f] | %s |'
@@ -688,17 +768,76 @@ def etapa_relatorio(saida):
                       '✅ **confirmada**' if p1 >= 0.5 else '❌ **FALHOU**'))
     if len(dias) < 3 or not np.isfinite(p2):
         rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | '
-                   '**não avaliável** — só %d dia(s) com n ≥ 8, e o coeficiente '
-                   'exige 3 | ⏳ **não avaliada** |' % len(dias))
+                   '**não avaliável** — %d dia(s) com n ≥ 8; o coeficiente exige '
+                   '≥ 3 | ⏳ **não avaliável** |' % len(dias))
     else:
         rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **%.4f** '
                    '(%d dias com n ≥ 8) | %s |'
                    % (p2, len(dias), '✅ **confirmada**' if p2 <= -0.8 else '❌ **FALHOU**'))
     rel.append('| **P3** | revisor cego acerta ≥ 75 %% dos pares | '
-               'painel de %d pares emitido; a preencher | ⏳ pendente |' % len(painel))
+               '%s | ⏳ **%s** |'
+               % (('painel de %d pares emitido; a preencher' % len(painel)) if painel
+                  else 'nenhum par possível — não houve falha para parear (n = 0)',
+                  'pendente' if painel else 'não avaliável'))
     rel.append('| **P4** | falha dominante = referência de pele contaminada | '
-               'assinatura "anel do splint" em **%s** das obtidas | ver modos abaixo |'
-               % ('%.1f %%' % (100 * p4_assin) if obtidas else 'não avaliável'))
+               'assinatura "anel do splint" em **%s** das obtidas | 📋 **descritiva** |'
+               % ('%.1f %%' % (100 * p4_assin) if obtidas else 'não avaliável (n = 0)'))
+    rel.append('\n> Três estados, fixados antes do banco: **confirmada** · '
+               '**FALHOU** · **não avaliável**, este sempre com o motivo e os '
+               'números. "Não avaliável" é resultado publicável: não entra no '
+               'placar como confirmação nem como falha. A **P4 é descritiva** e '
+               'não tem veredito automático.\n')
+    # ---- comparador nulo geometrico, pareado (regra 4 do pre-registro) ----
+    par = [(imgs[a]['area'], imgs[a]['area_nulo_mm2']) for a in obtidas
+           if imgs[a].get('area_nulo_mm2') is not None]
+    rel.append('\n## COMPARADOR NULO GEOMÉTRICO (regra 4 do pré-registro)\n')
+    rel.append('Círculo de %.0f mm no centro do anel, pareado por imagem. '
+               'Área do nulo: **%.2f mm²** (constante por construção).\n'
+               % (DIAM_MM, np.pi * (DIAM_MM / 2) ** 2))
+    if len(par) >= 3:
+        am = np.array([x[0] for x in par]); an_ = np.array([x[1] for x in par])
+        dif = am - an_
+        dices = np.array([imgs[a]['dice_motor_vs_nulo'] for a in obtidas
+                          if imgs[a].get('dice_motor_vs_nulo') is not None])
+        lo, hi = ic(dif, np.median)
+        try:
+            from scipy.stats import wilcoxon
+            pw = float(wilcoxon(am, an_).pvalue)
+            spw = '%.4g' % pw
+        except Exception:
+            spw = 'não calculado'
+        rel.append('| | mediana | mínimo | máximo |')
+        rel.append('|---|---|---|---|')
+        rel.append('| área do motor | %.2f | %.2f | %.2f |' % (np.median(am), am.min(), am.max()))
+        rel.append('| área do nulo | %.2f | %.2f | %.2f |' % (np.median(an_), an_.min(), an_.max()))
+        rel.append('| diferença (motor − nulo) | %.2f | %.2f | %.2f |'
+                   % (np.median(dif), dif.min(), dif.max()))
+        rel.append('| Dice motor × nulo | %.4f | %.4f | %.4f |'
+                   % (np.median(dices), dices.min(), dices.max()))
+        rel.append('\nIC95 da diferença mediana: [%.2f; %.2f] · Wilcoxon pareado p = %s · n = %d\n'
+                   % (lo, hi, spw, len(par)))
+    else:
+        rel.append('**não avaliável** — %d imagem(ns) com nulo pareável; exige ≥ 3.\n' % len(par))
+
+    # ---- estratos descritivos (Emenda 1, item 6) ----
+    def tabela(chave, titulo, rot):
+        gr = {}
+        for a in obtidas:
+            gr.setdefault(rot(mapa[a]), []).append(imgs[a]['area'])
+        out = ['\n### %s\n' % titulo, '| estrato | n | área mediana | mínimo | máximo |',
+               '|---|---|---|---|---|']
+        for k in sorted(gr):
+            v = gr[k]
+            out.append('| %s | %d | %.2f | %.2f | %.2f |'
+                       % (k, len(v), np.median(v), min(v), max(v)))
+        return out
+    rel.append('\n## ESTRATOS DESCRITIVOS (Emenda 1, item 6)\n')
+    rel.append('Pré-declarados como **descritivos**: nenhum teste confirmatório '
+               'entre estratos nesta rodada.')
+    rel.extend(tabela('idade', 'Idade (A × Y)', lambda m_:
+                      'A (idoso)' if m_['animal'].upper().startswith('A') else 'Y (jovem)'))
+    rel.extend(tabela('lado', 'Lado (L × R)', lambda m_: m_['lado'].upper()))
+
     rel.append('\n## TABELA POR DIA\n')
     rel.extend(linhas)
     rel.append('\n## MODOS DE FALHA\n')
@@ -743,5 +882,5 @@ if __name__ == '__main__':
 
 ---
 
-*Escrita pelo Opus em 01/10/2026, sobre a segunda revisão do Fable. Nenhuma
+*Escrita pelo Opus em 01/10/2026, sobre as duas revisões do Fable. Nenhuma
 imagem do banco foi baixada, aberta ou inspecionada até esta linha.*
