@@ -1,0 +1,576 @@
+# EMENDA 3 · pré-registro do camundongo — o driver da rodada
+
+**01/10/2026, 06h40 (Brasília). Escrita ANTES de qualquer byte de imagem do banco
+Dryad 10.25338/B84W8Q ser baixado ou aberto.**
+
+Cadeia: `PRE_REGISTRO_CAMUNDONGO_30SET.md` `d0989cf7…` → `EMENDA_1` `161e1d78…` →
+`EMENDA_2_CAMUNDONGO_01OUT.md` **`5af2ca99d59d77b0757958c7138f4f0e78de7d515996f9b982e137ce9bebb8ca`**.
+A Emenda 2 **não é alterada por esta**; seu hash segue de pé.
+
+---
+
+## POR QUE ESTA EMENDA EXISTE
+
+Revisão do Fable sobre a Emenda 2 achou dois buracos, ambos procedentes:
+
+1. **O driver da rodada real não existia.** O `teste_cadeia.py` prova a cadeia em
+   cena sintética, mas calcula `cai_fora` e **não faz nada com ele** — e o
+   `.crop()` do PIL preenche o que falta com **preto, não com réplica da borda**.
+   Ou seja: a regra 3.3 da Emenda 2 estava escrita e não implementada em lugar
+   nenhum. Faltavam também JSON de saída, `razao_pxmm`, estratos, fallback
+   manual, bootstrap e P1–P4. Tudo isso é código novo no caminho da medida —
+   pelo argumento da própria Emenda 2, precisa existir e ter hash antes do
+   download.
+
+2. **As regras 3.1 e 3.2 não tinham regra de escolha.** "O operador *pode* medir
+   à mão" é decisão por imagem, tomada depois de ver a foto e — pior — podendo
+   ver o resultado. Isso é o vazamento que as emendas existem para fechar.
+
+---
+
+## 1 · A REGRA QUE FALTAVA (fecha o item 2)
+
+> **Detector falha → medida manual do anel, SEMPRE, antes de o motor rodar
+> naquela imagem. Anel não visível → estrato "sem escala própria" (3.1).
+> Sem exceção e sem escolha caso a caso.**
+
+E a regra não fica dependendo de disciplina: **está na forma do programa**. O
+driver tem quatro etapas, e a etapa 3 **recusa-se a rodar** enquanto houver
+pendência de escala sem resposta — ensaiado, sai com código 1 e a mensagem
+*"Regra 3.2: medida manual do anel antes de o motor rodar"*. Quando o operador
+mede, o motor **ainda não rodou em imagem nenhuma do banco**: não há resultado
+que ele possa ter visto.
+
+**Acréscimo do executor:** a medida manual exige **diâmetro em px e também o
+centro (x, y)**. A escala sozinha não define o recorte de 24 mm, e usar o centro
+do quadro como substituto seria inventar um centro. Três números ou `SEM_ANEL`;
+o driver recusa linha incompleta.
+
+---
+
+## 2 · O DRIVER
+
+`roda_camundongo.py` — SHA-256 `adb63c9b36e65cf87445b454b748a315ec9aa0279e33e6cd8c94d8bc9adc3e2b` (21092 bytes). Verbatim no anexo.
+
+| etapa | o que faz | saída |
+|---|---|---|
+| 1 `detectar` | detector da Emenda 2 em todas as imagens | `deteccao_camundongo.json` · `PENDENTES_ESCALA_MANUAL.txt` |
+| 2 `medir` | operador informa diâmetro e centro das pendentes | `deteccao_camundongo_com_manual.json` |
+| 3 `rodar` | recorte, motor congelado, por imagem | `camundongo_v0.json` |
+| 4 `relatorio` | P1–P4, tabela por dia, IC bootstrap, painel da P3 | `CAMUNDONGO_V0_RELATORIO.md` · `PAINEL_P3.txt` · `CHAVE_P3_NAO_ABRIR.json` |
+
+**Recorte (3.3, agora implementado).** Se o quadrado de 24 mm não couber no
+quadro, a imagem é estendida com `numpy.pad(mode='edge')` — **réplica da borda**,
+nunca preto, nunca encolhendo o recorte — e a `fracao_replicada` vai para o JSON,
+no estrato `recorte incompleto`.
+
+**Sem escala própria (3.1).** Maior quadrado central → 1380 → 700, saída em
+**px²**, com o critério **`sec`** do próprio motor congelado — o critério sem o
+termo de tamanho, que já existe no código lacrado. É o que o item 3 do
+pré-registro manda quando não há nominal utilizável.
+
+**`razao_pxmm`.** px/mm da imagem ÷ **mediana do banco**. Exige as escalas todas
+antes de qualquer medida, e é por isso que a etapa 1 é separada da 3. Fora de
+[0,80; 1,25] a imagem entra marcada no relatório — **contada, nunca removida**.
+
+**Duas regras que ficam fixadas aqui, antes de ver o banco:**
+
+- **Assinatura da P4**: `parece_anel_do_splint` = |área − 201,06 mm²| / 201,06 ≤ **0,15**
+  (201,06 = π·8², o disco de 16 mm). É o teste da predição do item 5 da Emenda 1.
+- **"Plausível" para o painel da P3**: medida obtida, sem a assinatura do splint e
+  com `razao_pxmm` dentro da faixa. O painel pareia uma plausível com uma falhada
+  **do mesmo dia**, ordem sorteada com a semente 20260928; a chave sai em arquivo
+  separado, que não se abre antes das respostas.
+
+**`MAPA_FERIDA_DIA.tsv`** (nome, dia, animal, lado) vem da **convenção de nomes
+do README** e é fixado **antes da etapa 3**. A etapa 4 recusa-se a rodar sem ele.
+Nunca é inferido do resultado. Nenhuma imagem do banco foi vista para escrevê-lo —
+ele ainda não existe, e quem o escrever o faz a partir do README, não das saídas.
+
+---
+
+## 3 · O ENSAIO
+
+`teste_driver.py` — SHA-256 `51dd407f2479457a06ab16e80f132d0ffd3f2ca888451d8061c6deda2fdccf9d` (4428 bytes). Banco **sintético** de 48 imagens
+(6 dias × 8 feridas), desenhado por código, com ferida encolhendo, uma imagem sem
+anel e uma com o anel na beira do quadro. Semente 20260928.
+
+| conferência | resultado |
+|---|---|
+| etapa 3 barrada sem a etapa 2 | ✅ código 1, mensagem da regra 3.2 |
+| recorte que não cabe | ✅ 1 imagem, `fracao_replicada` 0,150, por réplica de borda |
+| estrato "sem escala própria" | ✅ 1 imagem, unidade `px²`, critério `sec` |
+| JSON por imagem | ✅ arquivo, SHA-256, px/mm, centro, área, nota, canal, componentes, ajuste, estrato, razão |
+| bootstrap, tabela por dia, painel P3 | ✅ os três saem |
+
+🔴 **No ensaio sintético o motor devolveu a assinatura do splint em 89,4 % das
+imagens e a P2 FALHOU** (Spearman +0,30). É a mesma assinatura que a Emenda 2 já
+registrou em 4 de 5 cenas — agora num banco inteiro e com a P2 medida.
+
+**Isto não é resultado sobre o banco real e não autoriza mexer em nada.** É o
+ensaio mostrando que o caminho inteiro corre e que a predição do item 5 da
+Emenda 1 tem como aparecer. Fica declarado antes do download, em cima do que já
+estava declarado.
+
+---
+
+## 4 · O QUE CONTINUA VALENDO
+
+Tudo do pré-registro, da Emenda 1 e da Emenda 2: uma rodada · nenhuma exclusão
+por resultado · nenhuma constante do v0 tocada · P1–P4 como escritas · estratos
+de idade e lado só descritivos · IC bootstrap 10 000, semente 20260928 · diâmetro
+efetivo **11,5 mm** pela identidade da reauditoria d3 · dias 7/16/19 do porco
+fechados · CWDB intocado · v2 do Zenodo não se publica aqui.
+
+---
+
+## ANEXO · `roda_camundongo.py`, verbatim
+
+```python
+"""
+roda_camundongo.py — driver da rodada do motor v0 congelado no banco de
+camundongo (Dryad 10.25338/B84W8Q).
+
+CONGELADO PELA EMENDA 3 do pré-registro (01/10/2026). Escrito, testado em cena
+sintética e hasheado ANTES de qualquer byte de imagem do banco ser baixado.
+
+Não contém nenhuma constante do motor v0 e não altera nenhuma. O motor entra
+por motor_v0_funcoes.py, extração verbatim de v0_congelado_2026-09-22/rodar.py.
+
+TRÊS ETAPAS, NESTA ORDEM, SEM EXCEÇÃO
+  1  detectar  — detector do anel em todas as imagens; grava deteccao.json e,
+                 se houver falha, PENDENTES_ESCALA_MANUAL.txt.
+  2  medir     — o operador informa o diâmetro do anel em px das pendentes.
+                 Obrigatória sempre que a etapa 1 deixar pendência (regra 3.2
+                 da Emenda 3). O motor ainda NÃO rodou em imagem nenhuma: o
+                 operador não pode ter visto resultado algum.
+  3  rodar     — recorte, motor; grava camundongo_v0.json.
+  4  relatorio — P1-P4, tabela por dia, IC bootstrap e painel cego da P3;
+                 grava CAMUNDONGO_V0_RELATORIO.md. Exige MAPA_FERIDA_DIA.tsv,
+                 que vem da convenção de nomes do README e é fixado ANTES da
+                 etapa 3 — nunca inferido do resultado.
+
+Uso:
+    python roda_camundongo.py detectar <pasta_tiffs> <pasta_saida>
+    python roda_camundongo.py medir    <pasta_saida> MEDIDAS.txt
+    python roda_camundongo.py rodar     <pasta_tiffs> <pasta_saida>
+    python roda_camundongo.py relatorio <pasta_saida>
+
+MEDIDAS.txt: uma linha por imagem,
+    nome <TAB> diametro_px <TAB> centro_x_px <TAB> centro_y_px
+O centro é obrigatório: a escala sozinha não define o recorte de 24 mm, e o
+centro do quadro NÃO serve de substituto. Imagem sem anel visível: escrever
+"SEM_ANEL" no lugar dos três números (estrato 3.1).
+"""
+import os, sys, json, hashlib, datetime
+import numpy as np
+from PIL import Image
+
+AQUI = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, AQUI)
+from detecta_anel_camundongo import detecta, px_por_mm, ANEL_MM
+import motor_v0_funcoes as M
+
+# ---------------------------------------------------------------- constantes
+RECORTE_MM = 24.0                      # Emenda 1, item 3
+LADO_1380  = 1380                      # quadro de referência
+DIAM_MM    = 6.0                       # nominal do punch (Emenda 1, item 4)
+S_1380     = LADO_1380 / RECORTE_MM     # 57,5 px/mm por construção
+DIAM_EF    = DIAM_MM * S_1380 / 30.0    # 11,5 mm — identidade da reauditoria d3
+SEMENTE    = 20260928
+BOOT       = 10000
+RAZAO_LO, RAZAO_HI = 0.80, 1.25         # faixa de razao_pxmm que não vira linha própria
+AREA_SPLINT_MM2 = np.pi * (ANEL_MM / 2) ** 2          # 201,06 mm²
+TOL_SPLINT = 0.15                       # |área − 201,06|/201,06 ≤ 0,15 = assinatura P4
+EXT = ('.tif', '.tiff')
+
+
+def sha256(p):
+    h = hashlib.sha256()
+    with open(p, 'rb') as f:
+        for b in iter(lambda: f.read(1 << 20), b''):
+            h.update(b)
+    return h.hexdigest()
+
+
+def lista(pasta):
+    return sorted(f for f in os.listdir(pasta) if f.lower().endswith(EXT))
+
+
+# ------------------------------------------------------------------ etapa 1
+def etapa_detectar(pasta, saida):
+    os.makedirs(saida, exist_ok=True)
+    arqs = lista(pasta)
+    print('%d imagens' % len(arqs))
+    reg = {}
+    for i, a in enumerate(arqs, 1):
+        p = os.path.join(pasta, a)
+        r = detecta(p)
+        reg[a] = {'arquivo': a, 'sha256': sha256(p), 'deteccao': r,
+                  'px_mm': (px_por_mm(r) if r['ok'] else None),
+                  'escala_manual': False}
+        print('%4d/%d  %-40s %s' % (i, len(arqs), a,
+              ('px/mm %.3f' % px_por_mm(r)) if r['ok'] else 'PENDENTE [%s]' % r['motivo']))
+    json.dump(reg, open(os.path.join(saida, 'deteccao_camundongo.json'), 'w'), indent=1)
+    pend = [a for a in arqs if not reg[a]['deteccao']['ok']]
+    with open(os.path.join(saida, 'PENDENTES_ESCALA_MANUAL.txt'), 'w') as f:
+        f.write('# Regra 3.2 da Emenda 3: toda imagem desta lista recebe medida\n'
+                '# manual do anel, OBRIGATORIAMENTE, antes de o motor rodar nela.\n'
+                '# nome <TAB> diametro_px <TAB> centro_x_px <TAB> centro_y_px   (ou SEM_ANEL)\n')
+        for a in pend:
+            f.write('%s\t\t\t\n' % a)
+    print('\npendentes de escala manual: %d de %d' % (len(pend), len(arqs)))
+    return len(pend)
+
+
+# ------------------------------------------------------------------ etapa 2
+def etapa_medir(saida, medidas):
+    pj = os.path.join(saida, 'deteccao_camundongo.json')
+    reg = json.load(open(pj))
+    quando = datetime.datetime.now().astimezone().isoformat(timespec='seconds')
+    n_ok = n_sem = 0
+    for linha in open(medidas, encoding='utf-8'):
+        linha = linha.strip()
+        if not linha or linha.startswith('#'):
+            continue
+        partes = [x.strip() for x in (linha.split('\t') if '\t' in linha
+                                      else linha.split())]
+        if len(partes) < 2:
+            continue
+        nome = partes[0]
+        if nome not in reg:
+            print('ignorado (nao esta na deteccao): %s' % nome); continue
+        if partes[1].upper() == 'SEM_ANEL':
+            reg[nome]['estrato'] = 'sem escala propria'
+            reg[nome]['px_mm'] = None
+            reg[nome]['quando_medido'] = quando
+            n_sem += 1
+        else:
+            if len(partes) != 4:
+                sys.exit('PARADO: %s precisa de diametro_px, centro_x e centro_y '
+                         '(ou SEM_ANEL). Linha: %r' % (nome, linha))
+            d, cx, cy = (float(x.replace(',', '.')) for x in partes[1:4])
+            reg[nome]['escala_manual'] = True
+            reg[nome]['diam_anel_px_manual'] = d
+            reg[nome]['centro_manual'] = [cx, cy]
+            reg[nome]['px_mm'] = d / ANEL_MM
+            reg[nome]['quando_medido'] = quando
+            n_ok += 1
+    json.dump(reg, open(os.path.join(saida, 'deteccao_camundongo_com_manual.json'), 'w'),
+              indent=1)
+    print('medidas manuais: %d | marcadas SEM_ANEL: %d' % (n_ok, n_sem))
+
+
+# --------------------------------------------------------- recorte (item 3.3)
+def recorta(im, cx, cy, pxmm):
+    """24 mm centrado no anel -> 1380 -> 700. Se o quadrado nao couber no quadro,
+    completa por REPLICACAO DA BORDA (nunca preto, nunca encolhendo o recorte) e
+    devolve a fracao de area replicada. Regra 3.3 da Emenda 2."""
+    H, W = im.shape[:2]
+    lado = int(round(RECORTE_MM * pxmm))
+    x0 = int(round(cx - lado / 2)); y0 = int(round(cy - lado / 2))
+    esq = max(0, -x0); cima = max(0, -y0)
+    dir_ = max(0, (x0 + lado) - W); baixo = max(0, (y0 + lado) - H)
+    frac = 1.0 - (max(0, min(W, x0 + lado) - max(0, x0)) *
+                  max(0, min(H, y0 + lado) - max(0, y0))) / float(lado * lado)
+    if esq or dir_ or cima or baixo:
+        im = np.pad(im, ((cima, baixo), (esq, dir_), (0, 0)), mode='edge')
+        x0 += esq; y0 += cima
+    rec = Image.fromarray(im[y0:y0 + lado, x0:x0 + lado])
+    q1380 = rec.resize((LADO_1380, LADO_1380), Image.LANCZOS)
+    q700 = q1380.resize((M.L, M.L), Image.LANCZOS)
+    return np.asarray(q700.convert('RGB')), float(frac)
+
+
+def quadrado_central(im):
+    """estrato 'sem escala propria': maior quadrado central -> 1380 -> 700"""
+    H, W = im.shape[:2]
+    lado = min(H, W)
+    y0, x0 = (H - lado) // 2, (W - lado) // 2
+    q = Image.fromarray(im[y0:y0 + lado, x0:x0 + lado])
+    return np.asarray(q.resize((LADO_1380, LADO_1380), Image.LANCZOS)
+                       .resize((M.L, M.L), Image.LANCZOS).convert('RGB'))
+
+
+def roda_motor(rgb, diam, criterio):
+    """percorre a grade de 144 do motor congelado; criterio 'prim' ou 'sec'"""
+    cache, mel = {}, (-1, None, None)
+    k = 1 if criterio == 'prim' else 2
+    for gama, can, g, dsl, al, (lo, hi) in M.grade:
+        ka = (gama, can)
+        if ka not in cache:
+            cache[ka] = M.canais[can](M.clareia(rgb, gama))
+        kt = (gama, can, g, dsl, al)
+        if kt not in cache:
+            cache[kt] = M.mapa_t(cache[ka], g, dsl, al, 4, None)
+        r = M.anel(cache[kt], lo, hi, 3, None, diam)
+        if r is None:
+            continue
+        if r[k] > mel[0]:
+            mel = (r[k], r[0], (gama, can, g, dsl, al, lo, hi))
+    return mel
+
+
+# ------------------------------------------------------------------ etapa 3
+def etapa_rodar(pasta, saida):
+    pj = os.path.join(saida, 'deteccao_camundongo_com_manual.json')
+    if not os.path.isfile(pj):
+        pj = os.path.join(saida, 'deteccao_camundongo.json')
+        reg = json.load(open(pj))
+        if any(not v['deteccao']['ok'] and not v.get('escala_manual')
+               and v.get('estrato') != 'sem escala propria' for v in reg.values()):
+            sys.exit('PARADO: ha pendencias de escala e a etapa 2 nao foi feita.\n'
+                     'Regra 3.2: medida manual do anel antes de o motor rodar.')
+    reg = json.load(open(pj))
+
+    # razao_pxmm contra a MEDIANA DO BANCO: precisa de todas as escalas antes
+    escalas = [v['px_mm'] for v in reg.values() if v['px_mm']]
+    med = float(np.median(escalas)) if escalas else None
+    print('mediana de px/mm do banco: %s' % ('%.4f' % med if med else '—'))
+
+    res = {}
+    for i, (a, v) in enumerate(sorted(reg.items()), 1):
+        p = os.path.join(pasta, a)
+        im = np.asarray(Image.open(p).convert('RGB'))
+        linha = {'arquivo': a, 'sha256': v['sha256'],
+                 'escala_manual': bool(v.get('escala_manual')),
+                 'diam_anel_px': (v.get('diam_anel_px_manual')
+                                  or (v['deteccao'].get('diam_px') if v['deteccao']['ok'] else None)),
+                 'px_mm': v['px_mm'], 'motivo_deteccao': v['deteccao'].get('motivo', ''),
+                 'centro_px': (v.get('centro_manual') if v.get('escala_manual')
+                               else ([v['deteccao']['cx'], v['deteccao']['cy']]
+                                     if v['deteccao']['ok'] else None))}
+        if v['px_mm'] is None:
+            rgb = quadrado_central(im)
+            nota, m, aj = roda_motor(rgb, DIAM_EF, 'sec')
+            linha.update({'estrato': 'sem escala propria', 'criterio': 'sec',
+                          'unidade': 'px2', 'fracao_replicada': 0.0,
+                          'razao_pxmm': None})
+            if m is None:
+                linha.update({'obtida': False, 'area': None, 'nota': None})
+            else:
+                linha.update({'obtida': True,
+                              'area': float(m.sum() * (LADO_1380 / M.L) ** 2),
+                              'nota': float(nota), 'ajuste': list(aj),
+                              'canal': aj[1], 'componentes': int(_comp(m))})
+        else:
+            if v.get('escala_manual'):
+                cx, cy = v['centro_manual']
+            else:
+                cx, cy = v['deteccao']['cx'], v['deteccao']['cy']
+            rgb, frac = recorta(im, cx, cy, v['px_mm'])
+            nota, m, aj = roda_motor(rgb, DIAM_EF, 'prim')
+            razao = v['px_mm'] / med if med else None
+            linha.update({'estrato': ('recorte incompleto' if frac > 0 else 'normal'),
+                          'criterio': 'prim', 'unidade': 'mm2',
+                          'fracao_replicada': frac, 'razao_pxmm': razao,
+                          'razao_fora_da_faixa': bool(razao is not None and
+                                                      not (RAZAO_LO <= razao <= RAZAO_HI))})
+            if m is None:
+                linha.update({'obtida': False, 'area': None, 'nota': None,
+                              'parece_anel_do_splint': None})
+            else:
+                area = float(m.sum() * (LADO_1380 / M.L) ** 2 / (S_1380 ** 2))
+                linha.update({'obtida': True, 'area': area, 'nota': float(nota),
+                              'ajuste': list(aj), 'canal': aj[1],
+                              'componentes': int(_comp(m)),
+                              'parece_anel_do_splint':
+                                  bool(abs(area - AREA_SPLINT_MM2) / AREA_SPLINT_MM2
+                                       <= TOL_SPLINT)})
+        res[a] = linha
+        print('%4d  %-40s %s' % (i, a, _resumo(linha)))
+
+    saidas = {'_meta': {'quando': datetime.datetime.now().astimezone()
+                        .isoformat(timespec='seconds'),
+                        'recorte_mm': RECORTE_MM, 'lado_1380': LADO_1380,
+                        'diam_nominal_mm': DIAM_MM, 'diam_efetivo_mm': DIAM_EF,
+                        's_1380_px_mm': S_1380, 'semente': SEMENTE,
+                        'bootstrap': BOOT, 'mediana_pxmm_banco': med,
+                        'sha256_motor_origem':
+                            '78b193014577a45109771a2b15f3b7ff55663b0bb4312a23980c766fe7161732'},
+              'imagens': res}
+    pout = os.path.join(saida, 'camundongo_v0.json')
+    json.dump(saidas, open(pout, 'w'), indent=1)
+    print('\n%s  SHA-256 %s' % (pout, sha256(pout)))
+    return saidas
+
+
+def _comp(m):
+    from scipy import ndimage as ndi
+    return ndi.label(m)[1]
+
+
+def _resumo(l):
+    if not l.get('obtida'):
+        return 'SEM MEDIDA'
+    u = l['unidade']
+    s = '%9.2f %s  nota %.3f  %s' % (l['area'], u, l['nota'], l['estrato'])
+    if l.get('parece_anel_do_splint'):
+        s += '  [assinatura P4: anel do splint]'
+    if l.get('razao_fora_da_faixa'):
+        s += '  [razao_pxmm fora da faixa]'
+    return s
+
+
+# ------------------------------------------------------------------ etapa 4
+def _spearman(x, y):
+    """rho de Spearman, sem dependencia externa"""
+    def posto(v):
+        o = np.argsort(np.argsort(v, kind='stable'), kind='stable').astype(float)
+        v = np.asarray(v, float)
+        for u in np.unique(v):
+            k = v == u
+            if k.sum() > 1:
+                o[k] = o[k].mean()
+        return o
+    a, b = posto(x), posto(y)
+    a = a - a.mean(); b = b - b.mean()
+    d = np.sqrt((a * a).sum() * (b * b).sum())
+    return float((a * b).sum() / d) if d else float('nan')
+
+
+def etapa_relatorio(saida):
+    """P1-P4, tabela por dia, IC bootstrap e painel cego da P3."""
+    dados = json.load(open(os.path.join(saida, 'camundongo_v0.json')))
+    imgs = dados['imagens']
+    pmapa = os.path.join(saida, 'MAPA_FERIDA_DIA.tsv')
+    if not os.path.isfile(pmapa):
+        sys.exit('PARADO: falta MAPA_FERIDA_DIA.tsv (nome<TAB>dia<TAB>animal<TAB>lado).\n'
+                 'Ele vem da convencao de nomes do README e e fixado ANTES da etapa 3.')
+    mapa = {}
+    for linha in open(pmapa, encoding='utf-8'):
+        if linha.startswith('#') or not linha.strip():
+            continue
+        c = [x.strip() for x in linha.rstrip('\n').split('\t')]
+        if len(c) >= 4:
+            mapa[c[0]] = {'dia': int(c[1]), 'animal': c[2], 'lado': c[3]}
+    faltam = [a for a in imgs if a not in mapa]
+    if faltam:
+        sys.exit('PARADO: %d imagens sem linha no mapa (ex.: %s)' % (len(faltam), faltam[:3]))
+
+    rng = np.random.default_rng(SEMENTE)
+    def ic(v, f):
+        v = np.asarray(v, float)
+        if len(v) == 0:
+            return (float('nan'), float('nan'))
+        b = [f(v[rng.integers(0, len(v), len(v))]) for _ in range(BOOT)]
+        return float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
+
+    com_anel = [a for a, l in imgs.items() if l['estrato'] != 'sem escala propria']
+    obtidas = [a for a in com_anel if imgs[a]['obtida']]
+    p1 = len(obtidas) / len(com_anel) if com_anel else float('nan')
+    p1_lo, p1_hi = ic([1.0 if imgs[a]['obtida'] else 0.0 for a in com_anel], np.mean)
+
+    por_dia = {}
+    for a in obtidas:
+        por_dia.setdefault(mapa[a]['dia'], []).append(imgs[a]['area'])
+    dias = sorted(d for d, v in por_dia.items() if len(v) >= 8)
+    med_dia = [float(np.median(por_dia[d])) for d in dias]
+    p2 = _spearman(dias, med_dia) if len(dias) >= 3 else float('nan')
+
+    modos = {}
+    for a, l in imgs.items():
+        if not l['obtida']:
+            modos[l.get('motivo_deteccao') or 'motor nao devolveu medida'] = \
+                modos.get(l.get('motivo_deteccao') or 'motor nao devolveu medida', 0) + 1
+    n_splint = sum(1 for a in obtidas if imgs[a].get('parece_anel_do_splint'))
+    p4_assin = n_splint / len(obtidas) if obtidas else float('nan')
+
+    # painel cego da P3: pares do mesmo dia, uma plausivel e uma falhada
+    plaus = [a for a in obtidas if not imgs[a].get('parece_anel_do_splint')
+             and not imgs[a].get('razao_fora_da_faixa')]
+    falhou = [a for a, l in imgs.items() if not l['obtida']]
+    pares = []
+    for a in falhou:
+        d = mapa[a]['dia']
+        cand = [b for b in plaus if mapa[b]['dia'] == d and b not in [p[1] for p in pares]]
+        if cand:
+            pares.append((a, cand[int(rng.integers(0, len(cand)))]))
+    ordem = rng.permutation(len(pares))
+    painel = []
+    for i in ordem:
+        a, b = pares[i]
+        ab = [a, b] if rng.integers(0, 2) == 0 else [b, a]
+        painel.append({'par': int(i) + 1, 'A': ab[0], 'B': ab[1],
+                       'qual_falhou': 'A' if ab[0] == a else 'B'})
+    json.dump({'semente': SEMENTE, 'n_pares': len(painel), 'pares': painel},
+              open(os.path.join(saida, 'CHAVE_P3_NAO_ABRIR.json'), 'w'), indent=1)
+    with open(os.path.join(saida, 'PAINEL_P3.txt'), 'w', encoding='utf-8') as f:
+        f.write('# Painel cego da P3. Para cada par, dizer qual das duas FALHOU e por que.\n'
+                '# O revisor nao ve area, nota, px/mm nem estrato.\n')
+        for p_ in painel:
+            f.write('par %d\tA = %s\tB = %s\tresposta: \tcausa: \n'
+                    % (p_['par'], p_['A'], p_['B']))
+
+    linhas = ['| dia | n medidas | área mediana | mínimo | máximo |', '|---|---|---|---|---|']
+    for d in sorted(por_dia):
+        v = por_dia[d]
+        linhas.append('| %d | %d | %.2f | %.2f | %.2f |'
+                      % (d, len(v), np.median(v), min(v), max(v)))
+    rel = []
+    rel.append('# CAMUNDONGO · motor v0 congelado · relatório da rodada\n')
+    rel.append('Banco Dryad 10.25338/B84W8Q · %d imagens · motor intocado '
+               '(origem SHA-256 %s)\n' % (len(imgs), dados['_meta']['sha256_motor_origem'][:16] + '…'))
+    rel.append('Diâmetro nominal %.0f mm · efetivo passado ao motor **%.1f mm** '
+               '(s = %.1f px/mm no quadro de 1380) · semente %d · bootstrap %d\n'
+               % (DIAM_MM, DIAM_EF, S_1380, SEMENTE, BOOT))
+    rel.append('## PREDIÇÕES\n')
+    rel.append('| | predição | resultado | |')
+    rel.append('|---|---|---|---|')
+    rel.append('| **P1** | medida obtida em ≥ 50 %% das imagens com anel visível | '
+               '**%.1f %%** (%d de %d) · IC95 [%.1f; %.1f] | %s |'
+               % (100 * p1, len(obtidas), len(com_anel), 100 * p1_lo, 100 * p1_hi,
+                  '✅ **confirmada**' if p1 >= 0.5 else '❌ **FALHOU**'))
+    rel.append('| **P2** | Spearman(dia, área mediana) ≤ −0,8 | **%.4f** (%d dias com n ≥ 8) | %s |'
+               % (p2, len(dias), '✅ **confirmada**' if p2 <= -0.8 else '❌ **FALHOU**'))
+    rel.append('| **P3** | revisor cego acerta ≥ 75 %% dos pares | '
+               'painel de %d pares emitido; a preencher | ⏳ pendente |' % len(painel))
+    rel.append('| **P4** | falha dominante = referência de pele contaminada | '
+               'assinatura "anel do splint" em **%.1f %%** das obtidas | %s |'
+               % (100 * p4_assin, 'ver modos abaixo'))
+    rel.append('\n## TABELA POR DIA\n')
+    rel.extend(linhas)
+    rel.append('\n## MODOS DE FALHA\n')
+    for k, v in sorted(modos.items(), key=lambda z: -z[1]):
+        rel.append('- %s — %d' % (k or '(sem motivo)', v))
+    rel.append('\n## ESTRATOS\n')
+    for e in sorted(set(l['estrato'] for l in imgs.values())):
+        n = sum(1 for l in imgs.values() if l['estrato'] == e)
+        rel.append('- %s — %d' % (e, n))
+    n_man = sum(1 for l in imgs.values() if l['escala_manual'])
+    n_raz = sum(1 for l in imgs.values() if l.get('razao_fora_da_faixa'))
+    rel.append('- escala manual (ato do operador) — %d' % n_man)
+    rel.append('- razao_pxmm fora de [%.2f; %.2f] — %d' % (RAZAO_LO, RAZAO_HI, n_raz))
+    rel.append('\n*Nenhuma imagem foi excluída. Nenhuma constante do motor foi tocada.*\n')
+    prel = os.path.join(saida, 'CAMUNDONGO_V0_RELATORIO.md')
+    open(prel, 'w', encoding='utf-8').write('\n'.join(rel))
+    pj = os.path.join(saida, 'camundongo_v0.json')
+    with open(prel, 'a', encoding='utf-8') as f:
+        f.write('\n## HASHES DAS SAÍDAS\n\n')
+        f.write('- `camundongo_v0.json` — %s\n' % sha256(pj))
+        f.write('- `CAMUNDONGO_V0_RELATORIO.md` — calculado após esta linha, '
+                'registrado pelo executor no log.\n')
+    print('\n'.join(rel[:14]))
+    print('\n%s' % prel)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) < 3:
+        sys.exit(__doc__)
+    etapa = sys.argv[1]
+    if etapa == 'detectar':
+        etapa_detectar(sys.argv[2], sys.argv[3])
+    elif etapa == 'medir':
+        etapa_medir(sys.argv[2], sys.argv[3])
+    elif etapa == 'rodar':
+        etapa_rodar(sys.argv[2], sys.argv[3])
+    elif etapa == 'relatorio':
+        etapa_relatorio(sys.argv[2])
+    else:
+        sys.exit(__doc__)
+```
+
+---
+
+*Escrita pelo Opus em 01/10/2026, sobre a revisão do Fable. Nenhuma imagem do
+banco foi baixada, aberta ou inspecionada até esta linha.*
