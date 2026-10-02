@@ -1,0 +1,276 @@
+# nome	classe	plastico	comentario	quando_iso
+# classe: v=vejo a ferida · c=cicatrizada · n=nao da para laudar · d=em duvida
+# plastico: S quando ha filme/plastico sobre a FERIDA, N quando nao
+# comentario: texto livre, descritivo. NAO e categoria e nao entra em contagem.
+# censo: todas as imagens da pasta, em ordem alfabetica, sem amostra e sem selecao.
+# vale a ULTIMA linha de cada nome; as anteriores ficam como historico.
+Day 0_A8-1-L.tiff	v	N		2026-10-02T18:07:09-03:00
+Day 0_A8-1-R.tiff	v	N		2026-10-02T18:07:20-03:00
+Day 0_A8-3-L.tiff	v	N		2026-10-02T18:07:26-03:00
+Day 0_A8-3-R.tiff	v	N	Reflexo na ferida	2026-10-02T18:08:38-03:00
+Day 0_A8-4-L.tiff	v	N	Reflexo na ferida	2026-10-02T18:08:52-03:00
+Day 0_A8-4-R.tiff	v	N	Pouco Reflexo	2026-10-02T18:09:11-03:00
+Day 0_A8-5-L.tiff	v	N	Reflexo na ferida	2026-10-02T18:09:20-03:00
+Day 0_A8-5-R.tiff	v	N	Pouco reflexo na ferida	2026-10-02T18:09:31-03:00
+Day 0_Y8-1-L.tiff	v	N	Reflexo na ferida	2026-10-02T18:09:44-03:00
+Day 0_Y8-1-R.tiff	v	N	Reflexo na ferida	2026-10-02T18:09:53-03:00
+Day 0_Y8-2-L.tiff	v	N	Pouco Reflexo na ferida	2026-10-02T18:10:05-03:00
+Day 0_Y8-2-R.tiff	v	N	Reflexo na ferida	2026-10-02T18:10:17-03:00
+Day 0_Y8-3-L.tiff	v	N	Pouco Reflexo na ferida e outra ferida acima	2026-10-02T18:10:44-03:00
+Day 0_Y8-3-R.tiff	v	N	pouco reflexo na ferida	2026-10-02T18:10:55-03:00
+Day 0_Y8-4-L.tiff	v	N	Reflexo na ferida	2026-10-02T18:11:06-03:00
+Day 0_Y8-4-R.tiff	v	N	refelxo na ferida	2026-10-02T18:11:14-03:00
+Day 10_A8-1-L.tiff	v	S		2026-10-02T18:12:18-03:00
+Day 10_A8-1-R.tiff	v	S		2026-10-02T18:12:30-03:00
+Day 10_A8-3-L.tiff	n	S		2026-10-02T18:13:09-03:00
+Day 10_A8-3-R.tiff	d	S		2026-10-02T18:13:29-03:00
+Day 10_A8-4-L.tiff	n	N	pelo sobre a ferida	2026-10-02T18:13:52-03:00
+Day 10_A8-4-R.tiff	v	S		2026-10-02T18:14:08-03:00
+Day 10_A8-5-L.tiff	d	S		2026-10-02T18:14:24-03:00
+Day 10_A8-5-R.tiff	d	N		2026-10-02T18:14:33-03:00
+Day 10_Y8-1-L.tiff	n	S		2026-10-02T18:14:51-03:00
+Day 10_Y8-1-R.tiff	n	N		2026-10-02T18:14:56-03:00
+Day 10_Y8-2-L.tiff	d	N	pelo na ferida	2026-10-02T18:15:12-03:00
+Day 10_Y8-2-R.tiff	d	N		2026-10-02T18:15:21-03:00
+Day 10_Y8-3-L.tiff	d	N		2026-10-02T18:15:25-03:00
+Day 10_Y8-3-R.tiff	n	N	Varios focos de lesoes.	2026-10-02T18:16:15-03:00
+Day 10_Y8-4-L.tiff	d	N		2026-10-02T18:16:31-03:00
+Day 10_Y8-4-R.tiff	d	N		2026-10-02T18:16:40-03:00
+Day 11_A8-1-L.tiff	v	N		2026-10-02T18:16:48-03:00
+Day 11_A8-1-R.tiff	v	N		2026-10-02T18:16:52-03:00
+Day 11_A8-3-L.tiff	v	N	pelos em volta da ferida	2026-10-02T18:17:07-03:00
+Day 11_A8-3-R.tiff	d	N	não sei se é crosta, pelo ou pastico	2026-10-02T18:19:01-03:00
+Day 11_A8-4-L.tiff	n	N	Plastico e pelo e mancha sobre a ferida.	2026-10-02T18:19:38-03:00
+Day 11_A8-4-R.tiff	v	N	Plastico na ferida	2026-10-02T18:19:59-03:00
+Day 11_A8-5-L.tiff	v	N		2026-10-02T18:20:06-03:00
+Day 11_A8-5-R.tiff	n	N	varios focos de lesoes, pelo em cima da lesao	2026-10-02T18:20:43-03:00
+Day 11_Y8-1-L.tiff	n	N		2026-10-02T18:20:52-03:00
+Day 11_Y8-1-R.tiff	c	N		2026-10-02T18:20:57-03:00
+Day 11_Y8-2-L.tiff	n	N	pelo sobre a lesao	2026-10-02T18:21:07-03:00
+Day 11_Y8-2-R.tiff	n	N	Pelo sobre a lesao.	2026-10-02T18:21:29-03:00
+Day 11_Y8-3-L.tiff	n	N		2026-10-02T18:21:34-03:00
+Day 11_Y8-3-R.tiff	n	N		2026-10-02T18:21:36-03:00
+Day 11_Y8-4-L.tiff	n	N		2026-10-02T18:21:38-03:00
+Day 11_Y8-4-R.tiff	d	N	Vejo a ferida, porem com pelos que podem estar sobre ela	2026-10-02T18:22:20-03:00
+Day 12_A8-1-L.tiff	v	N	Plastico na ferida	2026-10-02T18:22:33-03:00
+Day 12_A8-1-R.tiff	d	N	Plastico na ferida e ela econta no anel vermelho/ outra mancha ao lado, que pode ser outra lesao.	2026-10-02T18:23:31-03:00
+Day 12_A8-3-L.tiff	v	N	Pelos em volta da Ferida	2026-10-02T18:23:46-03:00
+Day 12_A8-3-R.tiff	v	N	Pelos em volta da ferida, poucos.	2026-10-02T18:24:13-03:00
+Day 12_A8-4-L.tiff	n	N	Pelos sobre a ferida, nao consigo ver seu contorno	2026-10-02T18:24:39-03:00
+Day 12_A8-4-R.tiff	v	S		2026-10-02T18:24:56-03:00
+Day 12_A8-5-L.tiff	v	N		2026-10-02T18:26:39-03:00
+Day 12_A8-5-R.tiff	d	S	varios focos de ferida	2026-10-02T18:27:02-03:00
+Day 12_Y8-1-L.tiff	d	S		2026-10-02T18:27:16-03:00
+Day 12_Y8-1-R.tiff	n	S		2026-10-02T18:27:26-03:00
+Day 12_Y8-2-L.tiff	n	N	Pelo sobre a ferida	2026-10-02T18:27:40-03:00
+Day 12_Y8-2-R.tiff	n	N	Pelo SObre a ferida	2026-10-02T18:27:49-03:00
+Day 12_Y8-3-L.tiff	n	N	Pelo sobre a ferida	2026-10-02T18:28:02-03:00
+Day 12_Y8-3-R.tiff	n	S	Nao da pra saber qual é a lesao, varios focos	2026-10-02T18:28:31-03:00
+Day 12_Y8-4-L.tiff	d	N		2026-10-02T18:28:49-03:00
+Day 12_Y8-4-R.tiff	d	N	pelo sobre a ferida	2026-10-02T18:29:06-03:00
+Day 13_A8-1-L.tiff	d	S	resquisio de sangue em volta da ferida	2026-10-02T18:29:47-03:00
+Day 13_A8-1-R.tiff	v	N		2026-10-02T18:29:51-03:00
+Day 13_A8-3-L.tiff	v	N	Pelos em volta da ferida	2026-10-02T18:30:07-03:00
+Day 13_A8-3-R.tiff	v	N	Pelos em volta da ferida	2026-10-02T18:30:16-03:00
+Day 13_A8-4-L.tiff	n	S	Pelos sobre a ferida	2026-10-02T18:30:30-03:00
+Day 13_A8-4-R.tiff	d	N	Ferida com o que me parece exudato	2026-10-02T18:31:18-03:00
+Day 13_A8-5-L.tiff	v	S		2026-10-02T18:31:27-03:00
+Day 13_A8-5-R.tiff	n	S	nao é possivel saber qual é a lesao	2026-10-02T18:32:04-03:00
+Day 13_Y8-1-L.tiff	n	N	Nao é possivel saber qual é a lesao	2026-10-02T18:32:23-03:00
+Day 13_Y8-1-R.tiff	n	S		2026-10-02T18:32:33-03:00
+Day 13_Y8-2-L.tiff	n	N	Pelos cobrindo a ferida	2026-10-02T18:32:43-03:00
+Day 13_Y8-2-R.tiff	n	N	Pelos cobrindo a ferida	2026-10-02T18:32:51-03:00
+Day 13_Y8-3-L.tiff	n	N	pelos cobrindo a ferida	2026-10-02T18:33:00-03:00
+Day 13_Y8-3-R.tiff	n	N	pelos cobrindo a ferida	2026-10-02T18:33:08-03:00
+Day 13_Y8-4-L.tiff	n	N	pelos cobrindo a ferida	2026-10-02T18:33:16-03:00
+Day 13_Y8-4-R.tiff	n	N	Pelos cobrindo a ferida	2026-10-02T18:33:41-03:00
+Day 14_A8-1-L.tiff	d	N	nao é possivel saber qual é a ferida	2026-10-02T18:34:13-03:00
+Day 14_A8-1-R.tiff	v	N		2026-10-02T18:34:29-03:00
+Day 14_A8-3-L.tiff	v	N	Pelos em volta da ferida	2026-10-02T18:34:43-03:00
+Day 14_A8-3-R.tiff	d	N	Pelos em volta da ferida	2026-10-02T18:34:55-03:00
+Day 14_A8-4-L.tiff	n	S	Plastico e pelos deformam a ferida	2026-10-02T18:35:23-03:00
+Day 14_A8-4-R.tiff	v	S		2026-10-02T18:35:34-03:00
+Day 14_A8-5-L.tiff	d	N	Pelos na ferida	2026-10-02T18:35:51-03:00
+Day 14_A8-5-R.tiff	n	N	nao é possivel saber qual é a lesao	2026-10-02T18:36:07-03:00
+Day 14_Y8-1-L.tiff	n	N	Pelos cobrindo a ferida	2026-10-02T18:36:21-03:00
+Day 14_Y8-1-R.tiff	n	N	Pelos cobrindo a ferida	2026-10-02T18:36:34-03:00
+Day 14_Y8-2-L.tiff	n	N	Pelos cobrindo a ferida	2026-10-02T18:36:48-03:00
+Day 14_Y8-2-R.tiff	n	N	Pelos cobrindo a ferida	2026-10-02T18:36:56-03:00
+Day 14_Y8-3-L.tiff	n	N	Pelos sobre a ferida.	2026-10-02T18:37:12-03:00
+Day 14_Y8-3-R.tiff	n	N	Pelos sobre a ferida	2026-10-02T18:37:21-03:00
+Day 14_Y8-4-L.tiff	n	N	Pelos sobre a ferida	2026-10-02T18:37:35-03:00
+Day 14_Y8-4-R.tiff	c	N		2026-10-02T18:37:43-03:00
+Day 15_A8-1-L.tiff	n	N	Nao é possivel saber ql é a lesao	2026-10-02T18:38:08-03:00
+Day 15_A8-1-R.tiff	v	N		2026-10-02T18:38:15-03:00
+Day 15_A8-3-L.tiff	d	N	Pelos sobre a ferida e reflexo	2026-10-02T18:38:30-03:00
+Day 15_A8-3-R.tiff	d	N	Pelos sobre a ferida	2026-10-02T18:38:40-03:00
+Day 15_A8-4-L.tiff	c	N		2026-10-02T18:38:44-03:00
+Day 15_A8-4-R.tiff	c	N		2026-10-02T18:38:48-03:00
+Day 15_A8-5-L.tiff	n	N	Pelos sobre a ferida	2026-10-02T18:39:03-03:00
+Day 15_A8-5-R.tiff	d	N		2026-10-02T18:39:09-03:00
+Day 15_Y8-1-L.tiff	d	N	nao localizo a ferida	2026-10-02T18:39:30-03:00
+Day 15_Y8-1-R.tiff	c	N		2026-10-02T18:39:36-03:00
+Day 15_Y8-2-L.tiff	n	N	pelos sobre a ferida	2026-10-02T18:39:50-03:00
+Day 15_Y8-2-R.tiff	n	N	nao é possivel saber qual é a lesao e pelos no que parece ser ferida	2026-10-02T18:40:53-03:00
+Day 15_Y8-3-L.tiff	c	N		2026-10-02T18:40:57-03:00
+Day 15_Y8-3-R.tiff	c	N		2026-10-02T18:40:59-03:00
+Day 15_Y8-4-L.tiff	c	N		2026-10-02T18:41:03-03:00
+Day 15_Y8-4-R.tiff	c	N		2026-10-02T18:41:07-03:00
+Day 1_A8-1-L.tiff	v	S		2026-10-02T18:41:12-03:00
+Day 1_A8-1-R.tiff	n	S	Plastico deforma a ferida	2026-10-02T18:41:39-03:00
+Day 1_A8-3-L.tiff	d	S	Parece q o anel invade a ferida	2026-10-02T18:42:12-03:00
+Day 1_A8-3-R.tiff	d	S	parece q parte do anel invade a ferida	2026-10-02T18:42:29-03:00
+Day 1_A8-4-L.tiff	d	S	Algo invade a ferida	2026-10-02T18:43:02-03:00
+Day 1_A8-4-R.tiff	v	S		2026-10-02T18:43:10-03:00
+Day 1_A8-5-L.tiff	v	S		2026-10-02T18:43:19-03:00
+Day 1_A8-5-R.tiff	v	S	Artefatos invadem a ferida	2026-10-02T18:43:53-03:00
+Day 1_Y8-1-L.tiff	v	S		2026-10-02T18:43:58-03:00
+Day 1_Y8-1-R.tiff	v	S		2026-10-02T18:44:02-03:00
+Day 1_Y8-2-L.tiff	v	S	muito reflexo, algo invade o campo onde esta localizada a ferida	2026-10-02T18:44:38-03:00
+Day 1_Y8-2-R.tiff	v	S		2026-10-02T18:44:44-03:00
+Day 1_Y8-3-L.tiff	v	S		2026-10-02T18:44:50-03:00
+Day 1_Y8-3-R.tiff	v	S		2026-10-02T18:44:54-03:00
+Day 1_Y8-4-L.tiff	v	S		2026-10-02T18:44:58-03:00
+Day 1_Y8-4-R.tiff	v	S	Muito reflexo	2026-10-02T18:45:18-03:00
+Day 2_A8-1-L.tiff	v	S	muito reflexo	2026-10-02T18:45:31-03:00
+Day 2_A8-1-R.tiff	n	S	Plastico deforma parte da ferida.	2026-10-02T18:45:59-03:00
+Day 2_A8-3-L.tiff	d	S		2026-10-02T18:46:07-03:00
+Day 2_A8-3-R.tiff	v	S		2026-10-02T18:46:12-03:00
+Day 2_A8-4-L.tiff	v	S		2026-10-02T18:46:21-03:00
+Day 2_A8-4-R.tiff	v	S	muito reflexo	2026-10-02T18:46:33-03:00
+Day 2_A8-5-L.tiff	v	N		2026-10-02T18:46:43-03:00
+Day 2_A8-5-R.tiff	v	N	reflexo na ferida	2026-10-02T18:46:51-03:00
+Day 2_Y8-1-L.tiff	v	S		2026-10-02T18:46:55-03:00
+Day 2_Y8-1-R.tiff	v	N	Nao sei ao certo se possui plastco, reflexo	2026-10-02T18:47:26-03:00
+Day 2_Y8-2-L.tiff	d	S	Artefatos na ferida	2026-10-02T18:47:49-03:00
+Day 2_Y8-2-R.tiff	v	S		2026-10-02T18:48:03-03:00
+Day 2_Y8-3-L.tiff	v	N	Refelxo na ferida	2026-10-02T18:48:12-03:00
+Day 2_Y8-3-R.tiff	v	N		2026-10-02T18:48:39-03:00
+Day 2_Y8-4-L.tiff	v	N		2026-10-02T18:48:46-03:00
+Day 2_Y8-4-R.tiff	v	S		2026-10-02T18:48:54-03:00
+Day 3_A8-1-L.tiff	d	S	Plastico deforma ferida	2026-10-02T18:49:18-03:00
+Day 3_A8-1-R.tiff	n	N	Plastico deforma a ferida	2026-10-02T18:49:31-03:00
+Day 3_A8-3-L.tiff	n	N	Plastico deforma a ferida	2026-10-02T18:49:50-03:00
+Day 3_A8-3-R.tiff	v	S		2026-10-02T18:49:58-03:00
+Day 3_A8-4-L.tiff	v	S		2026-10-02T18:50:06-03:00
+Day 3_A8-4-R.tiff	v	S		2026-10-02T18:50:11-03:00
+Day 3_A8-5-L.tiff	v	N	Reflexo na ferida	2026-10-02T18:50:30-03:00
+Day 3_A8-5-R.tiff	v	S	em parte da ferida parece que existe resto de Plastico	2026-10-02T18:51:11-03:00
+Day 3_Y8-1-L.tiff	d	S	Plastico deforma a ferida	2026-10-02T18:51:37-03:00
+Day 3_Y8-1-R.tiff	d	S		2026-10-02T18:51:49-03:00
+Day 3_Y8-2-L.tiff	v	S		2026-10-02T18:51:53-03:00
+Day 3_Y8-2-R.tiff	d	S	Plastico deforma a ferida	2026-10-02T18:52:10-03:00
+Day 3_Y8-3-L.tiff	v	N		2026-10-02T18:52:16-03:00
+Day 3_Y8-3-R.tiff	v	N		2026-10-02T18:52:23-03:00
+Day 3_Y8-4-L.tiff	v	N	Reflexo na ferida	2026-10-02T18:52:34-03:00
+Day 3_Y8-4-R.tiff	v	S		2026-10-02T18:52:38-03:00
+Day 4_A8-1-L.tiff	v	S	Ferida com pouca qualidade	2026-10-02T18:52:53-03:00
+Day 4_A8-1-R.tiff	d	N	Plastico deforma em parte a ferida	2026-10-02T18:53:13-03:00
+Day 4_A8-3-L.tiff	d	N	Plastico deforma em parte a ferida	2026-10-02T18:53:26-03:00
+Day 4_A8-3-R.tiff	v	S	Muito reflexo	2026-10-02T18:53:45-03:00
+Day 4_A8-4-L.tiff	d	S	Mancha preta parece invadir a ferida	2026-10-02T18:54:17-03:00
+Day 4_A8-4-R.tiff	v	S		2026-10-02T18:54:21-03:00
+Day 4_A8-5-L.tiff	v	S	ferida muito proxima do anel	2026-10-02T18:54:44-03:00
+Day 4_A8-5-R.tiff	v	N		2026-10-02T18:54:51-03:00
+Day 4_Y8-1-L.tiff	d	S	Plastico deforma a ferida	2026-10-02T18:55:12-03:00
+Day 4_Y8-1-R.tiff	v	S	pouca qualidade na imagem	2026-10-02T18:55:25-03:00
+Day 4_Y8-2-L.tiff	v	S		2026-10-02T18:55:35-03:00
+Day 4_Y8-2-R.tiff	v	N		2026-10-02T18:55:42-03:00
+Day 4_Y8-3-L.tiff	v	S	muito reflexo	2026-10-02T18:55:53-03:00
+Day 4_Y8-3-R.tiff	v	N	Reflexo na ferida	2026-10-02T18:56:06-03:00
+Day 4_Y8-4-L.tiff	v	S	Reflexo na ferida	2026-10-02T18:56:17-03:00
+Day 4_Y8-4-R.tiff	v	N	Pouco reflexo na ferida	2026-10-02T18:56:31-03:00
+Day 5_A8-1-L.tiff	n	N	Brilho deixou o contorno da ferida duvidosa	2026-10-02T18:57:04-03:00
+Day 5_A8-1-R.tiff	n	N	Plastico e reflexo comprometeram a borda da ferida	2026-10-02T18:57:27-03:00
+Day 5_A8-3-L.tiff	d	S		2026-10-02T18:57:40-03:00
+Day 5_A8-3-R.tiff	n	S	Deformidade na ferida provocada pelo plastico e reflexo	2026-10-02T18:58:04-03:00
+Day 5_A8-4-L.tiff	d	S		2026-10-02T18:58:17-03:00
+Day 5_A8-4-R.tiff	v	S		2026-10-02T18:58:26-03:00
+Day 5_A8-5-L.tiff	v	S		2026-10-02T18:58:30-03:00
+Day 5_A8-5-R.tiff	v	N		2026-10-02T18:58:38-03:00
+Day 5_Y8-1-L.tiff	v	S		2026-10-02T18:58:44-03:00
+Day 5_Y8-1-R.tiff	v	N	Muita claridade na ferida	2026-10-02T18:59:04-03:00
+Day 5_Y8-2-L.tiff	v	N	muito reflexo na ferida	2026-10-02T18:59:21-03:00
+Day 5_Y8-2-R.tiff	v	N		2026-10-02T18:59:24-03:00
+Day 5_Y8-3-L.tiff	v	S	artefato sobre a ferida, parecendo pelo	2026-10-02T19:01:02-03:00
+Day 5_Y8-3-R.tiff	v	N		2026-10-02T19:01:52-03:00
+Day 5_Y8-4-L.tiff	v	N	Pouco de reflexo sobre a ferida	2026-10-02T19:02:05-03:00
+Day 5_Y8-4-R.tiff	v	N		2026-10-02T19:02:12-03:00
+Day 6_A8-1-L.tiff	d	S	muito artefato na ferida	2026-10-02T19:02:33-03:00
+Day 6_A8-1-R.tiff	d	S	Plastico deforma parte da ferida	2026-10-02T19:02:51-03:00
+Day 6_A8-3-L.tiff	d	N	Plastico deforma parte da ferida	2026-10-02T19:03:02-03:00
+Day 6_A8-3-R.tiff	v	S	muito reflexo	2026-10-02T19:03:14-03:00
+Day 6_A8-4-L.tiff	v	S	pelo em cima da ferida	2026-10-02T19:03:26-03:00
+Day 6_A8-4-R.tiff	v	S	Reflexo	2026-10-02T19:03:36-03:00
+Day 6_A8-5-L.tiff	v	S		2026-10-02T19:03:51-03:00
+Day 6_A8-5-R.tiff	v	N		2026-10-02T19:04:02-03:00
+Day 6_Y8-1-L.tiff	v	S		2026-10-02T19:17:08-03:00
+Day 6_Y8-1-R.tiff	v	S	Plastico deforma em parte a ferida	2026-10-02T19:17:27-03:00
+Day 6_Y8-2-L.tiff	v	N	Muito reflexo	2026-10-02T19:17:46-03:00
+Day 6_Y8-2-R.tiff	v	N	refelxo na ferida	2026-10-02T19:17:56-03:00
+Day 6_Y8-3-L.tiff	d	S		2026-10-02T19:18:03-03:00
+Day 6_Y8-3-R.tiff	v	N	Pelo atravessando a ferida	2026-10-02T19:18:22-03:00
+Day 6_Y8-4-L.tiff	v	N	Reflexo na ferida	2026-10-02T19:18:34-03:00
+Day 6_Y8-4-R.tiff	v	N		2026-10-02T19:18:42-03:00
+Day 7_A8-1-L.tiff	v	S		2026-10-02T19:18:46-03:00
+Day 7_A8-1-R.tiff	v	S		2026-10-02T19:18:49-03:00
+Day 7_A8-3-L.tiff	d	S	Plastico parece deformar a ferida	2026-10-02T19:19:05-03:00
+Day 7_A8-3-R.tiff	d	S	Plastico parece deformar a ferida	2026-10-02T19:19:18-03:00
+Day 7_A8-4-L.tiff	n	N	Pelo atravessa a borda da ferida,	2026-10-02T19:19:39-03:00
+Day 7_A8-4-R.tiff	v	S		2026-10-02T19:19:44-03:00
+Day 7_A8-5-L.tiff	v	S		2026-10-02T19:19:49-03:00
+Day 7_A8-5-R.tiff	v	N	Pelos na borda da ferida	2026-10-02T19:20:10-03:00
+Day 7_Y8-1-L.tiff	v	S		2026-10-02T19:20:14-03:00
+Day 7_Y8-1-R.tiff	d	N		2026-10-02T19:20:22-03:00
+Day 7_Y8-2-L.tiff	v	S		2026-10-02T19:20:29-03:00
+Day 7_Y8-2-R.tiff	v	N		2026-10-02T19:20:33-03:00
+Day 7_Y8-3-L.tiff	v	N	Pelos em volta da ferida	2026-10-02T19:20:55-03:00
+Day 7_Y8-3-R.tiff	v	N		2026-10-02T19:20:59-03:00
+Day 7_Y8-4-L.tiff	v	N		2026-10-02T19:21:02-03:00
+Day 7_Y8-4-R.tiff	d	N		2026-10-02T19:21:10-03:00
+Day 8_A8-1-L.tiff	v	S		2026-10-02T19:21:14-03:00
+Day 8_A8-1-R.tiff	n	S	Plastico muda o contorno da borda da ferida e sua coloracao	2026-10-02T19:21:44-03:00
+Day 8_A8-3-L.tiff	n	S	Plastico deforma a ferida	2026-10-02T19:21:56-03:00
+Day 8_A8-3-R.tiff	n	S	Plastico deforma a ferida	2026-10-02T19:22:08-03:00
+Day 8_A8-4-L.tiff	v	S	Pelo sobre a ferida	2026-10-02T19:22:24-03:00
+Day 8_A8-4-R.tiff	n	S	Plastico deforma a ferida	2026-10-02T19:22:42-03:00
+Day 8_A8-5-L.tiff	v	S		2026-10-02T19:22:50-03:00
+Day 8_A8-5-R.tiff	v	N	Pelos sobre uma parte da borda da ferida	2026-10-02T19:23:08-03:00
+Day 8_Y8-1-L.tiff	n	S	Plastico deforma uma parte da broda da ferida	2026-10-02T19:23:31-03:00
+Day 8_Y8-1-R.tiff	d	N		2026-10-02T19:23:36-03:00
+Day 8_Y8-2-L.tiff	v	N	Reflexo	2026-10-02T19:23:54-03:00
+Day 8_Y8-2-R.tiff	v	N		2026-10-02T19:23:57-03:00
+Day 8_Y8-3-L.tiff	n	S		2026-10-02T19:24:10-03:00
+Day 8_Y8-3-R.tiff	d	S		2026-10-02T19:24:33-03:00
+Day 8_Y8-4-L.tiff	v	N	duas lesoes proximas	2026-10-02T19:24:47-03:00
+Day 8_Y8-4-R.tiff	d	N		2026-10-02T19:24:50-03:00
+Day 9_A8-1-L.tiff	d	S	Pastico deforma a ferida	2026-10-02T19:25:03-03:00
+Day 9_A8-1-R.tiff	d	S	Plastico deforma em parte ba ferida	2026-10-02T19:25:19-03:00
+Day 9_A8-3-L.tiff	n	N	Plastico deforma a ferida	2026-10-02T19:25:33-03:00
+Day 9_A8-3-R.tiff	n	N	Plastico deforma a ferida	2026-10-02T19:25:45-03:00
+Day 9_A8-4-L.tiff	v	S	Pelos em parte atravessam a borda da ferida	2026-10-02T19:26:02-03:00
+Day 9_A8-4-R.tiff	v	S		2026-10-02T19:26:07-03:00
+Day 9_A8-5-L.tiff	d	S		2026-10-02T19:26:12-03:00
+Day 9_A8-5-R.tiff	n	S	Pelos atravessam parte da borda da ferida	2026-10-02T19:26:40-03:00
+Day 9_Y8-1-L.tiff	v	N	Pelos em volta da ferida	2026-10-02T19:27:03-03:00
+Day 9_Y8-1-R.tiff	d	N		2026-10-02T19:27:07-03:00
+Day 9_Y8-2-L.tiff	v	N	Pelos em volta da ferida	2026-10-02T19:27:17-03:00
+Day 9_Y8-3-L.tiff	v	N	Pelos atravessa parte da ferida	2026-10-02T19:27:32-03:00
+Day 9_Y8-3-R.tiff	v	N		2026-10-02T19:27:41-03:00
+Day 9_Y8-4-L.tiff	v	N		2026-10-02T19:27:45-03:00
+Day 9_Y8-4-R.tiff	d	N		2026-10-02T19:27:48-03:00
+Day 9_Y8-4-R.tiff	d	N		2026-10-02T19:27:53-03:00
+Day 11_A8-4-L.tiff	n	N	Plastico e pelo e mancha sobre a ferida.	2026-10-02T19:40:10-03:00
+Day 11_A8-4-R.tiff	v	S	Plastico na ferida	2026-10-02T19:40:23-03:00
+Day 12_A8-1-L.tiff	d	S	Plastico na ferida deforma parte da borda	2026-10-02T19:40:51-03:00
+Day 12_A8-1-L.tiff	n	S	Plastico na ferida deforma parte da borda	2026-10-02T19:41:05-03:00
+Day 3_A8-1-R.tiff	n	S	Plastico deforma a ferida	2026-10-02T19:41:12-03:00
+Day 3_A8-3-L.tiff	n	N	Plastico deforma a ferida	2026-10-02T19:41:18-03:00
+Day 4_A8-1-R.tiff	v	S	Plastico deforma em parte a ferida	2026-10-02T19:41:27-03:00
+Day 4_A8-3-L.tiff	n	S	Plastico deforma em parte a ferida	2026-10-02T19:41:35-03:00
+Day 5_A8-1-R.tiff	n	S	Plastico e reflexo comprometeram a borda da ferida	2026-10-02T19:41:41-03:00
+Day 6_A8-3-L.tiff	n	S	Plastico deforma parte da ferida	2026-10-02T19:41:48-03:00
+Day 9_A8-3-L.tiff	n	S	Plastico deforma a ferida	2026-10-02T19:41:51-03:00
+Day 9_A8-3-R.tiff	n	S	Plastico deforma a ferida	2026-10-02T19:41:54-03:00
+Day 11_A8-4-L.tiff	n	S	Plastico e pelo e mancha sobre a ferida.	2026-10-02T19:47:17-03:00
+Day 3_A8-3-L.tiff	n	S	Plastico deforma a ferida	2026-10-02T19:47:56-03:00
