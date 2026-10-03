@@ -12,3 +12,4 @@ for escrito, as escolhidas entram nele, com hash, antes do sorteio.
 | 03/10 08h53 | o **painel** do operador pode dizer o **tipo de ferida**, e isso define o tamanho do campo | Fabio | painel de revisão já existe nas humanas |
 | 03/10 08h15 | tirar **juntos** reflexo, pelo, sangue e ponto cirúrgico | Fabio | é a rodada 4 do v0; vira regra no v1? |
 | 03/10 07h48 | o laranja visível começa antes dos 5 mm (~4,3) | campo do operador | anel do splint tem borda visível ≠ nominal |
+| 03/10 08h54 | **modo por contexto de captura**: foto de estudo (centralizada, padronizada) é tratada de um jeito; foto de UBS, de outro; e assim por diante | Fabio | o painel declara o contexto; cada modo com suas condições de uso escritas |
