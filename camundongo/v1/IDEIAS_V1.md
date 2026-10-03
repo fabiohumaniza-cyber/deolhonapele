@@ -13,3 +13,11 @@ for escrito, as escolhidas entram nele, com hash, antes do sorteio.
 | 03/10 08h15 | tirar **juntos** reflexo, pelo, sangue e ponto cirúrgico | Fabio | é a rodada 4 do v0; vira regra no v1? |
 | 03/10 07h48 | o laranja visível começa antes dos 5 mm (~4,3) | campo do operador | anel do splint tem borda visível ≠ nominal |
 | 03/10 08h54 | **modo por contexto de captura**: foto de estudo (centralizada, padronizada) é tratada de um jeito; foto de UBS, de outro; e assim por diante | Fabio | o painel declara o contexto; cada modo com suas condições de uso escritas |
+
+## Artigo do camundongo (anotado 03/10, nada decidido)
+
+| data | ideia | de quem |
+|---|---|---|
+| 03/10 10h51 | fio do artigo: no suíno a foto era pele e ferida; no camundongo a maior parte é artefato; o que recuperou o motor foi **declarar o campo** | Fabio |
+| 03/10 10h51 | títulos candidatos (fechar só depois da rodada 4): 1 "Declaring the field: a frozen wound-edge rule that failed on splinted mouse photographs, and what recovered it" · 2 "When most of the photograph is artefact: four pre-registered rounds of a rule-based wound-edge engine on a public murine dataset" · 3 "From pig to mouse: a pre-registered failure of transfer, and the declared field that reversed it" | Opus |
+| 03/10 10h52 | **Dice contra traçado humano, com campo declarado**; chamar **~3 enfermeiras** para traçar, além de Helga e Emílio | Fabio |
