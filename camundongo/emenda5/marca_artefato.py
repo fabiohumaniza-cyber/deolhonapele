@@ -2,8 +2,9 @@
 marca_artefato.py — o operador marca, DENTRO do campo amarelo, o que nao e
 ferida, e diz por que. Entrada da RODADA 4 (Adendos 34 e 35).
 
-NAO RODA O MOTOR E NAO MOSTRA A MASCARA DELE. Mostra so a foto, recortada
-exatamente como a rodada 3 recorta (roda_rodada3.recorte_campo, 72cfb5cc...),
+NAO RODA O MOTOR E NAO MOSTRA A MASCARA DELE. Mostra a foto com o anel em volta
+(3,2 x o raio do campo) e o circulo amarelo; so se pinta DENTRO do amarelo. O
+mapa gravado fica no quadrado do campo, recortado exatamente como a rodada 3 recorta (roda_rodada3.recorte_campo, 72cfb5cc...),
 na mesma escala do quadro de 700.
 
 As 201 imagens com campo 'ok' no CAMPO.txt (91160713...), em ordem de nome.
@@ -99,7 +100,15 @@ def main(pasta, saida, destino):
         rgb, _ = R.recorta(im, v['centro_px'][0], v['centro_px'][1], v['px_mm'])
         cx, cy, rb, rc = campo[nome]
         sub, ar, (x0, y0) = R3.recorte_campo(rgb, cx, cy, rc)
-        est.update(sub=sub, dentro=~ar, x0=x0, y0=y0, esc=TELA / float(sub.shape[0]), desfaz=[])
+        # VISTA: quadrado de 3,2 x o raio do campo, com o anel em volta, como nas pranchas
+        meio = 1.6 * rc
+        vx0, vy0 = int(round(cx - meio)), int(round(cy - meio))
+        vl = int(round(2 * meio))
+        pad = vl
+        big = np.pad(rgb, ((pad, pad), (pad, pad), (0, 0)), mode='edge')
+        vista = big[vy0 + pad:vy0 + pad + vl, vx0 + pad:vx0 + pad + vl]
+        est.update(sub=sub, dentro=~ar, x0=x0, y0=y0, vx0=vx0, vy0=vy0, vl=vl,
+                   esc=TELA / float(vl), desfaz=[], campo=(cx, cy, rc))
         pm = os.path.join(destino, os.path.splitext(nome)[0] + '_artefato.png')
         lab = np.zeros(sub.shape[:2], np.uint8)
         if nome in feito and os.path.isfile(pm):
@@ -107,9 +116,7 @@ def main(pasta, saida, destino):
             if a.shape == lab.shape:
                 lab = a.copy()
         est['lab'] = lab
-        base = sub.astype(np.float32)
-        base[ar] *= 0.25
-        est['base'] = Image.fromarray(base.astype(np.uint8)).resize((TELA, TELA), Image.LANCZOS)
+        est['base'] = Image.fromarray(vista).resize((TELA, TELA), Image.LANCZOS)
         desenha()
 
     def desenha():
@@ -119,20 +126,26 @@ def main(pasta, saida, destino):
             for k, c in COR.items():
                 s = est['lab'] == k
                 rgba[s, :3] = c; rgba[s, 3] = 120
-            ov = Image.fromarray(rgba, 'RGBA').resize((TELA, TELA), Image.NEAREST)
+            big = np.zeros((est['vl'], est['vl'], 4), np.uint8)
+            ox, oy = est['x0'] - est['vx0'], est['y0'] - est['vy0']
+            h, w = est['lab'].shape
+            big[oy:oy + h, ox:ox + w] = rgba          # o quadrado do campo cabe sempre na vista (1,6 rc > rc)
+            ov = Image.fromarray(big, 'RGBA').resize((TELA, TELA), Image.NEAREST)
             img = Image.alpha_composite(img.convert('RGBA'), ov).convert('RGB')
         est['foto'] = ImageTk.PhotoImage(img)
         tela.delete('all')
         tela.create_image(0, 0, anchor='nw', image=est['foto'])
-        tela.create_oval(1, 1, TELA - 2, TELA - 2, outline='#ffdc00', width=2)
+        cx, cy, rc = est['campo']; k = est['esc']
+        ex, ey, er = (cx - est['vx0']) * k, (cy - est['vy0']) * k, rc * k
+        tela.create_oval(ex - er, ey - er, ex + er, ey + er, outline='#ffdc00', width=2)
         nome = nomes[est['i']]
         conta = '  '.join('%s %d' % (MOTIVO[k][:7], int((est['lab'] == k).sum())) for k in MOTIVO)
         ja = feito.get(nome)
         topo.config(text=(
             '%d/%d  %s   %s\n'
             'PINCEL: [%d] %s   tamanho %d   conta-gotas tol %d   %s\n'
-            '1 reflexo  2 filme  3 sangue  4 ponto  5 outra lesao | esq pinta | dir conta-gotas | '
-            'roda tamanho | +/- tol | z desfaz | c limpa | h ver | p PELO | Enter/-> grava | <- volta | q sai\n%s'
+            'MOTIVO: 1 reflexo  2 filme  3 sangue  4 ponto  5 outra lesao   |  esq pinta  dir conta-gotas  roda tamanho\n'
+            '+/- tol   z desfaz   c limpa   h ver   p PELO   Enter ou -> grava   <- volta   q sai\n%s'
             % (est['i'] + 1, len(nomes), nome, ('JA GRAVADA: ' + ja[1]) if ja else '',
                est['mot'], MOTIVO[est['mot']].upper(), est['pincel'], est['tol'],
                '' if est['ver'] else '(PINTURA ESCONDIDA)', conta)))
@@ -142,18 +155,19 @@ def main(pasta, saida, destino):
         est['desfaz'] = est['desfaz'][-40:]
 
     def pos(e):
-        k = est['esc']
-        return int(e.y / k), int(e.x / k)
+        k = est['esc']   # tela -> vista -> quadro de 700 -> quadrado do campo
+        return int(e.y / k + est['vy0'] - est['y0']), int(e.x / k + est['vx0'] - est['x0'])
 
     def pinta(e):
         y, x = pos(e)
         h, w = est['lab'].shape
         r = est['pincel']
-        yy, xx = np.ogrid[max(0, y - r):min(h, y + r + 1), max(0, x - r):min(w, x + r + 1)]
-        disco = (yy - y) ** 2 + (xx - x) ** 2 <= r * r
-        sl = (slice(max(0, y - r), min(h, y + r + 1)), slice(max(0, x - r), min(w, x + r + 1)))
-        m = disco & est['dentro'][sl]
-        est['lab'][sl][m] = est['mot']
+        ya, yb, xa, xb = max(0, y - r), min(h, y + r + 1), max(0, x - r), min(w, x + r + 1)
+        if ya >= yb or xa >= xb:
+            return                      # fora do campo: nao pinta
+        yy, xx = np.ogrid[ya:yb, xa:xb]
+        m = ((yy - y) ** 2 + (xx - x) ** 2 <= r * r) & est['dentro'][ya:yb, xa:xb]
+        est['lab'][ya:yb, xa:xb][m] = est['mot']
         desenha()
 
     def aperta(e):
