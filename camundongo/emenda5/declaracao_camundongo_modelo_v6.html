@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Declaração · camundongo · rodada 4</title>
+<style>
+:root{--fundo:#141416;--painel:#1d1d21;--linha:#2c2c33;--texto:#e8e8ec;
+  --fraco:#9a9aa6;--acento:#ffd23f;--ok:#3ddc84;--perigo:#ff7a59}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--texto);
+  font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+header{padding:10px 14px;border-bottom:1px solid var(--linha);background:var(--painel)}
+header b{color:var(--acento)}
+header span{color:var(--fraco);font-size:13px;display:block;margin-top:2px}
+#nav{display:flex;gap:8px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--linha)}
+#nav button{background:#26262c;color:var(--texto);border:1px solid var(--linha);
+  border-radius:6px;padding:6px 16px;font-size:18px;cursor:pointer}
+#nav #nome{font-weight:600}
+#nav #situ{color:var(--fraco);font-size:13px}
+#nav .feito{color:var(--ok)}
+#corpo{display:flex;gap:14px;padding:14px;align-items:flex-start;flex-wrap:wrap}
+#palco{position:relative;flex:0 0 auto;border:1px solid var(--linha);border-radius:8px;
+  overflow:hidden;background:#000;touch-action:none}
+#palco canvas{display:block;position:absolute;left:0;top:0}
+#fo{display:block}
+#lado{flex:1 1 320px;min-width:300px;max-width:420px}
+.bloco{background:var(--painel);border:1px solid var(--linha);border-radius:8px;
+  padding:12px;margin-bottom:10px}
+.bloco h3{margin:0 0 8px;font-size:13px;color:var(--acento);
+  text-transform:uppercase;letter-spacing:.4px}
+button.acao{display:block;width:100%;margin:6px 0;padding:10px;border-radius:7px;
+  border:1px solid var(--linha);background:#2a2a31;color:var(--texto);
+  font-size:14px;cursor:pointer;text-align:left}
+button.acao:hover{background:#34343c}
+button.forte{background:var(--acento);color:#000;font-weight:600;border-color:var(--acento)}
+button.perigo{border-color:var(--perigo);color:var(--perigo)}
+.motivos{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.motivos button{flex:1 1 30%;padding:6px 4px;border-radius:6px;border:1px solid var(--linha);
+  background:#26262c;color:var(--texto);font-size:12px;cursor:pointer}
+.motivos button.on{outline:2px solid #fff}
+label{display:block;font-size:12px;color:var(--fraco);margin:9px 0 3px}
+input[type=range]{width:100%}
+textarea{width:100%;background:#26262c;color:var(--texto);border:1px solid var(--linha);
+  border-radius:6px;padding:8px;font-size:15px;font-family:inherit;min-height:60px}
+.dica{font-size:13px;color:var(--fraco);margin:6px 0}
+.aviso{background:#3a2a0a;border:1px solid #6b4e10;color:#ffd9a0;
+  padding:9px;border-radius:6px;font-size:13px;margin:8px 0}
+#cur{position:absolute;pointer-events:none;border:1.5px solid #fff;border-radius:50%;
+  display:none;mix-blend-mode:difference}
+#amostra{display:inline-block;width:60px;height:34px;border:1px solid #555;
+  border-radius:6px;vertical-align:middle;margin-left:8px}
+.pal{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:6px 0}
+.pal div{height:30px;border-radius:5px;border:1px solid #555;cursor:pointer}
+.pal div:hover{outline:2px solid #fff}
+.pal div.on{outline:3px solid var(--acento)}
+</style>
+</head>
+<body>
+
+<header>
+  <b>DECLARAÇÃO · camundongo · rodada 4 · __N__ imagens com campo</b>
+  <span>só a foto, <b>sem o traçado do motor</b> · <b>conta-gotas</b> troca o brilho pela cor de onde aquilo <i>deveria</i> ser · <b>artefato</b> exclui a região · só vale dentro do círculo amarelo</span>
+</header>
+
+<div id="nav">
+  <button id="btAnt" title="seta para a esquerda">◀</button>
+  <button id="btProx" title="seta para a direita">▶</button>
+  <span id="cont"></span> · <span id="nome"></span> <span id="situ"></span>
+</div>
+
+<div id="corpo">
+  <div id="palco">
+    <img id="fo" alt="">
+    <canvas id="cv"></canvas>
+    <div id="cur"></div>
+  </div>
+
+  <div id="lado">
+
+    <div class="bloco">
+      <h3>ferramenta</h3>
+      <div style="display:flex;gap:6px">
+        <button class="acao forte" id="btGota" style="text-align:center">💧 conta-gotas</button>
+        <button class="acao" id="btPinc" style="text-align:center">🖌 pincel</button>
+        <button class="acao" id="btArt" style="text-align:center">▓ artefato</button>
+        <button class="acao" id="btSeta" style="text-align:center">➜ seta</button>
+      </div>
+      <div class="dica" id="expl"></div>
+      <div id="blSeta" style="display:none">
+        <label>texto da seta (aparece no rabo da seta)</label>
+        <input id="txSeta" style="width:100%;background:#26262c;color:var(--texto);border:1px solid var(--linha);border-radius:6px;padding:6px" placeholder="ex.: brilho do filme">
+        <label>tamanho da seta — <span id="lbSL">60</span></label>
+        <input type="range" id="rgSL" min="15" max="250" value="60">
+        <label>girar — <span id="lbSA">225</span>°</label>
+        <input type="range" id="rgSA" min="0" max="359" value="225">
+        <div class="dica">Clique na foto para pôr a seta (a <b>ponta</b> vai onde você clicar). Arraste a <b>ponta</b> para mover. Arraste a <b>bolinha amarela</b> do rabo para <b>girar e esticar</b>. Também: barras acima, <b>rodinha</b> = tamanho, <b>Shift + rodinha</b> = girar. As setas são <b>numeradas</b> 1, 2, 3 em cada imagem. <b>O motor não vê as setas</b> — são só para mostrar às pessoas.</div>
+        <button class="acao" id="btSetaDel">✕ apagar a seta escolhida</button>
+        <button class="acao" id="btSetaVer">👁 esconder / mostrar setas</button>
+      </div>
+      <div id="blMot" style="display:none">
+        <label>por quê — o motivo do artefato</label>
+        <div class="motivos" id="motivos"></div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <h3>como usar</h3>
+      <div class="dica">
+        <b>1 · 💧 conta-gotas</b> — passe o mouse: o quadrado mostra a cor dali. <b>Clique</b> para escolher.<br>
+        <b>2 · 🖌 pincel</b> — arraste por cima do brilho: pinta com a cor escolhida.<br>
+        <b>▓ artefato</b> — escolha o motivo e arraste para excluir.<br>
+        <b>Tamanho do pincel</b> — na barra, ou com a rodinha do mouse em cima da foto.<br>
+        <b>← →</b> no teclado ou ◀ ▶ em cima — anda entre as imagens.
+      </div>
+      <div>cor embaixo do mouse <span id="aovivo" style="display:inline-block;width:60px;height:34px;border:1px solid #555;border-radius:6px;vertical-align:middle;margin-left:8px"></span></div>
+      <div style="margin-top:6px">cor do pincel <span id="amostra"></span></div>
+      <label>últimas cores escolhidas (clique numa para usar)</label>
+      <div class="pal" id="ultimas"></div>
+      <label>tamanho do pincel — <span id="lbR">10</span></label>
+      <input type="range" id="rgR" min="2" max="40" value="10">
+      <button class="acao" id="btDesfaz">↶ desfazer o último traço</button>
+      <button class="acao" id="btLimpa">↺ apagar tudo desta imagem</button>
+      <button class="acao" id="btCirc">◯ esconder / mostrar o círculo</button>
+    </div>
+
+    <div class="bloco">
+      <h3>registro</h3>
+      <div class="aviso" id="est">—</div>
+      <label>nota — o que você corrigiu e por quê</label>
+      <textarea id="nota" placeholder="ex.: brilho do filme no lado direito; ponto às 3 h"></textarea>
+      <button class="acao forte" id="btFecha">✔ terminei esta imagem</button>
+      <button class="acao" id="btNada">○ nada a tirar — está boa assim</button>
+      <label>exclusão — a imagem sai da rodada 4 e o motivo fica gravado</label>
+      <button class="acao perigo" id="btPelo">✖ pelo sobre a lesão — não dá para arrumar</button>
+      <button class="acao perigo" id="btNaoTraca">✖ não é possível traçar</button>
+      <button class="acao perigo" id="btBorda">✖ parte da borda não dá para verificar</button>
+    </div>
+
+    <div class="bloco">
+      <h3>progresso</h3>
+      <div class="aviso" id="prog">—</div>
+      <button class="acao forte" id="btSalva">⬇ salvar JSON</button>
+      <div class="dica">Salva como <b>declaracao_camundongo.json</b>. O trabalho também fica guardado neste navegador a cada imagem; mesmo assim, salve o JSON ao parar.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* v6 (03/10, 11h34): seta gira e estica arrastando a bolinha do rabo; numero 1,2,3 em cada seta;
+   Shift+rodinha no Windows (deltaX).
+   v5 (03/10, 11h27): SETAS de anotacao (por, mover, tamanho, girar, texto) — o motor NAO usa.
+   v4 (03/10, 11h18): tres ferramentas — conta-gotas (cor ao vivo sob o mouse; clique escolhe),
+   pincel (pinta com a cor escolhida), artefato. Rodinha ajusta o pincel.
+   v3 (03/10, 11h16): conta-gotas abre PALETA de 12 cores do redor do clique + ultimas 6.
+   v2 (03/10, 10h54): exclusao com tres motivos — pelo, nao tracavel, borda parcial.
+   Declaracao da RODADA 4 do camundongo. Copia adaptada da
+   declaracao_d3_exploratorio.html do porco (25/09), que NAO foi alterada.
+   COORDENADAS GRAVADAS EM PIXEL DA VISTA (imagem natural, lado vl), com a
+   origem da vista no quadro de 700 em (vx0, vy0). O driver da rodada 4 converte. */
+
+var FIG = __FIG__;
+var META = __META__;
+var MOT = [['reflexo','#00e6ff'],['filme','#ff00ff'],['sangue','#ff2828'],['ponto','#ffe600'],['outra_lesao','#285aff']];
+var A = 0, L = 0, E = {}, LOG = [], MOTIVO = 0, CIRC = true, SVER = true, SSEL = -1, SARR = false, SRABO = false;
+var COR = [200,150,140], RAIO = 10;
+var arrast = false, atual = null, CHAVE = 'declaracao_camundongo_r4';   /* mesma chave da v1: o que foi feito na v1 continua */
+var INI = new Date().toISOString();
+
+function agora(){ return new Date().toISOString(); }
+function ctx(){ return document.getElementById('cv').getContext('2d'); }
+function ev(o,d){ LOG.push({q:agora(), o:o, d:d||null, f:FIG[A]?FIG[A].nome:null}); }
+function F(){ return FIG[A]; }
+function px(fx){ return fx * F().vl; }          // fracao da tela -> pixel da vista
+
+function est(){
+  var n = F().nome;
+  if(!E[n]) E[n] = { corr: [], art: [], nota:'', estado:null, t_abriu: agora(), t_fechou: null };
+  if(!E[n].setas) E[n].setas = [];
+  return E[n];
+}
+function pos(e){
+  var r = document.getElementById('cv').getBoundingClientRect();
+  return { x:(e.clientX-r.left)/L, y:(e.clientY-r.top)/L };
+}
+function circulo(c){
+  var f = F(), k = L / f.vl;
+  c.beginPath(); c.arc(f.cx*k, f.cy*k, f.rc*k, 0, 2*Math.PI);
+}
+function pinta(){
+  var c = ctx(), e = est(), k = L / F().vl;
+  c.clearRect(0,0,L,L);
+  c.save(); circulo(c); c.clip();
+  e.corr.forEach(function(t){
+    c.strokeStyle = 'rgb('+t.cor.join(',')+')'; c.fillStyle = c.strokeStyle;
+    c.lineWidth = t.r*2*k; c.lineCap='round'; c.lineJoin='round';
+    c.beginPath();
+    t.pts.forEach(function(p,i){ i?c.lineTo(p[0]*k,p[1]*k):c.moveTo(p[0]*k,p[1]*k); });
+    if(t.pts.length===1){ c.arc(t.pts[0][0]*k,t.pts[0][1]*k,t.r*k,0,7); c.fill(); }
+    c.stroke();
+  });
+  e.art.forEach(function(t){
+    c.globalAlpha = .5; c.fillStyle = MOT[t.m][1];
+    c.beginPath(); c.arc(t.x*k, t.y*k, t.r*k, 0, 7); c.fill(); c.globalAlpha = 1;
+  });
+  c.restore();
+  if(SVER) setas(c, k);
+  if(CIRC){ c.strokeStyle = '#ffd23f'; c.lineWidth = 2; circulo(c); c.stroke(); }
+  var cont = {}; e.art.forEach(function(t){ cont[MOT[t.m][0]] = (cont[MOT[t.m][0]]||0)+1; });
+  document.getElementById('est').textContent =
+    e.corr.length + ' traço(s) de conta-gotas · ' + e.art.length + ' toque(s) de artefato' +
+    (e.art.length ? ' (' + Object.keys(cont).map(function(m){return m+' '+cont[m];}).join(', ') + ')' : '') +
+    (e.estado ? ' · GRAVADA: ' + e.estado : '');
+  progresso();
+}
+function setas(c, k){
+  est().setas.forEach(function(a, i){
+    var X1 = a.x*k, Y1 = a.y*k, rad = a.ang*Math.PI/180;
+    var X0 = X1 + a.len*k*Math.cos(rad), Y0 = Y1 + a.len*k*Math.sin(rad);
+    var h = Math.max(8, a.len*k*0.22), b = Math.atan2(Y1-Y0, X1-X0);
+    [['#000',6],[(i===SSEL && FERR==='seta')?'#ffd23f':'#fff',3]].forEach(function(st){
+      c.strokeStyle = st[0]; c.fillStyle = st[0]; c.lineWidth = st[1]; c.lineCap = 'round';
+      c.beginPath(); c.moveTo(X0,Y0); c.lineTo(X1,Y1); c.stroke();
+      c.beginPath(); c.moveTo(X1,Y1);
+      c.lineTo(X1 - h*Math.cos(b-0.45), Y1 - h*Math.sin(b-0.45));
+      c.lineTo(X1 - h*Math.cos(b+0.45), Y1 - h*Math.sin(b+0.45)); c.closePath(); c.fill();
+    });
+    var rot = (i+1) + (a.txt ? ' · ' + a.txt : '');
+    c.font = 'bold 15px sans-serif'; c.lineWidth = 4; c.strokeStyle = '#000'; c.fillStyle = '#fff';
+    var tx = X0 + (Math.cos(rad)>=0 ? 8 : -8 - c.measureText(rot).width), ty = Y0 + (Math.sin(rad)>=0 ? 18 : -8);
+    c.strokeText(rot, tx, ty); c.fillText(rot, tx, ty);
+    if(i===SSEL && FERR==='seta'){   /* alca do rabo: arraste para girar e esticar */
+      c.fillStyle = '#ffd23f'; c.strokeStyle = '#000'; c.lineWidth = 2;
+      c.beginPath(); c.arc(X0, Y0, 7, 0, 7); c.fill(); c.stroke();
+    }
+  });
+}
+function setaSel(){ var e = est(); return (SSEL>=0 && SSEL<e.setas.length) ? e.setas[SSEL] : null; }
+function sliders(){
+  var a = setaSel(); if(!a) return;
+  document.getElementById('rgSL').value = a.len; document.getElementById('lbSL').textContent = Math.round(a.len);
+  document.getElementById('rgSA').value = a.ang; document.getElementById('lbSA').textContent = Math.round(a.ang);
+  document.getElementById('txSeta').value = a.txt || '';
+}
+function progresso(){
+  var n = {ok:0, nada:0, PELO:0, NAO_TRACAVEL:0, BORDA_PARCIAL:0};
+  FIG.forEach(function(f){ var e = E[f.nome]; if(e && e.estado) n[e.estado]++; });
+  var feitas = n.ok + n.nada + n.PELO + n.NAO_TRACAVEL + n.BORDA_PARCIAL;
+  document.getElementById('prog').textContent =
+    feitas + ' de ' + FIG.length + ' · corrigidas ' + n.ok + ' · nada a tirar ' + n.nada + ' · excluídas: pelo ' + n.PELO + ', não traçável ' + n.NAO_TRACAVEL + ', borda parcial ' + n.BORDA_PARCIAL;
+  var e = E[F().nome];
+  document.getElementById('situ').innerHTML = (e && e.estado) ? '<span class="feito">✔ ' + e.estado + '</span>' : '';
+}
+
+var ULT = [];
+function poeCor(c){
+  COR = c.slice();
+  document.getElementById('amostra').style.background = 'rgb('+COR.join(',')+')';
+  ULT = ULT.filter(function(u){ return u.join() !== COR.join(); }); ULT.unshift(COR.slice()); ULT = ULT.slice(0,6);
+  quadros('ultimas', ULT); ev('cor', COR.join(','));
+}
+function quadros(id, cores){
+  var d = document.getElementById(id); d.innerHTML = '';
+  cores.forEach(function(c){
+    var q = document.createElement('div'); q.style.background = 'rgb('+c.join(',')+')';
+    if(c.join() === COR.join()) q.className = 'on';
+    q.title = c.join(','); q.onclick = function(){ poeCor(c);  };
+    d.appendChild(q);
+  });
+}
+var PAL = [], CVI = null;
+function corEm(p){
+  var img = document.getElementById('fo');
+  if(!CVI || CVI._src !== img.src){
+    CVI = document.createElement('canvas'); CVI._src = img.src;
+    CVI.width = img.naturalWidth; CVI.height = img.naturalHeight;
+    CVI.getContext('2d').drawImage(img,0,0);
+  }
+  var d = CVI.getContext('2d').getImageData(Math.round(p.x*img.naturalWidth)-1, Math.round(p.y*img.naturalHeight)-1, 3, 3).data;
+  var R=[],G=[],B=[];
+  for(var i=0;i<d.length;i+=4){ R.push(d[i]); G.push(d[i+1]); B.push(d[i+2]); }
+  function m(a){ a.sort(function(u,v){return u-v;}); return a[a.length>>1]; }
+  return [m(R),m(G),m(B)];
+}
+function amostra(e){ poeCor(corEm(pos(e))); }
+
+var pal = document.getElementById('palco');
+pal.addEventListener('contextmenu', function(e){ e.preventDefault(); amostra(e); });
+pal.addEventListener('wheel', function(e){ e.preventDefault();
+  if(FERR === 'seta'){ var a = setaSel(); if(!a) return;
+    var d = e.deltaY || e.deltaX;
+    if(e.shiftKey) a.ang = (a.ang + (d<0?5:-5) + 360) % 360; else a.len = Math.max(15, Math.min(250, a.len + (d<0?4:-4)));
+    sliders(); guarda(); pinta(); return; }
+  RAIO = Math.max(2, Math.min(40, RAIO + (e.deltaY<0?1:-1))); document.getElementById('rgR').value = RAIO; document.getElementById('lbR').textContent = RAIO; cursor(e); }, {passive:false});
+function rpx(){ return RAIO * F().vl / L; }        // raio do pincel em pixel da vista
+function poeArtefato(p){ est().art.push({ x:px(p.x), y:px(p.y), r:rpx(), m:MOTIVO }); }
+pal.addEventListener('mousedown', function(e){
+  if(e.button !== 0) return;
+  e.preventDefault();
+  var p = pos(e), e2 = est();
+  if(FERR === 'gota'){ amostra(e); return; }
+  if(FERR === 'seta'){
+    var k = L / F().vl, perto = -1; SRABO = false;
+    var sel = setaSel();
+    if(sel){
+      var rr = sel.ang*Math.PI/180, rx = (sel.x + sel.len*Math.cos(rr))*k, ry = (sel.y + sel.len*Math.sin(rr))*k;
+      if(Math.hypot(rx - p.x*L, ry - p.y*L) < 14){ SRABO = true; SARR = true; return; }
+    }
+    e2.setas.forEach(function(a,i){ if(Math.hypot(a.x*k - p.x*L, a.y*k - p.y*L) < 14) perto = i; });
+    if(perto < 0){
+      e2.setas.push({ x:px(p.x), y:px(p.y), len:+document.getElementById('rgSL').value,
+                      ang:+document.getElementById('rgSA').value, txt:document.getElementById('txSeta').value });
+      perto = e2.setas.length - 1; ev('seta', 'nova');
+    }
+    SSEL = perto; SARR = true; sliders(); guarda(); pinta(); return;
+  }
+  if(FERR === 'art'){ poeArtefato(p); arrast = true; pinta(); return; }
+  atual = { r: rpx(), cor: COR.slice(), pts: [[px(p.x), px(p.y)]] };
+  e2.corr.push(atual); arrast = true; pinta();
+});
+window.addEventListener('mousemove', function(e){
+  cursor(e);
+  var rr = document.getElementById('cv').getBoundingClientRect();
+  if(e.clientX>=rr.left && e.clientX<=rr.right && e.clientY>=rr.top && e.clientY<=rr.bottom){
+    var cc = corEm(pos(e)); document.getElementById('aovivo').style.background = 'rgb('+cc.join(',')+')'; }
+  if(SARR && FERR === 'seta'){ var a = setaSel(), q = pos(e);
+    if(a && SRABO){ var dx = px(q.x) - a.x, dy = px(q.y) - a.y;
+      a.len = Math.max(15, Math.min(250, Math.hypot(dx, dy))); a.ang = (Math.atan2(dy, dx)*180/Math.PI + 360) % 360; sliders(); pinta(); }
+    else if(a){ a.x = px(q.x); a.y = px(q.y); pinta(); }
+    return; }
+  if(arrast && FERR === 'art'){ poeArtefato(pos(e)); pinta(); return; }
+  if(!arrast || !atual) return;
+  var p = pos(e), u = atual.pts[atual.pts.length-1];
+  if(Math.hypot(px(p.x)-u[0], px(p.y)-u[1]) > 0.7){ atual.pts.push([px(p.x), px(p.y)]); pinta(); }
+});
+window.addEventListener('mouseup', function(){
+  if(SARR){ SARR = false; SRABO = false; guarda(); }
+  if(arrast){ ev(FERR==='art'?'artefato':'tracou'); guarda(); }
+  arrast = false; atual = null;
+});
+function cursor(e){
+  var c = document.getElementById('cur');
+  var r = document.getElementById('palco').getBoundingClientRect();
+  c.style.display='block';
+  c.style.width = c.style.height = (RAIO*2)+'px';
+  c.style.left = (e.clientX-r.left-RAIO)+'px';
+  c.style.top  = (e.clientY-r.top-RAIO)+'px';
+}
+pal.addEventListener('mouseleave', function(){ document.getElementById('cur').style.display='none'; });
+
+var FERR = 'gota';  /* gota = so escolhe a cor; pinc = pinta com ela; art = exclui */
+function trocaFerr(f){
+  FERR = f;
+  document.getElementById('btGota').className = 'acao' + (f==='gota'?' forte':'');
+  document.getElementById('btPinc').className = 'acao' + (f==='pinc'?' forte':'');
+  document.getElementById('btArt').className  = 'acao' + (f==='art' ?' forte':'');
+  document.getElementById('btSeta').className = 'acao' + (f==='seta'?' forte':'');
+  document.getElementById('blMot').style.display = (f==='art') ? 'block' : 'none';
+  document.getElementById('blSeta').style.display = (f==='seta') ? 'block' : 'none';
+  document.getElementById('expl').innerHTML = (f==='gota')
+    ? '<b>conta-gotas</b> — passe o mouse e veja a cor no quadrado; <b>clique</b> para escolher. Escolha de onde aquilo <b>deveria</b> ser: o leito ao lado do brilho.'
+    : (f==='pinc')
+    ? '<b>pincel</b> — arraste por cima do brilho. Ele pinta com a <b>cor do pincel</b>.'
+    : (f==='art')
+    ? '<b>artefato</b> — marca a região para ser EXCLUÍDA. O motor não olha para lá. Escolha o motivo antes de pintar.'
+    : '<b>seta</b> — aponta onde você corrigiu e por quê. Só para as pessoas verem: <b>o motor não usa</b>.';
+  ev('ferramenta', f);
+}
+function motivos(){
+  var d = document.getElementById('motivos'); d.innerHTML = '';
+  MOT.forEach(function(m,i){
+    var b = document.createElement('button');
+    b.textContent = m[0].replace('_',' '); b.style.borderColor = m[1];
+    if(i===MOTIVO) b.classList.add('on');
+    b.onclick = function(){ MOTIVO = i; motivos(); ev('motivo', m[0]); };
+    d.appendChild(b);
+  });
+}
+document.getElementById('btGota').onclick = function(){ trocaFerr('gota'); };
+document.getElementById('btPinc').onclick = function(){ trocaFerr('pinc'); };
+document.getElementById('btSeta').onclick = function(){ trocaFerr('seta'); pinta(); };
+document.getElementById('rgSL').oninput = function(){ document.getElementById('lbSL').textContent = this.value; var a = setaSel(); if(a){ a.len = +this.value; guarda(); pinta(); } };
+document.getElementById('rgSA').oninput = function(){ document.getElementById('lbSA').textContent = this.value; var a = setaSel(); if(a){ a.ang = +this.value; guarda(); pinta(); } };
+document.getElementById('txSeta').oninput = function(){ var a = setaSel(); if(a){ a.txt = this.value; guarda(); pinta(); } };
+document.getElementById('btSetaDel').onclick = function(){ var e = est(); if(setaSel()){ e.setas.splice(SSEL,1); SSEL = -1; ev('seta','apagou'); guarda(); pinta(); } };
+document.getElementById('btSetaVer').onclick = function(){ SVER = !SVER; pinta(); };
+document.getElementById('btArt').onclick  = function(){ trocaFerr('art'); };
+document.getElementById('rgR').oninput = function(){ RAIO = +this.value; document.getElementById('lbR').textContent = RAIO; };
+document.getElementById('btDesfaz').onclick = function(){
+  var e = est();
+  if(FERR === 'art') e.art.splice(-12); else if(FERR === 'seta'){ e.setas.pop(); SSEL = -1; } else e.corr.pop();
+  ev('desfez', FERR); guarda(); pinta(); };
+document.getElementById('btLimpa').onclick = function(){
+  var e = est(); e.corr = []; e.art = []; e.setas = []; SSEL = -1; ev('limpou'); guarda(); pinta(); };
+document.getElementById('btCirc').onclick = function(){ CIRC = !CIRC; pinta(); };
+
+function fecha(estado){
+  var e = est();
+  if(estado === 'ok' && !e.corr.length && !e.art.length) estado = 'nada';
+  e.nota = document.getElementById('nota').value;
+  e.estado = estado; e.t_fechou = agora();
+  ev('fechou', estado); guarda();
+  if(A+1 < FIG.length) abre(A+1); else { pinta(); alert('Acabou. Agora salve o JSON.'); }
+}
+document.getElementById('btFecha').onclick = function(){ fecha('ok'); };
+document.getElementById('btNada').onclick  = function(){ fecha('nada'); };
+document.getElementById('btPelo').onclick  = function(){ fecha('PELO'); };
+document.getElementById('btNaoTraca').onclick = function(){ fecha('NAO_TRACAVEL'); };
+document.getElementById('btBorda').onclick = function(){ fecha('BORDA_PARCIAL'); };
+document.getElementById('btAnt').onclick   = function(){ if(A>0) abre(A-1); };
+document.getElementById('btProx').onclick  = function(){ if(A+1<FIG.length) abre(A+1); };
+window.addEventListener('keydown', function(e){
+  if(document.activeElement && (document.activeElement.id === 'nota' || document.activeElement.id === 'txSeta')) return;
+  if(e.key === 'ArrowLeft'  && A > 0) abre(A-1);
+  if(e.key === 'ArrowRight' && A+1 < FIG.length) abre(A+1);
+});
+document.getElementById('nota').oninput = function(){ est().nota = this.value; guarda(); };
+
+function guarda(){
+  try{ localStorage.setItem(CHAVE, JSON.stringify({E:E, LOG:LOG.slice(-3000)})); }catch(e){}
+}
+function recupera(){
+  try{
+    var t = localStorage.getItem(CHAVE); if(!t) return;
+    var d = JSON.parse(t); E = d.E || {}; LOG = d.LOG || [];
+  }catch(e){}
+}
+
+function abre(i){
+  if(E[F() ? F().nome : ''] ) est().nota = document.getElementById('nota').value;
+  A = i; SSEL = -1;
+  var f = FIG[i], im = document.getElementById('fo');
+  im.onload = function(){
+    L = Math.min(760, window.innerWidth-380, window.innerHeight-150);
+    if(L < 340) L = Math.min(760, window.innerWidth-30);
+    im.style.width = im.style.height = L+'px';
+    document.getElementById('palco').style.width = document.getElementById('palco').style.height = L+'px';
+    var c = document.getElementById('cv'); c.width = c.height = L;
+    document.getElementById('nota').value = est().nota || '';
+    document.getElementById('cont').textContent = (i+1) + ' / ' + FIG.length;
+    document.getElementById('nome').textContent = f.nome;
+    trocaFerr(FERR);
+    document.getElementById('amostra').style.background = 'rgb('+COR.join(',')+')';
+    pinta(); ev('abriu');
+  };
+  im.src = f.img;
+}
+
+document.getElementById('btSalva').onclick = function(){
+  var Eout = {};
+  FIG.forEach(function(f){
+    var e = E[f.nome]; if(!e) return;
+    Eout[f.nome] = { estado: e.estado, vx0: f.vx0, vy0: f.vy0, vl: f.vl,
+      campo: [f.cx, f.cy, f.rc],
+      corr: e.corr.map(function(k){ return {r:k.r, cor:k.cor, pts:k.pts}; }),
+      art:  e.art.map(function(t){ return {x:t.x, y:t.y, r:t.r, motivo: MOT[t.m][0]}; }),
+      setas: (e.setas||[]).map(function(a, i){ return {numero:i+1, ponta_x:a.x, ponta_y:a.y, comprimento:a.len, angulo_graus:a.ang, texto:a.txt}; }),
+      nota: e.nota, t_abriu: e.t_abriu, t_fechou: e.t_fechou };
+  });
+  var o = { versao:'declaracao_camundongo_v6', meta: META, inicio: INI, salvo: agora(),
+    _setas: 'ANOTACAO PARA PESSOAS — o driver da rodada 4 NAO usa as setas',
+    _coordenadas: 'pixel da VISTA (lado vl); ponto no quadro de 700 = (vx0 + x, vy0 + y)',
+    E: Eout, LOG: LOG };
+  var txt = JSON.stringify(o, null, 1);
+  try{
+    var b = new Blob([txt], {type:'application/json;charset=utf-8'});
+    var u = URL.createObjectURL(b);
+    var a = document.createElement('a'); a.href = u; a.download = 'declaracao_camundongo.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(u); }, 2000);
+    ev('salvou');
+  }catch(err){
+    var w = window.open('', '_blank');
+    if(w){ var pre = w.document.createElement('pre'); pre.textContent = txt; w.document.body.appendChild(pre); }
+  }
+};
+
+motivos();
+recupera();
+var primeira = FIG.findIndex(function(f){ return !(E[f.nome] && E[f.nome].estado); });
+abre(primeira < 0 ? 0 : primeira);
+</script>
+</body>
+</html>
