@@ -1,0 +1,12 @@
+POSICAO DAS MASCARAS DA RODADA 1 — gerado por posicao_mascaras.py
+imagens com escala: 204   com mascara: 204   todas reproduzidas (area = JSON)
+zona = onde esta MAIS DA METADE dos pixels da mascara; "misto" se nenhuma passa de 50 %
+
+Dice zero (n=158): buraco 0  coroa 63  fora 95  misto 0  sem_mascara 0
+Dice > 0 (n=46): buraco 4  coroa 41  fora 1  misto 0  sem_mascara 0
+todas (n=204): buraco 4  coroa 104  fora 96  misto 0  sem_mascara 0
+
+com campo declarado (ok): 201
+  mascara com mais da metade DENTRO do campo amarelo: 4
+  mascara que toca a faixa laranja entre o verde e os 5 mm: 99
+  largura dessa faixa (5 mm - r_borda): min 0.50  mediana 0.71  max 1.60 mm
