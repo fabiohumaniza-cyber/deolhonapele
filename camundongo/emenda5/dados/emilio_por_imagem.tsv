@@ -1,0 +1,202 @@
+id	nome	emilio	fabio	filme	cicatrizada	area_emilio_mm2	area_r3	area_r4	dice_r3	dice_r4	dice_nulo	segundos	nota
+C053	Day 0_A8-1-L	PARCIAL	nada	False	False	22.1255	22.0044	22.0044	0.9592	0.9592	0.7936	46.1790	pequeno pedaço pega a borda, plástico
+C046	Day 0_A8-1-R	TRACADA	ok	False	False	31.3638	28.9434	28.9246	0.9203	0.9198	0.7137	47.9830	
+C003	Day 0_A8-3-L	TRACADA	ok	False	False	27.9090	28.1452	26.2938	0.9682	0.9593	0.8846	42.0070	
+C174	Day 0_A8-3-R	TRACADA	ok	False	False	30.1401	31.7435	29.2467	0.9537	0.9567	0.9435	38.7860	
+C009	Day 0_A8-4-L	TRACADA	ok	False	False	20.4891	28.4767	28.4603	0.8367	0.8369	0.8409	35.5340	
+C074	Day 0_A8-4-R	PARCIAL	ok	False	False	26.4572	26.5924	26.7064	0.9444	0.9467	0.7662	59.9640	existe algo estranho com esta ferida que não consigo avaliar
+C054	Day 0_A8-5-L	TRACADA	ok	False	False	29.2937	27.0320	28.3768	0.9380	0.9546	0.8322	42.8110	
+C080	Day 0_A8-5-R	PARCIAL	ok	False	False	22.5040	27.9172	27.9572	0.8918	0.8912	0.7413	73.0390	não sei se é sombra ou sangue próximo a borda
+C088	Day 0_Y8-1-L	TRACADA	nada	False	False	23.0847	24.5047	24.5047	0.9346	0.9346	0.8818	30.3710	
+C155	Day 0_Y8-1-R	TRACADA	ok	False	False	17.0896	29.2808	19.4253	0.7274	0.9150	0.7514	31.9530	
+C122	Day 0_Y8-2-L	TRACADA	ok	False	False	27.1672	27.3600	27.3953	0.9307	0.9311	0.9024	72.0660	
+C086	Day 0_Y8-2-R	TRACADA	ok	False	False	18.7412	19.4664	16.4054	0.9685	0.8653	0.7978	35.1670	
+C124	Day 0_Y8-3-L	TRACADA	ok	False	False	25.5262	32.3618	17.5104	0.8819	0.7450	0.8765	34.0920	
+C045	Day 0_Y8-3-R	TRACADA	nada	False	False	26.0505	26.0411	26.0411	0.9747	0.9747	0.9259	57.3910	
+C014	Day 0_Y8-4-L	TRACADA	nada	False	False	21.7516	22.5569	22.5569	0.9487	0.9487	0.7646	29.5720	
+C112	Day 0_Y8-4-R	TRACADA	ok	False	False	22.0467	22.9671	23.8217	0.9513	0.9571	0.8662	29.1320	
+C055	Day 10_A8-1-L	IMAGINADA	nada	True	False	9.3241	28.7024	28.7024	0.4750	0.4750	0.4964	42.8550	Plástico com amarelado, perde visualização da borda
+C029	Day 10_A8-1-R	PARCIAL	NAO_TRACAVEL	True	False	12.3311	25.4768	25.4768	0.6521	0.6521	0.6072	36.4060	Muito plástico deformando beirada da ferida
+C126	Day 10_A8-3-L	IMAGINADA	NAO_TRACAVEL	True	False	7.9512	26.6617	26.6617	0.4312	0.4312	0.4394	40.8550	não é possível; Plástico de forma muito grosseira
+C094	Day 10_A8-3-R	IMAGINADA	NAO_TRACAVEL	True	False	0.4549	19.9801	19.9801	0.0445	0.0445	0.0317	43.7670	não é possível... não sei qual é a lesão
+C142	Day 10_A8-4-L	IMAGINADA	NAO_TRACAVEL	False	False	10.9945	28.2816	28.2816	0.4595	0.4595	0.5604	31.2790	Imaginei o que seria a borda, imagem muito contaminada
+C063	Day 10_A8-4-R	PARCIAL	NAO_TRACAVEL	True	False	10.9017	22.5804	22.5804	0.6512	0.6512	0.5570	27.1070	Não da pra saber ao certo
+C031	Day 10_A8-5-L	PARCIAL	NAO_TRACAVEL	True	False	19.4065	27.9219	27.9219	0.3117	0.3117	0.4906	50.9660	Muito Plástico, misturando com a borda, nitidez da imagem ruim
+C172	Day 10_A8-5-R	PARCIAL	NAO_TRACAVEL	False	False	2.5708	23.1493	23.1493	0.1999	0.1999	0.1167	41.9330	Pelo atrapalha parte da borda
+C134	Day 10_Y8-1-L	IMAGINADA	NAO_TRACAVEL	True	False	5.5167	24.7880	24.7880	0.3625	0.3625	0.3268	29.5590	Plástico enrugado em cima da borda
+C020	Day 10_Y8-2-L	IMAGINADA	NAO_TRACAVEL	False	False	3.5465	15.0418	15.0418	0.3816	0.3816	0.2163	42.0820	pelos e crostas... imaginei onde seria
+C121	Day 10_Y8-2-R	IMAGINADA	NAO_TRACAVEL	False	True	1.2590	25.7084	25.7084	0.0934	0.0934	0.0854	15.9140	Ferida fechada
+C198	Day 10_Y8-3-L	PARCIAL	NAO_TRACAVEL	False	True	0.4244	28.5955	28.5955	0.0173	0.0173	0.0296	34.7260	Difícil localizar a borda
+C004	Day 10_Y8-4-L	FECHADA	NAO_TRACAVEL	False	True	0.0000	28.4544	28.4544				33.9430	
+C056	Day 11_A8-1-L	TRACADA	ok	False	False	4.5492	29.9085	3.6982	0.2640	0.8885	0.2775	19.3300	
+C130	Day 11_A8-1-R	TRACADA	ok	False	False	5.0606	5.2251	5.2522	0.9529	0.9525	0.2775	15.7930	
+C001	Day 11_A8-3-L	TRACADA	nada	False	False	7.5515	7.2588	7.2588	0.9223	0.9223	0.4220	81.1500	
+C071	Day 11_A8-3-R	IMAGINADA	NAO_TRACAVEL	False	False	20.1130	19.3007	19.3007	0.9522	0.9522	0.8091	44.1140	Não é possível saber o que é ferida ou borda
+C113	Day 11_A8-4-L	PARCIAL	NAO_TRACAVEL	True	False	8.0088	19.2925	19.2925	0.3868	0.3868	0.4419	35.3950	nao é possível pelo e plastico deformam imagem
+C110	Day 11_A8-4-R	IMAGINADA	NAO_TRACAVEL	True	False	10.4726	28.9928	28.9928	0.5307	0.5307	0.5398	41.1050	não da pra definir o que é borda
+C098	Day 11_A8-5-L	TRACADA	nada	False	False	5.6225	5.5743	5.5743	0.9180	0.9180	0.3288	1104.0420	
+C051	Day 11_Y8-2-L	IMAGINADA	NAO_TRACAVEL	False	False	1.6363	6.3478	6.3478	0.3984	0.3984	0.1095	33.9580	Pelo por cima da borda
+C091	Day 11_Y8-2-R	IMAGINADA	NAO_TRACAVEL	False	False	0.2998	28.5273	28.5273	0.0029	0.0029	0.0210	34.1390	Pelo sobre a ferida, acho q ja cicatrizada
+C199	Day 12_A8-1-L	PARCIAL	NAO_TRACAVEL	True	False	3.7945	15.1993	15.1993	0.3987	0.3987	0.2369	24.7440	Contaminada por plastico
+C099	Day 12_A8-3-L	TRACADA	nada	False	False	5.4767	7.1741	7.1741	0.8610	0.8610	0.3113	19.9550	
+C139	Day 12_A8-3-R	IMAGINADA	nada	False	False	9.1337	8.2944	8.2944	0.9110	0.9110	0.4864	48.0670	não consegue definir ao certo oq é lesão
+C066	Day 12_A8-4-L	PARCIAL	nada	False	False	5.8305	26.2621	26.2621	0.1196	0.1196	0.3423	26.7680	pelo sobre quase toda ferida
+C118	Day 12_A8-4-R	IMAGINADA	nada	True	False	0.7159	23.5043	23.5043	0.0591	0.0591	0.0494	47.4600	não é possível, plástico pega a ferida de uma forma que contorce
+C170	Day 12_A8-5-L	IMAGINADA	nada	False	False	4.4446	4.3835	4.3835	0.8956	0.8956	0.2720	34.9860	Lesao com muito pelo, talvez cicatrizada
+C058	Day 12_Y8-2-L	IMAGINADA	NAO_TRACAVEL	False	False	0.7935	7.7842	7.7842	0.1850	0.1850	0.0547	36.6090	Pelo sobre a ferida. não consigo visualizar
+C188	Day 12_Y8-2-R	IMAGINADA	NAO_TRACAVEL	False	False	0.1164	28.3698	28.3698	0.0000	0.0000	0.0082	26.2490	Pelo cicatriz, não é possível
+C011	Day 13_A8-1-L	PARCIAL	NAO_TRACAVEL	True	False	4.4834	20.4421	20.4421	0.3597	0.3597	0.2740	70.3670	Plástico não deixa olhar se é a borda. estou imaginando que seja.
+C180	Day 13_A8-1-R	TRACADA	nada	False	False	1.4576	2.6555	2.6555	0.7088	0.7088	0.0982	28.8240	
+C076	Day 13_A8-3-L	TRACADA	nada	False	False	4.3200	5.6789	5.6789	0.8302	0.8302	0.2654	15.7570	
+C038	Day 13_A8-3-R	PARCIAL	nada	False	False	4.9571	5.1769	5.1769	0.9451	0.9451	0.2986	44.3800	Imagem muito desfocada com cores diferentes na borda, talvez pelo do rato.
+C190	Day 13_A8-4-L	IMAGINADA	NAO_TRACAVEL	True	False	4.6092	27.3142	27.3142	0.2888	0.2888	0.2806	19.7990	Imagem sem condições alguma
+C115	Day 13_A8-4-R	IMAGINADA	NAO_TRACAVEL	False	False	10.5243	11.7845	11.7845	0.9375	0.9375	0.5430	49.7610	nao da pra saber o que é borda, liquido amarelado com plastico talvez fizeram este efeito na ferida
+C035	Day 13_A8-5-L	PARCIAL	NAO_TRACAVEL	True	False	3.3337	28.1899	28.1899	0.0001	0.0001	0.1677	47.9920	Plástico defira parte de baixo da ferida, imaginei boa parte
+C129	Day 13_Y8-2-L	IMAGINADA	NAO_TRACAVEL	False	True	0.0917	28.2887	28.2887	0.0000	0.0000	0.0065	42.5820	pelo cobre a borda, aparenta esta cicatrizada
+C022	Day 13_Y8-2-R	IMAGINADA	NAO_TRACAVEL	False	False	0.1117	27.4294	27.4294	0.0081	0.0081	0.0079	25.6460	não tem como, pelo sobre a borda. 
+C067	Day 14_A8-1-R	TRACADA	nada	False	False	1.9032	2.1159	2.1159	0.8049	0.8049	0.1263	30.6260	
+C135	Day 14_A8-3-L	TRACADA	nada	False	False	4.0508	27.7326	27.7326	0.2533	0.2533	0.2509	21.5220	
+C140	Day 14_A8-3-R	IMAGINADA	NAO_TRACAVEL	False	False	3.8651	29.0304	29.0304	0.2331	0.2331	0.2408	33.7890	não consegue definir a lesao
+C171	Day 14_A8-4-L	IMAGINADA	NAO_TRACAVEL	True	False	10.9275	31.1346	31.1346	0.5108	0.5108	0.5580	125.5610	impossível de achar a borda,.
+C052	Day 14_A8-4-R	IMAGINADA	NAO_TRACAVEL	True	False	13.5948	15.0959	15.0959	0.8943	0.8943	0.6499	39.4430	não é possível nem classificar o que é
+C181	Day 14_A8-5-L	PARCIAL	PELO	False	False	2.3052	25.3710	25.3710	0.0000	0.0000	0.1437	29.0480	Pelo atrapalhou a borda
+C184	Day 14_Y8-2-L	IMAGINADA	NAO_TRACAVEL	False	False	0.1528	14.5340	14.5340	0.0208	0.0208	0.0108	26.9400	Pelo e possível cicatrização não vejo borda
+C187	Day 14_Y8-2-R	IMAGINADA	NAO_TRACAVEL	False	False	0.1881	34.9703	34.9703	0.0107	0.0107	0.0132	39.2140	não é possível, pelo
+C108	Day 15_A8-1-R	TRACADA	nada	False	False	1.9760	2.2887	2.2887	0.9107	0.9107	0.1308	15.7040	
+C196	Day 15_A8-3-L	IMAGINADA	NAO_TRACAVEL	False	True	3.4689	26.7240	26.7240	0.0975	0.0975	0.2185	38.5500	Imagem contaminada plástico pelo, substancia amarelada
+C167	Day 15_A8-3-R	IMAGINADA	NAO_TRACAVEL	False	False	6.9955	28.2240	28.2240	0.1931	0.1931	0.3742	45.6280	lesão com pelos outros focos de lesão , plástico
+C083	Day 1_A8-1-L	TRACADA	nada	True	False	21.5671	22.3100	22.3100	0.9713	0.9713	0.8557	45.3030	
+C060	Day 1_A8-3-L	TRACADA	ok	True	False	28.3521	25.5133	25.6967	0.9348	0.9407	0.8643	28.3540	
+C128	Day 1_A8-3-R	TRACADA	ok	True	False	28.7647	29.9602	28.5649	0.9708	0.9721	0.9332	24.5980	
+C078	Day 1_A8-4-L	TRACADA	ok	True	False	24.0886	21.3614	20.9805	0.9259	0.9310	0.8222	21.1000	
+C178	Day 1_A8-4-R	TRACADA	nada	True	False	30.5774	29.9567	29.9567	0.9476	0.9476	0.8006	29.8840	
+C059	Day 1_A8-5-L	TRACADA	nada	True	False	28.2616	25.6849	25.6849	0.9498	0.9498	0.8830	53.7590	apesar da borda estar com pouca nitidez, é possível ver a borda
+C068	Day 1_A8-5-R	PARCIAL	NAO_TRACAVEL	True	False	17.4117	27.7091	27.7091	0.7613	0.7613	0.7624	74.0230	sangue e anel quebrado invadindo a ferida atrapalham em reconhecer a borda, pastico tbm
+C002	Day 1_Y8-1-L	TRACADA	nada	True	False	29.1832	27.3729	27.3729	0.9406	0.9406	0.8381	38.6090	
+C147	Day 1_Y8-1-R	TRACADA	nada	True	False	23.4655	27.2389	27.2389	0.9220	0.9220	0.9030	24.9020	
+C106	Day 1_Y8-2-L	TRACADA	ok	True	False	30.6937	29.7569	29.5135	0.9574	0.9602	0.8462	22.3970	
+C149	Day 1_Y8-2-R	TRACADA	nada	True	False	24.4635	25.0595	25.0595	0.9731	0.9731	0.8903	26.6540	
+C085	Day 1_Y8-3-L	PARCIAL	nada	True	False	26.8663	26.6394	26.6394	0.9686	0.9686	0.8564	62.7590	ferida duvidosa de visualizar , baixa qualidade
+C039	Day 1_Y8-3-R	TRACADA	ok	True	False	25.3346	26.7887	26.8122	0.9604	0.9636	0.9005	25.3420	
+C157	Day 1_Y8-4-L	PARCIAL	nada	True	False	24.0216	25.5062	25.5062	0.9339	0.9339	0.7785	40.2050	Imagem bem complicada, imaginei boa parte
+C097	Day 1_Y8-4-R	PARCIAL	nada	True	False	25.2911	22.5204	22.5204	0.9308	0.9308	0.8697	58.7820	Muito Plástico
+C197	Day 2_A8-1-L	PARCIAL	nada	True	False	20.0072	19.9378	19.9378	0.9444	0.9444	0.8168	33.6650	Imagem muito contaminada pelo plastico
+C032	Day 2_A8-1-R	PARCIAL	NAO_TRACAVEL	True	False	34.8398	27.1096	27.1096	0.8542	0.8542	0.7021	46.1110	Plastico altera quase que totalmente a borda
+C185	Day 2_A8-3-L	PARCIAL	nada	True	False	27.2883	27.2436	27.2436	0.9355	0.9355	0.8520	39.8470	Plástico atrapalha parte da borda
+C127	Day 2_A8-3-R	PARCIAL	nada	True	False	28.1923	28.0477	28.0477	0.9647	0.9647	0.8970	46.5420	Plástico contamina parte visível da borda
+C017	Day 2_A8-4-L	TRACADA	ok	True	False	20.5456	28.2052	27.6750	0.8263	0.7881	0.7847	33.5380	
+C111	Day 2_A8-4-R	TRACADA	nada	True	False	28.5132	27.4529	27.4529	0.9569	0.9569	0.9158	23.0650	
+C138	Day 2_A8-5-L	TRACADA	nada	False	False	27.3800	28.9117	28.9117	0.9496	0.9496	0.8323	30.2680	
+C072	Day 2_A8-5-R	TRACADA	nada	False	False	19.1455	18.9116	18.9116	0.9765	0.9765	0.7978	68.9790	
+C027	Day 2_Y8-1-L	TRACADA	nada	True	False	26.3020	25.5168	25.5168	0.9501	0.9501	0.8446	29.4830	
+C065	Day 2_Y8-1-R	TRACADA	nada	False	False	23.7770	22.8790	22.8790	0.9485	0.9485	0.8177	31.5480	
+C034	Day 2_Y8-2-L	TRACADA	ok	True	False	28.8317	21.9809	21.5248	0.8477	0.8480	0.8699	69.0590	vejo a borda porem soltou algo do anel vermelho que pode confundir.
+C182	Day 2_Y8-2-R	TRACADA	nada	True	False	21.1474	20.6008	20.6008	0.9632	0.9632	0.8490	25.6740	
+C148	Day 2_Y8-3-L	TRACADA	ok	False	False	26.5207	27.8537	29.1327	0.7176	0.9239	0.8681	26.5480	
+C141	Day 2_Y8-3-R	TRACADA	nada	False	False	24.1285	22.2312	22.2312	0.9575	0.9575	0.8102	34.6110	
+C160	Day 2_Y8-4-L	TRACADA	nada	False	False	23.0682	20.6514	20.6514	0.9249	0.9249	0.6871	28.9480	
+C191	Day 2_Y8-4-R	PARCIAL	nada	True	False	25.5321	27.0767	27.0767	0.8975	0.8975	0.8836	41.7680	Plástico atrapalha em parte
+C033	Day 3_A8-1-L	IMAGINADA	nada	True	False	23.5184	28.3216	28.3216	0.8159	0.8159	0.8183	46.2330	Plástico em toda borda de uma forma que deforma 
+C096	Day 3_A8-3-L	PARCIAL	nada	True	False	21.0745	24.1156	24.1156	0.9143	0.9143	0.8177	54.1890	muito plástico escondendo a borda.
+C176	Day 3_A8-3-R	PARCIAL	nada	True	False	27.4917	28.6401	28.6401	0.9349	0.9349	0.9550	42.3680	Plástico atrapalha um pouco
+C186	Day 3_A8-4-L	TRACADA	ok	True	False	18.6177	28.7941	23.0518	0.3212	0.7508	0.7843	22.7040	
+C168	Day 3_A8-4-R	PARCIAL	ok	True	False	27.1531	30.9077	24.0509	0.8080	0.7673	0.8234	41.9150	LEsao com plástico em alguns lugares da borda
+C145	Day 3_A8-5-L	PARCIAL	nada	False	False	25.2276	28.8682	28.8682	0.9151	0.9151	0.9068	31.8440	Plástico contamina parte da lesao
+C090	Day 3_A8-5-R	PARCIAL	ok	True	False	18.7905	27.1884	21.4190	0.7569	0.8569	0.7965	42.3230	Plástico atrapalha localizar a borda
+C159	Day 3_Y8-1-L	PARCIAL	ok	True	False	24.4200	22.0490	22.6192	0.8721	0.8750	0.8553	27.9960	Muito Plástico pegando muito a lesao
+C062	Day 3_Y8-1-R	PARCIAL	BORDA_PARCIAL	True	False	21.9162	28.3098	28.3098	0.8527	0.8527	0.8714	32.0800	vejo muito pouco a borda
+C019	Day 3_Y8-2-L	TRACADA	nada	True	False	24.0274	30.8066	30.8066	0.8677	0.8677	0.9003	23.2030	
+C133	Day 3_Y8-2-R	IMAGINADA	nada	True	False	18.8246	29.5429	29.5429	0.6326	0.6326	0.7746	52.0650	Plástico contamina  toda borda.
+C087	Day 3_Y8-3-L	TRACADA	ok	False	False	26.0470	30.0120	27.5257	0.7694	0.7910	0.9062	45.9590	
+C151	Day 3_Y8-3-R	TRACADA	nada	False	False	21.8727	23.1340	23.1340	0.9031	0.9031	0.5811	23.1330	
+C136	Day 3_Y8-4-L	PARCIAL	nada	False	False	18.6565	14.9701	14.9701	0.8814	0.8814	0.7169	33.3400	Plástico contamina ferida
+C007	Day 3_Y8-4-R	PARCIAL	nada	True	False	23.5772	29.0633	29.0633	0.8780	0.8780	0.8164	60.0110	imagem de pouca resolução, amarelo misturando com borda
+C200	Day 4_A8-1-L	PARCIAL	nada	True	False	19.6357	27.2001	27.2001	0.8358	0.8358	0.7978	29.1980	Imagem com desfoque muito grande
+C104	Day 4_A8-1-R	PARCIAL	nada	True	False	27.1331	25.2347	25.2347	0.9492	0.9492	0.8898	34.2590	Plástico atrapalha um pouco
+C070	Day 4_A8-3-L	PARCIAL	nada	True	False	25.5168	25.7260	25.7260	0.9154	0.9154	0.6104	31.2680	Plástico atrapalhando novamente
+C158	Day 4_A8-3-R	PARCIAL	nada	True	False	25.1747	28.2158	28.2158	0.9374	0.9374	0.8934	37.6290	Muito Plástico.
+C105	Day 4_A8-4-L	PARCIAL	ok	True	False	18.3697	26.5795	0.6583	0.7931	0.0692	0.7449	32.9620	Pelo atrapalha um pouco
+C103	Day 4_A8-4-R	TRACADA	nada	True	False	25.9623	29.6370	29.6370	0.9073	0.9073	0.8534	22.8280	
+C050	Day 4_A8-5-L	PARCIAL	nada	True	False	23.3797	24.6117	24.6117	0.9465	0.9465	0.6446	54.9260	Plástico tira percepção de borda
+C153	Day 4_A8-5-R	TRACADA	nada	False	False	14.8632	31.1628	31.1628	0.6113	0.6113	0.6123	21.2450	
+C114	Day 4_Y8-1-L	PARCIAL	nada	True	False	21.9750	24.8773	24.8773	0.9328	0.9328	0.8580	36.0840	em alguns lugares plástico contamina a borda
+C095	Day 4_Y8-1-R	TRACADA	nada	True	False	20.9123	22.3523	22.3523	0.9009	0.9009	0.8509	25.2310	
+C137	Day 4_Y8-2-L	TRACADA	ok	True	False	21.1850	28.1253	27.2695	0.8593	0.8744	0.8559	27.6340	
+C143	Day 4_Y8-2-R	TRACADA	nada	False	False	14.1226	23.3750	23.3750	0.7533	0.7533	0.6667	27.8900	
+C079	Day 4_Y8-3-L	TRACADA	ok	True	False	22.5451	28.1358	26.7534	0.8892	0.9123	0.8813	19.3420	
+C075	Day 4_Y8-3-R	TRACADA	nada	False	False	20.6855	18.0088	18.0088	0.9147	0.9147	0.8454	22.1400	
+C018	Day 4_Y8-4-L	TRACADA	ok	True	False	16.0457	24.8973	20.6373	0.7832	0.8743	0.7246	42.6630	
+C023	Day 4_Y8-4-R	TRACADA	nada	False	False	16.7252	20.4104	20.4104	0.8952	0.8952	0.6641	27.8160	
+C173	Day 5_A8-1-L	IMAGINADA	NAO_TRACAVEL	False	False	19.6898	29.0551	29.0551	0.7940	0.7940	0.8216	41.5270	Plástico tira totalmente a borda
+C048	Day 5_A8-1-R	IMAGINADA	NAO_TRACAVEL	True	False	20.5197	26.7240	26.7240	0.8104	0.8104	0.7851	42.9790	sem possibilidade, pastico tira o olhar da borda
+C081	Day 5_A8-3-L	PARCIAL	BORDA_PARCIAL	True	False	20.8124	19.2842	19.2842	0.9065	0.9065	0.8486	32.6750	Imagem de baixa qualidade, desfoque, plástico
+C107	Day 5_A8-3-R	PARCIAL	BORDA_PARCIAL	True	False	21.0710	21.8645	21.8645	0.9375	0.9375	0.8274	51.5540	Plástico e qualidade da imagem, reflexo atrapalham
+C073	Day 5_A8-4-L	PARCIAL	ok	True	False	18.7059	26.3973	19.8144	0.4825	0.5032	0.7969	36.2400	pelo e imagem com qualidade ruim
+C057	Day 5_A8-4-R	IMAGINADA	nada	True	False	26.8722	29.1456	29.1456	0.9228	0.9228	0.8183	42.9220	Plastico novamente atrapalha
+C169	Day 5_A8-5-L	PARCIAL	nada	True	False	19.8567	24.5658	24.5658	0.8753	0.8753	0.7135	38.1480	lesão com muito plástico em lugares da borda
+C146	Day 5_A8-5-R	PARCIAL	ok	False	False	14.8831	26.3832	25.7096	0.7210	0.7321	0.6082	40.7910	imagem sem muita definição
+C125	Day 5_Y8-1-L	PARCIAL	nada	True	False	16.5829	28.6201	28.6201	0.7337	0.7337	0.7399	34.0460	Plástico contamina
+C150	Day 5_Y8-1-R	PARCIAL	nada	False	False	12.1712	13.2409	13.2409	0.9314	0.9314	0.6024	46.1410	imagem com plástico, muito clara
+C036	Day 5_Y8-2-L	IMAGINADA	nada	False	False	18.1569	29.2291	29.2291	0.7525	0.7525	0.7827	39.5040	Plástico emendado com ferida, não da pra saber oq é borda
+C166	Day 5_Y8-2-R	TRACADA	nada	False	False	8.1416	12.6802	12.6802	0.7820	0.7820	0.4476	23.9530	
+C192	Day 5_Y8-3-L	PARCIAL	NAO_TRACAVEL	True	False	16.4948	28.4861	28.4861	0.3995	0.3995	0.7373	95.7180	Imagem difícil
+C082	Day 5_Y8-3-R	PARCIAL	nada	False	False	11.8727	27.5751	27.5751	0.6019	0.6019	0.5920	30.1150	muito plástico próximo a borda
+C109	Day 5_Y8-4-L	TRACADA	nada	False	False	10.4950	17.0214	17.0214	0.7628	0.7628	0.5419	14.2880	
+C120	Day 5_Y8-4-R	TRACADA	nada	False	False	12.4157	12.1383	12.1383	0.9498	0.9498	0.5909	18.7020	
+C042	Day 6_A8-1-L	PARCIAL	NAO_TRACAVEL	True	False	15.7918	28.5437	28.5437	0.6844	0.6844	0.7173	52.3400	boa parte da borda não é possível ver  
+C123	Day 6_A8-1-R	IMAGINADA	NAO_TRACAVEL	True	False	21.0828	28.0195	28.0195	0.8325	0.8325	0.8549	38.6190	Plástico contamina toda ferida, não sei oq é borda
+C021	Day 6_A8-3-L	PARCIAL	NAO_TRACAVEL	True	False	18.3156	29.2349	29.2349	0.7704	0.7704	0.7720	49.3240	parte da borda dá para olhar, outras o plástico mascara ela.
+C132	Day 6_A8-3-R	PARCIAL	BORDA_PARCIAL	True	False	18.9422	27.6292	27.6292	0.8069	0.8069	0.8008	37.0270	Plástico contamina borda em alguns lugares
+C040	Day 6_A8-4-L	PARCIAL	PELO	True	False	18.8376	22.6685	22.6685	0.6879	0.6879	0.7906	31.7840	Pelo em cima da borda
+C006	Day 6_A8-4-R	PARCIAL	BORDA_PARCIAL	True	False	21.3437	28.0829	28.0829	0.8554	0.8554	0.8235	63.8620	parte da borda com sangue e plástico um pouco difícil de entender
+C037	Day 6_A8-5-L	PARCIAL	NAO_TRACAVEL	True	False	18.9504	29.9520	29.9520	0.4694	0.4694	0.7362	36.0920	Plástico atrapalhando visualizar a borda
+C077	Day 6_A8-5-R	PARCIAL	nada	False	False	17.2530	15.3510	15.3510	0.9032	0.9032	0.7490	31.8860	Pelo, Plástico, atrapalham a borda
+C131	Day 6_Y8-1-L	PARCIAL	ok	True	False	13.1304	17.4410	23.8464	0.8124	0.7026	0.6346	37.6960	O Plástico contamina parte da ferida
+C028	Day 6_Y8-1-R	PARCIAL	NAO_TRACAVEL	True	False	9.8555	21.3520	21.3520	0.6316	0.6316	0.5174	46.0450	Muito pastico deformando a ferida
+C201	Day 6_Y8-2-L	IMAGINADA	nada	False	False	15.1606	28.2416	28.2416	0.6986	0.6986	0.6974	30.8300	Não é possível saber o que é borda
+C069	Day 6_Y8-2-R	TRACADA	nada	False	False	4.2671	27.9172	27.9172	0.2652	0.2652	0.2625	16.3880	
+C163	Day 6_Y8-3-L	IMAGINADA	BORDA_PARCIAL	True	False	15.6190	26.6923	26.6923	0.7181	0.7181	0.7122	34.2820	Lesão totalmente comprometida de plástico.
+C100	Day 6_Y8-3-R	TRACADA	ok	False	False	5.7565	21.3755	7.3270	0.4243	0.8744	0.3386	12.8990	
+C193	Day 6_Y8-4-L	TRACADA	ok	False	False	6.8379	27.8913	6.8215	0.3938	0.8458	0.3899	25.0460	
+C177	Day 6_Y8-4-R	PARCIAL	ok	False	False	9.4652	24.3813	11.6223	0.5593	0.8890	0.5021	17.9540	Plastico atrapalha um pouco
+C005	Day 7_A8-1-L	PARCIAL	BORDA_PARCIAL	True	False	12.9612	25.0701	25.0701	0.6816	0.6816	0.6276	97.6700	Parte da diretora da borda com liqueido ou plástico junto, não sei ao certo o que faz parte da borda
+C049	Day 7_A8-1-R	PARCIAL	BORDA_PARCIAL	True	False	20.8982	28.8835	28.8835	0.8254	0.8254	0.7037	36.6390	desfocada, baixa resolução 
+C165	Day 7_A8-3-L	PARCIAL	BORDA_PARCIAL	True	False	19.1385	19.9461	19.9461	0.9267	0.9267	0.7473	27.0240	Muito pastico na borda
+C016	Day 7_A8-3-R	PARCIAL	nada	True	False	21.1756	21.2850	21.2850	0.9439	0.9439	0.7762	39.8150	Locais onde plástico escodem a borda, imaginei onde seria
+C161	Day 7_A8-4-L	PARCIAL	PELO	False	False	22.2207	28.7941	28.7941	0.8102	0.8102	0.8363	25.8830	Pelo em cima da borda
+C008	Day 7_A8-4-R	PARCIAL	nada	True	False	18.2439	29.5629	29.5629	0.7632	0.7632	0.7127	37.5460	muito dificil. imaginei boa parte/
+C175	Day 7_A8-5-L	IMAGINADA	NAO_TRACAVEL	True	False	12.1430	28.9246	28.9246	0.5914	0.5914	0.5839	26.4300	Plastico tira contorno da borda
+C061	Day 7_A8-5-R	PARCIAL	ok	False	False	9.4969	11.7339	12.8930	0.8297	0.8099	0.5033	82.8860	nitidez da imagem pus confundem o que é borda
+C101	Day 7_Y8-1-L	PARCIAL	ok	True	False	9.5663	11.1920	11.1192	0.9169	0.9195	0.5061	33.1360	plástico atrapalha em alguns pontos
+C013	Day 7_Y8-2-L	PARCIAL	ok	True	False	14.0509	27.8749	16.6840	0.6703	0.8824	0.6645	92.2010	Plástico na borda fazendo espécie de vinco, não da para saber.
+C195	Day 7_Y8-2-R	TRACADA	ok	False	False	2.4051	3.1939	3.0975	0.8591	0.8716	0.1570	19.0230	
+C041	Day 7_Y8-3-L	IMAGINADA	nada	False	False	12.9377	13.1457	13.1457	0.8725	0.8725	0.6284	46.9370	não é possível definir a borda, por conta do plástico aderido com pus, talvez.
+C084	Day 7_Y8-3-R	TRACADA	nada	False	False	4.6832	4.9783	4.9783	0.9220	0.9220	0.2845	19.3060	
+C043	Day 7_Y8-4-L	PARCIAL	nada	False	False	3.5618	6.5264	6.5264	0.7061	0.7061	0.2240	89.0470	não sei se o vermelho é borda e se o amarelo tbm é....
+C025	Day 8_A8-1-L	PARCIAL	nada	True	False	9.1678	17.8278	17.8278	0.6792	0.6792	0.4901	61.1290	Plástico tira a borda em alguns lugares
+C194	Day 8_A8-1-R	PARCIAL	BORDA_PARCIAL	True	False	14.2366	26.2797	26.2797	0.7024	0.7024	0.6683	37.8210	imagem difícil por conta do Plástico
+C030	Day 8_A8-3-L	PARCIAL	NAO_TRACAVEL	True	False	15.6061	27.9619	27.9619	0.7142	0.7142	0.7047	47.4860	Imagem desfocada, plástico atrapalhando a borda
+C047	Day 8_A8-3-R	IMAGINADA	ok	True	False	17.9007	24.3436	24.0909	0.8392	0.8442	0.7692	36.8280	não é possível ver borda, plástico tira visão
+C116	Day 8_A8-4-L	PARCIAL	ok	True	False	22.9706	24.6375	23.1023	0.8440	0.8334	0.8317	26.8910	pelo atrapalha
+C183	Day 8_A8-4-R	PARCIAL	nada	True	False	9.3477	28.2863	28.2863	0.4968	0.4968	0.4974	31.0900	Plástico atrapalha parte da borda
+C044	Day 8_A8-5-L	IMAGINADA	ok	True	False	14.1273	25.4004	19.8379	0.7141	0.8129	0.6498	29.2190	não consigo ver borda aqui
+C092	Day 8_A8-5-R	PARCIAL	ok	False	False	5.5978	5.8975	4.9254	0.8794	0.8865	0.3162	56.3300	pelo sobre a borda
+C154	Day 8_Y8-1-L	PARCIAL	ok	True	False	8.4190	16.3325	14.0133	0.6624	0.7343	0.4593	26.1790	contaminada plástico
+C012	Day 8_Y8-2-L	PARCIAL	ok	False	False	9.5510	24.4083	12.1125	0.5625	0.8591	0.5055	49.2000	Plastico mudando aspecto da borda
+C093	Day 8_Y8-2-R	TRACADA	nada	False	False	1.8456	0.8616	0.8616	0.6366	0.6366	0.1227	17.8100	
+C089	Day 8_Y8-3-L	IMAGINADA	NAO_TRACAVEL	True	False	8.1381	29.7545	29.7545	0.4295	0.4295	0.4474	50.5550	não é possível localizar a borda, acho q uma das piores imagens.
+C164	Day 8_Y8-3-R	PARCIAL	ok	True	False	3.7511	28.0230	24.8891	0.2361	0.2576	0.2345	26.5130	Lesão em parte comprometida por pastico
+C010	Day 8_Y8-4-L	PARCIAL	ok	False	False	4.2107	24.3072	5.4885	0.2436	0.8600	0.2595	61.6540	mistura de crosta amarela com a borda não sei extremante onde é ela
+C156	Day 9_A8-1-L	PARCIAL	ok	True	False	7.6702	26.9721	6.7274	0.4426	0.8976	0.4272	22.9650	Imagem contaminada de plastico
+C179	Day 9_A8-1-R	IMAGINADA	ok	True	False	11.8315	27.8878	16.8439	0.5958	0.8245	0.5668	40.8800	Plástico atrapalha totalmente e baixa resolucao
+C152	Day 9_A8-3-L	PARCIAL	NAO_TRACAVEL	True	False	11.7880	29.3572	29.3572	0.5707	0.5707	0.5890	27.3570	Imagem totalmente contaminada de Plastico
+C119	Day 9_A8-3-R	IMAGINADA	NAO_TRACAVEL	True	False	17.5080	27.8349	27.8349	0.7567	0.7567	0.7609	50.4110	não é possível, plástico dobra na ferida, borda
+C024	Day 9_A8-4-L	PARCIAL	BORDA_PARCIAL	True	False	13.8169	28.3192	28.3192	0.4391	0.4391	0.6571	28.6930	pelo e plastico atraplahm
+C064	Day 9_A8-4-R	PARCIAL	nada	True	False	9.8449	22.5851	22.5851	0.6036	0.6036	0.5170	25.3930	não da pra saber ao certo
+C026	Day 9_A8-5-L	IMAGINADA	NAO_TRACAVEL	True	False	14.9925	25.4098	25.4098	0.2527	0.2527	0.5919	48.0390	Plástico, ferida parece q atravessa o circulo vermelho
+C015	Day 9_A8-5-R	PARCIAL	PELO	True	False	4.9089	4.7150	4.7150	0.7707	0.7707	0.2701	36.3370	Pelo em cima da borda, imaginei onde seria
+C162	Day 9_Y8-1-L	TRACADA	ok	False	False	5.8164	24.1121	3.1151	0.3887	0.6976	0.3416	22.0020	
+C144	Day 9_Y8-2-L	IMAGINADA	ok	False	False	5.2240	20.5526	8.6776	0.4053	0.7516	0.3122	44.0880	Crosta de plástico na lesão
+C102	Day 9_Y8-3-L	TRACADA	ok	False	False	5.4649	5.8329	5.8058	0.8940	0.8942	0.3243	21.9110	
+C189	Day 9_Y8-3-R	TRACADA	ok	False	False	2.2370	2.5944	3.0152	0.8847	0.8393	0.1466	11.7320	
+C117	Day 9_Y8-4-L	TRACADA	ok	False	False	1.8197	3.2327	3.0434	0.7203	0.7484	0.1211	13.6620	
