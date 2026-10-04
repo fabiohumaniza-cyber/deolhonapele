@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>De Olho na Pele · pesquisa com enfermeiros</title>
+<style>
+:root{
+  --fundo:#f6f3ee; --cartao:#ffffff; --tinta:#1f2a2e; --suave:#5d6b70; --linha:#e3ddd3;
+  --acento:#0f6e6a; --acento2:#e9f3f2; --sim:#1d7f4e; --nao:#b23a3a; --sombra:0 6px 24px rgba(31,42,46,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--fundo);color:var(--tinta);
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;-webkit-text-size-adjust:100%}
+.topo{padding:18px 18px 8px;max-width:620px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.olho{width:34px;height:34px;border-radius:50%;background:var(--acento);position:relative;flex:0 0 auto}
+.olho:after{content:"";position:absolute;left:11px;top:11px;width:12px;height:12px;border-radius:50%;background:#fff}
+.marca{font-weight:700;letter-spacing:.2px}
+.marca small{display:block;font-weight:400;color:var(--suave);font-size:13px}
+main{max-width:620px;margin:0 auto;padding:8px 16px 40px}
+.cartao{background:var(--cartao);border:1px solid var(--linha);border-radius:18px;box-shadow:var(--sombra);padding:22px}
+h1{font-size:22px;line-height:1.25;margin:0 0 10px}
+p{margin:8px 0;color:var(--suave)}
+p b{color:var(--tinta)}
+label.campo{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}
+input[type=text]{width:100%;padding:13px 14px;border:1px solid var(--linha);border-radius:12px;font-size:16px;background:#fff;color:var(--tinta)}
+input[type=text]:focus{outline:2px solid var(--acento);border-color:transparent}
+.linha2{display:flex;gap:10px}.linha2>div:first-child{flex:1}.linha2>div:last-child{width:90px}
+.foto{display:flex;align-items:center;gap:14px;margin-top:6px}
+.foto .av{width:64px;height:64px;border-radius:50%;background:var(--acento2) center/cover no-repeat;border:1px solid var(--linha);flex:0 0 auto}
+.foto label.bt{padding:10px 14px;border:1px dashed var(--acento);border-radius:12px;color:var(--acento);font-weight:600;cursor:pointer;font-size:15px}
+.ok{display:flex;gap:10px;align-items:flex-start;margin:14px 0 0;font-size:15px;color:var(--tinta)}
+.ok input{width:22px;height:22px;margin-top:1px;accent-color:var(--acento);flex:0 0 auto}
+button.principal{width:100%;margin-top:22px;padding:16px;border:0;border-radius:14px;background:var(--acento);color:#fff;font-size:17px;font-weight:700;cursor:pointer}
+button.principal:disabled{opacity:.35;cursor:not-allowed}
+.prog{display:flex;align-items:center;gap:12px;margin:4px 0 12px;font-size:14px;color:var(--suave)}
+.barra{flex:1;height:8px;background:var(--linha);border-radius:4px;overflow:hidden}
+.barra i{display:block;height:100%;width:0;background:var(--acento);transition:width .25s}
+.imagem{width:100%;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:#000;box-shadow:var(--sombra)}
+.imagem img{width:100%;height:100%;object-fit:contain;display:block}
+.pergunta{font-size:19px;font-weight:700;text-align:center;margin:18px 4px 14px;line-height:1.3}
+.botoes{display:flex;gap:12px}
+.botoes button{flex:1;padding:18px 10px;border-radius:16px;border:0;font-size:19px;font-weight:800;color:#fff;cursor:pointer}
+.botoes .sim{background:var(--sim)} .botoes .nao{background:var(--nao)}
+.botoes button:disabled{opacity:.4}
+.fim{text-align:center}
+.fim .av{width:96px;height:96px;border-radius:50%;margin:4px auto 12px;background:var(--acento2) center/cover no-repeat;border:1px solid var(--linha)}
+.nota{font-size:13px;color:var(--suave);margin-top:14px;text-align:center}
+.esconde{display:none}
+</style>
+</head>
+<body>
+<div class="topo"><div class="olho"></div><div class="marca">De Olho na Pele<small>pesquisa com enfermeiros · borda de ferida</small></div></div>
+<main>
+
+<section id="t1" class="cartao">
+  <h1>Você consegue ver a borda?</h1>
+  <p>Você vai ver <b>__N__ fotos</b> de feridas de camundongo, uma por vez. Em cada uma, responda só <b>Sim</b> ou <b>Não</b>. Leva poucos minutos.</p>
+  <p>Não existe resposta certa: queremos saber o que <b>você</b> vê.</p>
+
+  <label class="campo" for="nome">Nome completo</label>
+  <input type="text" id="nome" autocomplete="name" placeholder="como deve aparecer no trabalho">
+  <div class="linha2">
+    <div><label class="campo" for="coren">COREN</label><input type="text" id="coren" inputmode="numeric" placeholder="número"></div>
+    <div><label class="campo" for="uf">UF</label><input type="text" id="uf" maxlength="2" placeholder="SP"></div>
+  </div>
+
+  <label class="campo">Sua foto (opcional)</label>
+  <div class="foto"><div class="av" id="av1"></div>
+    <label class="bt">escolher foto<input type="file" id="arqfoto" accept="image/*" hidden></label></div>
+
+  <label class="ok"><input type="checkbox" id="c1"> Autorizo que meu nome e meu COREN apareçam no trabalho científico, como colaborador(a).</label>
+  <label class="ok"><input type="checkbox" id="c2"> Declaro que não vi estas fotos antes e que respondo sozinho(a), sem ajuda.</label>
+
+  <button class="principal" id="btComeca" disabled>Começar</button>
+  <div class="nota">Nada é enviado pela internet. No fim, você manda o arquivo de respostas para o Fabio.</div>
+</section>
+
+<section id="t2" class="esconde">
+  <div class="prog"><span id="cont">1 de __N__</span><div class="barra"><i id="barra"></i></div></div>
+  <div class="imagem"><img id="foto" alt="foto de ferida"></div>
+  <div class="pergunta">Você conseguiria traçar com segurança a borda desta ferida?</div>
+  <div class="botoes"><button class="sim" id="btSim" disabled>Sim</button><button class="nao" id="btNao" disabled>Não</button></div>
+</section>
+
+<section id="t3" class="cartao fim esconde">
+  <div class="av" id="av3"></div>
+  <h1 id="obrigado">Obrigado!</h1>
+  <p>Suas respostas estão prontas. Toque no botão e mande o arquivo para o Fabio pelo WhatsApp ou e-mail.</p>
+  <button class="principal" id="btEnvia">Enviar ao Fabio</button>
+  <div class="nota" id="dica"></div>
+</section>
+
+</main>
+<script>
+var FIG = __FIGS__;
+var VERSAO = 'app_enfermeiros_v2';
+var CHAVE = 'olho_enfermeiros_v2';
+var P = null, ORDEM = [], R = {}, i = 0, t0 = 0, LOG = [];
+function agora(){ return new Date().toISOString(); }
+function $(x){ return document.getElementById(x); }
+function guarda(){ try{ localStorage.setItem(CHAVE, JSON.stringify({P:P, ORDEM:ORDEM, R:R, i:i, LOG:LOG})); }catch(e){} }
+
+function valida(){
+  var ok = $('nome').value.trim().split(/\s+/).length >= 2 && $('coren').value.trim().length >= 3 &&
+           $('uf').value.trim().length === 2 && $('c1').checked && $('c2').checked;
+  $('btComeca').disabled = !ok;
+}
+['nome','coren','uf'].forEach(function(k){ $(k).addEventListener('input', valida); });
+['c1','c2'].forEach(function(k){ $(k).addEventListener('change', valida); });
+
+var FOTO = null;
+$('arqfoto').addEventListener('change', function(){
+  var f = this.files[0]; if(!f) return;
+  var img = new Image(), rd = new FileReader();
+  rd.onload = function(){ img.src = rd.result; };
+  img.onload = function(){
+    var s = 240, c = document.createElement('canvas'); c.width = s; c.height = s;
+    var k = Math.max(s / img.width, s / img.height), w = img.width * k, h = img.height * k;
+    c.getContext('2d').drawImage(img, (s - w) / 2, (s - h) / 2, w, h);
+    FOTO = c.toDataURL('image/jpeg', .82);
+    $('av1').style.backgroundImage = 'url(' + FOTO + ')';
+  };
+  rd.readAsDataURL(f);
+});
+
+function embaralha(n){
+  var a = []; for(var k = 0; k < n; k++) a.push(k);
+  var r = new Uint32Array(n); (window.crypto || window.msCrypto).getRandomValues(r);
+  for(var k = n - 1; k > 0; k--){ var j = r[k] % (k + 1), t = a[k]; a[k] = a[j]; a[j] = t; }
+  return a;
+}
+
+$('btComeca').onclick = function(){
+  if(!P){
+    P = { nome: $('nome').value.trim(), coren: $('coren').value.trim(), uf: $('uf').value.trim().toUpperCase(),
+          foto: FOTO, autoriza_nome_no_trabalho: true, declara_nao_ter_visto: true, quando: agora() };
+    ORDEM = embaralha(FIG.length).map(function(k){ return FIG[k].id; });
+    LOG.push({q: agora(), o: 'comecou'});
+  }
+  $('t1').classList.add('esconde'); $('t2').classList.remove('esconde');
+  mostra();
+};
+
+function porId(id){ for(var k = 0; k < FIG.length; k++) if(FIG[k].id === id) return FIG[k]; }
+function mostra(){
+  if(i >= ORDEM.length){ fim(); return; }
+  $('btSim').disabled = $('btNao').disabled = true;
+  var f = porId(ORDEM[i]);
+  $('foto').onload = function(){ t0 = Date.now(); R[f.id] = {mostrou: agora()}; $('btSim').disabled = $('btNao').disabled = false; };
+  $('foto').src = f.img;
+  $('cont').textContent = (i + 1) + ' de ' + ORDEM.length;
+  $('barra').style.width = (100 * i / ORDEM.length).toFixed(1) + '%';
+  window.scrollTo(0, 0);
+}
+function responde(s){
+  var id = ORDEM[i];
+  R[id].resposta = s; R[id].respondeu = agora(); R[id].ms = Date.now() - t0; R[id].sha256_imagem = porId(id).sha;
+  i++; guarda(); mostra();
+}
+$('btSim').onclick = function(){ responde('SIM'); };
+$('btNao').onclick = function(){ responde('NAO'); };
+
+function arquivo(){
+  var o = { versao: VERSAO, participante: P, inicio: P.quando, fim: agora(), navegador: navigator.userAgent,
+            n: ORDEM.length, ordem: ORDEM, respostas: R, LOG: LOG };
+  var nome = 'olho_enfermeiro_' + P.nome.split(/\s+/)[0].toLowerCase().normalize('NFD').replace(/[^a-z]/g,'') + '_' + agora().slice(0,10) + '.json';
+  return new File([JSON.stringify(o)], nome, {type: 'application/json'});
+}
+function fim(){
+  $('t2').classList.add('esconde'); $('t3').classList.remove('esconde');
+  $('obrigado').textContent = 'Obrigado, ' + P.nome.split(/\s+/)[0] + '!';
+  if(P.foto) $('av3').style.backgroundImage = 'url(' + P.foto + ')'; else $('av3').style.display = 'none';
+  LOG.push({q: agora(), o: 'terminou'}); guarda();
+}
+$('btEnvia').onclick = function(){
+  var f = arquivo();
+  if(navigator.canShare && navigator.canShare({files: [f]})){
+    navigator.share({files: [f], title: 'De Olho na Pele · respostas'}).catch(function(){});
+  } else {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(f); a.download = f.name;
+    document.body.appendChild(a); a.click(); a.remove();
+    $('dica').textContent = 'O arquivo "' + f.name + '" foi salvo. Mande esse arquivo para o Fabio.';
+  }
+};
+
+try {
+  var s = JSON.parse(localStorage.getItem(CHAVE) || 'null');
+  if(s && s.P){ P = s.P; ORDEM = s.ORDEM; R = s.R; i = s.i; LOG = s.LOG || [];
+    LOG.push({q: agora(), o: 'retomou'});
+    $('t1').classList.add('esconde');
+    if(i >= ORDEM.length) fim(); else { $('t2').classList.remove('esconde'); mostra(); } }
+} catch(e){}
+</script>
+</body>
+</html>
