@@ -213,7 +213,8 @@ Dois leitores traçaram a borda da ferida nas 201 imagens com campo.
 - **Leitor 1:** bacharel em ciência da computação, com dois anos de veterinária
   e parente do autor.
 - **Leitora 2:** enfermeira, ex-diretora de Saúde de Águas de Lindóia (SP)
-  (COREN [a inserir]); [relação com o autor a declarar].
+  (COREN [a inserir]); foi chefe do autor na Secretaria de Saúde do
+  município, sem vínculo de trabalho atual entre os dois [confirmar].
 
 **O painel.** Cada leitor recebeu o mesmo painel em navegador:
 - as mesmas vistas, conferidas pelo SHA-256 de cada imagem;
