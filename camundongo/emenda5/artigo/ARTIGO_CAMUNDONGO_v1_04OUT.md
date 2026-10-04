@@ -289,6 +289,8 @@ trava o número**.
 - 3,1 a 7,7 mm² entre os dias 7 e 13;
 - ρ = −0,88.
 
+![Figura 2](FIGURA_2_CURVA.png)
+
 **O efeito da correção do operador.** Das 56 imagens corrigidas, 24 saíram
 praticamente iguais à execução 3 (Dice ≥ 0,95 entre as duas máscaras). A
 previsão de que mais da metade sairia igual falhou.
@@ -465,8 +467,20 @@ O repositório público reúne:
   traçados dos dois leitores);
 - 60 adendos com hash.
 
-[link do repositório e DOI do Zenodo a inserir]. As imagens originais estão no
-Dryad (doi:10.25338/B84W8Q).
+- **Repositório:** https://github.com/fabiohumaniza-cyber/deolhonapele (ramo
+  `emenda2-camundongo`, pasta `camundongo/emenda5`). DOI do Zenodo a inserir na
+  submissão.
+- **Imagens originais:** Dryad (doi:10.25338/B84W8Q).
+- **Desafio aberto:** as 30 imagens da Figura 1 podem ser tentadas por
+  qualquer pessoa em https://fabiohumaniza-cyber.github.io/deolhonapele/desafio_borda.html.
+  O participante:
+  - se identifica (nome, profissão, instituição e e-mail);
+  - declara responder sozinho e sem ter visto as imagens;
+  - em cada imagem, tenta traçar a borda e responde se consegue traçá-la com
+    certeza.
+
+  Nada é enviado automaticamente. As respostas recebidas por e-mail e
+  confirmadas com o participante serão relatadas em adendo público.
 
 ## AGRADECIMENTOS
 
