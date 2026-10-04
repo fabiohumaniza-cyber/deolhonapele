@@ -25,6 +25,9 @@ button.nao{border-color:var(--no);color:var(--no);font-weight:600}
 table{width:100%;border-collapse:collapse;font-size:.92rem}td{padding:6px 4px;border-top:1px solid var(--line);vertical-align:top}
 .hide{display:none}
 a{color:var(--acc)}
+label{display:block;margin:8px 0;font-size:.95rem}
+input:not([type=checkbox]){width:100%;font:inherit;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);margin-top:3px}
+.chk{display:flex;gap:8px;align-items:flex-start}.chk input{margin-top:5px}
 </style>
 </head>
 <body>
@@ -40,6 +43,17 @@ a{color:var(--acc)}
   Depois de responder, aparece o que os três disseram.</p>
   <p class="mut">Nada é enviado pela internet. No fim, você pode baixar suas
   respostas e mandá-las ao autor, se quiser: fabiohumaniza@gmail.com.</p>
+  <div class="card">
+    <b>Quem está respondendo</b>
+    <p class="mut" style="margin:.3em 0 .8em">Para que uma resposta possa ser relatada no estudo, ela precisa ter autor. Os dados ficam só no arquivo que você baixa no fim.</p>
+    <label>Nome completo*<br><input id="fNome" autocomplete="name"></label>
+    <label>Profissão*<br><input id="fProf" placeholder="ex.: enfermeira, médico, estudante"></label>
+    <label>Registro profissional (opcional)<br><input id="fReg" placeholder="ex.: COREN-SP 000000"></label>
+    <label>Instituição ou cidade*<br><input id="fInst"></label>
+    <label>E-mail (opcional)<br><input id="fMail" type="email" autocomplete="email"></label>
+    <label class="chk"><input type="checkbox" id="fDecl"> Declaro que respondo sozinho(a), sem ajuda, e que não vi estas fotos nem os traçados dos observadores antes.</label>
+    <p id="falta" class="mut" style="color:var(--no)"></p>
+  </div>
   <div class="row"><button class="pri" id="bComeca">Começar</button></div>
   <p class="mut" style="margin-top:18px">Artigo: “Nem toda ferida fotografada pode ser medida” (rascunho, 2026).
   Preprint relacionado: <a href="https://doi.org/10.5281/zenodo.23062849">doi:10.5281/zenodo.23062849</a>.</p>
@@ -96,15 +110,24 @@ function responde(s) {
 $('bSim').onclick = function () { responde(true); };
 $('bNao').onclick = function () { responde(false); };
 $('bProx').onclick = function () { i++; if (i < D.length) mostra(); else fim(); };
-$('bComeca').onclick = function () { $('ini').classList.add('hide'); $('foto').classList.remove('hide'); mostra(); };
+var P = null;
+$('bComeca').onclick = function () {
+  var v = function (id) { return $(id).value.trim(); }, f = [];
+  if (v('fNome').split(/\s+/).length < 2) f.push('nome completo');
+  if (!v('fProf')) f.push('profissão');
+  if (!v('fInst')) f.push('instituição ou cidade');
+  if (!$('fDecl').checked) f.push('a declaração');
+  if (f.length) { $('falta').textContent = 'Falta: ' + f.join(', ') + '.'; return; }
+  P = { nome: v('fNome'), profissao: v('fProf'), registro: v('fReg'), instituicao_cidade: v('fInst'), email: v('fMail'), declarou_sozinho_e_sem_ver: true, inicio: new Date().toISOString() };
+  $('ini').classList.add('hide'); $('foto').classList.remove('hide'); mostra(); };
 function fim() {
   $('foto').classList.add('hide'); $('fim').classList.remove('hide');
   var s = R.filter(function (r) { return r.consegue_tracar; }).length;
   $('res').textContent = 'Você disse que consegue traçar com certeza ' + s + ' de ' + D.length + ' fotos. Os três observadores do estudo não viram a borda em nenhuma delas.';
 }
 $('bBaixa').onclick = function () {
-  var b = new Blob([JSON.stringify({ desafio: 'borda_camundongo_30', versao: 1, respostas: R }, null, 1)], { type: 'application/json' });
-  var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'desafio_borda_respostas.json'; a.click();
+  var b = new Blob([JSON.stringify({ desafio: 'borda_camundongo_30', versao: 2, participante: P, fim: new Date().toISOString(), navegador: navigator.userAgent, respostas: R }, null, 1)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'desafio_borda_' + (P ? P.nome.split(' ')[0] : 'respostas') + '.json'; a.click();
 };
 $('bDeNovo').onclick = function () { i = 0; R = []; $('fim').classList.add('hide'); $('ini').classList.remove('hide'); };
 addEventListener('resize', tam);
