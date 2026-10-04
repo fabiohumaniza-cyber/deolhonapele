@@ -45,12 +45,12 @@ input:not([type=checkbox]){width:100%;font:inherit;padding:10px;border-radius:8p
   respostas e mandá-las ao autor, se quiser: fabiohumaniza@gmail.com.</p>
   <div class="card">
     <b>Quem está respondendo</b>
-    <p class="mut" style="margin:.3em 0 .8em">Para que uma resposta possa ser relatada no estudo, ela precisa ter autor. Os dados ficam só no arquivo que você baixa no fim.</p>
+    <p class="mut" style="margin:.3em 0 .8em">Para que uma resposta possa ser relatada no estudo, ela precisa ter autor. Os dados ficam só no arquivo que você baixa no fim. Se você mandar o arquivo, o autor confirma sua participação por esse e-mail antes de relatar a resposta.</p>
     <label>Nome completo*<br><input id="fNome" autocomplete="name"></label>
     <label>Profissão*<br><input id="fProf" placeholder="ex.: enfermeira, médico, estudante"></label>
     <label>Registro profissional (opcional)<br><input id="fReg" placeholder="ex.: COREN-SP 000000"></label>
     <label>Instituição ou cidade*<br><input id="fInst"></label>
-    <label>E-mail (opcional)<br><input id="fMail" type="email" autocomplete="email"></label>
+    <label>E-mail*<br><input id="fMail" type="email" autocomplete="email"></label>
     <label class="chk"><input type="checkbox" id="fDecl"> Declaro que respondo sozinho(a), sem ajuda, e que não vi estas fotos nem os traçados dos observadores antes.</label>
     <p id="falta" class="mut" style="color:var(--no)"></p>
   </div>
@@ -116,6 +116,7 @@ $('bComeca').onclick = function () {
   if (v('fNome').split(/\s+/).length < 2) f.push('nome completo');
   if (!v('fProf')) f.push('profissão');
   if (!v('fInst')) f.push('instituição ou cidade');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('fMail'))) f.push('e-mail válido');
   if (!$('fDecl').checked) f.push('a declaração');
   if (f.length) { $('falta').textContent = 'Falta: ' + f.join(', ') + '.'; return; }
   P = { nome: v('fNome'), profissao: v('fProf'), registro: v('fReg'), instituicao_cidade: v('fInst'), email: v('fMail'), declarou_sozinho_e_sem_ver: true, inicio: new Date().toISOString() };
