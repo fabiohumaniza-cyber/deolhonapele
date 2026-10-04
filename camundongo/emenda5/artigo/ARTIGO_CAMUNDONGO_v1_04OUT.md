@@ -457,7 +457,7 @@ Dryad (doi:10.25338/B84W8Q).
 ## AGRADECIMENTOS
 
 Aos autores do banco público de feridas de camundongo (Yang, Bagood, Carrión,
-Isseroff e colaboradores), por disponibilizá-lo. Aos dois leitores, Emílio [sobrenome a inserir] e Helga Emanuele Resquioto
+Isseroff e colaboradores), por disponibilizá-lo. Aos dois leitores, Emílio da Camara Oliveira Ferreira e Helga Emanuele Resquioto
 (enfermeira, COREN-SP 115508), que traçaram as 201 imagens.
 
 **Compensação.** A segunda leitora recebeu compensação fixa pelo tempo,
