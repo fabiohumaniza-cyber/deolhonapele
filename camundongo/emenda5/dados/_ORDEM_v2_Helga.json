@@ -1,0 +1,1818 @@
+{
+ "tracador": "Helga",
+ "semente": 20261004,
+ "regra": "Random(semente + soma dos codigos das letras do nome)",
+ "declaracao_html_sha256": "43e0b7ab3e773d05629b7299a6d3e3adc1c0246f1ab8651222ed274deadb08a9",
+ "coordenadas": "fracao 0..1 do lado vl; ponto no quadro de 700 = (vx0 + x*vl, vy0 + y*vl)",
+ "ordem": [
+  {
+   "id": "C001",
+   "nome": "Day 9_A8-3-L",
+   "arquivo": "Day 9_A8-3-L.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "2f1da0a75f999827db9a74188c4596f34c8b71a1ff3fc2b07600c608f72aaff5"
+  },
+  {
+   "id": "C002",
+   "nome": "Day 13_A8-1-R",
+   "arquivo": "Day 13_A8-1-R.tiff",
+   "vx0": 162,
+   "vy0": 174,
+   "vl": 370,
+   "sha256_imagem": "75f989b4e883a0370ef036b38023eda46256060171be8b228edcbb50b1badcb6"
+  },
+  {
+   "id": "C003",
+   "nome": "Day 5_A8-5-L",
+   "arquivo": "Day 5_A8-5-L.tiff",
+   "vx0": 157,
+   "vy0": 157,
+   "vl": 386,
+   "sha256_imagem": "a13990520994a08fbfff61934024cc06e42bbba253135ca95be5e1ae8ee5c3fb"
+  },
+  {
+   "id": "C004",
+   "nome": "Day 3_A8-4-L",
+   "arquivo": "Day 3_A8-4-L.tiff",
+   "vx0": 166,
+   "vy0": 166,
+   "vl": 366,
+   "sha256_imagem": "cd181fdb5c8345e5414e5be2ab03de69bf49e8ddaeab84996a308f638b8fa334"
+  },
+  {
+   "id": "C005",
+   "nome": "Day 0_A8-4-R",
+   "arquivo": "Day 0_A8-4-R.tiff",
+   "vx0": 166,
+   "vy0": 172,
+   "vl": 392,
+   "sha256_imagem": "fc4b2804f5d4f8ae1e404a7fa2072c6eb38d8a7cac4a7b7aedbfcaceafc865fa"
+  },
+  {
+   "id": "C006",
+   "nome": "Day 2_A8-5-L",
+   "arquivo": "Day 2_A8-5-L.tiff",
+   "vx0": 172,
+   "vy0": 140,
+   "vl": 379,
+   "sha256_imagem": "146ca1bbc1067f1da8a38b24278246615eeac656e0d5bda5ba55775dcfac926d"
+  },
+  {
+   "id": "C007",
+   "nome": "Day 6_Y8-3-L",
+   "arquivo": "Day 6_Y8-3-L.tiff",
+   "vx0": 163,
+   "vy0": 163,
+   "vl": 373,
+   "sha256_imagem": "a261ed5764dc08e3a1410cf6944aae61fead2f891a4feec246aaef337f961eab"
+  },
+  {
+   "id": "C008",
+   "nome": "Day 2_A8-3-R",
+   "arquivo": "Day 2_A8-3-R.tiff",
+   "vx0": 185,
+   "vy0": 175,
+   "vl": 354,
+   "sha256_imagem": "ce303669c87fdd77ef4640a5c6364d44988987e5d85688b71e85175bc333f65d"
+  },
+  {
+   "id": "C009",
+   "nome": "Day 5_Y8-1-L",
+   "arquivo": "Day 5_Y8-1-L.tiff",
+   "vx0": 165,
+   "vy0": 166,
+   "vl": 357,
+   "sha256_imagem": "edd4300cd8048616d95745c17d29150786be35dde5d5161bed51474ebc9053ab"
+  },
+  {
+   "id": "C010",
+   "nome": "Day 2_Y8-1-L",
+   "arquivo": "Day 2_Y8-1-L.tiff",
+   "vx0": 187,
+   "vy0": 156,
+   "vl": 360,
+   "sha256_imagem": "b9e64e76a3057d0d863ef4236afa8864340d6702cf399d0aaadaa7d936adf894"
+  },
+  {
+   "id": "C011",
+   "nome": "Day 7_Y8-3-L",
+   "arquivo": "Day 7_Y8-3-L.tiff",
+   "vx0": 134,
+   "vy0": 152,
+   "vl": 392,
+   "sha256_imagem": "2100569c31a4addd6f3d42834aab90c20fee1cf9adb10e7ece2cabb59e8a4618"
+  },
+  {
+   "id": "C012",
+   "nome": "Day 1_A8-5-R",
+   "arquivo": "Day 1_A8-5-R.tiff",
+   "vx0": 162,
+   "vy0": 151,
+   "vl": 376,
+   "sha256_imagem": "bca0fa5f7664f2007d384046c30b4b3e758c9286badcb048f10e4eb80812279b"
+  },
+  {
+   "id": "C013",
+   "nome": "Day 11_A8-5-L",
+   "arquivo": "Day 11_A8-5-L.tiff",
+   "vx0": 128,
+   "vy0": 122,
+   "vl": 392,
+   "sha256_imagem": "0ab9fb6c7d3b9b2931629cd250fd16318b7a3d21cae06fdbc3ef2262ad711bc4"
+  },
+  {
+   "id": "C014",
+   "nome": "Day 2_A8-4-L",
+   "arquivo": "Day 2_A8-4-L.tiff",
+   "vx0": 167,
+   "vy0": 149,
+   "vl": 373,
+   "sha256_imagem": "b0879e448b117a683b3030f25763e32f6e2b6d107ac3132d45098db95d909cd4"
+  },
+  {
+   "id": "C015",
+   "nome": "Day 4_A8-3-L",
+   "arquivo": "Day 4_A8-3-L.tiff",
+   "vx0": 145,
+   "vy0": 192,
+   "vl": 357,
+   "sha256_imagem": "1e88451490cec38ab670e97142c6dede063c51762ce4194db8f0559a02ba6d86"
+  },
+  {
+   "id": "C016",
+   "nome": "Day 14_A8-1-R",
+   "arquivo": "Day 14_A8-1-R.tiff",
+   "vx0": 160,
+   "vy0": 168,
+   "vl": 370,
+   "sha256_imagem": "2c59818dfe8b12f0eb0af6a2d0f87c87aaf57bac2439b7238dbb3ac8598c30c1"
+  },
+  {
+   "id": "C017",
+   "nome": "Day 12_A8-4-L",
+   "arquivo": "Day 12_A8-4-L.tiff",
+   "vx0": 176,
+   "vy0": 160,
+   "vl": 392,
+   "sha256_imagem": "65a270e9970552f592c76f893e2f574d7e12f673a58eb2f4c2d88d0eb17a3826"
+  },
+  {
+   "id": "C018",
+   "nome": "Day 9_A8-1-L",
+   "arquivo": "Day 9_A8-1-L.tiff",
+   "vx0": 168,
+   "vy0": 182,
+   "vl": 370,
+   "sha256_imagem": "8a6551e988b0ed4c888df3b4f71110a1103741c4c52eea4055679eb627eada7c"
+  },
+  {
+   "id": "C019",
+   "nome": "Day 15_A8-3-R",
+   "arquivo": "Day 15_A8-3-R.tiff",
+   "vx0": 173,
+   "vy0": 154,
+   "vl": 366,
+   "sha256_imagem": "608dbfe74ee9b573b2877035276e98aa7329a559d89c3e0e95dffee70ccde3c9"
+  },
+  {
+   "id": "C020",
+   "nome": "Day 6_Y8-1-R",
+   "arquivo": "Day 6_Y8-1-R.tiff",
+   "vx0": 172,
+   "vy0": 157,
+   "vl": 357,
+   "sha256_imagem": "fe5509fb955c11f4db857298782098f5e898d7c4cfe9a42c30cf5c1003b9c24f"
+  },
+  {
+   "id": "C021",
+   "nome": "Day 11_A8-1-L",
+   "arquivo": "Day 11_A8-1-L.tiff",
+   "vx0": 161,
+   "vy0": 150,
+   "vl": 392,
+   "sha256_imagem": "455775a9485fb3f94a24835a11c936af429a27e7cecb4c79fc33feab90f8bbbe"
+  },
+  {
+   "id": "C022",
+   "nome": "Day 3_A8-5-L",
+   "arquivo": "Day 3_A8-5-L.tiff",
+   "vx0": 157,
+   "vy0": 133,
+   "vl": 392,
+   "sha256_imagem": "4d44934e7700878eee33c25645547f70deb55aad1fcb4c3834769d621b3c814b"
+  },
+  {
+   "id": "C023",
+   "nome": "Day 10_A8-4-R",
+   "arquivo": "Day 10_A8-4-R.tiff",
+   "vx0": 160,
+   "vy0": 160,
+   "vl": 392,
+   "sha256_imagem": "0eec88ce266b0c7c54c1a8c5ce90b3c500415f5800e1b26355c81e880261f6e8"
+  },
+  {
+   "id": "C024",
+   "nome": "Day 13_A8-4-R",
+   "arquivo": "Day 13_A8-4-R.tiff",
+   "vx0": 166,
+   "vy0": 166,
+   "vl": 366,
+   "sha256_imagem": "935595edfec59477cfdf8d1cba762a8173a2f9a8ba67911d6c7796ec5dffb6e3"
+  },
+  {
+   "id": "C025",
+   "nome": "Day 0_Y8-3-L",
+   "arquivo": "Day 0_Y8-3-L.tiff",
+   "vx0": 145,
+   "vy0": 179,
+   "vl": 392,
+   "sha256_imagem": "4e6869c09cfbd046563e602066ce52b9496fcacfbc33daf26d4b40bf35ec1587"
+  },
+  {
+   "id": "C026",
+   "nome": "Day 8_A8-3-L",
+   "arquivo": "Day 8_A8-3-L.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "97364e5cbccc8bfc5b95bca6694f605d3606ca953d51ef8515d7fd90432b431b"
+  },
+  {
+   "id": "C027",
+   "nome": "Day 4_A8-5-R",
+   "arquivo": "Day 4_A8-5-R.tiff",
+   "vx0": 173,
+   "vy0": 156,
+   "vl": 392,
+   "sha256_imagem": "4098a0bdc7f085f441c3b9304be28f9eb84459f51371850e49ccc783d98e59fc"
+  },
+  {
+   "id": "C028",
+   "nome": "Day 8_Y8-1-L",
+   "arquivo": "Day 8_Y8-1-L.tiff",
+   "vx0": 187,
+   "vy0": 187,
+   "vl": 325,
+   "sha256_imagem": "cfae0d26c24105647ccbe40e34de13278699831511990b0f7c636db6d1f1bb85"
+  },
+  {
+   "id": "C029",
+   "nome": "Day 12_A8-5-L",
+   "arquivo": "Day 12_A8-5-L.tiff",
+   "vx0": 138,
+   "vy0": 135,
+   "vl": 392,
+   "sha256_imagem": "219236b21e0e8e7c765746d6396ade67e43fc5ff6b974e6b39b7f957037d0d57"
+  },
+  {
+   "id": "C030",
+   "nome": "Day 7_Y8-1-L",
+   "arquivo": "Day 7_Y8-1-L.tiff",
+   "vx0": 181,
+   "vy0": 142,
+   "vl": 354,
+   "sha256_imagem": "80e0a0cda0704616f7a3d6761569e6797c28caa06f1538021519b5c53b02a46e"
+  },
+  {
+   "id": "C031",
+   "nome": "Day 6_Y8-4-R",
+   "arquivo": "Day 6_Y8-4-R.tiff",
+   "vx0": 190,
+   "vy0": 165,
+   "vl": 341,
+   "sha256_imagem": "b880f33ca0cc60f9c5e1d5b4bf0d9b4e69a77185e926b01313c7f5005818d3b4"
+  },
+  {
+   "id": "C032",
+   "nome": "Day 0_A8-4-L",
+   "arquivo": "Day 0_A8-4-L.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "5cccb4c39dde71d76470f01432b9a802dc06424e7351e5d40b3153caf1958941"
+  },
+  {
+   "id": "C033",
+   "nome": "Day 7_Y8-4-L",
+   "arquivo": "Day 7_Y8-4-L.tiff",
+   "vx0": 166,
+   "vy0": 166,
+   "vl": 366,
+   "sha256_imagem": "db5b885d11b445cc784329aaaab4de10fdfb7e2fe18c486b43dea82de7a43b34"
+  },
+  {
+   "id": "C034",
+   "nome": "Day 6_Y8-3-R",
+   "arquivo": "Day 6_Y8-3-R.tiff",
+   "vx0": 170,
+   "vy0": 164,
+   "vl": 370,
+   "sha256_imagem": "f1d927b46bcbdcfeac7643f1d818fd5a465c2d4f278cdbf33a1630ec2c03abce"
+  },
+  {
+   "id": "C035",
+   "nome": "Day 10_A8-5-R",
+   "arquivo": "Day 10_A8-5-R.tiff",
+   "vx0": 139,
+   "vy0": 182,
+   "vl": 392,
+   "sha256_imagem": "72cf29cc23c78a213947f716ad5df150c4d07041682a5cddae3f8dacf22e30c1"
+  },
+  {
+   "id": "C036",
+   "nome": "Day 6_A8-5-L",
+   "arquivo": "Day 6_A8-5-L.tiff",
+   "vx0": 168,
+   "vy0": 168,
+   "vl": 363,
+   "sha256_imagem": "ffb5b2fb5e16ffd8a7b5987f13bf0909b499ef3d5be9b0d5e8001af3a64ed4cb"
+  },
+  {
+   "id": "C037",
+   "nome": "Day 7_Y8-3-R",
+   "arquivo": "Day 7_Y8-3-R.tiff",
+   "vx0": 161,
+   "vy0": 172,
+   "vl": 373,
+   "sha256_imagem": "a2b0f46294cf13fb8092c729bbab90cf65b85403aac2f7e43e6fbc51cf78860a"
+  },
+  {
+   "id": "C038",
+   "nome": "Day 8_A8-1-R",
+   "arquivo": "Day 8_A8-1-R.tiff",
+   "vx0": 166,
+   "vy0": 166,
+   "vl": 366,
+   "sha256_imagem": "62995eb20e3f166fc31cbc1efe580ff0fb45d3019cac5bd25ad4e498bde8b435"
+  },
+  {
+   "id": "C039",
+   "nome": "Day 14_Y8-2-L",
+   "arquivo": "Day 14_Y8-2-L.tiff",
+   "vx0": 171,
+   "vy0": 171,
+   "vl": 357,
+   "sha256_imagem": "2fa06cd47002a4a7d7d93226b1bcc9642f5dd761bd903e9ea1cca3f6398cda2d"
+  },
+  {
+   "id": "C040",
+   "nome": "Day 1_A8-1-L",
+   "arquivo": "Day 1_A8-1-L.tiff",
+   "vx0": 191,
+   "vy0": 211,
+   "vl": 338,
+   "sha256_imagem": "aeddf7a962a92b3082878962aed75fefb78c0a1fa3180c5c44b923a208364664"
+  },
+  {
+   "id": "C041",
+   "nome": "Day 11_A8-4-L",
+   "arquivo": "Day 11_A8-4-L.tiff",
+   "vx0": 160,
+   "vy0": 157,
+   "vl": 392,
+   "sha256_imagem": "9ffebbd16a3755c0ea805fcd60a25368f5d9cc3b5a4f6ad8f5ab15d3a5948c67"
+  },
+  {
+   "id": "C042",
+   "nome": "Day 9_A8-1-R",
+   "arquivo": "Day 9_A8-1-R.tiff",
+   "vx0": 174,
+   "vy0": 169,
+   "vl": 373,
+   "sha256_imagem": "4e90f041ce295f27842b796ad7a0a05e0b97dc3c499c1e4c438b69b7758fea6b"
+  },
+  {
+   "id": "C043",
+   "nome": "Day 3_Y8-4-R",
+   "arquivo": "Day 3_Y8-4-R.tiff",
+   "vx0": 179,
+   "vy0": 158,
+   "vl": 360,
+   "sha256_imagem": "d25474ac6c5ac8d3901173efffab792d1583c3c23255733b206f0064e011a431"
+  },
+  {
+   "id": "C044",
+   "nome": "Day 13_A8-5-L",
+   "arquivo": "Day 13_A8-5-L.tiff",
+   "vx0": 175,
+   "vy0": 178,
+   "vl": 354,
+   "sha256_imagem": "0b6d0fa7e5f278c4d5e050dd7a493f474bdc97064e0d3dcedf1112ff6f21cbb2"
+  },
+  {
+   "id": "C045",
+   "nome": "Day 10_A8-4-L",
+   "arquivo": "Day 10_A8-4-L.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "ba87ffe0226e849d2c6ed7d0c8300d36399b941c9682e98e6be0f2a652d27816"
+  },
+  {
+   "id": "C046",
+   "nome": "Day 5_Y8-3-R",
+   "arquivo": "Day 5_Y8-3-R.tiff",
+   "vx0": 171,
+   "vy0": 171,
+   "vl": 357,
+   "sha256_imagem": "9912f7cbba849127526b3b676ef7733293225d0f2b8de0e4d7e35c161d494042"
+  },
+  {
+   "id": "C047",
+   "nome": "Day 9_A8-5-L",
+   "arquivo": "Day 9_A8-5-L.tiff",
+   "vx0": 144,
+   "vy0": 142,
+   "vl": 392,
+   "sha256_imagem": "8cae156de3f5ce2128456df00c7d88d45f0328e787c530a0ed30b3a1343784f5"
+  },
+  {
+   "id": "C048",
+   "nome": "Day 7_A8-4-L",
+   "arquivo": "Day 7_A8-4-L.tiff",
+   "vx0": 160,
+   "vy0": 160,
+   "vl": 379,
+   "sha256_imagem": "62738252de55497e04ef95dae47ebc7e2afbbcce5ba66b13557958468d321651"
+  },
+  {
+   "id": "C049",
+   "nome": "Day 6_Y8-1-L",
+   "arquivo": "Day 6_Y8-1-L.tiff",
+   "vx0": 165,
+   "vy0": 190,
+   "vl": 350,
+   "sha256_imagem": "3004ea9823799d7f75910367372bdbce93539805a48af6fa0441986808bcfd47"
+  },
+  {
+   "id": "C050",
+   "nome": "Day 1_A8-3-R",
+   "arquivo": "Day 1_A8-3-R.tiff",
+   "vx0": 190,
+   "vy0": 184,
+   "vl": 331,
+   "sha256_imagem": "498d4ca105a5c1ad5ea124b9abf716a844ed35a3c3d49e2337d9d28082c873bd"
+  },
+  {
+   "id": "C051",
+   "nome": "Day 12_Y8-2-L",
+   "arquivo": "Day 12_Y8-2-L.tiff",
+   "vx0": 167,
+   "vy0": 173,
+   "vl": 363,
+   "sha256_imagem": "6c9c7d58b5d38d1da658dc4199ab64291a14f667241f58a778987aa0db8dcbef"
+  },
+  {
+   "id": "C052",
+   "nome": "Day 3_Y8-4-L",
+   "arquivo": "Day 3_Y8-4-L.tiff",
+   "vx0": 161,
+   "vy0": 174,
+   "vl": 370,
+   "sha256_imagem": "cb8a42ee43bfea5f5fc5b773d2818716555d08228897716f4be38c0346189a7f"
+  },
+  {
+   "id": "C053",
+   "nome": "Day 5_Y8-1-R",
+   "arquivo": "Day 5_Y8-1-R.tiff",
+   "vx0": 173,
+   "vy0": 173,
+   "vl": 354,
+   "sha256_imagem": "0f14ebd2b3ba4f5678ff0dc44a6ebd5059522e5b8298da55b4b3bd0fd657cc16"
+  },
+  {
+   "id": "C054",
+   "nome": "Day 10_Y8-4-L",
+   "arquivo": "Day 10_Y8-4-L.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "613f79988800e0c94a7726b44960014d92de8ddb6dd68a8968b141bfc1fa3aef"
+  },
+  {
+   "id": "C055",
+   "nome": "Day 14_Y8-2-R",
+   "arquivo": "Day 14_Y8-2-R.tiff",
+   "vx0": 144,
+   "vy0": 157,
+   "vl": 392,
+   "sha256_imagem": "11492f80ca363d3705bd8b5bb828ed60eb6e2e089917af3a14a83fa8d2baeb51"
+  },
+  {
+   "id": "C056",
+   "nome": "Day 7_A8-5-R",
+   "arquivo": "Day 7_A8-5-R.tiff",
+   "vx0": 161,
+   "vy0": 157,
+   "vl": 373,
+   "sha256_imagem": "93f04b3753b40a7ad495d326367feae9ccc9a6d1a61e1f57eef178325dc6bcdb"
+  },
+  {
+   "id": "C057",
+   "nome": "Day 3_Y8-2-R",
+   "arquivo": "Day 3_Y8-2-R.tiff",
+   "vx0": 167,
+   "vy0": 184,
+   "vl": 392,
+   "sha256_imagem": "2a149edf13cf3348dbd93264e189a7d4448ddd82db6d973eb9437359d292cb74"
+  },
+  {
+   "id": "C058",
+   "nome": "Day 2_Y8-3-R",
+   "arquivo": "Day 2_Y8-3-R.tiff",
+   "vx0": 168,
+   "vy0": 168,
+   "vl": 376,
+   "sha256_imagem": "ca39f39cecfeba7cea4a6f58e26c8859a0de08e9f21e25b97d3a88c7f391c6cb"
+  },
+  {
+   "id": "C059",
+   "nome": "Day 13_A8-3-R",
+   "arquivo": "Day 13_A8-3-R.tiff",
+   "vx0": 188,
+   "vy0": 181,
+   "vl": 347,
+   "sha256_imagem": "07ce3b2038adea88e8ed4d9d39c9ad21eb22f91f23e584450a61bdc032ddc75b"
+  },
+  {
+   "id": "C060",
+   "nome": "Day 1_Y8-1-R",
+   "arquivo": "Day 1_Y8-1-R.tiff",
+   "vx0": 157,
+   "vy0": 180,
+   "vl": 366,
+   "sha256_imagem": "4f98ac7e0495b76337476b0c9a7756031c2c6b3786465f7c2c80105aeba29df3"
+  },
+  {
+   "id": "C061",
+   "nome": "Day 10_A8-1-L",
+   "arquivo": "Day 10_A8-1-L.tiff",
+   "vx0": 152,
+   "vy0": 140,
+   "vl": 392,
+   "sha256_imagem": "d80014f7045aa923259cc677d5fe3767dfb5307756160105a567bdbf9c92235c"
+  },
+  {
+   "id": "C062",
+   "nome": "Day 11_Y8-2-R",
+   "arquivo": "Day 11_Y8-2-R.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "86970f2a21c9c57977b21024a996531c34a03fccc72984cccc7e12b3cd804ee4"
+  },
+  {
+   "id": "C063",
+   "nome": "Day 0_Y8-2-L",
+   "arquivo": "Day 0_Y8-2-L.tiff",
+   "vx0": 149,
+   "vy0": 166,
+   "vl": 392,
+   "sha256_imagem": "9d10976b7f28990019bcfb8a2c4db28da0fd2e85d2b623d0613f7883d0f8abca"
+  },
+  {
+   "id": "C064",
+   "nome": "Day 6_A8-3-L",
+   "arquivo": "Day 6_A8-3-L.tiff",
+   "vx0": 168,
+   "vy0": 180,
+   "vl": 363,
+   "sha256_imagem": "e0beb458df1d0ab18f01ed438f656dcb5aa899aae78013fc6e71ff2d953ef6f5"
+  },
+  {
+   "id": "C065",
+   "nome": "Day 14_A8-3-R",
+   "arquivo": "Day 14_A8-3-R.tiff",
+   "vx0": 146,
+   "vy0": 153,
+   "vl": 392,
+   "sha256_imagem": "8cd4c68655115b942a3110b935c4d8f49e7acb04f932529d75c5d77df5cbcba4"
+  },
+  {
+   "id": "C066",
+   "nome": "Day 6_Y8-4-L",
+   "arquivo": "Day 6_Y8-4-L.tiff",
+   "vx0": 176,
+   "vy0": 176,
+   "vl": 347,
+   "sha256_imagem": "2c21a55e8266d02bb954a974e0b601cc419fac3efbb118b3685546584e7890bb"
+  },
+  {
+   "id": "C067",
+   "nome": "Day 7_A8-1-R",
+   "arquivo": "Day 7_A8-1-R.tiff",
+   "vx0": 193,
+   "vy0": 174,
+   "vl": 354,
+   "sha256_imagem": "efdee28a21a60eec623d9980a9975ffb6a8031a4229890c19b9382950f97c316"
+  },
+  {
+   "id": "C068",
+   "nome": "Day 7_Y8-2-R",
+   "arquivo": "Day 7_Y8-2-R.tiff",
+   "vx0": 153,
+   "vy0": 160,
+   "vl": 376,
+   "sha256_imagem": "bf23b819adc454875f0e2214f726d5845f8a534ad1a3d4836f93a76c6c81cfb0"
+  },
+  {
+   "id": "C069",
+   "nome": "Day 1_Y8-4-R",
+   "arquivo": "Day 1_Y8-4-R.tiff",
+   "vx0": 171,
+   "vy0": 156,
+   "vl": 357,
+   "sha256_imagem": "4c86b042f9e76393d5c5d29998592dc4f1d49a19cfff02bc3bdbf073a128cc0f"
+  },
+  {
+   "id": "C070",
+   "nome": "Day 11_A8-3-R",
+   "arquivo": "Day 11_A8-3-R.tiff",
+   "vx0": 155,
+   "vy0": 156,
+   "vl": 392,
+   "sha256_imagem": "a0b3a793536e23636ac818caf85e95ac0f489345d11b6d33647fab336743e756"
+  },
+  {
+   "id": "C071",
+   "nome": "Day 0_A8-5-L",
+   "arquivo": "Day 0_A8-5-L.tiff",
+   "vx0": 146,
+   "vy0": 162,
+   "vl": 392,
+   "sha256_imagem": "876ebb88f85b7b2f035fcc8fb997cd3daaf47f362530232edf6fe39174cc4cad"
+  },
+  {
+   "id": "C072",
+   "nome": "Day 4_Y8-4-R",
+   "arquivo": "Day 4_Y8-4-R.tiff",
+   "vx0": 186,
+   "vy0": 177,
+   "vl": 363,
+   "sha256_imagem": "b1bce389a5ae5531ba84f1e8f6b8b5c65bfb896bff1b2ea2dca4aa43df6ce7a0"
+  },
+  {
+   "id": "C073",
+   "nome": "Day 2_Y8-2-L",
+   "arquivo": "Day 2_Y8-2-L.tiff",
+   "vx0": 177,
+   "vy0": 157,
+   "vl": 366,
+   "sha256_imagem": "32cf258de130343f5b3e13dd769b98857b4066ba08989ba11333641faa155f3c"
+  },
+  {
+   "id": "C074",
+   "nome": "Day 8_Y8-3-L",
+   "arquivo": "Day 8_Y8-3-L.tiff",
+   "vx0": 146,
+   "vy0": 138,
+   "vl": 392,
+   "sha256_imagem": "edc9f7ee4ef1bccc7f793955a7ca760d4b0bca0cd6707a56b68282b5fad7d15b"
+  },
+  {
+   "id": "C075",
+   "nome": "Day 2_A8-5-R",
+   "arquivo": "Day 2_A8-5-R.tiff",
+   "vx0": 169,
+   "vy0": 161,
+   "vl": 373,
+   "sha256_imagem": "4eca75bd8854661a6a4478eca9defe6460bae861df61e479066b75bffb8fb20c"
+  },
+  {
+   "id": "C076",
+   "nome": "Day 15_A8-1-R",
+   "arquivo": "Day 15_A8-1-R.tiff",
+   "vx0": 156,
+   "vy0": 158,
+   "vl": 382,
+   "sha256_imagem": "ce24d899603f6fe2ff4471fcce9fc2fd71eec36138a5942f63d1c83cd1aabc08"
+  },
+  {
+   "id": "C077",
+   "nome": "Day 4_Y8-1-R",
+   "arquivo": "Day 4_Y8-1-R.tiff",
+   "vx0": 174,
+   "vy0": 165,
+   "vl": 370,
+   "sha256_imagem": "d781a12e66e03a11964df12d72ed8f2badb03543c3769681f7ab8714bf3e373c"
+  },
+  {
+   "id": "C078",
+   "nome": "Day 5_A8-1-R",
+   "arquivo": "Day 5_A8-1-R.tiff",
+   "vx0": 169,
+   "vy0": 188,
+   "vl": 357,
+   "sha256_imagem": "75f4b193064ba4ab4996649720f7b06a83f727c9a31b875a15c799a605b4b3b9"
+  },
+  {
+   "id": "C079",
+   "nome": "Day 13_A8-3-L",
+   "arquivo": "Day 13_A8-3-L.tiff",
+   "vx0": 154,
+   "vy0": 165,
+   "vl": 379,
+   "sha256_imagem": "92e7081cdcd330a6c7973ae03fffaa2b099cfe3b0da740d6793c111ab0bae66f"
+  },
+  {
+   "id": "C080",
+   "nome": "Day 12_A8-1-L",
+   "arquivo": "Day 12_A8-1-L.tiff",
+   "vx0": 217,
+   "vy0": 218,
+   "vl": 309,
+   "sha256_imagem": "fa50d341a548959a4db980bf21e7c0ea68a4161a76e049b35e7c544be6aee8c9"
+  },
+  {
+   "id": "C081",
+   "nome": "Day 1_Y8-3-R",
+   "arquivo": "Day 1_Y8-3-R.tiff",
+   "vx0": 148,
+   "vy0": 173,
+   "vl": 376,
+   "sha256_imagem": "80f4cf675b14f199c436611fb453d25e492acebde3d56c65ffebe823f482cb32"
+  },
+  {
+   "id": "C082",
+   "nome": "Day 6_Y8-2-R",
+   "arquivo": "Day 6_Y8-2-R.tiff",
+   "vx0": 162,
+   "vy0": 175,
+   "vl": 370,
+   "sha256_imagem": "19e427eaf2a7561f61049a1146366fde268343682e49f08b5debc48ed05950f8"
+  },
+  {
+   "id": "C083",
+   "nome": "Day 4_Y8-3-R",
+   "arquivo": "Day 4_Y8-3-R.tiff",
+   "vx0": 155,
+   "vy0": 172,
+   "vl": 357,
+   "sha256_imagem": "c4a6561dcac7ac47ea00f5217dc72357810709479412a6ae4b7910bcfe025b9e"
+  },
+  {
+   "id": "C084",
+   "nome": "Day 6_A8-5-R",
+   "arquivo": "Day 6_A8-5-R.tiff",
+   "vx0": 171,
+   "vy0": 185,
+   "vl": 357,
+   "sha256_imagem": "ee70fecd5ad9c027297f4dd504fe1bec308e4d68cdb8f89bf83902291afc2030"
+  },
+  {
+   "id": "C085",
+   "nome": "Day 4_Y8-4-L",
+   "arquivo": "Day 4_Y8-4-L.tiff",
+   "vx0": 156,
+   "vy0": 162,
+   "vl": 360,
+   "sha256_imagem": "59a20538058c7a2f663cc8272bbf479394787f2de070f20bafcb0bcb0520b5ec"
+  },
+  {
+   "id": "C086",
+   "nome": "Day 5_A8-3-L",
+   "arquivo": "Day 5_A8-3-L.tiff",
+   "vx0": 184,
+   "vy0": 184,
+   "vl": 331,
+   "sha256_imagem": "9144b19030f88d17df6806b5d2ace5dc2f39acf075e696b1a136030a21636baa"
+  },
+  {
+   "id": "C087",
+   "nome": "Day 1_Y8-2-R",
+   "arquivo": "Day 1_Y8-2-R.tiff",
+   "vx0": 158,
+   "vy0": 169,
+   "vl": 373,
+   "sha256_imagem": "f39ec9fad0a2a5a92eede90e8610012e0529548b3557fff7776b423fece8e1d0"
+  },
+  {
+   "id": "C088",
+   "nome": "Day 2_Y8-1-R",
+   "arquivo": "Day 2_Y8-1-R.tiff",
+   "vx0": 183,
+   "vy0": 165,
+   "vl": 370,
+   "sha256_imagem": "a5f00ad14162c3daf2bb1550d862353ec48aa31af11137d7184f2b6eedbbe601"
+  },
+  {
+   "id": "C089",
+   "nome": "Day 10_Y8-2-L",
+   "arquivo": "Day 10_Y8-2-L.tiff",
+   "vx0": 150,
+   "vy0": 138,
+   "vl": 392,
+   "sha256_imagem": "702e2c1f96e509fd1504a165d00bf71f9fd8c94eb62e696e3b80072c93b35559"
+  },
+  {
+   "id": "C090",
+   "nome": "Day 2_Y8-4-R",
+   "arquivo": "Day 2_Y8-4-R.tiff",
+   "vx0": 155,
+   "vy0": 144,
+   "vl": 382,
+   "sha256_imagem": "90980cfe5200795167bcefc58e71d874ed19096560c8b5fc065b02ab4a6e9e79"
+  },
+  {
+   "id": "C091",
+   "nome": "Day 2_A8-1-R",
+   "arquivo": "Day 2_A8-1-R.tiff",
+   "vx0": 203,
+   "vy0": 190,
+   "vl": 347,
+   "sha256_imagem": "caaf34236defa362fbda75bd41afbb6276b7eafca7eb8034cceb21113f06617c"
+  },
+  {
+   "id": "C092",
+   "nome": "Day 9_Y8-3-L",
+   "arquivo": "Day 9_Y8-3-L.tiff",
+   "vx0": 147,
+   "vy0": 130,
+   "vl": 392,
+   "sha256_imagem": "4ee5c36ba4429b8afed36e82bbe41575df4bd58771edc6232fe73f666884b8a9"
+  },
+  {
+   "id": "C093",
+   "nome": "Day 2_Y8-2-R",
+   "arquivo": "Day 2_Y8-2-R.tiff",
+   "vx0": 182,
+   "vy0": 166,
+   "vl": 370,
+   "sha256_imagem": "5723d4af175e0bea1fc18cfb73019ec956ef7bd80bc6afc19549a36e1eddfb41"
+  },
+  {
+   "id": "C094",
+   "nome": "Day 4_Y8-3-L",
+   "arquivo": "Day 4_Y8-3-L.tiff",
+   "vx0": 166,
+   "vy0": 166,
+   "vl": 366,
+   "sha256_imagem": "bf95b73bb94c5c5b4a4a5d1ac9c3274c368b705cbfd7fe922bd03b2c504a8888"
+  },
+  {
+   "id": "C095",
+   "nome": "Day 8_A8-4-L",
+   "arquivo": "Day 8_A8-4-L.tiff",
+   "vx0": 162,
+   "vy0": 162,
+   "vl": 376,
+   "sha256_imagem": "88abac9695c951fd3949f95352a8cc88e7560f44904eb73f0c6dc90e1ac171dc"
+  },
+  {
+   "id": "C096",
+   "nome": "Day 3_A8-1-L",
+   "arquivo": "Day 3_A8-1-L.tiff",
+   "vx0": 161,
+   "vy0": 182,
+   "vl": 392,
+   "sha256_imagem": "b6091a8d0e61ebc13d5a4d76720105ab6908fe918bf4ea740804bb8dc2e31190"
+  },
+  {
+   "id": "C097",
+   "nome": "Day 14_A8-3-L",
+   "arquivo": "Day 14_A8-3-L.tiff",
+   "vx0": 146,
+   "vy0": 173,
+   "vl": 392,
+   "sha256_imagem": "1b325d5b9b98df0cb601864e228895c3f4b6d44a0b46feb9bc440c0b02c51e8e"
+  },
+  {
+   "id": "C098",
+   "nome": "Day 6_A8-1-R",
+   "arquivo": "Day 6_A8-1-R.tiff",
+   "vx0": 162,
+   "vy0": 178,
+   "vl": 376,
+   "sha256_imagem": "da28b46b3616a632f37d3463f51147cc2563fdec117ca56b2a4eea262ed850d7"
+  },
+  {
+   "id": "C099",
+   "nome": "Day 13_A8-4-L",
+   "arquivo": "Day 13_A8-4-L.tiff",
+   "vx0": 178,
+   "vy0": 170,
+   "vl": 357,
+   "sha256_imagem": "03f6d308b82dd5396a6553cd2e90f5cd0aecf5cd171e32cd60c533fc203ed996"
+  },
+  {
+   "id": "C100",
+   "nome": "Day 14_A8-4-R",
+   "arquivo": "Day 14_A8-4-R.tiff",
+   "vx0": 171,
+   "vy0": 166,
+   "vl": 366,
+   "sha256_imagem": "2b0290908d6eff5dd3695250a3830703937d02da21ecaa4c3bc8d8378c2d51c3"
+  },
+  {
+   "id": "C101",
+   "nome": "Day 0_A8-5-R",
+   "arquivo": "Day 0_A8-5-R.tiff",
+   "vx0": 169,
+   "vy0": 166,
+   "vl": 392,
+   "sha256_imagem": "b955e392a9cf9913ad3d387ced5dcbf5f6a96715e2077f88260a94b3bbf0a3e9"
+  },
+  {
+   "id": "C102",
+   "nome": "Day 7_A8-1-L",
+   "arquivo": "Day 7_A8-1-L.tiff",
+   "vx0": 166,
+   "vy0": 193,
+   "vl": 357,
+   "sha256_imagem": "a0edce90a5d2401739646b9dd4dbeb748a5487a09bcee738127f5dcf723da852"
+  },
+  {
+   "id": "C103",
+   "nome": "Day 4_A8-4-R",
+   "arquivo": "Day 4_A8-4-R.tiff",
+   "vx0": 174,
+   "vy0": 160,
+   "vl": 366,
+   "sha256_imagem": "acb26429ce917557d47204d11c4b1a0cbb84419fa3b2d5338dc7c3fe5543ad75"
+  },
+  {
+   "id": "C104",
+   "nome": "Day 0_Y8-1-R",
+   "arquivo": "Day 0_Y8-1-R.tiff",
+   "vx0": 163,
+   "vy0": 144,
+   "vl": 392,
+   "sha256_imagem": "e135588fbaafe1072166eadff81198b1cee03ba4c4ab5c49d54c79cc0b46abea"
+  },
+  {
+   "id": "C105",
+   "nome": "Day 5_Y8-3-L",
+   "arquivo": "Day 5_Y8-3-L.tiff",
+   "vx0": 162,
+   "vy0": 153,
+   "vl": 376,
+   "sha256_imagem": "49b7c5da9e0a08fed25df6c0811d8ae21fcb95acf4c7f28747568b3d106d35bf"
+  },
+  {
+   "id": "C106",
+   "nome": "Day 4_A8-1-R",
+   "arquivo": "Day 4_A8-1-R.tiff",
+   "vx0": 179,
+   "vy0": 187,
+   "vl": 350,
+   "sha256_imagem": "6cfb42988860b8ba808638ec26fcf5251f8c3d38f3ca84a9504594092815bcbe"
+  },
+  {
+   "id": "C107",
+   "nome": "Day 0_Y8-2-R",
+   "arquivo": "Day 0_Y8-2-R.tiff",
+   "vx0": 157,
+   "vy0": 153,
+   "vl": 392,
+   "sha256_imagem": "d47ea2de59dda7aea49714834bb6442590b7bf81431e9e4312ef155f2a544445"
+  },
+  {
+   "id": "C108",
+   "nome": "Day 13_Y8-2-R",
+   "arquivo": "Day 13_Y8-2-R.tiff",
+   "vx0": 159,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "fef6d279cd5083c75f4a4c70c9ed2bcdbc47351c4d70b8a7ef5e3f9188a9ac80"
+  },
+  {
+   "id": "C109",
+   "nome": "Day 5_Y8-2-R",
+   "arquivo": "Day 5_Y8-2-R.tiff",
+   "vx0": 153,
+   "vy0": 164,
+   "vl": 366,
+   "sha256_imagem": "20b31cd9725bcf7a76535fa7b1f0e92e23968920272387ecc647f194e84eb758"
+  },
+  {
+   "id": "C110",
+   "nome": "Day 9_A8-4-R",
+   "arquivo": "Day 9_A8-4-R.tiff",
+   "vx0": 160,
+   "vy0": 160,
+   "vl": 379,
+   "sha256_imagem": "7d1e0a41e71821f635f410038b75d12cdd63443b7e20d8c2213e04e2c312924e"
+  },
+  {
+   "id": "C111",
+   "nome": "Day 8_A8-5-L",
+   "arquivo": "Day 8_A8-5-L.tiff",
+   "vx0": 164,
+   "vy0": 181,
+   "vl": 350,
+   "sha256_imagem": "c0cdb48e01182c527c7100f6fbf10ddb1b97fdd7cd3c691d603acaeeadd487d4"
+  },
+  {
+   "id": "C112",
+   "nome": "Day 1_Y8-4-L",
+   "arquivo": "Day 1_Y8-4-L.tiff",
+   "vx0": 176,
+   "vy0": 158,
+   "vl": 370,
+   "sha256_imagem": "5f5ae7248abc9b54e1d5bb855ff50952781e3b5703de7fb8f100216046d8fa64"
+  },
+  {
+   "id": "C113",
+   "nome": "Day 9_Y8-4-L",
+   "arquivo": "Day 9_Y8-4-L.tiff",
+   "vx0": 163,
+   "vy0": 153,
+   "vl": 376,
+   "sha256_imagem": "b53d2420d045b051b919544917a87015adfea9fe691debfe9f46e7e3c75ca2f4"
+  },
+  {
+   "id": "C114",
+   "nome": "Day 8_A8-3-R",
+   "arquivo": "Day 8_A8-3-R.tiff",
+   "vx0": 165,
+   "vy0": 145,
+   "vl": 392,
+   "sha256_imagem": "be67f12fa2c4ba10245ab0ef8386643c0c40c3bdd58262ddb677e60dd4de3125"
+  },
+  {
+   "id": "C115",
+   "nome": "Day 9_A8-3-R",
+   "arquivo": "Day 9_A8-3-R.tiff",
+   "vx0": 158,
+   "vy0": 150,
+   "vl": 392,
+   "sha256_imagem": "28fd31a93749d29e3666ae231b7513d60be92816784275f93886a99bf615db79"
+  },
+  {
+   "id": "C116",
+   "nome": "Day 3_Y8-3-L",
+   "arquivo": "Day 3_Y8-3-L.tiff",
+   "vx0": 173,
+   "vy0": 157,
+   "vl": 373,
+   "sha256_imagem": "a9b8c98d79d6b0060e4a44acebf0f19791eec9a0daf60a9e90f1861414078915"
+  },
+  {
+   "id": "C117",
+   "nome": "Day 0_Y8-4-L",
+   "arquivo": "Day 0_Y8-4-L.tiff",
+   "vx0": 146,
+   "vy0": 156,
+   "vl": 392,
+   "sha256_imagem": "a8849fec78da1c3b3d5a6812b7953122f0912c35b9f2607afca92998e73167f8"
+  },
+  {
+   "id": "C118",
+   "nome": "Day 6_A8-4-L",
+   "arquivo": "Day 6_A8-4-L.tiff",
+   "vx0": 168,
+   "vy0": 166,
+   "vl": 363,
+   "sha256_imagem": "1a74284969756c23ae03a17b115d54882b3c9a8e6b53a94e1212273e4c22c8e3"
+  },
+  {
+   "id": "C119",
+   "nome": "Day 4_Y8-1-L",
+   "arquivo": "Day 4_Y8-1-L.tiff",
+   "vx0": 165,
+   "vy0": 151,
+   "vl": 366,
+   "sha256_imagem": "f0d4ce1f0c2ff90a07c083375302ee6636c13bf9b7bac16200521a7bfb266b72"
+  },
+  {
+   "id": "C120",
+   "nome": "Day 5_Y8-4-R",
+   "arquivo": "Day 5_Y8-4-R.tiff",
+   "vx0": 159,
+   "vy0": 176,
+   "vl": 392,
+   "sha256_imagem": "f0b4d044f4db620924781e820d2280879e279f5f046b53d3c8f38b162762fe9d"
+  },
+  {
+   "id": "C121",
+   "nome": "Day 8_A8-1-L",
+   "arquivo": "Day 8_A8-1-L.tiff",
+   "vx0": 178,
+   "vy0": 168,
+   "vl": 379,
+   "sha256_imagem": "f7c8770df45056de9efaab212d8600c907bd9ac0731fac0642b25eb70901d9eb"
+  },
+  {
+   "id": "C122",
+   "nome": "Day 6_A8-3-R",
+   "arquivo": "Day 6_A8-3-R.tiff",
+   "vx0": 166,
+   "vy0": 138,
+   "vl": 392,
+   "sha256_imagem": "d6aca3d8553b849a76cb0a9f7e1bcef0f327c25b63d6ef22a02a33812ad0d8c6"
+  },
+  {
+   "id": "C123",
+   "nome": "Day 1_Y8-3-L",
+   "arquivo": "Day 1_Y8-3-L.tiff",
+   "vx0": 169,
+   "vy0": 157,
+   "vl": 366,
+   "sha256_imagem": "ef0bf9ad5f07bcafaecaa25305536e7fdd4b35c23a75169f865b4c2368ef3cc2"
+  },
+  {
+   "id": "C124",
+   "nome": "Day 12_A8-3-L",
+   "arquivo": "Day 12_A8-3-L.tiff",
+   "vx0": 161,
+   "vy0": 177,
+   "vl": 392,
+   "sha256_imagem": "b61aa67aec30fdc9b6d1af65ee1243c4c5755eed6f428303fa242370731cbcf3"
+  },
+  {
+   "id": "C125",
+   "nome": "Day 10_A8-3-R",
+   "arquivo": "Day 10_A8-3-R.tiff",
+   "vx0": 138,
+   "vy0": 157,
+   "vl": 392,
+   "sha256_imagem": "b175b6a8b31c83e3be04e5923b5394009663b1189816b1ad9282616d6f4c08c3"
+  },
+  {
+   "id": "C126",
+   "nome": "Day 0_Y8-4-R",
+   "arquivo": "Day 0_Y8-4-R.tiff",
+   "vx0": 149,
+   "vy0": 153,
+   "vl": 392,
+   "sha256_imagem": "5c45bd2605a2353131bce438cad335dfd4e6effea845512f17a5fd40342c7010"
+  },
+  {
+   "id": "C127",
+   "nome": "Day 4_A8-4-L",
+   "arquivo": "Day 4_A8-4-L.tiff",
+   "vx0": 150,
+   "vy0": 155,
+   "vl": 370,
+   "sha256_imagem": "6fa3e7992bec2b10349086bc090593100a9a3874d926b50b9f42ecc4a88edaae"
+  },
+  {
+   "id": "C128",
+   "nome": "Day 3_Y8-3-R",
+   "arquivo": "Day 3_Y8-3-R.tiff",
+   "vx0": 171,
+   "vy0": 211,
+   "vl": 360,
+   "sha256_imagem": "37de5c70249c07a4030cc1d873202f8de34a60b39826c4b8191651c310998891"
+  },
+  {
+   "id": "C129",
+   "nome": "Day 5_Y8-2-L",
+   "arquivo": "Day 5_Y8-2-L.tiff",
+   "vx0": 182,
+   "vy0": 182,
+   "vl": 334,
+   "sha256_imagem": "f15c3e9e11780b9308f3596ad29c510225a9470f53e141a3148906bd114fa8d1"
+  },
+  {
+   "id": "C130",
+   "nome": "Day 10_A8-1-R",
+   "arquivo": "Day 10_A8-1-R.tiff",
+   "vx0": 158,
+   "vy0": 163,
+   "vl": 392,
+   "sha256_imagem": "0b43c9060a19f6c73fc9bdae665125e692d975e1bbfba69f75330e0b150adde0"
+  },
+  {
+   "id": "C131",
+   "nome": "Day 6_A8-4-R",
+   "arquivo": "Day 6_A8-4-R.tiff",
+   "vx0": 170,
+   "vy0": 158,
+   "vl": 370,
+   "sha256_imagem": "f1b875738ef94bd9615e3e5f1ce663131cdd101d74530fae7fa5c5c11d4c8d7e"
+  },
+  {
+   "id": "C132",
+   "nome": "Day 14_A8-5-L",
+   "arquivo": "Day 14_A8-5-L.tiff",
+   "vx0": 173,
+   "vy0": 173,
+   "vl": 354,
+   "sha256_imagem": "d9291a3221f5c9cee0c6eb946b8fe28002db0f893b192f66ae0a668114388b4b"
+  },
+  {
+   "id": "C133",
+   "nome": "Day 9_Y8-2-L",
+   "arquivo": "Day 9_Y8-2-L.tiff",
+   "vx0": 151,
+   "vy0": 148,
+   "vl": 392,
+   "sha256_imagem": "535ba0dc02dd4dd0440d3c99da9de4c92ae31ded57b106654ed11cee14a3f22a"
+  },
+  {
+   "id": "C134",
+   "nome": "Day 7_A8-4-R",
+   "arquivo": "Day 7_A8-4-R.tiff",
+   "vx0": 155,
+   "vy0": 170,
+   "vl": 376,
+   "sha256_imagem": "86152929fcfda2aad191a868a076b98beb1d8bc403dd032c7bdf7355cdfda587"
+  },
+  {
+   "id": "C135",
+   "nome": "Day 0_Y8-3-R",
+   "arquivo": "Day 0_Y8-3-R.tiff",
+   "vx0": 156,
+   "vy0": 157,
+   "vl": 392,
+   "sha256_imagem": "31c9e7e59e76db5316f053239e9992e6c3020ea16af9024d307948268b2a3de6"
+  },
+  {
+   "id": "C136",
+   "nome": "Day 9_Y8-3-R",
+   "arquivo": "Day 9_Y8-3-R.tiff",
+   "vx0": 171,
+   "vy0": 171,
+   "vl": 357,
+   "sha256_imagem": "6d9e948da1d41701291f6d2cbd3eb89631879f232686718db2c6c1d2ef7e15f5"
+  },
+  {
+   "id": "C137",
+   "nome": "Day 11_Y8-2-L",
+   "arquivo": "Day 11_Y8-2-L.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "aa701261dd2e0d6b121aa70e2c2ff8702f32e7b3c0db58fef46535fb086bbd2c"
+  },
+  {
+   "id": "C138",
+   "nome": "Day 10_A8-3-L",
+   "arquivo": "Day 10_A8-3-L.tiff",
+   "vx0": 152,
+   "vy0": 158,
+   "vl": 392,
+   "sha256_imagem": "651cf301d8cf36ca73d1bdcf90946b62fae378aee7cc801d7d6cf33ef54f5251"
+  },
+  {
+   "id": "C139",
+   "nome": "Day 10_Y8-1-L",
+   "arquivo": "Day 10_Y8-1-L.tiff",
+   "vx0": 131,
+   "vy0": 163,
+   "vl": 392,
+   "sha256_imagem": "5e93bf6305f8ba0e6e23d0d19279ea69848b024bf8c98240e4ae14d929bea9e9"
+  },
+  {
+   "id": "C140",
+   "nome": "Day 13_A8-1-L",
+   "arquivo": "Day 13_A8-1-L.tiff",
+   "vx0": 241,
+   "vy0": 222,
+   "vl": 290,
+   "sha256_imagem": "94b6c74ac75d3089eb367fed700b721ecd912cbb6634db806c994baa3b54dfcb"
+  },
+  {
+   "id": "C141",
+   "nome": "Day 9_A8-4-L",
+   "arquivo": "Day 9_A8-4-L.tiff",
+   "vx0": 166,
+   "vy0": 157,
+   "vl": 392,
+   "sha256_imagem": "1e7c6c0addfb7355404c3276737d6f7074fc58b0743d7e33ac0e4157d36401d4"
+  },
+  {
+   "id": "C142",
+   "nome": "Day 3_Y8-2-L",
+   "arquivo": "Day 3_Y8-2-L.tiff",
+   "vx0": 165,
+   "vy0": 168,
+   "vl": 357,
+   "sha256_imagem": "fcd817175393a69a172fa38cdace3833e9ac3c32e5e9ac88b4e017011286b216"
+  },
+  {
+   "id": "C143",
+   "nome": "Day 9_Y8-1-L",
+   "arquivo": "Day 9_Y8-1-L.tiff",
+   "vx0": 148,
+   "vy0": 150,
+   "vl": 392,
+   "sha256_imagem": "2ec4da908bd7a314748cefcd3de0d53bae1f316e66906d4d41fa0d8fe200f574"
+  },
+  {
+   "id": "C144",
+   "nome": "Day 2_A8-4-R",
+   "arquivo": "Day 2_A8-4-R.tiff",
+   "vx0": 169,
+   "vy0": 157,
+   "vl": 366,
+   "sha256_imagem": "e4146b7cd9bcbdbcb433216faaae93c55708cc87e5a73ecc274c5fa6031828c2"
+  },
+  {
+   "id": "C145",
+   "nome": "Day 1_A8-5-L",
+   "arquivo": "Day 1_A8-5-L.tiff",
+   "vx0": 172,
+   "vy0": 157,
+   "vl": 379,
+   "sha256_imagem": "fbd1d2a87e076b179994ea5ef9a3489bd27b128ec12428b80bc7534f7001068c"
+  },
+  {
+   "id": "C146",
+   "nome": "Day 8_Y8-2-L",
+   "arquivo": "Day 8_Y8-2-L.tiff",
+   "vx0": 166,
+   "vy0": 166,
+   "vl": 366,
+   "sha256_imagem": "a137bbb2bd30b03194c76b13361fea9109a6764a2f7bea50e28b46b99b58377c"
+  },
+  {
+   "id": "C147",
+   "nome": "Day 8_Y8-3-R",
+   "arquivo": "Day 8_Y8-3-R.tiff",
+   "vx0": 171,
+   "vy0": 172,
+   "vl": 370,
+   "sha256_imagem": "671d6ba781a58f9e807b240843d7519063fabf1fc7db05171408f7c7f23d8a95"
+  },
+  {
+   "id": "C148",
+   "nome": "Day 7_Y8-2-L",
+   "arquivo": "Day 7_Y8-2-L.tiff",
+   "vx0": 167,
+   "vy0": 159,
+   "vl": 363,
+   "sha256_imagem": "de88e75eaea18c3852225512734c7ee21a23fcf35c33c72539724b7817f52718"
+  },
+  {
+   "id": "C149",
+   "nome": "Day 12_A8-3-R",
+   "arquivo": "Day 12_A8-3-R.tiff",
+   "vx0": 162,
+   "vy0": 159,
+   "vl": 392,
+   "sha256_imagem": "9f7564696fd83790b3111b1f708fdd7882a34157062111cadfbd28c09cb4dfae"
+  },
+  {
+   "id": "C150",
+   "nome": "Day 11_A8-4-R",
+   "arquivo": "Day 11_A8-4-R.tiff",
+   "vx0": 164,
+   "vy0": 150,
+   "vl": 392,
+   "sha256_imagem": "5e323d3b2be68d68d17b22ca22775f5e2f9f27427187b18a424408da9e26537c"
+  },
+  {
+   "id": "C151",
+   "nome": "Day 0_A8-1-R",
+   "arquivo": "Day 0_A8-1-R.tiff",
+   "vx0": 175,
+   "vy0": 138,
+   "vl": 392,
+   "sha256_imagem": "1a912713dc0863f3d89eb1bedad2c587dbe84ca9326a5c5a2c2824fd96485e08"
+  },
+  {
+   "id": "C152",
+   "nome": "Day 0_A8-1-L",
+   "arquivo": "Day 0_A8-1-L.tiff",
+   "vx0": 174,
+   "vy0": 141,
+   "vl": 389,
+   "sha256_imagem": "bfbd2261217030a5c67257ab8598c5594baa5563982572ee45ec3ec2dedb0b48"
+  },
+  {
+   "id": "C153",
+   "nome": "Day 5_A8-4-L",
+   "arquivo": "Day 5_A8-4-L.tiff",
+   "vx0": 166,
+   "vy0": 158,
+   "vl": 376,
+   "sha256_imagem": "aff927ee996cf7b25dd0147f2d94cdfb4d2453c5f5142f409925742f444ba0af"
+  },
+  {
+   "id": "C154",
+   "nome": "Day 6_Y8-2-L",
+   "arquivo": "Day 6_Y8-2-L.tiff",
+   "vx0": 173,
+   "vy0": 151,
+   "vl": 360,
+   "sha256_imagem": "59eebf76e28966b91200ef7a151f9fb33e2e7fc9041fa8f53331cc4487ce1b20"
+  },
+  {
+   "id": "C155",
+   "nome": "Day 12_A8-4-R",
+   "arquivo": "Day 12_A8-4-R.tiff",
+   "vx0": 166,
+   "vy0": 166,
+   "vl": 366,
+   "sha256_imagem": "fd78ecc83f3a3ade1af07fb4688998725a273e4c0e09af6a22642c36ef08a2c9"
+  },
+  {
+   "id": "C156",
+   "nome": "Day 7_A8-5-L",
+   "arquivo": "Day 7_A8-5-L.tiff",
+   "vx0": 158,
+   "vy0": 189,
+   "vl": 354,
+   "sha256_imagem": "be9b08ac9dc1313dfb40a37fe42b4f3f6678b378dfcf630a30f7f4d8ca7905cc"
+  },
+  {
+   "id": "C157",
+   "nome": "Day 15_A8-3-L",
+   "arquivo": "Day 15_A8-3-L.tiff",
+   "vx0": 147,
+   "vy0": 159,
+   "vl": 382,
+   "sha256_imagem": "c27c08767c6a38200b1b3a7208f78a97fdb3c988ff38bef3e6fb8b67228e0431"
+  },
+  {
+   "id": "C158",
+   "nome": "Day 3_Y8-1-L",
+   "arquivo": "Day 3_Y8-1-L.tiff",
+   "vx0": 171,
+   "vy0": 150,
+   "vl": 366,
+   "sha256_imagem": "72626c8de66545688c7e6953812ac68ea3eb9c13eda6825d7f89bfe97c9563b9"
+  },
+  {
+   "id": "C159",
+   "nome": "Day 2_Y8-3-L",
+   "arquivo": "Day 2_Y8-3-L.tiff",
+   "vx0": 167,
+   "vy0": 157,
+   "vl": 379,
+   "sha256_imagem": "8de059b13045d2efd818d2cd79d561c9cd99ca5e8eb98330f171167e50b4b0b7"
+  },
+  {
+   "id": "C160",
+   "nome": "Day 8_A8-4-R",
+   "arquivo": "Day 8_A8-4-R.tiff",
+   "vx0": 163,
+   "vy0": 174,
+   "vl": 370,
+   "sha256_imagem": "124063409774735b230f84b48c7a09b1e568d409fdaf6de606a4d40b826ff2d5"
+  },
+  {
+   "id": "C161",
+   "nome": "Day 2_A8-3-L",
+   "arquivo": "Day 2_A8-3-L.tiff",
+   "vx0": 167,
+   "vy0": 154,
+   "vl": 363,
+   "sha256_imagem": "37bc5e4e0a867689eaa33f31a8a25e496051512a63efd8527d564e63262c1e4b"
+  },
+  {
+   "id": "C162",
+   "nome": "Day 10_Y8-3-L",
+   "arquivo": "Day 10_Y8-3-L.tiff",
+   "vx0": 148,
+   "vy0": 142,
+   "vl": 392,
+   "sha256_imagem": "a20002c19040e427274820fa49bacad8f04c1e20723d93d083106a5e3e85c22c"
+  },
+  {
+   "id": "C163",
+   "nome": "Day 5_Y8-4-L",
+   "arquivo": "Day 5_Y8-4-L.tiff",
+   "vx0": 162,
+   "vy0": 162,
+   "vl": 360,
+   "sha256_imagem": "ca75944090813dda945ff094531de3167fe4a898c42a27e8544dd4eef4ef4071"
+  },
+  {
+   "id": "C164",
+   "nome": "Day 1_A8-3-L",
+   "arquivo": "Day 1_A8-3-L.tiff",
+   "vx0": 164,
+   "vy0": 171,
+   "vl": 354,
+   "sha256_imagem": "8f2d394e523f5cde6065a847e3dc59a841d390d373c3673d28c9eaf42b5a39df"
+  },
+  {
+   "id": "C165",
+   "nome": "Day 5_A8-3-R",
+   "arquivo": "Day 5_A8-3-R.tiff",
+   "vx0": 158,
+   "vy0": 174,
+   "vl": 363,
+   "sha256_imagem": "3d99bcab42eae19d0ff81ffcea796d0f379d37d6be3b7587bf90c596d1088126"
+  },
+  {
+   "id": "C166",
+   "nome": "Day 7_A8-3-L",
+   "arquivo": "Day 7_A8-3-L.tiff",
+   "vx0": 142,
+   "vy0": 146,
+   "vl": 392,
+   "sha256_imagem": "9fd30483fbb76ca7f35587aa7440d2aafea5ca817ea8e84462c3946ad83e6a6d"
+  },
+  {
+   "id": "C167",
+   "nome": "Day 12_Y8-2-R",
+   "arquivo": "Day 12_Y8-2-R.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "0b025ce62403a974ae4da4e6cb14eed083a6c7912af6cb2966a2f6d739de8f36"
+  },
+  {
+   "id": "C168",
+   "nome": "Day 5_A8-1-L",
+   "arquivo": "Day 5_A8-1-L.tiff",
+   "vx0": 173,
+   "vy0": 173,
+   "vl": 354,
+   "sha256_imagem": "835d2081b56c6381eaedade2655106141bd61c26866aaf07dd00e97add12ef29"
+  },
+  {
+   "id": "C169",
+   "nome": "Day 3_A8-3-R",
+   "arquivo": "Day 3_A8-3-R.tiff",
+   "vx0": 163,
+   "vy0": 163,
+   "vl": 373,
+   "sha256_imagem": "2b2fa7f930ec81a8ffecff47d02e98812990ca812a6e125621ff9e97cbb68edf"
+  },
+  {
+   "id": "C170",
+   "nome": "Day 10_Y8-2-R",
+   "arquivo": "Day 10_Y8-2-R.tiff",
+   "vx0": 160,
+   "vy0": 142,
+   "vl": 392,
+   "sha256_imagem": "aea3dcbc9e56128123d5abe9aac591a460f53bb7b71264e94a1c25f0d1e41e60"
+  },
+  {
+   "id": "C171",
+   "nome": "Day 4_Y8-2-L",
+   "arquivo": "Day 4_Y8-2-L.tiff",
+   "vx0": 172,
+   "vy0": 168,
+   "vl": 354,
+   "sha256_imagem": "6dc5623384f7789ee3620883e02c88e9cf2c3f28f54fd0cda94479f829019434"
+  },
+  {
+   "id": "C172",
+   "nome": "Day 3_A8-5-R",
+   "arquivo": "Day 3_A8-5-R.tiff",
+   "vx0": 166,
+   "vy0": 152,
+   "vl": 376,
+   "sha256_imagem": "f9cb177e0ff8d750beaedc11f7ef628e4eee63a80f458c44788c6bdb1dab1207"
+  },
+  {
+   "id": "C173",
+   "nome": "Day 2_Y8-4-L",
+   "arquivo": "Day 2_Y8-4-L.tiff",
+   "vx0": 174,
+   "vy0": 178,
+   "vl": 379,
+   "sha256_imagem": "fb7eefeba76dbec75be3e8f547e7e782c2f80168ee1115ccfea95182cd645e84"
+  },
+  {
+   "id": "C174",
+   "nome": "Day 1_Y8-2-L",
+   "arquivo": "Day 1_Y8-2-L.tiff",
+   "vx0": 170,
+   "vy0": 150,
+   "vl": 363,
+   "sha256_imagem": "9fe4019b89b982d7d05b9a315ca68c590483348edb6cdbecd7b44c6bb81bfff3"
+  },
+  {
+   "id": "C175",
+   "nome": "Day 1_A8-4-L",
+   "arquivo": "Day 1_A8-4-L.tiff",
+   "vx0": 166,
+   "vy0": 155,
+   "vl": 366,
+   "sha256_imagem": "4e36923a728b5ac6121f3ab32ae68fcc15b29d1df0394c4bf93ff09b3d526ce9"
+  },
+  {
+   "id": "C176",
+   "nome": "Day 3_Y8-1-R",
+   "arquivo": "Day 3_Y8-1-R.tiff",
+   "vx0": 166,
+   "vy0": 176,
+   "vl": 360,
+   "sha256_imagem": "0fc0dc16a11e9c191803e913d4f217f907dfad7c03c16a9f64809bce76dceaa8"
+  },
+  {
+   "id": "C177",
+   "nome": "Day 8_Y8-4-L",
+   "arquivo": "Day 8_Y8-4-L.tiff",
+   "vx0": 163,
+   "vy0": 163,
+   "vl": 373,
+   "sha256_imagem": "f7b620e95928c4a65d0c0e4513088ffea643c5ea9bb7f5a6b6c26a6e45520a68"
+  },
+  {
+   "id": "C178",
+   "nome": "Day 4_A8-5-L",
+   "arquivo": "Day 4_A8-5-L.tiff",
+   "vx0": 162,
+   "vy0": 166,
+   "vl": 392,
+   "sha256_imagem": "ad78e4fce9dfbed81011dd14e589448c3174d0c03d37c948b8770ba47a6c8055"
+  },
+  {
+   "id": "C179",
+   "nome": "Day 1_A8-4-R",
+   "arquivo": "Day 1_A8-4-R.tiff",
+   "vx0": 183,
+   "vy0": 152,
+   "vl": 354,
+   "sha256_imagem": "778f85caaa59d636d19db7bfaf49eec6587d170f49174fb9b3dbe0803753cd03"
+  },
+  {
+   "id": "C180",
+   "nome": "Day 4_A8-3-R",
+   "arquivo": "Day 4_A8-3-R.tiff",
+   "vx0": 168,
+   "vy0": 168,
+   "vl": 363,
+   "sha256_imagem": "56051cd2ba3fd3abc0728824d99b30488c018d976d599661ef268e2c3aa9a5b5"
+  },
+  {
+   "id": "C181",
+   "nome": "Day 3_A8-3-L",
+   "arquivo": "Day 3_A8-3-L.tiff",
+   "vx0": 162,
+   "vy0": 150,
+   "vl": 370,
+   "sha256_imagem": "706b578c6be68c39858069710055b6dbe5435f4bd511f3f8ea7826df2394dada"
+  },
+  {
+   "id": "C182",
+   "nome": "Day 8_A8-5-R",
+   "arquivo": "Day 8_A8-5-R.tiff",
+   "vx0": 158,
+   "vy0": 150,
+   "vl": 392,
+   "sha256_imagem": "74875110fbb5bce56159a0a76895ea3c75f14a9f8ab3a47d29c2a469ad242de0"
+  },
+  {
+   "id": "C183",
+   "nome": "Day 14_A8-4-L",
+   "arquivo": "Day 14_A8-4-L.tiff",
+   "vx0": 163,
+   "vy0": 163,
+   "vl": 373,
+   "sha256_imagem": "d96ba22a04ef0a2886fe920210e271df9a4e14fa504af97487ef7ca09d8b07fc"
+  },
+  {
+   "id": "C184",
+   "nome": "Day 4_Y8-2-R",
+   "arquivo": "Day 4_Y8-2-R.tiff",
+   "vx0": 157,
+   "vy0": 166,
+   "vl": 382,
+   "sha256_imagem": "fb64a5c2f5bbf3f93f89e1cbacb8f955779f3e372b62358d03373905ec2fc6cf"
+  },
+  {
+   "id": "C185",
+   "nome": "Day 1_Y8-1-L",
+   "arquivo": "Day 1_Y8-1-L.tiff",
+   "vx0": 180,
+   "vy0": 149,
+   "vl": 363,
+   "sha256_imagem": "00d9cb535cf41556b8f9e59d14ef027ea9218f1aff5cd7007ee8f900bb3357c3"
+  },
+  {
+   "id": "C186",
+   "nome": "Day 0_A8-3-L",
+   "arquivo": "Day 0_A8-3-L.tiff",
+   "vx0": 152,
+   "vy0": 151,
+   "vl": 392,
+   "sha256_imagem": "31230eec611dd3701ccc5112573263785fe0255c63dd23fea090b4e0be7019b2"
+  },
+  {
+   "id": "C187",
+   "nome": "Day 4_A8-1-L",
+   "arquivo": "Day 4_A8-1-L.tiff",
+   "vx0": 166,
+   "vy0": 162,
+   "vl": 392,
+   "sha256_imagem": "7cc75e398a9b31032dfdddee57b3016ce4f3a0e82e1af714ca9329a0164fdf1e"
+  },
+  {
+   "id": "C188",
+   "nome": "Day 6_A8-1-L",
+   "arquivo": "Day 6_A8-1-L.tiff",
+   "vx0": 178,
+   "vy0": 167,
+   "vl": 370,
+   "sha256_imagem": "6d96807737cc54a18b2b9c546c68d7d537bcb48b9d21db1cfdfd43a36b08fb02"
+  },
+  {
+   "id": "C189",
+   "nome": "Day 5_A8-4-R",
+   "arquivo": "Day 5_A8-4-R.tiff",
+   "vx0": 164,
+   "vy0": 168,
+   "vl": 379,
+   "sha256_imagem": "8226675eefaaa1b485918a893ac0560bf69f071002900a5fbf73449c457c1b1d"
+  },
+  {
+   "id": "C190",
+   "nome": "Day 3_A8-4-R",
+   "arquivo": "Day 3_A8-4-R.tiff",
+   "vx0": 173,
+   "vy0": 163,
+   "vl": 379,
+   "sha256_imagem": "86f5ecf6d8b713fc8c5e960627ca4ef3e10ce56a8d41926298e2066659b6fc84"
+  },
+  {
+   "id": "C191",
+   "nome": "Day 13_Y8-2-L",
+   "arquivo": "Day 13_Y8-2-L.tiff",
+   "vx0": 163,
+   "vy0": 163,
+   "vl": 373,
+   "sha256_imagem": "a9c92385bcc5bef9d406d71fb35f0d9660dbd909bbfcfc1fdb6eb25e73d2f1f5"
+  },
+  {
+   "id": "C192",
+   "nome": "Day 0_A8-3-R",
+   "arquivo": "Day 0_A8-3-R.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "8f7a4d43d8f7ec42a303dda4f2dec11f8327ebbd1422c8cc7438660ebbf00ef8"
+  },
+  {
+   "id": "C193",
+   "nome": "Day 11_A8-3-L",
+   "arquivo": "Day 11_A8-3-L.tiff",
+   "vx0": 151,
+   "vy0": 170,
+   "vl": 392,
+   "sha256_imagem": "02731e75bc9f454d85f20de9e9faa0ef7154705c627ea70e10be04587178ad30"
+  },
+  {
+   "id": "C194",
+   "nome": "Day 7_A8-3-R",
+   "arquivo": "Day 7_A8-3-R.tiff",
+   "vx0": 178,
+   "vy0": 146,
+   "vl": 392,
+   "sha256_imagem": "bfde9aac0c2983a33dd803c56a5dea3891bd92c0a2e18cbb4a05a3beae466b50"
+  },
+  {
+   "id": "C195",
+   "nome": "Day 8_Y8-2-R",
+   "arquivo": "Day 8_Y8-2-R.tiff",
+   "vx0": 158,
+   "vy0": 158,
+   "vl": 382,
+   "sha256_imagem": "cdefd7f5867dd856984e033798633d7ca7286fc7200cfe3c3102a6632be19d05"
+  },
+  {
+   "id": "C196",
+   "nome": "Day 9_A8-5-R",
+   "arquivo": "Day 9_A8-5-R.tiff",
+   "vx0": 170,
+   "vy0": 172,
+   "vl": 376,
+   "sha256_imagem": "2e7ee76bea9928c2e14f750b57de381a2a943651ca01e18b966aedee6051a939"
+  },
+  {
+   "id": "C197",
+   "nome": "Day 2_A8-1-L",
+   "arquivo": "Day 2_A8-1-L.tiff",
+   "vx0": 180,
+   "vy0": 157,
+   "vl": 360,
+   "sha256_imagem": "5164cc238b52a074b74437478928b52001d577db4d50f83cbd44598ac06a986a"
+  },
+  {
+   "id": "C198",
+   "nome": "Day 0_Y8-1-L",
+   "arquivo": "Day 0_Y8-1-L.tiff",
+   "vx0": 154,
+   "vy0": 154,
+   "vl": 392,
+   "sha256_imagem": "c1a051cba4f8a1c5b9f28792abaf777aa69736395392510d74dadc374de10c8f"
+  },
+  {
+   "id": "C199",
+   "nome": "Day 5_A8-5-R",
+   "arquivo": "Day 5_A8-5-R.tiff",
+   "vx0": 173,
+   "vy0": 183,
+   "vl": 354,
+   "sha256_imagem": "702c097c3142a7d3882b5e9207d7c40fe1130ff80dbeee370b7d1f458f0f28fb"
+  },
+  {
+   "id": "C200",
+   "nome": "Day 11_A8-1-R",
+   "arquivo": "Day 11_A8-1-R.tiff",
+   "vx0": 165,
+   "vy0": 170,
+   "vl": 392,
+   "sha256_imagem": "9543e4c3d0021b5f155a7278d97143bfdee095d890f7398731cf132153f46949"
+  },
+  {
+   "id": "C201",
+   "nome": "Day 10_A8-5-L",
+   "arquivo": "Day 10_A8-5-L.tiff",
+   "vx0": 169,
+   "vy0": 143,
+   "vl": 392,
+   "sha256_imagem": "6612e82433286e9769f97e3db404cc0efb97203f6ed7e89a4742406343b1c0da"
+  }
+ ]
+}
