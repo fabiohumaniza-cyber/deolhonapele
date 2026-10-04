@@ -213,7 +213,7 @@ Dois leitores traçaram a borda da ferida nas 201 imagens com campo.
 - **Leitor 1:** bacharel em ciência da computação, com dois anos de veterinária
   e parente do autor.
 - **Leitora 2:** enfermeira, ex-diretora de Saúde de Águas de Lindóia (SP)
-  (COREN [a inserir]); foi chefe do autor na Secretaria de Saúde do
+  (COREN-SP 115508); foi chefe do autor na Secretaria de Saúde do
   município, sem vínculo de trabalho atual entre os dois [confirmar].
 
 **O painel.** Cada leitor recebeu o mesmo painel em navegador:
@@ -458,7 +458,7 @@ Dryad (doi:10.25338/B84W8Q).
 
 Aos autores do banco público de feridas de camundongo (Yang, Bagood, Carrión,
 Isseroff e colaboradores), por disponibilizá-lo. Aos dois leitores, Emílio [sobrenome a inserir] e Helga Emanuele Resquioto
-(enfermeira, COREN [a inserir]), que traçaram as 201 imagens.
+(enfermeira, COREN-SP 115508), que traçaram as 201 imagens.
 
 **Compensação.** A segunda leitora recebeu compensação fixa pelo tempo,
 combinada antes da leitura e independente do resultado.
