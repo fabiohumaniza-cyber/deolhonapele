@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traçado de feridas · camundongo</title>
+<style>
+:root{--fundo:#141416;--painel:#1d1d21;--linha:#2c2c33;--texto:#e8e8ec;
+  --fraco:#9a9aa6;--acento:#ffd23f;--mao:#ff4d9a;--ok:#3ddc84;--perigo:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--texto);
+  font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+header{padding:10px 14px;border-bottom:1px solid var(--linha);background:var(--painel)}
+header b{color:var(--acento)}
+header span{color:var(--fraco);font-size:13px;display:block;margin-top:2px}
+#barra{padding:8px 14px;border-bottom:1px solid var(--linha);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+#prog{flex:1 1 200px;height:8px;background:#26262c;border-radius:4px;overflow:hidden}
+#prog i{display:block;height:100%;background:var(--ok);width:0}
+#cont{font-size:14px;color:var(--acento);font-weight:600}
+#relogio{font-size:13px;color:var(--fraco);font-variant-numeric:tabular-nums}
+#corpo{display:flex;gap:14px;padding:14px;align-items:flex-start;flex-wrap:wrap}
+#palco{position:relative;flex:0 0 auto;border:1px solid var(--linha);border-radius:8px;
+  overflow:hidden;background:#000;touch-action:none;cursor:crosshair}
+#palco canvas{display:block;position:absolute;left:0;top:0}
+#fo{display:block}
+#lado{flex:1 1 300px;min-width:300px;max-width:400px}
+.bloco{background:var(--painel);border:1px solid var(--linha);border-radius:8px;padding:12px;margin-bottom:10px}
+.bloco h3{margin:0 0 8px;font-size:13px;color:var(--acento);text-transform:uppercase;letter-spacing:.4px}
+button.acao{display:block;width:100%;margin:6px 0;padding:11px;border-radius:7px;
+  border:1px solid var(--linha);background:#2a2a31;color:var(--texto);font-size:15px;cursor:pointer;text-align:left}
+button.acao:hover:not(:disabled){background:#34343c}
+button.acao:disabled{opacity:.35;cursor:not-allowed}
+button.forte{background:var(--acento);color:#000;font-weight:600;border-color:var(--acento)}
+button.perigo{border-color:#6b2a2a;color:#ffb3b3}
+label{display:block;font-size:12px;color:var(--fraco);margin:9px 0 3px}
+textarea,input[type=text]{width:100%;background:#26262c;color:var(--texto);border:1px solid var(--linha);
+  border-radius:6px;padding:8px;font-size:15px;font-family:inherit}
+textarea{min-height:60px;resize:vertical}
+.dica{font-size:13px;color:var(--fraco);margin:6px 0}
+.aviso{background:#3a2a0a;border:1px solid #6b4e10;color:#ffd9a0;padding:9px;border-radius:6px;font-size:13px;margin:8px 0}
+.fim{background:#0f2f1c;border:1px solid #1d6b3f;color:#9ff0c0}
+#inicio{max-width:640px;margin:30px auto;padding:0 14px}
+#inicio .bloco{padding:18px}
+#inicio p{margin:8px 0}
+</style>
+</head>
+<body>
+
+<header>
+  <b>TRAÇADO DE FERIDAS · CAMUNDONGO</b>
+  <span>contorne a borda da ferida aberta · uma vez cada foto, sem voltar atrás · traçador: <b>__TRACADOR__</b></span>
+</header>
+
+<div id="inicio">
+  <div class="bloco">
+    <h3>antes de começar</h3>
+    <p>São <b>__N__ fotos</b> de feridas de camundongo, em ordem sorteada. As fotos <b>não têm nome nem dia</b>: só um número.</p>
+    <p><b>O que traçar:</b> a borda da <b>ferida aberta</b>, a parte vermelha ou rosada. Se houver um anel claro em volta da parte vermelha, <b>a borda é o limite do vermelho</b>, não do claro.</p>
+    <p>Ignore o anel laranja de plástico, os pontos de sutura, os pelos e o brilho.</p>
+    <p><b>Se não der para traçar</b>, use os botões vermelhos e escreva o motivo. Não chute uma borda que você não vê.</p>
+    <p>Cada foto fica gravada com a hora em que abriu e fechou.</p>
+    <label><input type="checkbox" id="decl"> Declaro que <b>não vi</b> estas fotos antes, nem traçados de outra pessoa ou de máquina sobre elas, e que ninguém me disse o que esperar.</label>
+    <button class="acao forte" id="btComeca" disabled>começar</button>
+  </div>
+</div>
+
+<div id="trabalho" style="display:none">
+<div id="barra">
+  <div id="cont">— de —</div>
+  <div id="prog"><i></i></div>
+  <div id="relogio"></div>
+</div>
+
+<div id="corpo">
+  <div id="palco">
+    <img id="fo" alt="">
+    <canvas id="cv"></canvas>
+  </div>
+
+  <div id="lado">
+    <div class="bloco" id="bTrab">
+      <h3>foto <span id="idfoto"></span></h3>
+      <div class="dica">Olhe a foto inteira antes. Arraste seguindo a borda. Pode soltar e continuar: a linha não apaga. Duas feridas separadas: contorne cada uma.</div>
+      <button class="acao" id="btLimpa">↺ apagar e traçar de novo</button>
+      <label>nota (opcional): dúvida, o que confundiu</label>
+      <textarea id="nota" placeholder="ex.: dúvida na parte de baixo"></textarea>
+      <button class="acao forte" id="btFecha">✔ terminei esta borda · próxima</button>
+      <button class="acao" id="btParcial">◐ tracei, mas parte da borda não dá para ver · próxima</button>
+      <button class="acao perigo" id="btNao">✖ não dá para traçar · próxima</button>
+      <button class="acao perigo" id="btPelo">✖ pelo cobre a ferida · próxima</button>
+      <button class="acao" id="btFechada">○ ferida fechada, sem parte aberta · próxima</button>
+      <div class="dica">Nos botões ✖ e ◐, escreva o motivo na nota. Depois de passar, não dá para voltar.</div>
+    </div>
+
+    <div class="bloco" id="bFim" style="display:none">
+      <h3>terminou</h3>
+      <div class="aviso fim">Obrigado. Salve o arquivo e entregue ao Fabio.</div>
+      <label>se quiser, diga o que foi difícil</label>
+      <textarea id="final" placeholder="opcional"></textarea>
+    </div>
+
+    <div class="bloco">
+      <h3>salvar</h3>
+      <button class="acao forte" id="btSalva">⬇ salvar o trabalho</button>
+      <div class="dica">O trabalho também fica guardado neste navegador a cada foto. Salve no fim e entregue o arquivo.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+/* Painel do traçador cego do camundongo.
+   NÃO MOSTRA contorno de máquina, o campo amarelo, nem marca de ninguém.
+   As fotos não têm nome nem dia: só um código. A ordem é sorteada no arquivo.
+   Cada foto é gravada com hora ISO de abrir e de fechar e com o SHA da imagem. */
+
+var FIG = __FIGS__;
+var TRACADOR = '__TRACADOR__';
+var CHAVE = 'tracador_camundongo_' + TRACADOR;
+var A = 0, L = 0, E = {}, LOG = [], arrast = false, fechada = {};
+var INI = null, DECL = null;
+
+function agora(){ return new Date().toISOString(); }
+function ctx(){ return document.getElementById('cv').getContext('2d'); }
+function ev(o, d){ LOG.push({q: agora(), o: o, d: d || null, f: FIG[A] ? FIG[A].id : null}); }
+function guarda(){
+  try { localStorage.setItem(CHAVE, JSON.stringify({E:E, LOG:LOG, fechada:fechada, A:A, INI:INI, DECL:DECL})); } catch(x){}
+}
+function est(){
+  var n = FIG[A].id;
+  if(!E[n]) E[n] = { t: [], nota: '', estado: null, t_abriu: agora(), t_fechou: null, passadas: 0 };
+  return E[n];
+}
+function pinta(){
+  var c = ctx(), e = est();
+  c.clearRect(0, 0, L, L);
+  if(!e.t.length) return;
+  c.strokeStyle = '#ff4d9a'; c.lineWidth = 2.5; c.lineJoin = 'round';
+  c.beginPath();
+  e.t.forEach(function(p, i){ (i && !p.novo) ? c.lineTo(p.x*L, p.y*L) : c.moveTo(p.x*L, p.y*L); });
+  c.stroke();
+}
+function pos(ev2){
+  var r = document.getElementById('cv').getBoundingClientRect();
+  var t = ev2.touches ? ev2.touches[0] : ev2;
+  return { x: (t.clientX - r.left)/L, y: (t.clientY - r.top)/L };
+}
+function baixa(ev2){
+  if(fechada[FIG[A].id]) return;
+  ev2.preventDefault();
+  var e = est(), p = pos(ev2);
+  var u = e.t[e.t.length-1];
+  p.novo = !u || Math.hypot(p.x-u.x, p.y-u.y) > 0.03;   // longe do último ponto = outra ilha
+  e.t.push(p); e.passadas++;
+  arrast = true; pinta();
+}
+function move(ev2){
+  if(!arrast) return;
+  ev2.preventDefault();
+  var e = est(), p = pos(ev2), u = e.t[e.t.length-1];
+  if(!u || Math.hypot(p.x-u.x, p.y-u.y) > 0.004) e.t.push(p);
+  pinta();
+}
+function sobe(){ if(arrast){ arrast = false; ev('tracou', est().t.length + ' pontos'); } }
+
+var pal = document.getElementById('palco');
+pal.addEventListener('mousedown', baixa);
+pal.addEventListener('touchstart', baixa, {passive:false});
+window.addEventListener('mousemove', move);
+window.addEventListener('touchmove', move, {passive:false});
+window.addEventListener('mouseup', sobe);
+window.addEventListener('touchend', sobe);
+
+document.getElementById('decl').onchange = function(){
+  document.getElementById('btComeca').disabled = !this.checked; };
+document.getElementById('btComeca').onclick = function(){
+  if(!INI){ INI = agora(); DECL = { declarou_nao_ter_visto: true, quando: INI }; }
+  document.getElementById('inicio').style.display = 'none';
+  document.getElementById('trabalho').style.display = '';
+  ev('comecou');
+  if(Object.keys(fechada).length >= FIG.length) termina(); else abre(A);
+};
+
+document.getElementById('btLimpa').onclick = function(){
+  if(fechada[FIG[A].id]) return;
+  est().t = []; ev('apagou'); pinta();
+};
+
+function fecha(estado){
+  var e = est();
+  e.nota = document.getElementById('nota').value;
+  if((estado === 'TRACADA' || estado === 'PARCIAL') && e.t.length < 20){
+    alert('O contorno está muito curto. Contorne a borda.'); return; }
+  if((estado === 'PARCIAL' || estado === 'NAO_TRACAVEL' || estado === 'PELO') && !e.nota.trim()){
+    alert('Escreva o motivo na nota.'); return; }
+  if(estado !== 'TRACADA' && estado !== 'PARCIAL') e.t = [];
+  e.estado = estado; e.t_fechou = agora();
+  fechada[FIG[A].id] = true;
+  ev('fechou', estado);
+  guarda();
+  if(A + 1 >= FIG.length){ termina(); return; }
+  abre(A + 1);
+}
+document.getElementById('btFecha').onclick   = function(){ fecha('TRACADA'); };
+document.getElementById('btParcial').onclick = function(){ fecha('PARCIAL'); };
+document.getElementById('btNao').onclick     = function(){ fecha('NAO_TRACAVEL'); };
+document.getElementById('btPelo').onclick    = function(){ fecha('PELO'); };
+document.getElementById('btFechada').onclick = function(){ fecha('FECHADA'); };
+
+function termina(){
+  document.getElementById('bTrab').style.display = 'none';
+  document.getElementById('bFim').style.display = '';
+  document.getElementById('palco').style.display = 'none';
+  ev('terminou'); guarda(); atualiza();
+}
+function atualiza(){
+  var feitas = Object.keys(fechada).length;
+  document.getElementById('cont').textContent = feitas + ' de ' + FIG.length;
+  document.getElementById('prog').firstElementChild.style.width = (100*feitas/FIG.length).toFixed(1) + '%';
+}
+setInterval(function(){
+  if(!INI) return;
+  var s = Math.floor((Date.now() - new Date(INI).getTime())/1000);
+  document.getElementById('relogio').textContent = 'tempo ' + Math.floor(s/60) + ' min ' + (s%60) + ' s';
+}, 1000);
+
+function abre(i){
+  A = i;
+  var f = FIG[i], im = document.getElementById('fo');
+  document.getElementById('idfoto').textContent = f.id + ' (' + (i+1) + ' de ' + FIG.length + ')';
+  im.onload = function(){
+    var maxW = Math.min(820, window.innerWidth - 360);
+    if(maxW < 340) maxW = Math.min(820, window.innerWidth - 30);
+    L = Math.min(maxW, window.innerHeight - 140);
+    im.style.width = L + 'px'; im.style.height = L + 'px';
+    pal.style.width = L + 'px'; pal.style.height = L + 'px';
+    var c = document.getElementById('cv'); c.width = L; c.height = L;
+    document.getElementById('nota').value = '';
+    est(); pinta(); atualiza(); ev('abriu'); guarda();
+  };
+  im.src = f.img;
+}
+
+document.getElementById('btSalva').onclick = function(){
+  var Eout = {};
+  FIG.forEach(function(f){
+    var e = E[f.id]; if(!e) return;
+    Eout[f.id] = { estado: e.estado, t: e.t, nota: e.nota, t_abriu: e.t_abriu, t_fechou: e.t_fechou,
+      passadas: e.passadas, pontos: e.t.length, sha256_imagem: f.sha, fechada: !!fechada[f.id] };
+  });
+  var o = { versao: 'tracador_camundongo_v1', tracador: TRACADOR, inicio: INI, salvo: agora(),
+    declaracao: DECL, navegador: navigator.userAgent,
+    coordenadas: 'fracao 0..1 do lado da foto (vista quadrada); o mapa codigo->imagem fica no _ORDEM, fora do painel',
+    comentario_final: document.getElementById('final').value,
+    n_fechadas: Object.keys(fechada).length, n_total: FIG.length, E: Eout, LOG: LOG };
+  var a = document.createElement('a');
+  a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(o));
+  a.download = 'tracado_camundongo_' + TRACADOR + '_' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  ev('salvou', Object.keys(fechada).length + ' fechadas'); guarda();
+};
+
+// retoma de onde parou, se o navegador fechou no meio
+try {
+  var s = JSON.parse(localStorage.getItem(CHAVE) || 'null');
+  if(s && s.INI){ E = s.E; LOG = s.LOG; fechada = s.fechada; INI = s.INI; DECL = s.DECL;
+    A = Math.min(Object.keys(fechada).length, FIG.length - 1);
+    document.getElementById('decl').checked = true; document.getElementById('btComeca').disabled = false;
+    document.getElementById('btComeca').textContent = 'continuar de onde parou';
+    LOG.push({q: agora(), o: 'retomou', d: null, f: null}); }
+} catch(x){}
+</script>
+</body>
+</html>
