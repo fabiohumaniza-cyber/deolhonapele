@@ -36,7 +36,7 @@ a{color:var(--acc)}
   (Dryad, doi:10.25338/B84W8Q). Em todas elas, três observadores, de forma
   independente e cega, <b>não conseguiram ver a borda</b>.</p>
   <p>Tente você. Em cada foto, contorne a borda da parte vermelha ou rosada
-  com o dedo ou o mouse e responda se conseguiria traçá-la <b>com segurança</b>.
+  com o dedo ou o mouse e responda se consegue traçá-la <b>com certeza</b>.
   Depois de responder, aparece o que os três disseram.</p>
   <p class="mut">Nada é enviado pela internet. No fim, você pode baixar suas
   respostas e mandá-las ao autor, se quiser: fabiohumaniza@gmail.com.</p>
@@ -51,7 +51,7 @@ a{color:var(--acc)}
   <div class="wrap" id="wrap"><img id="img" alt="ferida"><canvas id="cv"></canvas></div>
   <div class="row" style="margin-top:10px"><button id="bApaga">↺ apagar traço</button></div>
   <div class="card" id="pergunta">
-    <b>Você conseguiria traçar com segurança a borda desta ferida?</b>
+    <b>Você consegue, com certeza, traçar a borda desta ferida?</b>
     <div class="row" style="margin-top:10px"><button class="sim" id="bSim">Sim</button><button class="nao" id="bNao">Não</button></div>
   </div>
   <div class="card hide" id="revela">
@@ -100,7 +100,7 @@ $('bComeca').onclick = function () { $('ini').classList.add('hide'); $('foto').c
 function fim() {
   $('foto').classList.add('hide'); $('fim').classList.remove('hide');
   var s = R.filter(function (r) { return r.consegue_tracar; }).length;
-  $('res').textContent = 'Você disse que conseguiria traçar com segurança ' + s + ' de ' + D.length + ' fotos. Os três observadores do estudo não viram a borda em nenhuma delas.';
+  $('res').textContent = 'Você disse que consegue traçar com certeza ' + s + ' de ' + D.length + ' fotos. Os três observadores do estudo não viram a borda em nenhuma delas.';
 }
 $('bBaixa').onclick = function () {
   var b = new Blob([JSON.stringify({ desafio: 'borda_camundongo_30', versao: 1, respostas: R }, null, 1)], { type: 'application/json' });
