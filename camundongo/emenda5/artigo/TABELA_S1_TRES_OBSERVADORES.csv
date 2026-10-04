@@ -1,0 +1,202 @@
+﻿imagem;dia;filme;operador;nota do operador;leitor 1;nota do leitor 1;leitora 2;nota da leitora 2;figura 1 (ninguém viu a borda)
+Day 0_A8-1-L;0;não;nada;;PARCIAL;pequeno pedaço pega a borda, plástico;TRACADA;;
+Day 0_A8-1-R;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) indicadas na flexa 1 , 2 e 3.;TRACADA;;TRACADA;;
+Day 0_A8-3-L;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) setas 1,2,3,4;TRACADA;;TRACADA;;
+Day 0_A8-3-R;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) vários focos;TRACADA;;TRACADA;;
+Day 0_A8-4-L;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) vários focos de brilho;TRACADA;;TRACADA;;
+Day 0_A8-4-R;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) pequenos lugares.;PARCIAL;existe algo estranho com esta ferida que não consigo avaliar;TRACADA;;
+Day 0_A8-5-L;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) muitos focos;TRACADA;;TRACADA;;
+Day 0_A8-5-R;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) indicado seta amarela;PARCIAL;não sei se é sombra ou sangue próximo a borda;TRACADA;;
+Day 0_Y8-1-L;0;não;nada;;TRACADA;;TRACADA;;
+Day 0_Y8-1-R;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão);TRACADA;;TRACADA;;
+Day 0_Y8-2-L;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) 3 pequenos focos ajustes mínimos.;TRACADA;;TRACADA;;
+Day 0_Y8-2-R;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão);TRACADA;;TRACADA;;
+Day 0_Y8-3-L;0;não;ok;excluído sangue na borda da ferida (artefato) indicados pelas setas 1 a 5.  Retirado Focos de brilho dentro da ferida.;TRACADA;;TRACADA;;
+Day 0_Y8-3-R;0;não;nada;;TRACADA;;TRACADA;;
+Day 0_Y8-4-L;0;não;nada;;TRACADA;;TRACADA;;
+Day 0_Y8-4-R;0;não;ok;corrigido reflexo na lesão com conta-gotas e pincel (cor da lesão) setas 1 a 5. Resquícios de sague, tirados pela ferramenta artefato setas  6 a 10;TRACADA;;TRACADA;;
+Day 1_A8-1-L;1;sim;nada;;TRACADA;;TRACADA;;
+Day 1_A8-3-L;1;sim;ok;Artefato do anel entorno da borda pega um pequeno pedaço da lesão, retirado com ferramenta artefato;TRACADA;;TRACADA;;
+Day 1_A8-3-R;1;sim;ok;imagem desfocada, tirado brilhos;TRACADA;;TRACADA;;
+Day 1_A8-4-L;1;sim;ok;Retirado algum artefato que invade a área da lesão, indicada com seta;TRACADA;;PARCIAL;Filme atrapalha;
+Day 1_A8-4-R;1;sim;nada;;TRACADA;;TRACADA;;
+Day 1_A8-5-L;1;sim;nada;;TRACADA;apesar da borda estar com pouca nitidez, é possível ver a borda;TRACADA;;
+Day 1_A8-5-R;1;sim;NAO_TRACAVEL;Artefato que atravessa a lesão, Plástico que deforma a borda.;PARCIAL;sangue e anel quebrado invadindo a ferida atrapalham em reconhecer a borda, pastico tbm;PARCIAL;mancha escura avermelhada, em parte da borda;
+Day 1_Y8-1-L;1;sim;nada;;TRACADA;;TRACADA;;
+Day 1_Y8-1-R;1;sim;nada;;TRACADA;;TRACADA;;
+Day 1_Y8-2-L;1;sim;ok;retirado reflexo de plástico.;TRACADA;;TRACADA;;
+Day 1_Y8-2-R;1;sim;nada;;TRACADA;;TRACADA;;
+Day 1_Y8-3-L;1;sim;nada;;PARCIAL;ferida duvidosa de visualizar , baixa qualidade;PARCIAL;Filme atrapalha;
+Day 1_Y8-3-R;1;sim;ok;Retirado plástico dobrado próximo a borda. ferramenta artefato;TRACADA;;PARCIAL;Filme atrapalha;
+Day 1_Y8-4-L;1;sim;nada;;PARCIAL;Imagem bem complicada, imaginei boa parte;PARCIAL;imagem ruim desfoque;
+Day 1_Y8-4-R;1;sim;nada;;PARCIAL;Muito Plástico;PARCIAL;Filme atrapalha;
+Day 2_A8-1-L;2;sim;nada;;PARCIAL;Imagem muito contaminada pelo plastico;IMAGINADA;Filme atrapalha;
+Day 2_A8-1-R;2;sim;NAO_TRACAVEL;muito pasticho em volta difícil traçar;PARCIAL;Plastico altera quase que totalmente a borda;IMAGINADA;Filme atrapalha;
+Day 2_A8-3-L;2;sim;nada;;PARCIAL;Plástico atrapalha parte da borda;PARCIAL;Filme atrapalha;
+Day 2_A8-3-R;2;sim;nada;;PARCIAL;Plástico contamina parte visível da borda;TRACADA;;
+Day 2_A8-4-L;2;sim;ok;Retirado plástico próximo a lesão, plastico contorcido;TRACADA;;TRACADA;;
+Day 2_A8-4-R;2;sim;nada;;TRACADA;;TRACADA;;
+Day 2_A8-5-L;2;não;nada;;TRACADA;;TRACADA;;
+Day 2_A8-5-R;2;não;nada;;TRACADA;;TRACADA;;
+Day 2_Y8-1-L;2;sim;nada;;TRACADA;;TRACADA;;
+Day 2_Y8-1-R;2;não;nada;;TRACADA;;PARCIAL;Filme atrapalha;
+Day 2_Y8-2-L;2;sim;ok;retirado parte do anel em torno da ferida que se soltou.;TRACADA;vejo a borda porem soltou algo do anel vermelho que pode confundir.;TRACADA;vejo a borda apesar de objeto atravessando a ferida;
+Day 2_Y8-2-R;2;sim;nada;;TRACADA;;TRACADA;;
+Day 2_Y8-3-L;2;não;ok;retirado brilho da ferida de fôrma grosseira, fora dela tbm em alguns pontos;TRACADA;;TRACADA;;
+Day 2_Y8-3-R;2;não;nada;;TRACADA;;TRACADA;;
+Day 2_Y8-4-L;2;não;nada;;TRACADA;;TRACADA;;
+Day 2_Y8-4-R;2;sim;nada;;PARCIAL;Plástico atrapalha em parte;PARCIAL;Filme atrapalha;
+Day 3_A8-1-L;3;sim;nada;;IMAGINADA;Plástico em toda borda de uma forma que deforma;PARCIAL;Filme atrapalha;
+Day 3_A8-3-L;3;sim;nada;Plástico dobrado em cima da lesão confundindo avaliador;PARCIAL;muito plástico escondendo a borda.;IMAGINADA;Filme atrapalha;
+Day 3_A8-3-R;3;sim;nada;;PARCIAL;Plástico atrapalha um pouco;PARCIAL;Filme atrapalha;
+Day 3_A8-4-L;3;sim;ok;Retirado pastico contorcido da lesão;TRACADA;;TRACADA;;
+Day 3_A8-4-R;3;sim;ok;Retirado plástico contorcido fora da lesão;PARCIAL;LEsao com plástico em alguns lugares da borda;PARCIAL;Filme atrapalha;
+Day 3_A8-5-L;3;não;nada;;PARCIAL;Plástico contamina parte da lesao;PARCIAL;Filme atrapalha;
+Day 3_A8-5-R;3;sim;ok;Retirado plástico destorcido próximo a borda e reflexo na lesão;PARCIAL;Plástico atrapalha localizar a borda;IMAGINADA;Filme atrapalha;
+Day 3_Y8-1-L;3;sim;ok;Retirado plástico retorcido próximo a lesão;PARCIAL;Muito Plástico pegando muito a lesao;IMAGINADA;Filme atrapalha;
+Day 3_Y8-1-R;3;sim;BORDA_PARCIAL;borda parcial: filme plástico e opacidade da lesão impedem ver onde começa a borda da ferida na porção inferior (setas 1, 2 e 3), restante da borda visível.;PARCIAL;vejo muito pouco a borda;IMAGINADA;Filme atrapalha;
+Day 3_Y8-2-L;3;sim;nada;;TRACADA;;TRACADA;;
+Day 3_Y8-2-R;3;sim;nada;não permite mensuração;IMAGINADA;Plástico contamina  toda borda.;PARCIAL;Filme atrapalha;
+Day 3_Y8-3-L;3;não;ok;Seta 1 (tirado, oq pareci pelo próxima a borda, Seta 2, uma mistura que se assemelha a sangue com exsudato. Tirado alguns brilho pequeno na lesão;TRACADA;;TRACADA;;
+Day 3_Y8-3-R;3;não;nada;;TRACADA;;PARCIAL;Filme atrapalha;
+Day 3_Y8-4-L;3;não;nada;;PARCIAL;Plástico contamina ferida;PARCIAL;Filme atrapalha;
+Day 3_Y8-4-R;3;sim;nada;;PARCIAL;imagem de pouca resolução, amarelo misturando com borda;TRACADA;;
+Day 4_A8-1-L;4;sim;nada;Ferida muito desfocada.;PARCIAL;Imagem com desfoque muito grande;IMAGINADA;Filme atrapalha;
+Day 4_A8-1-R;4;sim;nada;;PARCIAL;Plástico atrapalha um pouco;PARCIAL;Filme atrapalha;
+Day 4_A8-3-L;4;sim;nada;;PARCIAL;Plástico atrapalhando novamente;PARCIAL;Filme atrapalha;
+Day 4_A8-3-R;4;sim;nada;;PARCIAL;Muito Plástico.;TRACADA;;
+Day 4_A8-4-L;4;sim;ok;foi tirado com ferramenta artefato pelo e bolha.;PARCIAL;Pelo atrapalha um pouco;PARCIAL;muito ruim a imagem pelagem atrapalha.;
+Day 4_A8-4-R;4;sim;nada;;TRACADA;;PARCIAL;Filme atrapalha;
+Day 4_A8-5-L;4;sim;nada;;PARCIAL;Plástico tira percepção de borda;TRACADA;;
+Day 4_A8-5-R;4;não;nada;;TRACADA;;TRACADA;;
+Day 4_Y8-1-L;4;sim;nada;;PARCIAL;em alguns lugares plástico contamina a borda;PARCIAL;Filme atrapalha;
+Day 4_Y8-1-R;4;sim;nada;;TRACADA;;PARCIAL;Filme atrapalha;
+Day 4_Y8-2-L;4;sim;ok;Retirado dois reflexos do plástico.;TRACADA;;TRACADA;;
+Day 4_Y8-2-R;4;não;nada;;TRACADA;;PARCIAL;desfocada a imagem da foto;
+Day 4_Y8-3-L;4;sim;ok;Retirada marcas próximas a borda da ferida, que se assemelham a fio de sutura.;TRACADA;;PARCIAL;algum material na borda;
+Day 4_Y8-3-R;4;não;nada;;TRACADA;;PARCIAL;Filme atrapalha;
+Day 4_Y8-4-L;4;sim;ok;retirado reflexo na ferida e pequenos focos na pele;TRACADA;;PARCIAL;Filme atrapalha;
+Day 4_Y8-4-R;4;não;nada;;TRACADA;;PARCIAL;Filme atrapalha;
+Day 5_A8-1-L;5;não;NAO_TRACAVEL;não é possível ver a borda da ferida, imagem opaca.;IMAGINADA;Plástico tira totalmente a borda;IMAGINADA;Filme atrapalha;sim
+Day 5_A8-1-R;5;sim;NAO_TRACAVEL;Imagem Opaca, com pasticho dobrando quem quase toda ferida, não é possível reconhecer a borda.;IMAGINADA;sem possibilidade, pastico tira o olhar da borda;IMAGINADA;Filme atrapalha;sim
+Day 5_A8-3-L;5;sim;BORDA_PARCIAL;Imagem muto opaca, desfocada.;PARCIAL;Imagem de baixa qualidade, desfoque, plástico;TRACADA;esta foto esta opaca mas vejo a borda.;
+Day 5_A8-3-R;5;sim;BORDA_PARCIAL;Imagem opaca, difícil verificar a borda, muito reflexo;PARCIAL;Plástico e qualidade da imagem, reflexo atrapalham;PARCIAL;Filme atrapalha;
+Day 5_A8-4-L;5;sim;ok;Retirado pelo e artefato.;PARCIAL;pelo e imagem com qualidade ruim;PARCIAL;Filme atrapalha e foto ruim;
+Day 5_A8-4-R;5;sim;nada;;IMAGINADA;Plastico novamente atrapalha;IMAGINADA;Filme atrapalha;
+Day 5_A8-5-L;5;sim;nada;;PARCIAL;lesão com muito plástico em lugares da borda;PARCIAL;Filme atrapalha;
+Day 5_A8-5-R;5;não;ok;Retirado pelo com ferramenta artefato;PARCIAL;imagem sem muita definição;PARCIAL;Filme atrapalha (crosta);
+Day 5_Y8-1-L;5;sim;nada;;PARCIAL;Plástico contamina;TRACADA;;
+Day 5_Y8-1-R;5;não;nada;;PARCIAL;imagem com plástico, muito clara;PARCIAL;Filme atrapalha;
+Day 5_Y8-2-L;5;não;nada;;IMAGINADA;Plástico emendado com ferida, não da pra saber oq é borda;IMAGINADA;Filme atrapalha;
+Day 5_Y8-2-R;5;não;nada;;TRACADA;;TRACADA;;
+Day 5_Y8-3-L;5;sim;NAO_TRACAVEL;não traçável: filme plástico sobre a maior parte da borda, halo claro do plástico se confunde com a margem da ferida, sem limite definido. Reflexo e pelos sobre o leito.;PARCIAL;Imagem difícil;PARCIAL;Filme atrapalha;
+Day 5_Y8-3-R;5;não;nada;;PARCIAL;muito plástico próximo a borda;PARCIAL;Filme atrapalha;
+Day 5_Y8-4-L;5;não;nada;;TRACADA;;PARCIAL;Filme atrapalha;
+Day 5_Y8-4-R;5;não;nada;;TRACADA;;TRACADA;;
+Day 6_A8-1-L;6;sim;NAO_TRACAVEL;não traçável: filme plástico sobre a maior parte da borda, halo claro do plástico se confunde com a margem da ferida, sem limite definido. Reflexo e pelos sobre o leito.;PARCIAL;boa parte da borda não é possível ver;IMAGINADA;Filme atrapalha;
+Day 6_A8-1-R;6;sim;NAO_TRACAVEL;não traçável: filme plástico sobre a maior parte da borda, halo claro do plástico se confunde com a margem da ferida, sem limite definido. Reflexo e pelos sobre o leito.;IMAGINADA;Plástico contamina toda ferida, não sei oq é borda;IMAGINADA;Filme atrapalha;sim
+Day 6_A8-3-L;6;sim;NAO_TRACAVEL;não traçável: filme plástico sobre a maior parte da borda, halo claro do plástico se confunde com a margem da ferida, sem limite definido. Reflexo e pelos sobre o leito.;PARCIAL;parte da borda dá para olhar, outras o plástico mascara ela.;PARCIAL;Filme atrapalha;
+Day 6_A8-3-R;6;sim;BORDA_PARCIAL;Ferida muito comprometida pelo plástico;PARCIAL;Plástico contamina borda em alguns lugares;PARCIAL;Filme atrapalha;
+Day 6_A8-4-L;6;sim;PELO;pelo sobre o leito;PARCIAL;Pelo em cima da borda;PARCIAL;pelagem do animal tampa a borda na parte de cima;
+Day 6_A8-4-R;6;sim;BORDA_PARCIAL;Plástico interfere em parte da borda da lesão;PARCIAL;parte da borda com sangue e plástico um pouco difícil de entender;PARCIAL;Filme atrapalha;
+Day 6_A8-5-L;6;sim;NAO_TRACAVEL;Muito Plástico, borda confusa. Uma parte avermelhada se uni a borda.;PARCIAL;Plástico atrapalhando visualizar a borda;PARCIAL;Filme atrapalha;
+Day 6_A8-5-R;6;não;nada;Um pouco de pelo sobre a Lesão, pode interferir.;PARCIAL;Pelo, Plástico, atrapalham a borda;PARCIAL;Filme atrapalha;
+Day 6_Y8-1-L;6;sim;ok;Lesão com plástico pegando parte da borda da ferida, retirado com ferramenta artefato. mancha preta tbm foi retirada com a mesma ferramenta;PARCIAL;O Plástico contamina parte da ferida;PARCIAL;Filme atrapalha;
+Day 6_Y8-1-R;6;sim;NAO_TRACAVEL;não traçável: filme plástico opaco sobre toda a ferida, mancha avermelhada central visível apenas através do filme, sem limite definido.;PARCIAL;Muito pastico deformando a ferida;PARCIAL;Filme atrapalha;
+Day 6_Y8-2-L;6;não;nada;;IMAGINADA;Não é possível saber o que é borda;IMAGINADA;Filme atrapalha;
+Day 6_Y8-2-R;6;não;nada;pelos podem atrapalhar o resultado.;TRACADA;;TRACADA;;
+Day 6_Y8-3-L;6;sim;BORDA_PARCIAL;borda parcial: lado esquerdo sem borda identificável (filme e opacidade, sem limite anatômico visível), lado direito e superior traçáveis. Pelos cruzando o leito.;IMAGINADA;Lesão totalmente comprometida de plástico.;PARCIAL;Filme atrapalha;
+Day 6_Y8-3-R;6;não;ok;Retirado artefatos não identificados na imagem.;TRACADA;;PARCIAL;Filme atrapalha;
+Day 6_Y8-4-L;6;não;ok;Retirado artefatos não identificados.;TRACADA;;PARCIAL;Filme atrapalha;
+Day 6_Y8-4-R;6;não;ok;retirado artefatos;PARCIAL;Plastico atrapalha um pouco;TRACADA;;
+Day 7_A8-1-L;7;sim;BORDA_PARCIAL;borda parcial: lado esquerdo sem borda identificável (filme e opacidade, sem limite anatômico visível), lado direito e superior traçáveis. Pelos cruzando o leito.;PARCIAL;Parte da diretora da borda com liqueido ou plástico junto, não sei ao certo o que faz parte da borda;PARCIAL;Filme atrapalha;
+Day 7_A8-1-R;7;sim;BORDA_PARCIAL;borda parcial: lado direito sem borda identificável (filme e opacidade, sem limite anatômico visível);PARCIAL;desfocada, baixa resolução;PARCIAL;fotografia ruim;
+Day 7_A8-3-L;7;sim;BORDA_PARCIAL;borda parcial: lado direito sem borda identificável (filme e opacidade, sem limite anatômico visível),;PARCIAL;Muito pastico na borda;IMAGINADA;Filme atrapalha;
+Day 7_A8-3-R;7;sim;nada;;PARCIAL;Locais onde plástico escodem a borda, imaginei onde seria;PARCIAL;Filme atrapalha;
+Day 7_A8-4-L;7;não;PELO;pelo sobre o leito;PARCIAL;Pelo em cima da borda;PARCIAL;Pelagem do animal na ferida;
+Day 7_A8-4-R;7;sim;nada;duas bordas: anel claro (provável epitélio novo) e leito vermelho, bolha do filme na parte inferior.;PARCIAL;muito dificil. imaginei boa parte/;IMAGINADA;Filme atrapalha;
+Day 7_A8-5-L;7;sim;NAO_TRACAVEL;não traçável: filme opaco sobre todo o campo, leito difuso sem limite definido (nem a borda clara nem a vermelha são identificáveis), reflexos sobre o leito.;IMAGINADA;Plastico tira contorno da borda;IMAGINADA;Filme atrapalha;sim
+Day 7_A8-5-R;7;não;ok;Pelos próximo a borda retirado com ferramenta artefato.;PARCIAL;nitidez da imagem pus confundem o que é borda;IMAGINADA;Filme atrapalha dicou aderido na ferida;
+Day 7_Y8-1-L;7;sim;ok;Retirado artefato;PARCIAL;plástico atrapalha em alguns pontos;PARCIAL;Filme atrapalha;
+Day 7_Y8-2-L;7;sim;ok;filme aderido e levantado na margem (lascas brancas): excluído só onde descola, restante da borda visível.;PARCIAL;Plástico na borda fazendo espécie de vinco, não da para saber.;IMAGINADA;Filme atrapalha;
+Day 7_Y8-2-R;7;não;ok;Retirado alguns pelo.;TRACADA;;TRACADA;;
+Day 7_Y8-3-L;7;não;nada;Muitos Pelos na Broda.;IMAGINADA;não é possível definir a borda, por conta do plástico aderido com pus, talvez.;IMAGINADA;Filme atrapalha;
+Day 7_Y8-3-R;7;não;nada;;TRACADA;;TRACADA;;
+Day 7_Y8-4-L;7;não;nada;;PARCIAL;não sei se o vermelho é borda e se o amarelo tbm é....;TRACADA;;
+Day 8_A8-1-L;8;sim;nada;duas bordas: disco claro ocupa todo o campo, borda considerada = limite da mancha vermelha central (difuso, mas contínuo).;PARCIAL;Plástico tira a borda em alguns lugares;PARCIAL;Filme atrapalha;
+Day 8_A8-1-R;8;sim;BORDA_PARCIAL;borda parcial: filme descolado (levantado) cobre a metade inferior da ferida, sem borda visível, metade superior traçável.;PARCIAL;imagem difícil por conta do Plástico;PARCIAL;Filme atrapalha;
+Day 8_A8-3-L;8;sim;NAO_TRACAVEL;não traçável: imagem desfocada + filme sobre toda a ferida, mancha vermelha central sem limite definido.;PARCIAL;Imagem desfocada, plástico atrapalhando a borda;IMAGINADA;Filme atrapalha;
+Day 8_A8-3-R;8;sim;ok;Retirado mínimo de artefato e um pingo vermelho indicado pela flexa;IMAGINADA;não é possível ver borda, plástico tira visão;PARCIAL;Filme atrapalha;
+Day 8_A8-4-L;8;sim;ok;Retirado pelos e sombra em torno da lesão;PARCIAL;pelo atrapalha;PARCIAL;pelagem e foto ruim;
+Day 8_A8-4-R;8;sim;nada;;PARCIAL;Plástico atrapalha parte da borda;PARCIAL;Filme atrapalha;
+Day 8_A8-5-L;8;sim;ok;Retirado sangue e pontos de brilho.;IMAGINADA;não consigo ver borda aqui;IMAGINADA;Filme atrapalha;
+Day 8_A8-5-R;8;não;ok;Retirado pelos em torno da lesão;PARCIAL;pelo sobre a borda;PARCIAL;Filme atrapalha ficou junto a ferida, ou algum tipo de crosta;
+Day 8_Y8-1-L;8;sim;ok;Retirado Plástico e pelo;PARCIAL;contaminada plástico;IMAGINADA;Filme atrapalha;
+Day 8_Y8-2-L;8;não;ok;Retirada borda de Plástico que ficou aderida próxima a lesão e pelos em volta;PARCIAL;Plastico mudando aspecto da borda;IMAGINADA;Filme atrapalha;
+Day 8_Y8-2-R;8;não;nada;;TRACADA;;TRACADA;;
+Day 8_Y8-3-L;8;sim;NAO_TRACAVEL;não traçável: filme amassado sobre todo o campo, dobra diagonal atravessando a ferida, sem leito nem borda identificáveis.;IMAGINADA;não é possível localizar a borda, acho q uma das piores imagens.;IMAGINADA;Filme atrapalha;sim
+Day 8_Y8-3-R;8;sim;ok;Retirado plástico e reflexo da ferida;PARCIAL;Lesão em parte comprometida por pastico;IMAGINADA;Filme atrapalha;
+Day 8_Y8-4-L;8;não;ok;retirado pelos e o que parece outra ferida que não tem relação com a do estudo;PARCIAL;mistura de crosta amarela com a borda não sei extremante onde é ela;TRACADA;;
+Day 9_A8-1-L;9;sim;ok;Foi tentando tirar filme dobrado que passa sobre borda da Lesão e um artefato vermelho;PARCIAL;Imagem contaminada de plastico;PARCIAL;Filme atrapalha;
+Day 9_A8-1-R;9;sim;ok;tentando tirar filme que passa sobre a lesão.;IMAGINADA;Plástico atrapalha totalmente e baixa resolucao;PARCIAL;Filme atrapalha e foto desregulada;
+Day 9_A8-3-L;9;sim;NAO_TRACAVEL;não traçável: filme enrugado com dobras e vincos atravessando a ferida, mancha avermelhada visível só através do filme, sem contorno confiável.;PARCIAL;Imagem totalmente contaminada de Plastico;PARCIAL;Filme atrapalha;
+Day 9_A8-3-R;9;sim;NAO_TRACAVEL;não traçável: vincos do filme cruzando toda a ferida em especial a borda, mancha difusa, contorno visível só em pequeno trecho.;IMAGINADA;não é possível, plástico dobra na ferida, borda;IMAGINADA;Filme atrapalha;sim
+Day 9_A8-4-L;9;sim;BORDA_PARCIAL;borda parcial: pelos sobre a margem superior comprometem o trecho de cima da borda, restante (esquerda, direita, inferior) traçável.;PARCIAL;pelo e plastico atraplahm;PARCIAL;Filme atrapalha, pelagem do animal tbm;
+Day 9_A8-4-R;9;sim;nada;;PARCIAL;não da pra saber ao certo;IMAGINADA;Filme atrapalha;
+Day 9_A8-5-L;9;sim;NAO_TRACAVEL;não traçável: leito difuso sob o filme, sem contorno definido, lesão aparenta se estender até o anel (além do campo). Dois pequenos focos vermelhos isolados.;IMAGINADA;Plástico, ferida parece q atravessa o circulo vermelho;IMAGINADA;n consegui enxergar a lesao;sim
+Day 9_A8-5-R;9;sim;PELO;pelo sobre o leito: tufo cobre o centro e a metade esquerda da lesão, só a margem direita visível. Outra pequena lesão ao lado (esquerda).;PARCIAL;Pelo em cima da borda, imaginei onde seria;PARCIAL;pelagem sobre a foto;
+Day 9_Y8-1-L;9;não;ok;Retirado pelos e algumas machas da lesão;TRACADA;;TRACADA;;
+Day 9_Y8-2-L;9;não;ok;Retirado pelos da área da lesão;IMAGINADA;Crosta de plástico na lesão;IMAGINADA;Plástico ficou na borda ou é parte de crosta. não sei identificar.;
+Day 9_Y8-3-L;9;não;ok;Retirado o que parece ser pelo próximo a lesão;TRACADA;;TRACADA;;
+Day 9_Y8-3-R;9;não;ok;Retirado pelos e manchas;TRACADA;;TRACADA;;
+Day 9_Y8-4-L;9;não;ok;Retirado pelos e algumas manchas;TRACADA;;TRACADA;;
+Day 10_A8-1-L;10;sim;nada;Imagem desfocada;IMAGINADA;Plástico com amarelado, perde visualização da borda;PARCIAL;Filme atrapalha;
+Day 10_A8-1-R;10;sim;NAO_TRACAVEL;filme dobrado sobre a borda: não dá para distinguir se a linha é borda da ferida, dobra do plástico ou exsudato aderido ao plástico.;PARCIAL;Muito plástico deformando beirada da ferida;PARCIAL;Filme atrapalha;
+Day 10_A8-3-L;10;sim;NAO_TRACAVEL;filme dobrado sobre a borda: não dá para distinguir se a linha é borda da ferida, dobra do plástico ou exsudato aderido ao plástico.;IMAGINADA;não é possível, Plástico de forma muito grosseira;IMAGINADA;Filme atrapalha;sim
+Day 10_A8-3-R;10;sim;NAO_TRACAVEL;filme dobrado sobre a borda: não dá para distinguir se a linha é borda da ferida, dobra do plástico ou exsudato aderido ao plástico.;IMAGINADA;não é possível... não sei qual é a lesão;PARCIAL;Filme atrapalha;sim
+Day 10_A8-4-L;10;não;NAO_TRACAVEL;filme dobrado sobre a borda: não dá para distinguir se a linha é borda da ferida, dobra do plástico ou exsudato aderido ao plástico. Pelo cobrindo a borda.;IMAGINADA;Imaginei o que seria a borda, imagem muito contaminada;PARCIAL;Filme atrapalha e pelagem tbm;sim
+Day 10_A8-4-R;10;sim;NAO_TRACAVEL;Opacidade do pastico com a ferida, não é possível determinar a borda.;PARCIAL;Não da pra saber ao certo;PARCIAL;Filme atrapalha;
+Day 10_A8-5-L;10;sim;NAO_TRACAVEL;Anel cobrindo parte da ferida, muito artefato, não é possível determinar a borda;PARCIAL;Muito Plástico, misturando com a borda, nitidez da imagem ruim;IMAGINADA;Filme atrapalha;
+Day 10_A8-5-R;10;não;NAO_TRACAVEL;Pelo atravessa parte da borda da ferida, excluída por decisão técnica.;PARCIAL;Pelo atrapalha parte da borda;PARCIAL;foto não esta boa.;
+Day 10_Y8-1-L;10;sim;NAO_TRACAVEL;Imagem totalmente misturada com cores, plásticos , não é possível determinar a borda;IMAGINADA;Plástico enrugado em cima da borda;IMAGINADA;Filme atrapalha;sim
+Day 10_Y8-2-L;10;não;NAO_TRACAVEL;Pelo sobre a pequena parte da borda da ferida, eliminada por decisão técnica.;IMAGINADA;pelos e crostas... imaginei onde seria;PARCIAL;pelagem do animal dificulta e restos de algo ou do próprio animal ou de plástico;sim
+Day 10_Y8-2-R;10;não;NAO_TRACAVEL;cicatrizada: sem borda de ferida visível, leito coberto de pelo.;IMAGINADA;Ferida fechada;FECHADA;nao  vejo;sim
+Day 10_Y8-3-L;10;não;NAO_TRACAVEL;cicatrizada: sem borda de ferida visível.;PARCIAL;Difícil localizar a borda;FECHADA;não vejo a borda;
+Day 10_Y8-4-L;10;não;NAO_TRACAVEL;cicatrizada: sem borda de ferida visível.;FECHADA;;PARCIAL;cicatrizada, nao consigo saber;
+Day 11_A8-1-L;11;não;ok;seta 1, Sombra tirada da pele, seta 2 e 3 algo que se assemelha a lesão . Possíveis brilhos retirados delicadamentes;TRACADA;;TRACADA;;
+Day 11_A8-1-R;11;não;ok;Retirada eventual lesão, não relacionada ao estudo;TRACADA;;TRACADA;;
+Day 11_A8-3-L;11;não;nada;Muitos pelos na lesão pode confundir a ferramenta.;TRACADA;;TRACADA;;
+Day 11_A8-3-R;11;não;NAO_TRACAVEL;Não é possível determinar a lesão;IMAGINADA;Não é possível saber o que é ferida ou borda;IMAGINADA;Filme atrapalha de forma global;sim
+Day 11_A8-4-L;11;sim;NAO_TRACAVEL;Pelo sobre a Lesão, não é possível ver a borda em grande parte.;PARCIAL;nao é possível pelo e plastico deformam imagem;PARCIAL;pelagem do animal na foto;
+Day 11_A8-4-R;11;sim;NAO_TRACAVEL;Opacidade, não da para definir borda.;IMAGINADA;não da pra definir o que é borda;IMAGINADA;Filme atrapalha;sim
+Day 11_A8-5-L;11;não;nada;;TRACADA;;TRACADA;;
+Day 11_Y8-2-L;11;não;NAO_TRACAVEL;Pelo sobre a ferida não é possível ver parte da borda;IMAGINADA;Pelo por cima da borda;IMAGINADA;pelo tampa a borda, crosta...;sim
+Day 11_Y8-2-R;11;não;NAO_TRACAVEL;Sem borda.;IMAGINADA;Pelo sobre a ferida, acho q ja cicatrizada;FECHADA;nao descubro a ferida ao certo;sim
+Day 12_A8-1-L;12;sim;NAO_TRACAVEL;Plástico e resido amarelado, não é possível ver a borda;PARCIAL;Contaminada por plastico;IMAGINADA;Filme atrapalha;
+Day 12_A8-3-L;12;não;nada;;TRACADA;;TRACADA;;
+Day 12_A8-3-R;12;não;nada;;IMAGINADA;não consegue definir ao certo oq é lesão;PARCIAL;Filme atrapalha;
+Day 12_A8-4-L;12;não;nada;Não é possível verificar boa parte da borda. pelos.;PARCIAL;pelo sobre quase toda ferida;PARCIAL;pelagem do animal cobre parte da ferida;
+Day 12_A8-4-R;12;sim;nada;Borda não verificável, mistura amarelado com plástico e ferida;IMAGINADA;não é possível, plástico pega a ferida de uma forma que contorce;IMAGINADA;Filme atrapalha;
+Day 12_A8-5-L;12;não;nada;Pelos podem confundir.;IMAGINADA;Lesao com muito pelo, talvez cicatrizada;IMAGINADA;pelagem dificulta;
+Day 12_Y8-2-L;12;não;NAO_TRACAVEL;Pelos cobrindo parte da borda,;IMAGINADA;Pelo sobre a ferida. não consigo visualizar;PARCIAL;pelos na ferida;sim
+Day 12_Y8-2-R;12;não;NAO_TRACAVEL;Não enxergo a borda;IMAGINADA;Pelo cicatriz, não é possível;FECHADA;nao vejo a borda;sim
+Day 13_A8-1-L;13;sim;NAO_TRACAVEL;Plástico envolta da ferida com algo branco não identificado.;PARCIAL;Plástico não deixa olhar se é a borda. estou imaginando que seja.;IMAGINADA;Filme atrapalha;
+Day 13_A8-1-R;13;não;nada;Imagem com baixa qualidade;TRACADA;;TRACADA;;
+Day 13_A8-3-L;13;não;nada;;TRACADA;;PARCIAL;Filme atrapalha;
+Day 13_A8-3-R;13;não;nada;Imagem de baixa qualidade;PARCIAL;Imagem muito desfocada com cores diferentes na borda, talvez pelo do rato.;PARCIAL;imagem ruim;
+Day 13_A8-4-L;13;sim;NAO_TRACAVEL;Pelos em cima da Borda, não é possível traçar;IMAGINADA;Imagem sem condições alguma;IMAGINADA;imagem com pelagem em quase toda lesao, e desfoque tbm resto de plastco;sim
+Day 13_A8-4-R;13;não;NAO_TRACAVEL;Liquido sobre a lesão que esconde a borda;IMAGINADA;nao da pra saber o que é borda, liquido amarelado com plastico talvez fizeram este efeito na ferida;IMAGINADA;Filme atrapalha, cola na ferida, não possível ver a borda;sim
+Day 13_A8-5-L;13;sim;NAO_TRACAVEL;Plástico dobrando sobre a ferida e borda, elemento de cor que não aparenta ser borda. Identificados na seta;PARCIAL;Plástico defira parte de baixo da ferida, imaginei boa parte;PARCIAL;Filme atrapalha;
+Day 13_Y8-2-L;13;não;NAO_TRACAVEL;Não é possível ver a borda. possivelmente cicatrizada.;IMAGINADA;pelo cobre a borda, aparenta esta cicatrizada;FECHADA;nao vejo;sim
+Day 13_Y8-2-R;13;não;NAO_TRACAVEL;Pelos, sem borda identificada.;IMAGINADA;não tem como, pelo sobre a borda.;FECHADA;pelo e não vejo a borda do animal, pode ter cicatrizado;sim
+Day 14_A8-1-R;14;não;nada;;TRACADA;;TRACADA;;
+Day 14_A8-3-L;14;não;nada;;TRACADA;;PARCIAL;pelagem e plástico ou exudato;
+Day 14_A8-3-R;14;não;NAO_TRACAVEL;não traçável: leito coberto de pelo e mancha avermelhada difusa que se confunde com a lesão, não dá para separar borda da ferida, mancha e pelo.;IMAGINADA;não consegue definir a lesao;PARCIAL;difícil saber onde esta a borda;sim
+Day 14_A8-4-L;14;sim;NAO_TRACAVEL;impossível determinar a lesão;IMAGINADA;impossível de achar a borda,.;IMAGINADA;Filme atrapalha;sim
+Day 14_A8-4-R;14;sim;NAO_TRACAVEL;Não é possível determinar a borda especialmente onde a seta indica;IMAGINADA;não é possível nem classificar o que é;IMAGINADA;Filme atrapalha e algum material que cobre a ferida;sim
+Day 14_A8-5-L;14;não;PELO;pelo sobre o leito;PARCIAL;Pelo atrapalhou a borda;PARCIAL;pelo atrapalha;
+Day 14_Y8-2-L;14;não;NAO_TRACAVEL;Não é possível ver a lesão;IMAGINADA;Pelo e possível cicatrização não vejo borda;FECHADA;pelagem... sem ferida;sim
+Day 14_Y8-2-R;14;não;NAO_TRACAVEL;não é possível ver borda, lesão;IMAGINADA;não é possível, pelo;IMAGINADA;pelos, nao vejo ferida;sim
+Day 15_A8-1-R;15;não;nada;;TRACADA;;TRACADA;;
+Day 15_A8-3-L;15;não;NAO_TRACAVEL;não traçável:  pequena área avermelhada com crosta no centro, sem limite claro entre ferida aberta e pele já cicatrizada, pelo e brilho por cima e o que parece exsudato por cima;IMAGINADA;Imagem contaminada plástico pelo, substancia amarelada;IMAGINADA;pelos e Filme atrapalha;sim
+Day 15_A8-3-R;15;não;NAO_TRACAVEL;pelos e manchas que atrapalham o traçado, em alguns pontos não se verifica a borda;IMAGINADA;lesão com pelos outros focos de lesão , plástico;IMAGINADA;pelagem atrapalha;sim

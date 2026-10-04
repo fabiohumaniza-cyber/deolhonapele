@@ -346,18 +346,32 @@ O que a tabela mostra:
 
 ### 3.5 · As imagens que ninguém consegue traçar
 
-Trinta imagens foram julgadas não traçáveis pelo operador **e** imaginadas
-pelo leitor 1.
-- **Motivos descritos:**
-  - filme plástico cobrindo ou deformando a borda;
-  - pelo sobre o leito;
-  - artefato atravessando a lesão;
-  - borda que se confunde com cicatriz;
-  - segunda ferida ao lado.
-- **Nessas imagens**, o Dice do motor contra o traçado imaginado teve mediana
-  de 0,37 (exploratório).
-- **Figura 1** (a produzir): exemplos dessas imagens, para que o leitor possa
-  tentar traçá-las.
+Em **30 imagens, nenhum dos três observadores viu a borda**:
+
+| observador | como classificou essas 30 |
+|---|---|
+| operador | não traçável |
+| leitor 1 | imaginada |
+| leitora 2 | imaginada (19), parcial (5) ou fechada (6); nenhuma como TRACADA |
+
+Os motivos descritos nas notas foram:
+- filme plástico cobrindo ou deformando a borda;
+- pelo sobre o leito;
+- artefato atravessando a lesão;
+- borda que se confunde com cicatriz;
+- segunda ferida ao lado.
+
+Nessas imagens, o Dice do motor contra o traçado imaginado teve mediana de
+0,37, resultado exploratório.
+
+**As 30 imagens estão na Figura 1, abertas ao leitor**, exatamente como os
+leitores as viram. A Tabela S1 traz, para as 201 imagens, a classificação e a
+nota de cada um dos três observadores. **Convidamos quem discordar a tentar
+traçá-las.** Todas as vistas, os traçados e o painel usado pelos leitores
+estão no repositório público. Uma ferramenta pública para essa tentativa está
+descrita em Disponibilidade de dados.
+
+![Figura 1](FIGURA_1_IMPOSSIVEIS.jpg)
 
 ### 3.6 · Feridas cicatrizadas
 
@@ -369,7 +383,7 @@ do tamanho que espera achar.
 ### 3.7 · No conjunto de teste do trabalho original
 
 Das 32 imagens de teste do trabalho original, 26 estão entre as 201. Três
-estão entre as 30 que nenhum leitor conseguiu traçar.
+estão entre as 30 da Figura 1.
 
 | conjunto | n | Dice médio do motor |
 |---|---|---|
