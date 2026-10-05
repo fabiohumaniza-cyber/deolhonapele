@@ -10,5 +10,5 @@ novo do Dryad (Carrión et al.).
 | `Mouse_wound_photos-updated.zip` | 4 484 969 336 bytes | `5cef41517571c9c2de65873792e3bc539a5572ec2da1571c9df1e10bf44b2a77` |
 
 Hash calculado no PC do Fabio com `certutil -hashfile ... SHA256` (captura de
-tela, 05/10 11h37). Data de modificação do arquivo no PC: 2026-09-27 (mtime
+tela, 05/10 11h37). Data de modificação do arquivo no PC: 2026-10-01, 07h50 de Brasília (mtime
 1790851859447 ms).
