@@ -1,4 +1,6 @@
 # COMANDO PARA O OPUS — Redigir o Certificado de Adição nº 2: triagem de câncer de pele
+
+> **SUSPENSO em 07/10/2026 14h (decisão do Fabio):** NÃO depositar agora. As reivindicações 1 do pedido principal e da adição v1.1 falam em "estrutura cutânea" sem limitar a ferida — o uso em pinta/carcinoma/melanoma já está coberto com a data existente. O depósito do braço de câncer virá depois do Dice no ISIC, com ABCDE implementado e testado. Não executar este comando até lá.
 *(do Fabio, preparado pelo Fable, 07/10/2026, 13h50. Cole este comando numa sessão do Opus.)*
 
 Opus, redige o **relatório descritivo, as reivindicações e o resumo** de um **segundo Certificado de Adição** (art. 76 da LPI), vinculado ao pedido principal **BR 10 2026 024571 2**, cobrindo a **aplicação do método a lesões cutâneas suspeitas de câncer** (carcinoma basocelular, carcinoma espinocelular e melanoma) com **triagem por aceitação/recusa declarada**. Mesma disciplina do certificado da v1.1 depositado hoje de manhã (BR 13 2026 025394-3) — reaproveite o formato.
