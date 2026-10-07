@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>De Olho na Pele · SoLiz — demonstração</title>
-<meta name="description" content="Demonstração da regra do anel — De Olho na Pele / SoLiz. Roda no navegador; a imagem não sai do computador.">
+<title>De Olho na Pele · a borda está na imagem</title>
+<meta name="description" content="De Olho na Pele: a borda de feridas e de pintas está na fotografia, e uma regra escrita a encontra. Preprints e demonstração no navegador.">
 <meta name="robots" content="noindex">
 <style>:root{--bg:#fbfaf8;--fg:#1d1d1f;--mut:#6b6b70;--li:#e3e1dc;--az:#1f4e79;--az2:#2a6ba8;
 --ok:#1f6b3a;--no:#9c2b2b;--cx:#ffffff;--av:#fdf3e3;--avb:#c9a227;--cod:#f3f1ec}
@@ -83,6 +83,19 @@ margin:10px 0}
 <header><div class="w"><span class="marca" data-t="marca"></span>
 <button id="lng" type="button">EN</button></div></header>
 <main class="w">
+<section class="pp" style="margin:26px 0 30px;padding:18px 20px;border:1px solid var(--li);border-radius:10px;background:var(--cx)">
+<p style="margin:0 0 6px;font-size:13px;color:var(--mut);letter-spacing:.04em">PREPRINTS · DE OLHO NA PELE</p>
+<p style="margin:0 0 4px;font-size:18px;font-weight:600">A borda está na imagem</p>
+<p style="margin:0 0 14px;color:var(--mut)">Uma regra escrita em linguagem clínica, sem treinamento e sem rede neural, congelada antes do teste, que diz quando não consegue medir.</p>
+<p style="margin:0 0 4px"><b>Pintas e manchas · 07/10/2026</b></p>
+<p style="margin:0 0 6px"><i>The border is in the image: a clinician-written, training-free rule delineates pigmented skin lesions in a pre-registered blind test of 1,000 dermoscopic images.</i><br>
+<a href="https://doi.org/10.5281/zenodo.23223877" target="_blank" rel="noopener">doi:10.5281/zenodo.23223877</a></p>
+<p style="margin:0 0 10px;font-size:14px;color:var(--mut)">Teste cego com 1.000 imagens do ISIC 2018, rodada única: Dice mediano 0,88 (recusas contadas como zero), contra 0,70 da limiarização de Otsu. Na métrica oficial do desafio ainda fica abaixo das redes neurais, e o artigo diz isso. A ferramenta de pintas não roda nesta página.</p>
+<figure style="margin:0 0 16px"><img src="pintas/mosaico_teste_cego.jpg" alt="Dezesseis imagens do teste cego sorteadas sem olhar o resultado, com o contorno do especialista e o da ferramenta" style="width:100%;height:auto;border-radius:6px"><figcaption style="font-size:13px;color:var(--mut);margin-top:6px">16 imagens sorteadas do teste cego (semente 20261007), sem escolher pelo resultado. Verde: especialista. Ciano: a regra. Número: Dice. REC: recusa declarada. Imagens ISIC 2018 (CC0).</figcaption></figure>
+<p style="margin:0 0 4px"><b>Ferida em modelo suíno · 30/09/2026</b></p>
+<p style="margin:0"><i>A borda da ferida existe na fotografia</i><br>
+<a href="https://doi.org/10.5281/zenodo.23062849" target="_blank" rel="noopener">doi:10.5281/zenodo.23062849</a> · a demonstração abaixo roda a regra deste estudo.</p>
+</section>
 <h1 data-t="idx_t"></h1><p class="sub" data-t="idx_p"></p>
 <div class="btns">
 <a class="bg" href="demo_soliz_auto.html"><b data-t="b_auto"></b><span data-t="b_auto_s"></span></a>
