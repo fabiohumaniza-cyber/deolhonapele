@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Desafio do Contorno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: uma coluna estreita; na tela de comparação, dois painéis lado a lado (empilham no celular) e barra de respostas fixa embaixo. */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --ink:#18221f; --muted:#5c6b66; --line:#d5ddda;
+  --accent:#0f6b5c; --accent-ink:#ffffff; --warn-bg:#fff4d6; --warn-ink:#6b4e00;
+  --trace:#3be0ff; --halo:rgba(0,0,0,.75);
+  --display:"Fraunces",Georgia,serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101615; --surface:#18201e; --ink:#e6eeeb; --muted:#97a8a2; --line:#2c3835;
+  --accent:#4fc3ad; --accent-ink:#0b1513; --warn-bg:#3a3014; --warn-ink:#f2d58a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101615; --surface:#18201e; --ink:#e6eeeb; --muted:#97a8a2; --line:#2c3835;
+  --accent:#4fc3ad; --accent-ink:#0b1513; --warn-bg:#3a3014; --warn-ink:#f2d58a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:0 120px}
+main{max-width:1100px;margin:0 auto}
+.narrow{max-width:620px;margin:0 auto}
+.lang{display:flex;justify-content:flex-end;margin-top:12px}.lang button{padding:6px 12px;font-size:14px}
+.proto{background:var(--warn-bg);color:var(--warn-ink);font-size:14px;padding:8px 12px;border-radius:6px;margin-top:16px}
+h1{font:650 clamp(28px,5vw,40px)/1.15 var(--display);text-wrap:balance;margin:28px 0 8px}
+h2{font:500 22px/1.25 var(--display);text-wrap:balance;margin:0 0 8px}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:14px;margin-top:16px}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-weight:600;margin-bottom:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--accent)}
+input[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);width:120px}
+.regrow{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.regrow select,.regrow input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}#nomereg{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}#numreg{flex:1 1 140px;min-width:0}#ufreg{width:120px}.small{font-size:13px;display:block}
+.tcle{font-size:14px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+button{font:600 16px var(--body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:12px 16px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,.opt:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:20px 0 10px;flex-wrap:wrap}
+.step{font:500 14px var(--mono);letter-spacing:.04em;color:var(--muted)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:700px){.pair{grid-template-columns:1fr}}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}
+figure canvas{display:block;width:100%;height:auto}
+figcaption{font:650 20px var(--display);padding:8px 12px;border-bottom:1px solid var(--line)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.bar .row{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:560px){.bar .row{grid-template-columns:1fr 1fr}}
+.bar button{padding:12px 6px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+td,th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}
+td.n,th.n{text-align:right}
+.meter{height:8px;background:var(--line);border-radius:4px;overflow:hidden;min-width:60px}
+.meter i{display:block;height:100%;background:var(--accent)}
+textarea{width:100%;font:13px var(--mono);padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-height:80px}
+.status{font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){figure{transition:border-color .15s}}
+</style>
+
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<main>
+  <div class="lang narrow"><button id="b-lang" lang="en">English</button></div>
+  <div class="proto narrow" id="proto" data-i="proto">Protótipo para avaliação do Comitê de Ética em Pesquisa. As respostas desta versão são de teste e não entram no estudo.</div>
+
+  <!-- 1. Abertura -->
+  <section id="s-intro" class="narrow">
+    <h1 data-i="t1">Qual contorno segue a borda da lesão?</h1>
+    <p data-i="p1">Você verá 10 fotografias dermatoscópicas de lesões de pele. Em cada uma aparecem dois contornos, A e B, desenhados por fontes diferentes. Escolha o que acompanha melhor a borda da lesão.</p>
+    <p class="muted" data-i="p2">Leva cerca de 3 minutos. Você não precisa identificar a lesão nem dar diagnóstico. Você não saberá de quem é cada contorno; ao final aparece o seu resumo.</p>
+    <button class="primary" id="b-ir-cadastro" data-i="go">Começar</button>
+  </section>
+
+  <!-- 2. Cadastro e termo -->
+  <section id="s-cad" class="narrow" hidden>
+    <h1 data-i="t2">Antes de começar</h1>
+    <form class="card" id="f-cad">
+      <fieldset id="fs-cat">
+        <legend data-i="area">Sua área</legend>
+        <label class="opt"><input type="radio" name="cat" value="dermatologista" id="c-derm"> <span data-i="c1">Dermatologista</span></label>
+        <label class="opt"><input type="radio" name="cat" value="outro_medico" id="c-med"> <span data-i="c2">Médico de outra especialidade</span></label>
+        <label class="opt"><input type="radio" name="cat" value="enfermeiro" id="c-enf"> <span data-i="c3">Enfermeiro</span></label>
+        <label class="opt"><input type="radio" name="cat" value="anotador_imagem" id="c-anot"> <span data-i="c4">Anotador ou traçador de imagens</span></label>
+        <label class="opt"><input type="radio" name="cat" value="laboratorio" id="c-lab"> <span data-i="c5">Profissional de laboratório</span></label>
+        <label class="opt"><input type="radio" name="cat" value="outro" id="c-out"> <span data-i="c6">Outra</span></label>
+      </fieldset>
+      <label for="anos"><b data-i="anos">Anos de prática na área</b><br><input type="number" id="anos" min="0" max="60" inputmode="numeric" required></label>
+      <div id="cx-reg" hidden>
+        <b data-i="reg">Registro no conselho profissional</b>
+        <input type="text" id="nomereg" maxlength="120" autocomplete="name" placeholder="Nome completo" data-ph="ph_nome" style="width:100%;margin-top:6px">
+        <div class="regrow">
+          <select id="conselho" aria-label="Conselho"><option value="">—</option><option>CRM</option><option>COREN</option><option>CRBM</option><option>CRF</option><option>CRO</option><option value="outro" data-i="outrocons">Outro</option></select>
+          <input type="text" id="numreg" maxlength="20" placeholder="Número" data-ph="ph_num">
+          <input type="text" id="ufreg" maxlength="30" placeholder="UF" data-ph="ph_uf">
+        </div>
+        <span class="muted small" data-i="regnota">Nome e registro são usados só para confirmar a sua categoria no site do conselho. Ficam guardados separados das respostas, não são publicados e são apagados depois da conferência.</span>
+      </div>
+      <label for="email"><b data-i="email">E-mail (opcional)</b><br><input type="email" id="email" maxlength="120" autocomplete="email" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);width:100%"><span class="muted small" data-i="emailnota">Só para receber o resultado do estudo quando for publicado. Fica guardado separado das respostas.</span></label>
+      <div class="tcle" id="tcle" data-i="tcle">
+        <b>Termo de consentimento (texto provisório, a ser aprovado pelo CEP).</b> Sua participação é voluntária e confidencial. O e-mail é opcional e serve só para enviarmos o resultado do estudo. Registramos a sua área, os anos de prática e as escolhas feitas nas 10 telas. Para profissões com conselho, pedimos nome completo e número de registro apenas para confirmar a categoria; eles ficam guardados separados das respostas, não são publicados e são apagados depois da conferência. Você pode parar a qualquer momento; as telas já respondidas podem ser usadas na análise. Pesquisador responsável: Fabio da Camara Oliveira Ferreira (ORCID 0009-0009-0997-3275).
+      </div>
+      <label class="opt"><input type="checkbox" id="aceite"> <span data-i="aceite">Li e concordo em participar.</span></label>
+      <button class="primary" type="submit" id="b-inicia" data-i="ini" disabled>Ir para a primeira foto</button>
+    </form>
+  </section>
+
+  <!-- 3. Telas -->
+  <section id="s-tela" hidden>
+    <div class="top">
+      <h2 data-i="q">Qual contorno segue melhor a borda da lesão?</h2>
+      <span class="step" id="passo">1 de 10</span>
+    </div>
+    <div class="pair">
+      <figure><figcaption>A</figcaption><canvas id="cv-A" aria-label="Foto com o contorno A"></canvas></figure>
+      <figure><figcaption>B</figcaption><canvas id="cv-B" aria-label="Foto com o contorno B"></canvas></figure>
+    </div>
+    <div class="tools">
+      <button id="b-esconde" aria-pressed="false" data-i="hide">Esconder os contornos</button>
+      <span class="status" id="salvo"></span>
+    </div>
+  </section>
+
+  <!-- 4. Resultado -->
+  <section id="s-fim" class="narrow" hidden>
+    <h1 data-i="t3">Obrigado pela participação</h1>
+    <p data-i="p3">Este é o resumo das suas 10 escolhas. Ele mostra, para cada fonte, quantas vezes o contorno dela apareceu e quantas vezes você o escolheu. Ele não mostra qual contorno era de quem em cada foto.</p>
+    <div class="card">
+      <table>
+        <thead><tr><th data-i="h1">Fonte do contorno</th><th class="n" data-i="h2">Apareceu</th><th class="n" data-i="h3">Escolhido</th><th class="n">%</th><th></th></tr></thead>
+        <tbody id="tb-res"></tbody>
+      </table>
+      <p class="muted" id="res-outros"></p>
+    </div>
+    <div class="card" id="cx-codigo">
+      <p><b data-i="cod">Código das suas respostas.</b> <span id="cod-msg"></span></p>
+      <textarea id="codigo" readonly></textarea>
+      <div><button id="b-copia" data-i="copy">Copiar código</button> <span class="status" id="copia-msg"></span></div>
+    </div>
+    <p class="muted" data-i="p4">Por favor, não comente o resultado com quem ainda vai participar.</p>
+  </section>
+</main>
+
+<div class="bar" id="bar" hidden>
+  <div class="row">
+    <button class="primary" data-r="A" id="r-A" data-i="rA">A é melhor</button>
+    <button class="primary" data-r="B" id="r-B" data-i="rB">B é melhor</button>
+    <button data-r="igual" id="r-igual" data-i="rI">Equivalentes</button>
+    <button data-r="nenhum" id="r-nenhum" data-i="rN">Nenhum dos dois</button>
+  </div>
+</div>
+
+<script>
+(function(){
+const ENDPOINT=''; // URL do Apps Script (preencher depois de implantar)
+const MODO='prototipo', BASE_SEMENTE=20261011, N_G=8, N_C=2;
+const $=id=>document.getElementById(id);
+let POOL=null, rodada=null, estado=null, img=new Image(), esconder=false;
+const EN={"proto": "Prototype for Research Ethics Committee review. Answers given in this version are test answers and are not part of the study.", "t1": "Which outline follows the lesion border?", "p1": "You will see 10 dermoscopic photographs of skin lesions. Each one shows two outlines, A and B, drawn by different sources. Choose the one that follows the lesion border more closely.", "p2": "It takes about 3 minutes. You do not need to identify the lesion or give a diagnosis. You will not know who drew each outline; your summary appears at the end.", "go": "Start", "t2": "Before you start", "area": "Your field", "c1": "Dermatologist", "c2": "Physician, other specialty", "c3": "Nurse", "c4": "Image annotator or tracer", "c5": "Laboratory professional", "c6": "Other", "anos": "Years of practice in your field", "tcle": "<b>Consent form (provisional text, pending ethics committee approval).</b> Participation is voluntary and confidential. Your e-mail is optional and is used only to send you the study results. We record your field, years of practice and the choices made on the 10 screens. For licensed professions we ask for your full name and licence number only to confirm your field; they are stored separately from your answers, never published, and deleted after checking. You may stop at any time; screens already answered may be used in the analysis. Principal investigator: Fabio da Camara Oliveira Ferreira (ORCID 0009-0009-0997-3275).", "reg": "Professional licence registration", "outrocons": "Other", "email": "E-mail (optional)", "emailnota": "Only to receive the study results when published. Stored separately from your answers.", "ph_nome": "Full name", "ph_num": "Number", "ph_uf": "State / country", "regnota": "Your name and licence are used only to confirm your field on the licensing board website. They are stored separately from your answers, never published, and deleted after checking.", "aceite": "I have read this and agree to take part.", "ini": "Go to the first photo", "q": "Which outline follows the lesion border more closely?", "hide": "Hide the outlines", "show": "Show the outlines", "t3": "Thank you for taking part", "p3": "This is the summary of your 10 choices. For each source it shows how many times its outline appeared and how many times you chose it. It does not show which outline came from which source in each photo.", "h1": "Outline source", "h2": "Shown", "h3": "Chosen", "cod": "Your answer code.", "copy": "Copy code", "p4": "Please do not discuss your result with people who have not taken part yet.", "rA": "A is better", "rB": "B is better", "rI": "Equivalent", "rN": "Neither", "of": "of", "saved": "Answer saved.", "copied": "Copied.", "selected": "Selected; press Ctrl+C.", "imgerr": "The photo did not load. Check your connection and reload the page.", "others": "Equivalent: {i} · Neither: {n}. The image-bank outline appears in every photo; the other sources take turns.", "codok": "Your answers have already been saved. Keep the code only as a receipt.", "codno": "This browser could not save your answers to the study. Copy the code and send it to the researcher.", "n0": "Image-bank outline (ISIC)", "n1": "Independent tracer", "n2": "Neural network", "n3": "Written rule (engine)"}, PTX={"show": "Mostrar os contornos", "hide": "Esconder os contornos", "of": "de", "saved": "Resposta gravada.", "copied": "Copiado.", "selected": "Selecionado; use Ctrl+C.", "imgerr": "A foto não carregou. Verifique a conexão e recarregue a página.", "others": "Equivalentes: {i} · Nenhum dos dois: {n}. O traçado do banco aparece em todas as fotos; as outras fontes se revezam.", "codok": "Suas respostas já foram gravadas. Guarde o código só como comprovante.", "codno": "Este navegador não conseguiu gravar as respostas no estudo. Copie o código e envie ao pesquisador.", "n0": "Traçado do banco de imagens (ISIC)", "n1": "Traçador independente", "n2": "Rede neural", "n3": "Regra escrita (motor)"}, PT={};
+document.querySelectorAll('[data-i]').forEach(e=>PT[e.dataset.i]=e.innerHTML);
+Object.assign(PT,PTX);
+let LANG=(navigator.language||'pt').toLowerCase().startsWith('pt')?'pt':'en';
+const T=k=>(LANG==='en'?EN:PT)[k];
+function aplicaLingua(){
+  document.documentElement.lang=LANG==='en'?'en':'pt-BR';
+  document.querySelectorAll('[data-i]').forEach(e=>{const v=T(e.dataset.i); if(v!=null) e.innerHTML=v});
+  document.querySelectorAll('[data-ph]').forEach(e=>{e.placeholder=LANG==='en'?EN[e.dataset.ph]:({ph_num:'Número',ph_uf:'UF',ph_nome:'Nome completo'})[e.dataset.ph]});
+  $('b-lang').textContent=LANG==='en'?'Português':'English';
+  $('b-lang').lang=LANG==='en'?'pt':'en';
+  if(esconder) $('b-esconde').textContent=T('show');
+  if(estado&&estado.i<estado.telas.length&&!$('s-tela').hidden) $('passo').textContent=(estado.i+1)+' '+T('of')+' '+estado.telas.length;
+  if(!$('s-fim').hidden) fim();
+}
+$('b-lang').onclick=()=>{LANG=LANG==='en'?'pt':'en'; aplicaLingua()};
+
+
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function embaralha(arr,rnd){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function sorteia(semente){
+  const rnd=mulberry32(semente);
+  const g=embaralha(POOL.filter(p=>p.k==='g'),rnd).slice(0,N_G);
+  const c=embaralha(POOL.filter(p=>p.k==='c'),rnd).slice(0,N_C);
+  const telas=embaralha(g.concat(c),rnd);
+  const uso={1:0,2:0,3:0};
+  return telas.map(p=>{
+    const disp=[1,2,3].filter(s=>p.c[s]);
+    const min=Math.min(...disp.map(s=>uso[s]));
+    const cand=disp.filter(s=>uso[s]===min);
+    const comp=cand[Math.floor(rnd()*cand.length)]; uso[comp]++;
+    const isicEmA=rnd()<0.5;
+    return {t:p.t,k:p.k,comp,isicEmA,resp:null,ms:null};
+  });
+}
+
+function desenha(){
+  const tela=estado.telas[estado.i], p=POOL.find(x=>x.t===tela.t);
+  const lados={A:tela.isicEmA?0:tela.comp, B:tela.isicEmA?tela.comp:0};
+  for(const L of ['A','B']){
+    const cv=$('cv-'+L), ctx=cv.getContext('2d');
+    cv.width=p.w; cv.height=p.h;
+    ctx.drawImage(img,0,0,p.w,p.h);
+    if(esconder) continue;
+    const lw=Math.max(2,p.w/320);
+    for(const pass of [[lw+2.5,'rgba(0,0,0,.7)'],[lw,getComputedStyle(document.documentElement).getPropertyValue('--trace').trim()||'#3be0ff']]){
+      ctx.lineWidth=pass[0]; ctx.strokeStyle=pass[1]; ctx.lineJoin='round';
+      for(const poly of p.c[lados[L]]){
+        ctx.beginPath(); ctx.moveTo(poly[0],poly[1]);
+        for(let k=2;k<poly.length;k+=2) ctx.lineTo(poly[k],poly[k+1]);
+        ctx.closePath(); ctx.stroke();
+      }
+    }
+  }
+}
+
+function abreTela(){
+  const tela=estado.telas[estado.i];
+  $('passo').textContent=(estado.i+1)+' '+T('of')+' '+estado.telas.length;
+  setBotoes(true);
+  img=new Image();
+  img.onload=()=>{desenha(); setBotoes(false); estado.t0=performance.now()};
+  img.onerror=()=>{$('salvo').textContent=T('imgerr')};
+  img.src='f/'+tela.t+'.jpg';
+  window.scrollTo({top:0});
+}
+function setBotoes(off){document.querySelectorAll('.bar button').forEach(b=>b.disabled=off)}
+
+// Envio automático para a planilha (Google Apps Script). Cada envio vira uma linha.
+function envia(p){
+  if(!ENDPOINT) return false;
+  try{ fetch(ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)}); return true; }catch(e){ return false; }
+}
+function gravaReg(){
+  if(!estado.reg&&!estado.email) return;
+  envia({tipo:'registro',rodada,categoria:estado.cat,...(estado.reg||{}),email:estado.email,quando:new Date().toISOString()});
+}
+function grava(){
+  const base={modo:MODO,rodada,lingua:LANG,semente:estado.semente,categoria:estado.cat,anos:estado.anos,inicio:estado.inicio,quando:new Date().toISOString()};
+  let ok;
+  if(estado.i===0) ok=envia({tipo:'inicio',...base});
+  else { const n=estado.i-1, t=estado.telas[n];
+    ok=envia({tipo:'resposta',...base,tela:n+1,t:t.t,k:t.k,comp:t.comp,isicEmA:t.isicEmA,resp:t.resp,ms:t.ms}); }
+  if(ok) $('salvo').textContent=T('saved');
+}
+
+function responde(r){
+  const tela=estado.telas[estado.i];
+  tela.resp=r; tela.ms=Math.round(performance.now()-(estado.t0||performance.now()));
+  estado.i++;
+  grava();
+  if(estado.i<estado.telas.length) abreTela(); else fim();
+}
+
+function fim(){
+  $('s-tela').hidden=true; $('bar').hidden=true; $('s-fim').hidden=false;
+  const ap={0:0,1:0,2:0,3:0}, es={0:0,1:0,2:0,3:0}; let ig=0, nen=0;
+  for(const t of estado.telas){
+    ap[0]++; ap[t.comp]++;
+    if(t.resp==='igual') ig++; else if(t.resp==='nenhum') nen++;
+    else { const isicGanhou=(t.resp==='A')===t.isicEmA; es[isicGanhou?0:t.comp]++; }
+  }
+  const tb=$('tb-res'); tb.textContent='';
+  for(const s of [0,1,2,3]){ if(!ap[s]) continue;
+    const pc=Math.round(100*es[s]/ap[s]);
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td></td><td class="n">'+ap[s]+'</td><td class="n">'+es[s]+'</td><td class="n">'+pc+'%</td><td><div class="meter"><i style="width:'+pc+'%"></i></div></td>';
+    tr.firstChild.textContent=T('n'+s); tb.appendChild(tr);
+  }
+  $('res-outros').textContent=T('others').replace('{i}',ig).replace('{n}',nen);
+  const cod={m:MODO,l:LANG,g:estado.reg,e:estado.email,s:estado.semente,c:estado.cat,a:estado.anos,r:estado.telas.map(t=>[t.t,t.comp,t.isicEmA?1:0,t.resp,t.ms])};
+  $('codigo').value=btoa(unescape(encodeURIComponent(JSON.stringify(cod))));
+  $('cod-msg').textContent=T(ENDPOINT?'codok':'codno');
+}
+
+// eventos
+$('b-ir-cadastro').onclick=()=>{$('s-intro').hidden=true;$('s-cad').hidden=false};
+const COM_CONSELHO=['dermatologista','outro_medico','enfermeiro','laboratorio'];
+const precisaReg=()=>{const c=document.querySelector('input[name=cat]:checked');return !!c&&COM_CONSELHO.includes(c.value)};
+const valida=()=>{const pr=precisaReg(); $('cx-reg').hidden=!pr;
+  const regOk=!pr||($('nomereg').value.trim().split(/\s+/).length>=2&&$('conselho').value&&$('numreg').value.trim().length>=3&&$('ufreg').value.trim().length>=2);
+  $('b-inicia').disabled=!(document.querySelector('input[name=cat]:checked')&&$('anos').value!==''&&regOk&&$('aceite').checked&&POOL)};
+$('f-cad').addEventListener('input',valida); $('f-cad').addEventListener('change',valida);
+$('f-cad').addEventListener('submit',e=>{
+  e.preventDefault(); if($('b-inicia').disabled) return;
+  const sorteio=Math.floor(Math.random()*1e6);
+  rodada=Date.now().toString(36)+'-'+sorteio;
+  estado={semente:BASE_SEMENTE+sorteio, cat:document.querySelector('input[name=cat]:checked').value,
+          anos:Number($('anos').value), inicio:new Date().toISOString(), i:0};
+  estado.email=$('email').value.trim()||null;
+  estado.reg=precisaReg()?{nome:$('nomereg').value.trim(),conselho:$('conselho').value,numero:$('numreg').value.trim(),uf:$('ufreg').value.trim()}:null;
+  gravaReg();
+  estado.telas=sorteia(estado.semente);
+  $('s-cad').hidden=true; $('s-tela').hidden=false; $('bar').hidden=false;
+  abreTela(); grava();
+});
+document.querySelectorAll('.bar button').forEach(b=>b.onclick=()=>responde(b.dataset.r));
+$('b-esconde').onclick=()=>{esconder=!esconder;$('b-esconde').setAttribute('aria-pressed',esconder);$('b-esconde').textContent=T(esconder?'show':'hide');desenha()};
+$('b-copia').onclick=()=>{const t=$('codigo');navigator.clipboard.writeText(t.value).then(()=>$('copia-msg').textContent=T('copied')).catch(()=>{t.select();$('copia-msg').textContent=T('selected')})};
+
+fetch('pool.json').then(r=>r.json()).then(p=>{POOL=p;valida()}).catch(()=>{$('proto').textContent=LANG==='en'?'The photos could not be loaded. Reload the page.':'Não foi possível carregar as fotos. Recarregue a página.'});
+aplicaLingua();
+
+})();
+</script>
+
+</body>
+</html>
