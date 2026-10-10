@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Painel do Contorno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: uma coluna estreita; na tela de comparação, dois painéis lado a lado (empilham no celular) e barra de respostas fixa embaixo. */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --ink:#18221f; --muted:#5c6b66; --line:#d5ddda;
+  --accent:#0f6b5c; --accent-ink:#ffffff; --warn-bg:#fff4d6; --warn-ink:#6b4e00;
+  --trace:#3be0ff; --halo:rgba(0,0,0,.75);
+  --display:"Fraunces",Georgia,serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101615; --surface:#18201e; --ink:#e6eeeb; --muted:#97a8a2; --line:#2c3835;
+  --accent:#4fc3ad; --accent-ink:#0b1513; --warn-bg:#3a3014; --warn-ink:#f2d58a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101615; --surface:#18201e; --ink:#e6eeeb; --muted:#97a8a2; --line:#2c3835;
+  --accent:#4fc3ad; --accent-ink:#0b1513; --warn-bg:#3a3014; --warn-ink:#f2d58a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:0 120px}
+main{max-width:1100px;margin:0 auto}
+.narrow{max-width:620px;margin:0 auto}
+.lang{display:flex;justify-content:flex-end;margin-top:12px}.lang button{padding:6px 12px;font-size:14px}
+.proto{background:var(--warn-bg);color:var(--warn-ink);font-size:14px;padding:8px 12px;border-radius:6px;margin-top:16px}
+h1{font:650 clamp(28px,5vw,40px)/1.15 var(--display);text-wrap:balance;margin:28px 0 8px}
+h2{font:500 22px/1.25 var(--display);text-wrap:balance;margin:0 0 8px}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:14px;margin-top:16px}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-weight:600;margin-bottom:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--accent)}
+input[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);width:120px}
+.regrow{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.regrow select,.regrow input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}#nomereg{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}#numreg{flex:1 1 140px;min-width:0}#ufreg{width:120px}.small{font-size:13px;display:block}
+.tcle{font-size:14px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+button{font:600 16px var(--body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:12px 16px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,.opt:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:20px 0 10px;flex-wrap:wrap}
+.step{font:500 14px var(--mono);letter-spacing:.04em;color:var(--muted)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:700px){.pair{grid-template-columns:1fr}}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}
+figure canvas{display:block;width:100%;height:auto}
+figcaption{font:650 20px var(--display);padding:8px 12px;border-bottom:1px solid var(--line)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.bar .row{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:560px){.bar .row{grid-template-columns:1fr 1fr}}
+.bar button{padding:12px 6px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+td,th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}
+td.n,th.n{text-align:right}
+.meter{height:8px;background:var(--line);border-radius:4px;overflow:hidden;min-width:60px}
+.meter i{display:block;height:100%;background:var(--accent)}
+textarea{width:100%;font:13px var(--mono);padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-height:80px}
+.status{font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){figure{transition:border-color .15s}}
+  .exemplo{margin:18px 0 22px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  .exemplo h2{font:600 18px/1.3 var(--body);margin:0 0 6px}
+  .ex-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  .ex-grade figure{margin:0;text-align:center}
+  .ex-grade svg{width:100%;height:auto;display:block}
+  .ex-grade figcaption{margin-top:6px;font:14px/1.3 var(--body);padding:0;border:0}
+  .ex-grade figcaption .small{font-size:12.5px}
+  .ex-grade figure{border:0;background:none}
+  @media (max-width:560px){.ex-grade{grid-template-columns:1fr;max-width:260px;margin-left:auto;margin-right:auto}}
+</style>
+
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<main>
+  <div class="lang narrow"><button id="b-lang" lang="en">English</button></div>
+  <div class="proto narrow" id="proto" data-i="proto">Painel de avaliadores convidados. Este link é pessoal: não repasse.</div>
+
+  <!-- 1. Abertura -->
+  <section id="s-intro" class="narrow">
+    <h1 data-i="t1">Qual contorno segue a borda da lesão?</h1>
+    <p data-i="p1">Você verá 20 fotografias dermatoscópicas de lesões de pele. Em cada uma aparecem dois contornos, A e B, desenhados por fontes diferentes. Escolha o que acompanha melhor a borda da lesão.</p>
+    <p class="muted" data-i="p2">Leva cerca de 6 minutos. Você não precisa identificar a lesão nem dar diagnóstico. Você não saberá de quem é cada contorno; ao final aparece o seu resumo.</p>
+
+    <div class="exemplo" aria-label="Exemplo">
+      <h2 data-i="ex_t">Antes de começar: o que é seguir a borda</h2>
+      <p class="muted" data-i="ex_p">A borda da lesão é o limite onde a pigmentação termina e começa a pele normal. Um bom contorno acompanha esse limite. O desenho abaixo é só um exemplo esquemático, não é uma foto do estudo.</p>
+      <div class="ex-grade">
+        <figure><svg viewBox="0 0 200 180" role="img" aria-hidden="true"><defs><radialGradient id="ga" cx="48%" cy="45%" r="60%"><stop offset="0" stop-color="#4a2a17"/><stop offset=".6" stop-color="#7a4a2b"/><stop offset="1" stop-color="#a9724c"/></radialGradient><filter id="fa"><feGaussianBlur stdDeviation="1.6"/></filter></defs><rect width="200" height="180" rx="10" fill="#e8c6a8"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="url(#ga)" filter="url(#fa)"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="none" stroke="rgba(0,0,0,.7)" stroke-width="4.5" stroke-linejoin="round"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="none" stroke="var(--trace)" stroke-width="2.2" stroke-linejoin="round"/></svg><figcaption><b data-i="ex_c1">Segue a borda</b><br><span class="muted small" data-i="ex_c1b">acompanha o limite entre a lesão e a pele</span></figcaption></figure>
+        <figure><svg viewBox="0 0 200 180" role="img" aria-hidden="true"><defs><radialGradient id="gb" cx="48%" cy="45%" r="60%"><stop offset="0" stop-color="#4a2a17"/><stop offset=".6" stop-color="#7a4a2b"/><stop offset="1" stop-color="#a9724c"/></radialGradient><filter id="fb"><feGaussianBlur stdDeviation="1.6"/></filter></defs><rect width="200" height="180" rx="10" fill="#e8c6a8"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="url(#gb)" filter="url(#fb)"/><path d="M160.8,90.0 L160.9,92.9 L160.0,95.7 L158.5,98.4 L156.6,100.9 L154.5,103.3 L152.4,105.5 L150.6,107.7 L149.0,109.8 L147.7,112.1 L146.4,114.3 L145.0,116.6 L143.4,118.7 L141.6,120.6 L139.3,122.2 L136.7,123.4 L133.9,124.3 L131.1,124.9 L128.2,125.3 L125.5,125.8 L123.1,126.4 L120.9,127.2 L118.8,128.4 L116.8,129.9 L114.8,131.5 L112.7,133.1 L110.4,134.4 L107.9,135.3 L105.3,135.6 L102.6,135.2 L100.0,134.1 L97.5,132.5 L95.3,130.6 L93.3,128.7 L91.3,127.1 L89.4,126.0 L87.3,125.5 L84.9,125.7 L82.1,126.6 L78.8,127.8 L75.1,129.3 L71.0,130.6 L66.9,131.4 L62.9,131.7 L59.2,131.2 L56.0,130.0 L53.5,128.1 L51.7,125.6 L50.4,122.7 L49.7,119.7 L49.3,116.6 L49.1,113.6 L48.9,110.7 L48.8,107.9 L48.6,105.2 L48.6,102.5 L48.8,99.9 L49.3,97.3 L50.4,94.7 L51.8,92.3 L53.7,90.0 L55.9,87.9 L58.0,86.0 L60.0,84.2 L61.5,82.6 L62.4,80.8 L62.6,79.0 L62.2,76.8 L61.2,74.3 L59.9,71.4 L58.7,68.3 L57.8,65.1 L57.5,61.9 L57.9,59.0 L59.1,56.5 L61.0,54.6 L63.6,53.2 L66.5,52.4 L69.6,52.0 L72.6,51.7 L75.5,51.3 L78.0,50.7 L80.3,49.7 L82.4,48.3 L84.4,46.4 L86.5,44.2 L88.8,42.0 L91.3,39.9 L94.0,38.3 L97.0,37.2 L100.0,36.8 L103.1,37.0 L106.0,37.9 L108.9,39.2 L111.5,40.7 L114.1,42.3 L116.5,43.9 L118.9,45.3 L121.2,46.7 L123.5,48.1 L125.7,49.6 L127.7,51.3 L129.4,53.3 L130.6,55.6 L131.4,58.3 L131.7,61.2 L131.7,64.1 L131.4,66.9 L131.1,69.4 L131.2,71.6 L131.8,73.3 L133.2,74.6 L135.4,75.7 L138.5,76.6 L142.3,77.5 L146.4,78.7 L150.5,80.2 L154.3,82.2 L157.5,84.5 L159.7,87.2 Z" fill="none" stroke="rgba(0,0,0,.7)" stroke-width="4.5" stroke-linejoin="round"/><path d="M160.8,90.0 L160.9,92.9 L160.0,95.7 L158.5,98.4 L156.6,100.9 L154.5,103.3 L152.4,105.5 L150.6,107.7 L149.0,109.8 L147.7,112.1 L146.4,114.3 L145.0,116.6 L143.4,118.7 L141.6,120.6 L139.3,122.2 L136.7,123.4 L133.9,124.3 L131.1,124.9 L128.2,125.3 L125.5,125.8 L123.1,126.4 L120.9,127.2 L118.8,128.4 L116.8,129.9 L114.8,131.5 L112.7,133.1 L110.4,134.4 L107.9,135.3 L105.3,135.6 L102.6,135.2 L100.0,134.1 L97.5,132.5 L95.3,130.6 L93.3,128.7 L91.3,127.1 L89.4,126.0 L87.3,125.5 L84.9,125.7 L82.1,126.6 L78.8,127.8 L75.1,129.3 L71.0,130.6 L66.9,131.4 L62.9,131.7 L59.2,131.2 L56.0,130.0 L53.5,128.1 L51.7,125.6 L50.4,122.7 L49.7,119.7 L49.3,116.6 L49.1,113.6 L48.9,110.7 L48.8,107.9 L48.6,105.2 L48.6,102.5 L48.8,99.9 L49.3,97.3 L50.4,94.7 L51.8,92.3 L53.7,90.0 L55.9,87.9 L58.0,86.0 L60.0,84.2 L61.5,82.6 L62.4,80.8 L62.6,79.0 L62.2,76.8 L61.2,74.3 L59.9,71.4 L58.7,68.3 L57.8,65.1 L57.5,61.9 L57.9,59.0 L59.1,56.5 L61.0,54.6 L63.6,53.2 L66.5,52.4 L69.6,52.0 L72.6,51.7 L75.5,51.3 L78.0,50.7 L80.3,49.7 L82.4,48.3 L84.4,46.4 L86.5,44.2 L88.8,42.0 L91.3,39.9 L94.0,38.3 L97.0,37.2 L100.0,36.8 L103.1,37.0 L106.0,37.9 L108.9,39.2 L111.5,40.7 L114.1,42.3 L116.5,43.9 L118.9,45.3 L121.2,46.7 L123.5,48.1 L125.7,49.6 L127.7,51.3 L129.4,53.3 L130.6,55.6 L131.4,58.3 L131.7,61.2 L131.7,64.1 L131.4,66.9 L131.1,69.4 L131.2,71.6 L131.8,73.3 L133.2,74.6 L135.4,75.7 L138.5,76.6 L142.3,77.5 L146.4,78.7 L150.5,80.2 L154.3,82.2 L157.5,84.5 L159.7,87.2 Z" fill="none" stroke="var(--trace)" stroke-width="2.2" stroke-linejoin="round"/></svg><figcaption><b data-i="ex_c2">Pequeno demais</b><br><span class="muted small" data-i="ex_c2b">corta por dentro e deixa parte da lesão de fora</span></figcaption></figure>
+        <figure><svg viewBox="0 0 200 180" role="img" aria-hidden="true"><defs><radialGradient id="gc" cx="48%" cy="45%" r="60%"><stop offset="0" stop-color="#4a2a17"/><stop offset=".6" stop-color="#7a4a2b"/><stop offset="1" stop-color="#a9724c"/></radialGradient><filter id="fc"><feGaussianBlur stdDeviation="1.6"/></filter></defs><rect width="200" height="180" rx="10" fill="#e8c6a8"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="url(#gc)" filter="url(#fc)"/><path d="M196.0,90.0 L196.0,94.6 L195.1,99.1 L193.3,103.4 L191.0,107.6 L188.5,111.5 L185.9,115.4 L183.5,119.1 L181.2,122.9 L179.0,126.6 L176.9,130.3 L174.5,134.0 L171.9,137.5 L168.9,140.7 L165.5,143.6 L161.6,146.0 L157.5,148.1 L153.2,149.7 L148.9,151.2 L144.7,152.6 L140.7,154.1 L136.8,155.7 L133.1,157.6 L129.4,159.7 L125.7,161.9 L121.8,164.0 L117.7,165.7 L113.4,166.9 L109.0,167.4 L104.4,167.2 L100.0,166.1 L95.7,164.5 L91.6,162.5 L87.7,160.3 L84.0,158.4 L80.3,156.9 L76.4,155.9 L72.3,155.6 L67.8,155.8 L62.8,156.4 L57.5,157.0 L51.9,157.4 L46.2,157.3 L40.7,156.6 L35.6,155.0 L31.1,152.6 L27.3,149.5 L24.3,145.7 L22.0,141.5 L20.2,137.1 L18.8,132.6 L17.7,128.1 L16.8,123.7 L15.9,119.4 L15.1,115.1 L14.6,110.8 L14.4,106.5 L14.6,102.3 L15.3,98.1 L16.7,94.0 L18.5,90.0 L20.7,86.2 L23.0,82.6 L25.2,79.2 L27.1,75.9 L28.4,72.6 L29.2,69.1 L29.3,65.3 L29.0,61.3 L28.6,56.9 L28.2,52.3 L28.3,47.7 L29.0,43.1 L30.5,38.8 L32.9,35.1 L36.1,31.9 L40.0,29.4 L44.3,27.5 L48.9,26.1 L53.5,24.8 L57.9,23.6 L62.0,22.2 L66.0,20.5 L69.8,18.4 L73.5,15.9 L77.4,13.3 L81.4,10.7 L85.8,8.3 L90.3,6.4 L95.1,5.2 L100.0,4.8 L104.9,5.1 L109.7,6.1 L114.4,7.6 L118.8,9.4 L123.2,11.4 L127.4,13.4 L131.5,15.5 L135.5,17.5 L139.5,19.6 L143.3,21.8 L146.9,24.4 L150.1,27.4 L152.8,30.7 L155.0,34.5 L156.6,38.5 L157.8,42.7 L158.7,46.8 L159.6,50.6 L160.7,54.2 L162.3,57.3 L164.6,60.1 L167.6,62.6 L171.4,65.1 L175.7,67.6 L180.4,70.4 L185.0,73.6 L189.1,77.2 L192.5,81.2 L194.8,85.5 Z" fill="none" stroke="rgba(0,0,0,.7)" stroke-width="4.5" stroke-linejoin="round"/><path d="M196.0,90.0 L196.0,94.6 L195.1,99.1 L193.3,103.4 L191.0,107.6 L188.5,111.5 L185.9,115.4 L183.5,119.1 L181.2,122.9 L179.0,126.6 L176.9,130.3 L174.5,134.0 L171.9,137.5 L168.9,140.7 L165.5,143.6 L161.6,146.0 L157.5,148.1 L153.2,149.7 L148.9,151.2 L144.7,152.6 L140.7,154.1 L136.8,155.7 L133.1,157.6 L129.4,159.7 L125.7,161.9 L121.8,164.0 L117.7,165.7 L113.4,166.9 L109.0,167.4 L104.4,167.2 L100.0,166.1 L95.7,164.5 L91.6,162.5 L87.7,160.3 L84.0,158.4 L80.3,156.9 L76.4,155.9 L72.3,155.6 L67.8,155.8 L62.8,156.4 L57.5,157.0 L51.9,157.4 L46.2,157.3 L40.7,156.6 L35.6,155.0 L31.1,152.6 L27.3,149.5 L24.3,145.7 L22.0,141.5 L20.2,137.1 L18.8,132.6 L17.7,128.1 L16.8,123.7 L15.9,119.4 L15.1,115.1 L14.6,110.8 L14.4,106.5 L14.6,102.3 L15.3,98.1 L16.7,94.0 L18.5,90.0 L20.7,86.2 L23.0,82.6 L25.2,79.2 L27.1,75.9 L28.4,72.6 L29.2,69.1 L29.3,65.3 L29.0,61.3 L28.6,56.9 L28.2,52.3 L28.3,47.7 L29.0,43.1 L30.5,38.8 L32.9,35.1 L36.1,31.9 L40.0,29.4 L44.3,27.5 L48.9,26.1 L53.5,24.8 L57.9,23.6 L62.0,22.2 L66.0,20.5 L69.8,18.4 L73.5,15.9 L77.4,13.3 L81.4,10.7 L85.8,8.3 L90.3,6.4 L95.1,5.2 L100.0,4.8 L104.9,5.1 L109.7,6.1 L114.4,7.6 L118.8,9.4 L123.2,11.4 L127.4,13.4 L131.5,15.5 L135.5,17.5 L139.5,19.6 L143.3,21.8 L146.9,24.4 L150.1,27.4 L152.8,30.7 L155.0,34.5 L156.6,38.5 L157.8,42.7 L158.7,46.8 L159.6,50.6 L160.7,54.2 L162.3,57.3 L164.6,60.1 L167.6,62.6 L171.4,65.1 L175.7,67.6 L180.4,70.4 L185.0,73.6 L189.1,77.2 L192.5,81.2 L194.8,85.5 Z" fill="none" stroke="var(--trace)" stroke-width="2.2" stroke-linejoin="round"/></svg><figcaption><b data-i="ex_c3">Grande demais</b><br><span class="muted small" data-i="ex_c3b">inclui pele normal em volta da lesão</span></figcaption></figure>
+      </div>
+    </div>
+    <button class="primary" id="b-ir-cadastro" data-i="go">Começar</button>
+  </section>
+
+  <!-- 2. Cadastro e termo -->
+  <section id="s-cad" class="narrow" hidden>
+    <h1 data-i="t2">Antes de começar</h1>
+    <form class="card" id="f-cad">
+      <label for="nome"><b data-i="nome">Nome completo</b><br><input type="text" id="nome" maxlength="120" autocomplete="name" style="font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);width:100%"><span class="muted small" data-i="nomenota">Como deve aparecer nos agradecimentos do artigo.</span></label>
+      <fieldset id="fs-cat">
+        <legend data-i="area">Sua formação</legend>
+        <label class="opt"><input type="radio" name="cat" value="dermatologista"> <span data-i="c1">Médico dermatologista</span></label>
+        <label class="opt"><input type="radio" name="cat" value="outro_medico"> <span data-i="c2">Médico de outra especialidade</span></label>
+        <label class="opt"><input type="radio" name="cat" value="enfermeiro"> <span data-i="c3">Enfermeiro</span></label>
+        <label class="opt"><input type="radio" name="cat" value="estudante_saude"> <span data-i="c4">Estudante da área da saúde</span></label>
+        <label class="opt"><input type="radio" name="cat" value="outra_saude"> <span data-i="c5">Outra profissão da saúde</span></label>
+        <label class="opt"><input type="radio" name="cat" value="outro"> <span data-i="c6">Outra área</span></label>
+      </fieldset>
+      <label for="anos"><b data-i="anos">Anos de prática na área (0 se for estudante ou de outra área)</b><br><input type="number" id="anos" min="0" max="60" inputmode="numeric"></label>
+      <div class="tcle" data-i="tcle">Você participa como <b>avaliador colaborador</b> da equipe do projeto De Olho na Pele. As fotos são públicas e anônimas. Registramos só o seu nome, a sua formação, os anos de prática e as escolhas nas 20 telas. Seu nome e sua formação aparecem nos agradecimentos do artigo. Nada mais é coletado. Responsável: Fabio da Camara Oliveira Ferreira (ORCID 0009-0009-0997-3275).</div>
+      <label class="opt"><input type="checkbox" id="aceite"> <span data-i="aceite">Aceito participar como avaliador colaborador e ser citado nos agradecimentos com meu nome e formação.</span></label>
+      <button class="primary" type="submit" id="b-inicia" data-i="ini" disabled>Ir para a primeira foto</button>
+    </form>
+  </section>
+
+  <!-- 3. Telas -->
+  <section id="s-tela" hidden>
+    <div class="top">
+      <h2 data-i="q">Qual contorno segue melhor a borda da lesão?</h2>
+      <span class="step" id="passo">1 de 20</span>
+    </div>
+    <div class="pair">
+      <figure><figcaption>A</figcaption><canvas id="cv-A" aria-label="Foto com o contorno A"></canvas></figure>
+      <figure><figcaption>B</figcaption><canvas id="cv-B" aria-label="Foto com o contorno B"></canvas></figure>
+    </div>
+    <div class="tools">
+      <button id="b-esconde" aria-pressed="false" data-i="hide">Esconder os contornos</button>
+      <span class="status" id="salvo"></span>
+    </div>
+  </section>
+
+  <!-- 4. Resultado -->
+  <section id="s-fim" class="narrow" hidden>
+    <h1 data-i="t3">Obrigado, avaliador!</h1>
+    <p data-i="p3">Este é o resumo das suas 20 escolhas. Ele mostra, para cada fonte, quantas vezes o contorno dela apareceu e quantas vezes você o escolheu. Ele não mostra qual contorno era de quem em cada foto.</p>
+    <div class="card">
+      <table>
+        <thead><tr><th data-i="h1">Fonte do contorno</th><th class="n" data-i="h2">Apareceu</th><th class="n" data-i="h3">Escolhido</th><th class="n">%</th><th></th></tr></thead>
+        <tbody id="tb-res"></tbody>
+      </table>
+      <p class="muted" id="res-outros"></p>
+    </div>
+    <div class="card" id="cx-codigo">
+      <p><b data-i="cod">Código das suas respostas.</b> <span id="cod-msg"></span></p>
+      <textarea id="codigo" readonly></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><a id="b-zap" href="#" target="_blank" rel="noopener" style="font:600 16px var(--body);border-radius:8px;background:var(--accent);color:var(--accent-ink);padding:12px 16px;text-decoration:none" data-i="zap">Enviar ao Fabio pelo WhatsApp</a><button id="b-copia" data-i="copy">Copiar código</button> <span class="status" id="copia-msg"></span></div>
+    </div>
+    <p class="muted" data-i="p4">Por favor, não comente o resultado com quem ainda vai participar.</p>
+  </section>
+</main>
+
+<div class="bar" id="bar" hidden>
+  <div class="row">
+    <button class="primary" data-r="A" id="r-A" data-i="rA">A é melhor</button>
+    <button class="primary" data-r="B" id="r-B" data-i="rB">B é melhor</button>
+    <button data-r="igual" id="r-igual" data-i="rI">Equivalentes</button>
+    <button data-r="nenhum" id="r-nenhum" data-i="rN">Nenhum dos dois</button>
+  </div>
+</div>
+
+<script>
+(function(){
+const ENDPOINT=''; // URL do Apps Script (preencher depois de implantar)
+const MODO='painel', BASE_SEMENTE=20261012, N_G=16, N_C=4, ZAP='5511976666697', SAL='painel11D-', H=["3fa50a31f181f76f", "22f25e4d94c569c4", "20ce7ec394d5d3cc", "a8a399a851489dc3", "ae0675859762bb6d", "f51447f2ea3a5e5d", "8d25d747494bb959", "10d6b5cee70112a2", "2822d74ecff013ba", "b0c6452b9e0fdc48", "2c06bc76095614a0", "0c433c4169478afc", "febe1db71e96ad67", "1ddc3dbc5c7887ec", "ba8176ca3430b5a1", "3378bdaf7cdb7a1c", "25a160b369efc701", "6f9fc7c080d93579", "4ab9de17d01de44c", "498a1c11d3c6e18d", "15dd67c9b83c9efd", "9cb1149e1a78462e", "fc493862f0b85f76", "c9e8289b501f56dc", "ccb63338e809f38b", "7891ecdd7575cf43", "6b63500097f5e97c", "ba1f64203782b119", "5373e5a65bb53f8d", "325bff4f9466ab41", "834eca64419872ae", "3e2433cf10e31a6e", "c6c0c116a1671f11", "342f716306386de3", "59cf381beb15b2c4", "cdb26a4894692f9b", "5631f6dbc2b5f9bc", "f645d1f91a7cfa79", "1e5a8e31b8a8b189", "22a434cc9e56cb33"];
+const CONV=(new URLSearchParams(location.search).get('c')||'').trim().toUpperCase();
+const $=id=>document.getElementById(id);
+let POOL=null, rodada=null, estado=null, img=new Image(), esconder=false;
+const EN={"proto": "Invited reviewer panel. This link is personal: do not forward it.", "t1": "Which outline follows the lesion border?", "p1": "You will see 20 dermoscopic photographs of skin lesions. Each one shows two outlines, A and B, drawn by different sources. Choose the one that follows the lesion border more closely.", "p2": "It takes about 6 minutes. You do not need to identify the lesion or give a diagnosis. You will not know who drew each outline; your summary appears at the end.", "go": "Start", "t2": "Before you start", "area": "Your background", "c1": "Physician, dermatologist", "c2": "Physician, other specialty", "c3": "Nurse", "c4": "Health sciences student", "c5": "Other health profession", "c6": "Other field", "anos": "Years of practice (0 if student or other field)", "tcle": "You take part as a <b>collaborating reviewer</b> on the De Olho na Pele project team. The photos are public and anonymous. We record only your name, background, years of practice and your choices on the 20 screens. Your name and background appear in the article acknowledgements. Nothing else is collected. Lead: Fabio da Camara Oliveira Ferreira (ORCID 0009-0009-0997-3275).", "aceite": "I agree to take part as a collaborating reviewer and to be named in the acknowledgements with my name and background.", "ini": "Go to the first photo", "q": "Which outline follows the lesion border more closely?", "hide": "Hide the outlines", "show": "Show the outlines", "t3": "Thank you, reviewer!", "p3": "This is the summary of your 20 choices. For each source it shows how many times its outline appeared and how many times you chose it. It does not show which outline came from which source in each photo.", "h1": "Outline source", "h2": "Shown", "h3": "Chosen", "cod": "Your answer code.", "copy": "Copy code", "p4": "Please do not discuss your result with people who have not taken part yet.", "rA": "A is better", "rB": "B is better", "rI": "Equivalent", "rN": "Neither", "of": "of", "saved": "Answer saved.", "copied": "Copied.", "selected": "Selected; press Ctrl+C.", "imgerr": "The photo did not load. Check your connection and reload the page.", "others": "Equivalent: {i} · Neither: {n}. The image-bank outline appears in every photo; the other sources take turns.", "codok": "Your answers have already been saved. Keep the code only as a receipt.", "codno": "Tap the green button to send your answers to Fabio on WhatsApp. If it does not open, copy the code and send it to him.", "n0": "Image-bank outline (ISIC)", "n1": "Independent tracer", "n2": "Neural network", "n3": "Written rule (engine)", "ex_t": "Before you start: what following the border means", "ex_p": "The lesion border is the limit where the pigmentation ends and normal skin begins. A good outline follows that limit. The drawing below is only a schematic example, not a photo from the study.", "ex_c1": "Follows the border", "ex_c1b": "tracks the limit between lesion and skin", "ex_c2": "Too small", "ex_c2b": "cuts inside and leaves part of the lesion out", "ex_c3": "Too large", "ex_c3b": "includes normal skin around the lesion", "nome": "Full name", "nomenota": "As it should appear in the article acknowledgements.", "zap": "Send to Fabio via WhatsApp", "semconv": "This link is personal and incomplete. Ask Fabio for your own link.", "feito": "This link has already been used on this device. If you need to redo it, talk to Fabio."}, PTX={"show": "Mostrar os contornos", "hide": "Esconder os contornos", "of": "de", "saved": "Resposta gravada.", "copied": "Copiado.", "selected": "Selecionado; use Ctrl+C.", "imgerr": "A foto não carregou. Verifique a conexão e recarregue a página.", "others": "Equivalentes: {i} · Nenhum dos dois: {n}. O traçado do banco aparece em todas as fotos; as outras fontes se revezam.", "codok": "Suas respostas já foram gravadas. Guarde o código só como comprovante.", "codno": "Toque no botão verde para enviar as suas respostas ao Fabio pelo WhatsApp. Se não abrir, copie o código e mande para ele.", "n0": "Traçado do banco de imagens (ISIC)", "n1": "Traçador independente", "n2": "Rede neural", "n3": "Regra escrita (motor)", "semconv": "Este link é pessoal e está incompleto. Peça o seu link ao Fabio.", "feito": "Este link já foi usado neste aparelho. Se precisar refazer, fale com o Fabio."}, PT={};
+document.querySelectorAll('[data-i]').forEach(e=>PT[e.dataset.i]=e.innerHTML);
+Object.assign(PT,PTX);
+let LANG=(navigator.language||'pt').toLowerCase().startsWith('pt')?'pt':'en';
+const T=k=>(LANG==='en'?EN:PT)[k];
+function aplicaLingua(){
+  document.documentElement.lang=LANG==='en'?'en':'pt-BR';
+  document.querySelectorAll('[data-i]').forEach(e=>{const v=T(e.dataset.i); if(v!=null) e.innerHTML=v});
+  $('b-lang').textContent=LANG==='en'?'Português':'English';
+  $('b-lang').lang=LANG==='en'?'pt':'en';
+  if(esconder) $('b-esconde').textContent=T('show');
+  if(estado&&estado.i<estado.telas.length&&!$('s-tela').hidden) $('passo').textContent=(estado.i+1)+' '+T('of')+' '+estado.telas.length;
+  if(!$('s-fim').hidden) fim();
+}
+$('b-lang').onclick=()=>{LANG=LANG==='en'?'pt':'en'; aplicaLingua()};
+
+
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function embaralha(arr,rnd){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function sorteia(semente){
+  const rnd=mulberry32(semente);
+  const g=embaralha(POOL.filter(p=>p.k==='g'),rnd).slice(0,N_G);
+  const c=embaralha(POOL.filter(p=>p.k==='c'),rnd).slice(0,N_C);
+  const telas=embaralha(g.concat(c),rnd);
+  const uso={1:0,2:0,3:0};
+  return telas.map(p=>{
+    const disp=[1,2,3].filter(s=>p.c[s]);
+    const min=Math.min(...disp.map(s=>uso[s]));
+    const cand=disp.filter(s=>uso[s]===min);
+    const comp=cand[Math.floor(rnd()*cand.length)]; uso[comp]++;
+    const isicEmA=rnd()<0.5;
+    return {t:p.t,k:p.k,comp,isicEmA,resp:null,ms:null};
+  });
+}
+
+function desenha(){
+  const tela=estado.telas[estado.i], p=POOL.find(x=>x.t===tela.t);
+  const lados={A:tela.isicEmA?0:tela.comp, B:tela.isicEmA?tela.comp:0};
+  for(const L of ['A','B']){
+    const cv=$('cv-'+L), ctx=cv.getContext('2d');
+    cv.width=p.w; cv.height=p.h;
+    ctx.drawImage(img,0,0,p.w,p.h);
+    if(esconder) continue;
+    const lw=Math.max(2,p.w/320);
+    for(const pass of [[lw+2.5,'rgba(0,0,0,.7)'],[lw,getComputedStyle(document.documentElement).getPropertyValue('--trace').trim()||'#3be0ff']]){
+      ctx.lineWidth=pass[0]; ctx.strokeStyle=pass[1]; ctx.lineJoin='round';
+      for(const poly of p.c[lados[L]]){
+        ctx.beginPath(); ctx.moveTo(poly[0],poly[1]);
+        for(let k=2;k<poly.length;k+=2) ctx.lineTo(poly[k],poly[k+1]);
+        ctx.closePath(); ctx.stroke();
+      }
+    }
+  }
+}
+
+function abreTela(){
+  const tela=estado.telas[estado.i];
+  $('passo').textContent=(estado.i+1)+' '+T('of')+' '+estado.telas.length;
+  setBotoes(true);
+  img=new Image();
+  img.onload=()=>{desenha(); setBotoes(false); estado.t0=performance.now()};
+  img.onerror=()=>{$('salvo').textContent=T('imgerr')};
+  img.src='../f/'+tela.t+'.jpg';
+  window.scrollTo({top:0});
+}
+function setBotoes(off){document.querySelectorAll('.bar button').forEach(b=>b.disabled=off)}
+
+// Envio automático para a planilha (Google Apps Script). Cada envio vira uma linha.
+function envia(p){
+  if(!ENDPOINT) return false;
+  try{ fetch(ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)}); return true; }catch(e){ return false; }
+}
+function grava(){
+  const base={modo:MODO,conv:CONV,nome:estado.nome,rodada,lingua:LANG,semente:estado.semente,categoria:estado.cat,anos:estado.anos,inicio:estado.inicio,quando:new Date().toISOString()};
+  let ok;
+  if(estado.i===0) ok=envia({tipo:'inicio',...base});
+  else { const n=estado.i-1, t=estado.telas[n];
+    ok=envia({tipo:'resposta',...base,tela:n+1,t:t.t,k:t.k,comp:t.comp,isicEmA:t.isicEmA,resp:t.resp,ms:t.ms}); }
+  if(ok) $('salvo').textContent=T('saved');
+}
+
+function responde(r){
+  const tela=estado.telas[estado.i];
+  tela.resp=r; tela.ms=Math.round(performance.now()-(estado.t0||performance.now()));
+  estado.i++;
+  grava();
+  if(estado.i<estado.telas.length) abreTela(); else fim();
+}
+
+function fim(){
+  $('s-tela').hidden=true; $('bar').hidden=true; $('s-fim').hidden=false;
+  const ap={0:0,1:0,2:0,3:0}, es={0:0,1:0,2:0,3:0}; let ig=0, nen=0;
+  for(const t of estado.telas){
+    ap[0]++; ap[t.comp]++;
+    if(t.resp==='igual') ig++; else if(t.resp==='nenhum') nen++;
+    else { const isicGanhou=(t.resp==='A')===t.isicEmA; es[isicGanhou?0:t.comp]++; }
+  }
+  const tb=$('tb-res'); tb.textContent='';
+  for(const s of [0,1,2,3]){ if(!ap[s]) continue;
+    const pc=Math.round(100*es[s]/ap[s]);
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td></td><td class="n">'+ap[s]+'</td><td class="n">'+es[s]+'</td><td class="n">'+pc+'%</td><td><div class="meter"><i style="width:'+pc+'%"></i></div></td>';
+    tr.firstChild.textContent=T('n'+s); tb.appendChild(tr);
+  }
+  $('res-outros').textContent=T('others').replace('{i}',ig).replace('{n}',nen);
+  const cod={m:MODO,v:CONV,n:estado.nome,s:estado.semente,l:LANG,c:estado.cat,a:estado.anos,r:estado.telas.map(t=>[t.t,t.comp,t.isicEmA?1:0,t.resp,t.ms])};
+  $('codigo').value=btoa(unescape(encodeURIComponent(JSON.stringify(cod))));
+  $('cod-msg').textContent=T(ENDPOINT?'codok':'codno');
+  $('b-zap').href='https://wa.me/'+ZAP+'?text='+encodeURIComponent('Painel do Contorno - '+estado.nome+' - codigo: '+$('codigo').value);
+  try{localStorage.setItem('painel_feito_'+CONV,'1')}catch(e){}
+}
+
+// eventos
+$('b-ir-cadastro').onclick=()=>{$('s-intro').hidden=true;$('s-cad').hidden=false};
+let CONV_OK=false;
+async function confereConvite(){
+  let ok=false;
+  try{ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(SAL+CONV));
+    const h=[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('').slice(0,16); ok=CONV.length===6&&H.includes(h);}catch(e){}
+  let feito=false; try{feito=localStorage.getItem('painel_feito_'+CONV)==='1'}catch(e){}
+  if(!ok){$('proto').innerHTML=T('semconv');$('b-ir-cadastro').disabled=true;return}
+  if(feito){$('proto').innerHTML=T('feito');$('b-ir-cadastro').disabled=true;return}
+  CONV_OK=true; valida();
+}
+const valida=()=>{
+  $('b-inicia').disabled=!(CONV_OK&&$('nome').value.trim().split(/\s+/).length>=2&&document.querySelector('input[name=cat]:checked')&&$('anos').value!==''&&$('aceite').checked&&POOL)};
+$('f-cad').addEventListener('input',valida); $('f-cad').addEventListener('change',valida);
+$('f-cad').addEventListener('submit',e=>{
+  e.preventDefault(); if($('b-inicia').disabled) return;
+  const sorteio=Math.floor(Math.random()*1e6);
+  rodada=Date.now().toString(36)+'-'+sorteio;
+  estado={semente:BASE_SEMENTE+sorteio, nome:$('nome').value.trim(), cat:document.querySelector('input[name=cat]:checked').value,
+          anos:Number($('anos').value), inicio:new Date().toISOString(), i:0};
+  estado.telas=sorteia(estado.semente);
+  $('s-cad').hidden=true; $('s-tela').hidden=false; $('bar').hidden=false;
+  abreTela(); grava();
+});
+document.querySelectorAll('.bar button').forEach(b=>b.onclick=()=>responde(b.dataset.r));
+$('b-esconde').onclick=()=>{esconder=!esconder;$('b-esconde').setAttribute('aria-pressed',esconder);$('b-esconde').textContent=T(esconder?'show':'hide');desenha()};
+$('b-copia').onclick=()=>{const t=$('codigo');navigator.clipboard.writeText(t.value).then(()=>$('copia-msg').textContent=T('copied')).catch(()=>{t.select();$('copia-msg').textContent=T('selected')})};
+
+fetch('../pool.json').then(r=>r.json()).then(p=>{POOL=p;valida()}).catch(()=>{$('proto').textContent=LANG==='en'?'The photos could not be loaded. Reload the page.':'Não foi possível carregar as fotos. Recarregue a página.'});
+aplicaLingua();
+confereConvite();
+
+})();
+</script>
+
+</body>
+</html>
