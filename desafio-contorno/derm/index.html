@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Painel Dermatológico do Contorno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: uma coluna estreita; na tela de comparação, dois painéis lado a lado (empilham no celular) e barra de respostas fixa embaixo. */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --ink:#18221f; --muted:#5c6b66; --line:#d5ddda;
+  --accent:#0f6b5c; --accent-ink:#ffffff; --warn-bg:#fff4d6; --warn-ink:#6b4e00;
+  --trace:#3be0ff; --halo:rgba(0,0,0,.75);
+  --display:"Fraunces",Georgia,serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101615; --surface:#18201e; --ink:#e6eeeb; --muted:#97a8a2; --line:#2c3835;
+  --accent:#4fc3ad; --accent-ink:#0b1513; --warn-bg:#3a3014; --warn-ink:#f2d58a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101615; --surface:#18201e; --ink:#e6eeeb; --muted:#97a8a2; --line:#2c3835;
+  --accent:#4fc3ad; --accent-ink:#0b1513; --warn-bg:#3a3014; --warn-ink:#f2d58a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:0 120px}
+main{max-width:1100px;margin:0 auto}
+.narrow{max-width:620px;margin:0 auto}
+.lang{display:flex;justify-content:flex-end;margin-top:12px}.lang button{padding:6px 12px;font-size:14px}
+.proto{background:var(--warn-bg);color:var(--warn-ink);font-size:14px;padding:8px 12px;border-radius:6px;margin-top:16px}
+h1{font:650 clamp(28px,5vw,40px)/1.15 var(--display);text-wrap:balance;margin:28px 0 8px}
+h2{font:500 22px/1.25 var(--display);text-wrap:balance;margin:0 0 8px}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:14px;margin-top:16px}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-weight:600;margin-bottom:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--accent)}
+input[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);width:120px}
+.regrow{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.regrow select,.regrow input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}#nomereg{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}#numreg{flex:1 1 140px;min-width:0}#ufreg{width:120px}.small{font-size:13px;display:block}
+.tcle{font-size:14px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+button{font:600 16px var(--body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:12px 16px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,.opt:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:20px 0 10px;flex-wrap:wrap}
+.step{font:500 14px var(--mono);letter-spacing:.04em;color:var(--muted)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:700px){.pair{grid-template-columns:1fr}}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}
+figure canvas{display:block;width:100%;height:auto}
+figcaption{font:650 20px var(--display);padding:8px 12px;border-bottom:1px solid var(--line)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.bar .row{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:560px){.bar .row{grid-template-columns:1fr 1fr}}
+.bar button{padding:12px 6px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+td,th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}
+td.n,th.n{text-align:right}
+.meter{height:8px;background:var(--line);border-radius:4px;overflow:hidden;min-width:60px}
+.meter i{display:block;height:100%;background:var(--accent)}
+textarea{width:100%;font:13px var(--mono);padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-height:80px}
+.status{font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){figure{transition:border-color .15s}}
+  .exemplo{margin:18px 0 22px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  .exemplo h2{font:600 18px/1.3 var(--body);margin:0 0 6px}
+  .ex-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+  .ex-grade figure{margin:0;text-align:center}
+  .ex-grade figure>svg{width:100%;height:auto;display:block}
+  .ex-grade figcaption{margin-top:6px;font:14px/1.3 var(--body);padding:0;border:0}
+  .ex-grade figcaption .small{font-size:12.5px}
+  .ex-grade figure{border:0;background:none}
+  @media (max-width:560px){.ex-grade{grid-template-columns:1fr;max-width:260px;margin-left:auto;margin-right:auto}}
+  .ex-grade figure.ok,.ex-grade figure.no{position:relative;border:4px solid;border-radius:14px;padding:6px;background:var(--surface);overflow:visible;margin-top:10px}
+  .ex-grade figure.ok{border-color:#1e9e4a}.ex-grade figure.no{border-color:#d93025}
+  .ex-grade .selo{position:absolute;top:-16px;right:-12px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;box-shadow:0 1px 3px rgba(0,0,0,.35);border:2px solid #fff}.ex-grade .selo svg{width:22px;height:22px}
+  .ex-grade .ok .selo{background:#1e9e4a}.ex-grade .no .selo{background:#d93025}
+  .ex-grade .ok b{color:#1e9e4a}.ex-grade .no b{color:#d93025}
+  @media (max-width:560px){#s-fim table td:last-child,#s-fim table th:last-child{display:none}}
+
+.campo{display:grid;gap:4px}.campo input,.campo select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);width:100%}
+.lin2{display:grid;grid-template-columns:1fr 110px;gap:8px}
+.bar .row{grid-template-columns:repeat(3,1fr)}
+@media (max-width:560px){.bar .row{grid-template-columns:repeat(3,1fr)}}
+.resumo li{margin-bottom:6px}
+</style>
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<main>
+  <div class="proto narrow" id="proto">Painel de dermatologistas convidados. Este link é pessoal: não repasse.</div>
+
+  <section id="s-intro" class="narrow">
+    <h1>Qual contorno segue a borda da lesão?</h1>
+    <div class="card">
+      <h2>Sobre o projeto</h2>
+      <p>O <b>De Olho na Pele</b> desenvolve um método de segmentação de lesões cutâneas em fotografias por <b>regras explícitas e auditáveis</b>, sem redes neurais, voltado à triagem na atenção primária do SUS. Responsável: Fabio da Camara Oliveira Ferreira, enfermeiro (COREN-SP), pesquisador independente (ORCID 0009-0009-0997-3275).</p>
+      <ul class="resumo muted">
+        <li>Três preprints públicos com DOI, entre eles uma auditoria das máscaras de referência do banco internacional ISIC 2017 (doi:10.5281/zenodo.23294261).</li>
+        <li>Este painel faz parte de um estudo <b>pré-registrado</b> em imagens dermatoscópicas públicas e anônimas do banco IMA++ (ISIC Archive). O protocolo foi congelado, com registro criptográfico, antes de qualquer resultado.</li>
+        <li>Em cada foto aparecem <b>dois contornos de origens diferentes</b>, na mesma cor e espessura, sem identificação. A posição (A ou B) foi sorteada.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>O que você vai fazer</h2>
+      <p>São <b>66 fotos</b>. Em cada uma, indique qual contorno representa melhor a borda da lesão: <b>A</b>, <b>B</b> ou <b>empate</b>, quando os dois forem igualmente bons ou igualmente ruins. Não é preciso dar diagnóstico.</p>
+      <p class="muted">Leva de 20 a 30 minutos. O progresso fica salvo neste aparelho: se precisar parar, abra o mesmo link depois para continuar.</p>
+    </div>
+    <div class="exemplo" aria-label="Exemplo">
+      <h2>O que é seguir a borda</h2>
+      <p class="muted">A borda da lesão é o limite onde a pigmentação termina e começa a pele normal. Um bom contorno acompanha esse limite. O desenho abaixo é só um exemplo esquemático, não é uma foto do estudo.</p>
+      <div class="ex-grade">
+        <figure class="ok"><span class="selo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><svg viewBox="0 0 200 180" role="img" aria-hidden="true"><defs><radialGradient id="ga" cx="48%" cy="45%" r="60%"><stop offset="0" stop-color="#4a2a17"/><stop offset=".6" stop-color="#7a4a2b"/><stop offset="1" stop-color="#a9724c"/></radialGradient><filter id="fa"><feGaussianBlur stdDeviation="1.6"/></filter></defs><rect width="200" height="180" rx="10" fill="#e8c6a8"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="url(#ga)" filter="url(#fa)"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="none" stroke="rgba(0,0,0,.7)" stroke-width="4.5" stroke-linejoin="round"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="none" stroke="var(--trace)" stroke-width="2.2" stroke-linejoin="round"/></svg><figcaption><b data-i="ex_c1">Certo: segue a borda</b><br><span class="muted small" data-i="ex_c1b">acompanha o limite entre a lesão e a pele</span></figcaption></figure>
+        <figure class="no"><span class="selo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></svg></span><svg viewBox="0 0 200 180" role="img" aria-hidden="true"><defs><radialGradient id="gb" cx="48%" cy="45%" r="60%"><stop offset="0" stop-color="#4a2a17"/><stop offset=".6" stop-color="#7a4a2b"/><stop offset="1" stop-color="#a9724c"/></radialGradient><filter id="fb"><feGaussianBlur stdDeviation="1.6"/></filter></defs><rect width="200" height="180" rx="10" fill="#e8c6a8"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="url(#gb)" filter="url(#fb)"/><path d="M160.8,90.0 L160.9,92.9 L160.0,95.7 L158.5,98.4 L156.6,100.9 L154.5,103.3 L152.4,105.5 L150.6,107.7 L149.0,109.8 L147.7,112.1 L146.4,114.3 L145.0,116.6 L143.4,118.7 L141.6,120.6 L139.3,122.2 L136.7,123.4 L133.9,124.3 L131.1,124.9 L128.2,125.3 L125.5,125.8 L123.1,126.4 L120.9,127.2 L118.8,128.4 L116.8,129.9 L114.8,131.5 L112.7,133.1 L110.4,134.4 L107.9,135.3 L105.3,135.6 L102.6,135.2 L100.0,134.1 L97.5,132.5 L95.3,130.6 L93.3,128.7 L91.3,127.1 L89.4,126.0 L87.3,125.5 L84.9,125.7 L82.1,126.6 L78.8,127.8 L75.1,129.3 L71.0,130.6 L66.9,131.4 L62.9,131.7 L59.2,131.2 L56.0,130.0 L53.5,128.1 L51.7,125.6 L50.4,122.7 L49.7,119.7 L49.3,116.6 L49.1,113.6 L48.9,110.7 L48.8,107.9 L48.6,105.2 L48.6,102.5 L48.8,99.9 L49.3,97.3 L50.4,94.7 L51.8,92.3 L53.7,90.0 L55.9,87.9 L58.0,86.0 L60.0,84.2 L61.5,82.6 L62.4,80.8 L62.6,79.0 L62.2,76.8 L61.2,74.3 L59.9,71.4 L58.7,68.3 L57.8,65.1 L57.5,61.9 L57.9,59.0 L59.1,56.5 L61.0,54.6 L63.6,53.2 L66.5,52.4 L69.6,52.0 L72.6,51.7 L75.5,51.3 L78.0,50.7 L80.3,49.7 L82.4,48.3 L84.4,46.4 L86.5,44.2 L88.8,42.0 L91.3,39.9 L94.0,38.3 L97.0,37.2 L100.0,36.8 L103.1,37.0 L106.0,37.9 L108.9,39.2 L111.5,40.7 L114.1,42.3 L116.5,43.9 L118.9,45.3 L121.2,46.7 L123.5,48.1 L125.7,49.6 L127.7,51.3 L129.4,53.3 L130.6,55.6 L131.4,58.3 L131.7,61.2 L131.7,64.1 L131.4,66.9 L131.1,69.4 L131.2,71.6 L131.8,73.3 L133.2,74.6 L135.4,75.7 L138.5,76.6 L142.3,77.5 L146.4,78.7 L150.5,80.2 L154.3,82.2 L157.5,84.5 L159.7,87.2 Z" fill="none" stroke="rgba(0,0,0,.7)" stroke-width="4.5" stroke-linejoin="round"/><path d="M160.8,90.0 L160.9,92.9 L160.0,95.7 L158.5,98.4 L156.6,100.9 L154.5,103.3 L152.4,105.5 L150.6,107.7 L149.0,109.8 L147.7,112.1 L146.4,114.3 L145.0,116.6 L143.4,118.7 L141.6,120.6 L139.3,122.2 L136.7,123.4 L133.9,124.3 L131.1,124.9 L128.2,125.3 L125.5,125.8 L123.1,126.4 L120.9,127.2 L118.8,128.4 L116.8,129.9 L114.8,131.5 L112.7,133.1 L110.4,134.4 L107.9,135.3 L105.3,135.6 L102.6,135.2 L100.0,134.1 L97.5,132.5 L95.3,130.6 L93.3,128.7 L91.3,127.1 L89.4,126.0 L87.3,125.5 L84.9,125.7 L82.1,126.6 L78.8,127.8 L75.1,129.3 L71.0,130.6 L66.9,131.4 L62.9,131.7 L59.2,131.2 L56.0,130.0 L53.5,128.1 L51.7,125.6 L50.4,122.7 L49.7,119.7 L49.3,116.6 L49.1,113.6 L48.9,110.7 L48.8,107.9 L48.6,105.2 L48.6,102.5 L48.8,99.9 L49.3,97.3 L50.4,94.7 L51.8,92.3 L53.7,90.0 L55.9,87.9 L58.0,86.0 L60.0,84.2 L61.5,82.6 L62.4,80.8 L62.6,79.0 L62.2,76.8 L61.2,74.3 L59.9,71.4 L58.7,68.3 L57.8,65.1 L57.5,61.9 L57.9,59.0 L59.1,56.5 L61.0,54.6 L63.6,53.2 L66.5,52.4 L69.6,52.0 L72.6,51.7 L75.5,51.3 L78.0,50.7 L80.3,49.7 L82.4,48.3 L84.4,46.4 L86.5,44.2 L88.8,42.0 L91.3,39.9 L94.0,38.3 L97.0,37.2 L100.0,36.8 L103.1,37.0 L106.0,37.9 L108.9,39.2 L111.5,40.7 L114.1,42.3 L116.5,43.9 L118.9,45.3 L121.2,46.7 L123.5,48.1 L125.7,49.6 L127.7,51.3 L129.4,53.3 L130.6,55.6 L131.4,58.3 L131.7,61.2 L131.7,64.1 L131.4,66.9 L131.1,69.4 L131.2,71.6 L131.8,73.3 L133.2,74.6 L135.4,75.7 L138.5,76.6 L142.3,77.5 L146.4,78.7 L150.5,80.2 L154.3,82.2 L157.5,84.5 L159.7,87.2 Z" fill="none" stroke="var(--trace)" stroke-width="2.2" stroke-linejoin="round"/></svg><figcaption><b data-i="ex_c2">Errado: pequeno demais</b><br><span class="muted small" data-i="ex_c2b">corta por dentro e deixa parte da lesão de fora</span></figcaption></figure>
+        <figure class="no"><span class="selo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></svg></span><svg viewBox="0 0 200 180" role="img" aria-hidden="true"><defs><radialGradient id="gc" cx="48%" cy="45%" r="60%"><stop offset="0" stop-color="#4a2a17"/><stop offset=".6" stop-color="#7a4a2b"/><stop offset="1" stop-color="#a9724c"/></radialGradient><filter id="fc"><feGaussianBlur stdDeviation="1.6"/></filter></defs><rect width="200" height="180" rx="10" fill="#e8c6a8"/><path d="M178.4,90.0 L178.5,93.7 L177.6,97.4 L175.9,100.9 L173.8,104.3 L171.5,107.4 L169.2,110.4 L167.0,113.4 L165.1,116.4 L163.4,119.3 L161.6,122.3 L159.8,125.3 L157.7,128.1 L155.2,130.7 L152.4,132.9 L149.2,134.7 L145.7,136.2 L142.1,137.3 L138.6,138.3 L135.1,139.2 L131.9,140.2 L128.9,141.5 L126.0,143.0 L123.1,144.8 L120.3,146.7 L117.3,148.5 L114.1,150.1 L110.7,151.1 L107.1,151.5 L103.5,151.2 L100.0,150.1 L96.6,148.5 L93.5,146.5 L90.5,144.5 L87.7,142.7 L84.8,141.4 L81.9,140.7 L78.6,140.7 L74.9,141.2 L70.8,142.1 L66.3,143.1 L61.4,144.0 L56.5,144.4 L51.8,144.1 L47.4,143.1 L43.6,141.3 L40.4,138.8 L38.0,135.7 L36.2,132.1 L34.9,128.4 L34.1,124.6 L33.4,120.9 L32.8,117.2 L32.3,113.6 L31.9,110.1 L31.6,106.7 L31.6,103.2 L32.0,99.8 L32.9,96.4 L34.3,93.1 L36.1,90.0 L38.3,87.1 L40.5,84.3 L42.6,81.7 L44.3,79.2 L45.4,76.7 L45.9,74.0 L45.7,71.1 L45.1,67.8 L44.3,64.2 L43.5,60.3 L43.0,56.4 L43.2,52.5 L44.2,48.9 L46.0,45.8 L48.6,43.2 L51.8,41.3 L55.4,40.0 L59.2,39.0 L63.0,38.3 L66.7,37.5 L70.0,36.5 L73.1,35.1 L76.1,33.3 L79.0,31.1 L81.9,28.7 L85.1,26.3 L88.5,24.1 L92.2,22.3 L96.0,21.2 L100.0,20.8 L104.0,21.1 L107.9,22.0 L111.6,23.4 L115.2,25.0 L118.6,26.9 L121.9,28.7 L125.2,30.4 L128.4,32.1 L131.5,33.8 L134.5,35.7 L137.3,37.8 L139.7,40.3 L141.7,43.2 L143.2,46.4 L144.2,49.8 L144.7,53.4 L145.1,56.8 L145.4,60.0 L145.9,62.9 L147.1,65.3 L148.9,67.4 L151.5,69.1 L155.0,70.8 L159.0,72.6 L163.4,74.6 L167.7,76.9 L171.7,79.7 L175.0,82.8 L177.2,86.3 Z" fill="url(#gc)" filter="url(#fc)"/><path d="M196.0,90.0 L196.0,94.6 L195.1,99.1 L193.3,103.4 L191.0,107.6 L188.5,111.5 L185.9,115.4 L183.5,119.1 L181.2,122.9 L179.0,126.6 L176.9,130.3 L174.5,134.0 L171.9,137.5 L168.9,140.7 L165.5,143.6 L161.6,146.0 L157.5,148.1 L153.2,149.7 L148.9,151.2 L144.7,152.6 L140.7,154.1 L136.8,155.7 L133.1,157.6 L129.4,159.7 L125.7,161.9 L121.8,164.0 L117.7,165.7 L113.4,166.9 L109.0,167.4 L104.4,167.2 L100.0,166.1 L95.7,164.5 L91.6,162.5 L87.7,160.3 L84.0,158.4 L80.3,156.9 L76.4,155.9 L72.3,155.6 L67.8,155.8 L62.8,156.4 L57.5,157.0 L51.9,157.4 L46.2,157.3 L40.7,156.6 L35.6,155.0 L31.1,152.6 L27.3,149.5 L24.3,145.7 L22.0,141.5 L20.2,137.1 L18.8,132.6 L17.7,128.1 L16.8,123.7 L15.9,119.4 L15.1,115.1 L14.6,110.8 L14.4,106.5 L14.6,102.3 L15.3,98.1 L16.7,94.0 L18.5,90.0 L20.7,86.2 L23.0,82.6 L25.2,79.2 L27.1,75.9 L28.4,72.6 L29.2,69.1 L29.3,65.3 L29.0,61.3 L28.6,56.9 L28.2,52.3 L28.3,47.7 L29.0,43.1 L30.5,38.8 L32.9,35.1 L36.1,31.9 L40.0,29.4 L44.3,27.5 L48.9,26.1 L53.5,24.8 L57.9,23.6 L62.0,22.2 L66.0,20.5 L69.8,18.4 L73.5,15.9 L77.4,13.3 L81.4,10.7 L85.8,8.3 L90.3,6.4 L95.1,5.2 L100.0,4.8 L104.9,5.1 L109.7,6.1 L114.4,7.6 L118.8,9.4 L123.2,11.4 L127.4,13.4 L131.5,15.5 L135.5,17.5 L139.5,19.6 L143.3,21.8 L146.9,24.4 L150.1,27.4 L152.8,30.7 L155.0,34.5 L156.6,38.5 L157.8,42.7 L158.7,46.8 L159.6,50.6 L160.7,54.2 L162.3,57.3 L164.6,60.1 L167.6,62.6 L171.4,65.1 L175.7,67.6 L180.4,70.4 L185.0,73.6 L189.1,77.2 L192.5,81.2 L194.8,85.5 Z" fill="none" stroke="rgba(0,0,0,.7)" stroke-width="4.5" stroke-linejoin="round"/><path d="M196.0,90.0 L196.0,94.6 L195.1,99.1 L193.3,103.4 L191.0,107.6 L188.5,111.5 L185.9,115.4 L183.5,119.1 L181.2,122.9 L179.0,126.6 L176.9,130.3 L174.5,134.0 L171.9,137.5 L168.9,140.7 L165.5,143.6 L161.6,146.0 L157.5,148.1 L153.2,149.7 L148.9,151.2 L144.7,152.6 L140.7,154.1 L136.8,155.7 L133.1,157.6 L129.4,159.7 L125.7,161.9 L121.8,164.0 L117.7,165.7 L113.4,166.9 L109.0,167.4 L104.4,167.2 L100.0,166.1 L95.7,164.5 L91.6,162.5 L87.7,160.3 L84.0,158.4 L80.3,156.9 L76.4,155.9 L72.3,155.6 L67.8,155.8 L62.8,156.4 L57.5,157.0 L51.9,157.4 L46.2,157.3 L40.7,156.6 L35.6,155.0 L31.1,152.6 L27.3,149.5 L24.3,145.7 L22.0,141.5 L20.2,137.1 L18.8,132.6 L17.7,128.1 L16.8,123.7 L15.9,119.4 L15.1,115.1 L14.6,110.8 L14.4,106.5 L14.6,102.3 L15.3,98.1 L16.7,94.0 L18.5,90.0 L20.7,86.2 L23.0,82.6 L25.2,79.2 L27.1,75.9 L28.4,72.6 L29.2,69.1 L29.3,65.3 L29.0,61.3 L28.6,56.9 L28.2,52.3 L28.3,47.7 L29.0,43.1 L30.5,38.8 L32.9,35.1 L36.1,31.9 L40.0,29.4 L44.3,27.5 L48.9,26.1 L53.5,24.8 L57.9,23.6 L62.0,22.2 L66.0,20.5 L69.8,18.4 L73.5,15.9 L77.4,13.3 L81.4,10.7 L85.8,8.3 L90.3,6.4 L95.1,5.2 L100.0,4.8 L104.9,5.1 L109.7,6.1 L114.4,7.6 L118.8,9.4 L123.2,11.4 L127.4,13.4 L131.5,15.5 L135.5,17.5 L139.5,19.6 L143.3,21.8 L146.9,24.4 L150.1,27.4 L152.8,30.7 L155.0,34.5 L156.6,38.5 L157.8,42.7 L158.7,46.8 L159.6,50.6 L160.7,54.2 L162.3,57.3 L164.6,60.1 L167.6,62.6 L171.4,65.1 L175.7,67.6 L180.4,70.4 L185.0,73.6 L189.1,77.2 L192.5,81.2 L194.8,85.5 Z" fill="none" stroke="var(--trace)" stroke-width="2.2" stroke-linejoin="round"/></svg><figcaption><b data-i="ex_c3">Errado: grande demais</b><br><span class="muted small" data-i="ex_c3b">inclui pele normal em volta da lesão</span></figcaption></figure>
+      </div>
+    </div>
+    <button class="primary" id="b-ir-cadastro">Começar</button>
+  </section>
+
+  <section id="s-cad" class="narrow" hidden>
+    <h1>Identificação do avaliador</h1>
+    <form class="card" id="f-cad">
+      <label class="campo"><b>Nome completo</b><input type="text" id="nome" maxlength="120" autocomplete="name"><span class="muted small">Como deve aparecer no artigo.</span></label>
+      <div class="lin2">
+        <label class="campo"><b>CRM (número)</b><input type="text" id="crm" maxlength="12" inputmode="numeric"></label>
+        <label class="campo"><b>UF</b><select id="uf"><option value=""></option><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option></select></label>
+      </div>
+      <label class="campo"><b>Especialidade</b><select id="esp"><option value=""></option><option value="dermatologia">Dermatologia</option><option value="residente_dermatologia">Residente de dermatologia</option><option value="outra_medica">Outra especialidade médica</option></select></label>
+      <label class="campo"><b>Instituição</b><input type="text" id="inst" maxlength="160"></label>
+      <label class="campo"><b>Anos de prática na especialidade</b><input type="number" id="anos" min="0" max="60" inputmode="numeric" style="width:120px"></label>
+      <div class="tcle">Você participa como <b>colaborador</b> do projeto De Olho na Pele e será nomeado no artigo, na lista de colaboradores. As fotos são públicas e anônimas. Registramos nome, CRM, UF, especialidade, instituição, anos de prática e as escolhas nas 66 telas. O CRM serve apenas para conferência no portal do CFM e <b>não é publicado</b>. Responsável: Fabio da Camara Oliveira Ferreira (ORCID 0009-0009-0997-3275).</div>
+      <label class="opt"><input type="checkbox" class="dec"> <span>Declaro que não vi, antes deste painel, os contornos, os resultados ou as imagens deste estudo.</span></label>
+      <label class="opt"><input type="checkbox" class="dec"> <span>Aceito participar como colaborador e ser nomeado no artigo com meu nome, especialidade e instituição.</span></label>
+      <label class="opt"><input type="checkbox" class="dec"> <span>Autorizo o registro dos meus dados acima para identificação e verificação, conforme a LGPD.</span></label>
+      <button class="primary" type="submit" id="b-inicia" disabled>Ir para a primeira foto</button>
+    </form>
+  </section>
+
+  <section id="s-tela" hidden>
+    <div class="top">
+      <h2>Qual contorno representa melhor a borda da lesão?</h2>
+      <span class="step" id="passo">1 de 66</span>
+    </div>
+    <div class="pair">
+      <figure><figcaption>A</figcaption><canvas id="cv-A" aria-label="Foto com o contorno A"></canvas></figure>
+      <figure><figcaption>B</figcaption><canvas id="cv-B" aria-label="Foto com o contorno B"></canvas></figure>
+    </div>
+    <div class="tools">
+      <button id="b-esconde" aria-pressed="false">Esconder os contornos</button>
+      <button id="b-volta">Voltar uma foto</button>
+      <span class="status" id="salvo"></span>
+    </div>
+  </section>
+
+  <section id="s-fim" class="narrow" hidden>
+    <h1>Muito obrigado!</h1>
+    <div class="card">
+      <p><b>Suas 66 respostas foram gravadas.</b> Você receberá o resultado do estudo quando o painel for encerrado.</p>
+      <p class="muted">Para não influenciar os outros avaliadores, o resultado não é mostrado agora. Por favor, não comente as fotos com quem ainda vai participar.</p>
+      <div><a id="b-zap" href="#" target="_blank" rel="noopener" style="display:inline-block;font:600 16px var(--body);border-radius:8px;background:var(--accent);color:var(--accent-ink);padding:12px 16px;text-decoration:none">Avisar o Fabio pelo WhatsApp</a></div>
+      <details><summary class="muted small">Teve problema? Mostrar código</summary>
+        <textarea id="codigo" readonly></textarea>
+        <div><button id="b-copia">Copiar código</button> <span class="status" id="copia-msg"></span></div>
+      </details>
+    </div>
+  </section>
+</main>
+
+<div class="bar" id="bar" hidden>
+  <div class="row">
+    <button class="primary" data-r="A">A mais certo</button>
+    <button class="primary" data-r="B">B mais certo</button>
+    <button data-r="empate">Empate</button>
+  </div>
+</div>
+
+<script>
+(function(){
+const ENDPOINT='https://script.google.com/macros/s/AKfycbwesRS7aprpG7n3hl-FJqVzEokifdqF1DmZZj38ERyOvkcLcy8rKMBacJwu_6LPyVQggQ/exec';
+const MODO='derm_r2', ZAP='5511976666697', SAL='dermR2-', H=["61aff59bbafb8b1b", "74454a4eaa21466f", "14f7d0275b74a82b", "80bc3bab5238c31b", "d8064464b1b692ac", "94be94f75cd373c9", "9551f3fc882dc866", "bf045693c6df3ea6", "5c5f10e1b8de19f7", "55dc62b30e36509a", "5c55811333d5f78d", "814b37f1a2a2507d", "0aba5ea163083839", "77edafea1e9ebbf0", "d3f3c81f8c5ece3f", "aa56982eac680da2", "ec96dfd600e05af5", "8a99a3d4775158eb", "caea231b0f2c2b7b", "664650fbecab0ea7", "46c63759aaad5cb4", "17d0cc7d7c5c98fd", "f916cffc8d282ea3", "687bd8b03baa65bd", "6c28f54e194b7cdb", "98b071eb9fb92293", "1401ca98fd9773cc", "1fab1e64e7d23482", "f681b5052abc34fd", "71f640bf510176ab"];
+const CONV=(new URLSearchParams(location.search).get('c')||'').trim().toUpperCase();
+const $=id=>document.getElementById(id), CHAVE='derm_r2_'+CONV;
+let POOL=null, estado=null, img=new Image(), esconder=false, CONV_OK=false;
+const salva=()=>{try{localStorage.setItem(CHAVE,JSON.stringify(estado))}catch(e){}};
+function desenha(){
+  const p=POOL[estado.i];
+  for(const L of ['A','B']){
+    const cv=$('cv-'+L), ctx=cv.getContext('2d'); cv.width=p.w; cv.height=p.h; ctx.drawImage(img,0,0,p.w,p.h);
+    if(esconder) continue;
+    const lw=Math.max(2,p.w/320);
+    for(const pass of [[lw+2.5,'rgba(0,0,0,.7)'],[lw,getComputedStyle(document.documentElement).getPropertyValue('--trace').trim()||'#3be0ff']]){
+      ctx.lineWidth=pass[0]; ctx.strokeStyle=pass[1]; ctx.lineJoin='round';
+      for(const poly of p[L]){ ctx.beginPath(); ctx.moveTo(poly[0],poly[1]); for(let k=2;k<poly.length;k+=2) ctx.lineTo(poly[k],poly[k+1]); ctx.closePath(); ctx.stroke(); }
+    }
+  }
+}
+function abreTela(){
+  $('passo').textContent=(estado.i+1)+' de '+POOL.length; setBotoes(true); $('b-volta').disabled=estado.i===0;
+  img=new Image(); img.onload=()=>{desenha(); setBotoes(false); estado.t0=performance.now()};
+  img.onerror=()=>{$('salvo').textContent='A foto não carregou. Verifique a conexão e recarregue a página.'};
+  img.src='fd/'+POOL[estado.i].t+'.jpg'; window.scrollTo({top:0});
+}
+function setBotoes(off){document.querySelectorAll('.bar button').forEach(b=>b.disabled=off)}
+function envia(p){ if(!ENDPOINT) return false; try{ fetch(ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)}); return true; }catch(e){ return false; } }
+const base=()=>({modo:MODO,conv:CONV,nome:estado.nome,crm:estado.crm,uf:estado.uf,categoria:estado.esp,instituicao:estado.inst,anos:estado.anos,inicio:estado.inicio,quando:new Date().toISOString()});
+function responde(r){
+  const p=POOL[estado.i];
+  estado.resp[p.c]=[r,Math.round(performance.now()-(estado.t0||performance.now()))];
+  if(envia({tipo:'resposta',...base(),tela:p.c,t:p.t,resp:r,ms:estado.resp[p.c][1]})) $('salvo').textContent='Resposta gravada.';
+  estado.i++; salva();
+  if(estado.i<POOL.length) abreTela(); else fim();
+}
+function fim(){
+  $('s-intro').hidden=true; $('s-cad').hidden=true; $('s-tela').hidden=true; $('bar').hidden=true; $('s-fim').hidden=false;
+  const cod={m:MODO,v:CONV,n:estado.nome,crm:estado.crm,uf:estado.uf,e:estado.esp,ins:estado.inst,a:estado.anos,r:POOL.map(p=>[p.c,...(estado.resp[p.c]||[null,null])])};
+  $('codigo').value=btoa(unescape(encodeURIComponent(JSON.stringify(cod))));
+  $('b-zap').href='https://wa.me/'+ZAP+'?text='+encodeURIComponent('Oi Fabio, terminei o Painel Dermatológico do Contorno! ✅ Nome: '+estado.nome+' · código '+CONV);
+  if(!estado.fimEnviado){estado.fimEnviado=true; salva(); envia({tipo:'fim',...base(),resp:$('codigo').value});}
+}
+function sha256hex(str){const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+const b=unescape(encodeURIComponent(str)),l=b.length,w=[];for(let i=0;i<l;i++)w[i>>2]|=b.charCodeAt(i)<<(24-(i%4)*8);w[l>>2]|=0x80<<(24-(l%4)*8);w[((l+8>>6)+1)*16-1]=l*8;
+let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];const r=(x,n)=>x>>>n|x<<(32-n);
+for(let j=0;j<w.length;j+=16){const W=[];let [a,b2,c,d,e,f,g,h]=H;for(let i=0;i<64;i++){if(i<16)W[i]=w[j+i]|0;else{const s0=r(W[i-15],7)^r(W[i-15],18)^W[i-15]>>>3,s1=r(W[i-2],17)^r(W[i-2],19)^W[i-2]>>>10;W[i]=W[i-16]+s0+W[i-7]+s1|0}
+const t1=h+(r(e,6)^r(e,11)^r(e,25))+(e&f^~e&g)+K[i]+W[i]|0,t2=(r(a,2)^r(a,13)^r(a,22))+(a&b2^a&c^b2&c)|0;h=g;g=f;f=e;e=d+t1|0;d=c;c=b2;b2=a;a=t1+t2|0}
+H=[H[0]+a|0,H[1]+b2|0,H[2]+c|0,H[3]+d|0,H[4]+e|0,H[5]+f|0,H[6]+g|0,H[7]+h|0]}return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
+
+function confere(){
+  let ok=false; try{ ok=CONV.length===6&&H.includes(sha256hex(SAL+CONV).slice(0,16)); }catch(e){}
+  if(!ok){$('proto').textContent='Este link é pessoal e está incompleto. Peça o seu link ao Fabio.';$('b-ir-cadastro').disabled=true;return}
+  CONV_OK=true;
+  try{ const s=JSON.parse(localStorage.getItem(CHAVE)||'null'); if(s&&s.resp){ estado=s;
+    if(estado.fimEnviado||estado.i>=(POOL?POOL.length:66)){ if(POOL) fim(); else estado._fim=true; return; }
+    $('b-ir-cadastro').textContent='Continuar de onde parei ('+(estado.i+1)+' de 66)'; } }catch(e){}
+  valida();
+}
+const valida=()=>{ $('b-inicia').disabled=!(CONV_OK&&POOL&&$('nome').value.trim().split(/\s+/).length>=2&&$('crm').value.trim().length>=3&&$('uf').value&&$('esp').value&&$('inst').value.trim().length>=2&&$('anos').value!==''&&[...document.querySelectorAll('.dec')].every(x=>x.checked)); };
+$('b-ir-cadastro').onclick=()=>{ $('s-intro').hidden=true; if(estado&&estado.resp){ $('s-tela').hidden=false; $('bar').hidden=false; abreTela(); } else $('s-cad').hidden=false; };
+$('f-cad').addEventListener('input',valida); $('f-cad').addEventListener('change',valida);
+$('f-cad').addEventListener('submit',e=>{ e.preventDefault(); if($('b-inicia').disabled) return;
+  estado={nome:$('nome').value.trim(),crm:$('crm').value.trim(),uf:$('uf').value,esp:$('esp').value,inst:$('inst').value.trim(),anos:Number($('anos').value),inicio:new Date().toISOString(),i:0,resp:{}};
+  salva(); envia({tipo:'inicio',...base()});
+  $('s-cad').hidden=true; $('s-tela').hidden=false; $('bar').hidden=false; abreTela(); });
+document.querySelectorAll('.bar button').forEach(b=>b.onclick=()=>responde(b.dataset.r));
+$('b-volta').onclick=()=>{ if(estado.i>0){ estado.i--; salva(); abreTela(); } };
+$('b-esconde').onclick=()=>{esconder=!esconder;$('b-esconde').setAttribute('aria-pressed',esconder);$('b-esconde').textContent=esconder?'Mostrar os contornos':'Esconder os contornos';desenha()};
+$('b-copia').onclick=()=>{const t=$('codigo');navigator.clipboard.writeText(t.value).then(()=>$('copia-msg').textContent='Copiado.').catch(()=>{t.select();$('copia-msg').textContent='Selecionado; use Ctrl+C.'})};
+fetch('pool_derm.json').then(r=>r.json()).then(p=>{POOL=p; if(estado&&estado._fim){delete estado._fim; fim();} valida();}).catch(()=>{$('proto').textContent='Não foi possível carregar as fotos. Recarregue a página.'});
+confere();
+})();
+</script>
+</body>
+</html>
