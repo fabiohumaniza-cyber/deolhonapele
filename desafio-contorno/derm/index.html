@@ -179,9 +179,9 @@ textarea{width:100%;font:13px var(--mono);padding:8px;border:1px solid var(--lin
 <script>
 (function(){
 const ENDPOINT='https://script.google.com/macros/s/AKfycbwesRS7aprpG7n3hl-FJqVzEokifdqF1DmZZj38ERyOvkcLcy8rKMBacJwu_6LPyVQggQ/exec';
-const MODO='derm_r2', ZAP='5511976666697', SAL='dermR2-', H=["61aff59bbafb8b1b", "74454a4eaa21466f", "14f7d0275b74a82b", "80bc3bab5238c31b", "d8064464b1b692ac", "94be94f75cd373c9", "9551f3fc882dc866", "bf045693c6df3ea6", "5c5f10e1b8de19f7", "55dc62b30e36509a", "5c55811333d5f78d", "814b37f1a2a2507d", "0aba5ea163083839", "77edafea1e9ebbf0", "d3f3c81f8c5ece3f", "aa56982eac680da2", "ec96dfd600e05af5", "8a99a3d4775158eb", "caea231b0f2c2b7b", "664650fbecab0ea7", "46c63759aaad5cb4", "17d0cc7d7c5c98fd", "f916cffc8d282ea3", "687bd8b03baa65bd", "6c28f54e194b7cdb", "98b071eb9fb92293", "1401ca98fd9773cc", "1fab1e64e7d23482", "f681b5052abc34fd", "71f640bf510176ab"];
+const MODO='derm_conf', ZAP='5511976666697', SAL='dermCONF-', H=["21e2846bcf9164b4", "4df88880fc4e5908", "c2386397a689d0e2", "163fe3699af00472", "41dbfd74c668f4f8", "3c1a21d84db201c3", "21b1cc07da5c6c33", "fb6ceff9e51af988", "bab1bb9afd01a93d", "24d772c23fc5c971", "5700776502484352", "a99b546120a17bbe", "98537445a7f82d33", "a645809e98c47a04", "206b75fd9cad9b20", "a821fa6710ba57fb", "580b274dde5d56cb", "4dbe87949902ab73", "e91224c05cecb87e", "835fae7704c17fca", "489699cefa2402e4", "ec5fd6b04d37881a", "224369450f51b997", "e7677c02461a4bae", "c9d7adb12cec5b3b", "9304b2f765fad88c", "29912d90d5d1a37e", "42142e161fd509d1", "e9fa17c03138ced8", "62a737148d72a7c9"];
 const CONV=(new URLSearchParams(location.search).get('c')||'').trim().toUpperCase();
-const $=id=>document.getElementById(id), CHAVE='derm_r2_'+CONV;
+const $=id=>document.getElementById(id), CHAVE='derm_conf_'+CONV;
 let POOL=null, estado=null, img=new Image(), esconder=false, CONV_OK=false;
 const salva=()=>{try{localStorage.setItem(CHAVE,JSON.stringify(estado))}catch(e){}};
 function desenha(){
