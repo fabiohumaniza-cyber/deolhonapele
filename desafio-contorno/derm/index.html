@@ -127,10 +127,11 @@ textarea{width:100%;font:13px var(--mono);padding:8px;border:1px solid var(--lin
         <label class="campo"><b>CRM (número)</b><input type="text" id="crm" maxlength="12" inputmode="numeric"></label>
         <label class="campo"><b>UF</b><select id="uf"><option value=""></option><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option></select></label>
       </div>
+      <label class="campo"><b>RQE (Registro de Qualificação de Especialista)</b><input type="text" id="rqe" maxlength="12" inputmode="numeric"><span class="muted small">Se tiver. Também usado só para conferência.</span></label>
       <label class="campo"><b>Especialidade</b><select id="esp"><option value=""></option><option value="dermatologia">Dermatologia</option><option value="residente_dermatologia">Residente de dermatologia</option><option value="outra_medica">Outra especialidade médica</option></select></label>
       <label class="campo"><b>Instituição</b><input type="text" id="inst" maxlength="160"></label>
       <label class="campo"><b>Anos de prática na especialidade</b><input type="number" id="anos" min="0" max="60" inputmode="numeric" style="width:120px"></label>
-      <div class="tcle">Você participa como <b>colaborador</b> do projeto De Olho na Pele e será nomeado no artigo, na lista de colaboradores. As fotos são públicas e anônimas. Registramos nome, CRM, UF, especialidade, instituição, anos de prática e as escolhas nas 66 telas. O CRM serve apenas para conferência no portal do CFM e <b>não é publicado</b>. Responsável: Fabio da Camara Oliveira Ferreira (ORCID 0009-0009-0997-3275).</div>
+      <div class="tcle">Você participa como <b>colaborador</b> do projeto De Olho na Pele e será nomeado no artigo, na lista de colaboradores. As fotos são públicas e anônimas. Registramos nome, CRM, UF, RQE, especialidade, instituição, anos de prática e as escolhas nas 66 telas. O CRM e o RQE servem apenas para conferência no portal do CFM e <b>não são publicados</b>. Responsável: Fabio da Camara Oliveira Ferreira (ORCID 0009-0009-0997-3275).</div>
       <label class="opt"><input type="checkbox" class="dec"> <span>Declaro que não vi, antes deste painel, os contornos, os resultados ou as imagens deste estudo.</span></label>
       <label class="opt"><input type="checkbox" class="dec"> <span>Aceito participar como colaborador e ser nomeado no artigo com meu nome, especialidade e instituição.</span></label>
       <label class="opt"><input type="checkbox" class="dec"> <span>Autorizo o registro dos meus dados acima para identificação e verificação, conforme a LGPD.</span></label>
@@ -204,7 +205,7 @@ function abreTela(){
 }
 function setBotoes(off){document.querySelectorAll('.bar button').forEach(b=>b.disabled=off)}
 function envia(p){ if(!ENDPOINT) return false; try{ fetch(ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)}); return true; }catch(e){ return false; } }
-const base=()=>({modo:MODO,conv:CONV,nome:estado.nome,crm:estado.crm,uf:estado.uf,categoria:estado.esp,instituicao:estado.inst,anos:estado.anos,inicio:estado.inicio,quando:new Date().toISOString()});
+const base=()=>({modo:MODO,conv:CONV,nome:estado.nome,crm:estado.crm,uf:estado.uf,rqe:estado.rqe,categoria:estado.esp,instituicao:estado.inst,anos:estado.anos,inicio:estado.inicio,quando:new Date().toISOString()});
 function responde(r){
   const p=POOL[estado.i];
   estado.resp[p.c]=[r,Math.round(performance.now()-(estado.t0||performance.now()))];
@@ -214,7 +215,7 @@ function responde(r){
 }
 function fim(){
   $('s-intro').hidden=true; $('s-cad').hidden=true; $('s-tela').hidden=true; $('bar').hidden=true; $('s-fim').hidden=false;
-  const cod={m:MODO,v:CONV,n:estado.nome,crm:estado.crm,uf:estado.uf,e:estado.esp,ins:estado.inst,a:estado.anos,r:POOL.map(p=>[p.c,...(estado.resp[p.c]||[null,null])])};
+  const cod={m:MODO,v:CONV,n:estado.nome,crm:estado.crm,uf:estado.uf,rqe:estado.rqe,e:estado.esp,ins:estado.inst,a:estado.anos,r:POOL.map(p=>[p.c,...(estado.resp[p.c]||[null,null])])};
   $('codigo').value=btoa(unescape(encodeURIComponent(JSON.stringify(cod))));
   $('b-zap').href='https://wa.me/'+ZAP+'?text='+encodeURIComponent('Oi Fabio, terminei o Painel Dermatológico do Contorno! ✅ Nome: '+estado.nome+' · código '+CONV);
   if(!estado.fimEnviado){estado.fimEnviado=true; salva(); envia({tipo:'fim',...base(),resp:$('codigo').value});}
@@ -239,7 +240,7 @@ const valida=()=>{ $('b-inicia').disabled=!(CONV_OK&&POOL&&$('nome').value.trim(
 $('b-ir-cadastro').onclick=()=>{ $('s-intro').hidden=true; if(estado&&estado.resp){ $('s-tela').hidden=false; $('bar').hidden=false; abreTela(); } else $('s-cad').hidden=false; };
 $('f-cad').addEventListener('input',valida); $('f-cad').addEventListener('change',valida);
 $('f-cad').addEventListener('submit',e=>{ e.preventDefault(); if($('b-inicia').disabled) return;
-  estado={nome:$('nome').value.trim(),crm:$('crm').value.trim(),uf:$('uf').value,esp:$('esp').value,inst:$('inst').value.trim(),anos:Number($('anos').value),inicio:new Date().toISOString(),i:0,resp:{}};
+  estado={nome:$('nome').value.trim(),crm:$('crm').value.trim(),uf:$('uf').value,rqe:$('rqe').value.trim(),esp:$('esp').value,inst:$('inst').value.trim(),anos:Number($('anos').value),inicio:new Date().toISOString(),i:0,resp:{}};
   salva(); envia({tipo:'inicio',...base()});
   $('s-cad').hidden=true; $('s-tela').hidden=false; $('bar').hidden=false; abreTela(); });
 document.querySelectorAll('.bar button').forEach(b=>b.onclick=()=>responde(b.dataset.r));
