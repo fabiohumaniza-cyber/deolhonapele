@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>The SoLiz platform in three screens · De Olho na Pele</title>
+<meta name="description" content="Demonstration of the three screens of the SoLiz platform: the patient app, the nursing screen and the doctor’s screen, step by step, with an invented case.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="De Olho na Pele">
+<meta property="og:title" content="The SoLiz platform in three screens">
+<meta property="og:description" content="Demonstration: the patient app, the nursing screen and the doctor’s screen, step by step, with an invented case.">
+<meta property="og:url" content="https://deolhonapele.com.br/plataforma/en/">
+<meta property="og:image" content="https://deolhonapele.com.br/plataforma/en/img/capa.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../fontes/source-sans-3-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fontes/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Página das três telas. Uma coluna; no computador os três cartões ficam lado a lado e o passo a passo abre embaixo, com o texto à esquerda e a tela à direita.
+   No celular o passo a passo abre logo depois do cartão tocado, e a barra de "Anterior / Próximo" fica presa embaixo. */
+@font-face{font-family:"Fraunces";src:url(../fontes/fraunces-latin-opsz-normal.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:url(../fontes/source-sans-3-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Source Sans 3";src:url(../fontes/source-sans-3-latin-600-normal.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(../fontes/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --ink:#18221f; --muted:#5c6b66; --line:#d5ddda;
+  --accent:#0f6b5c; --warn-bg:#fff4d6; --warn-ink:#6b4e00;
+  --paciente:#b0802a; --paciente-txt:#8a6410; --enfermagem:#2f7a5c; --enfermagem-txt:#2a6e53; --medico:#3f6fb5; --medico-txt:#3565aa;
+  --sobre-cor:#ffffff;
+  --display:"Fraunces",Georgia,serif; --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#101615; --surface:#18201e; --ink:#e6eeeb; --muted:#97a8a2; --line:#2c3835;
+  --accent:#4fc3ad; --warn-bg:#3a3014; --warn-ink:#f2d58a;
+  --paciente:#d9aa4f; --paciente-txt:#e0b45e; --enfermagem:#5fbf9b; --enfermagem-txt:#6cc9a6; --medico:#86aee8; --medico-txt:#93b8ee;
+  --sobre-cor:#0b1513; color-scheme:dark}}
+[data-quem="paciente"]{--cor:var(--paciente);--cor-txt:var(--paciente-txt)}
+[data-quem="enfermagem"]{--cor:var(--enfermagem);--cor-txt:var(--enfermagem-txt)}
+[data-quem="medico"]{--cor:var(--medico);--cor-txt:var(--medico-txt)}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--body);padding-inline:16px}
+.w{max-width:1080px;margin:0 auto}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+p{margin:0 0 12px}
+
+.topo{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.topo a{font:500 19px/1.1 var(--display);color:var(--ink);text-decoration:none}
+.topo a:hover{text-decoration:underline}
+.selo{font:500 12.5px/1 var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 10px;white-space:nowrap}
+
+.abre{padding:40px 0 0}
+h1{font:650 clamp(34px,6.4vw,56px)/1.05 var(--display);letter-spacing:-.01em;margin:0 0 16px;text-wrap:balance}
+.lede{font-size:clamp(18px,2.1vw,21px);line-height:1.5;max-width:62ch;margin:0 0 18px}
+.aviso{background:var(--warn-bg);color:var(--warn-ink);border-radius:8px;padding:12px 14px;font-size:15.5px;line-height:1.5;max-width:70ch;margin:0}
+.aviso b{font-weight:600}
+.norte{max-width:62ch;margin:0 0 18px;padding:2px 0 2px 14px;border-left:3px solid var(--accent);line-height:1.5}
+
+.trilho{margin:36px 0 0}
+.trilho h2{font:600 15px/1.2 var(--body);color:var(--muted);margin:0 0 14px}
+.trilho ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);position:relative}
+.trilho ol::before{content:"";position:absolute;left:15px;top:14px;width:80%;height:2px;background:var(--line)}
+.trilho li{position:relative;padding-right:14px}
+.trilho a{display:block;text-decoration:none;color:inherit;border-radius:8px}
+.trilho .n{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--cor);color:var(--sobre-cor);font:500 13px/1 var(--mono);box-shadow:0 0 0 5px var(--bg);position:relative}
+.trilho b{display:block;margin-top:10px;font-weight:600}
+.trilho .f{display:block;color:var(--muted);font-size:15px;line-height:1.35}
+.trilho a:hover b{text-decoration:underline}
+@media (max-width:719px){
+  .trilho ol{grid-template-columns:1fr;gap:14px}
+  .trilho ol::before{left:14px;top:15px;bottom:15px;width:2px;height:auto}
+  .trilho li{padding-right:0}
+  .trilho a{display:grid;grid-template-columns:30px 1fr;column-gap:12px}
+  .trilho .n{grid-row:1 / span 2}
+  .trilho b{margin-top:3px}
+}
+
+h2{font:500 clamp(24px,3.2vw,30px)/1.2 var(--display);margin:0 0 6px;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 18px}
+.telas{margin-top:56px}
+.papeis{display:grid;gap:14px}
+.papel{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--cor);border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column}
+.papel h3{font:650 26px/1.1 var(--display);margin:0}
+.papel .onde{color:var(--cor-txt);font-weight:600;font-size:15px;margin:4px 0 10px}
+.papel .resumo{margin:0 0 10px}
+.papel ul{margin:0 0 16px;padding-left:18px;font-size:16px;line-height:1.45}
+.papel li{margin-bottom:6px}
+.papel li::marker{color:var(--cor)}
+.papel .acao{margin:auto 0 0}
+.abrir{display:block;text-align:center;font:600 16px/1.25 var(--body);text-decoration:none;background:var(--cor-txt);color:var(--sobre-cor);border-radius:8px;padding:13px 14px}
+.abrir:hover{filter:brightness(1.08)}
+.abrir[aria-expanded="true"]{background:none;color:var(--cor-txt);box-shadow:inset 0 0 0 2px var(--cor)}
+
+.passeio{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--cor);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:10px}
+.js .passeio:not(.aberto){display:none}
+.cab{display:flex;justify-content:space-between;align-items:baseline;gap:6px 12px;flex-wrap:wrap}
+.cab h3{font:650 24px/1.15 var(--display);margin:0}
+.quantos{margin:0;color:var(--muted);font-size:15px;line-height:1.3}
+.passos{list-style:none;margin:0;padding:0;display:grid;gap:36px}
+.passo{display:grid;gap:14px}
+.passo .num{font:500 13px/1 var(--mono);color:var(--cor-txt);margin:0 0 8px}
+.passo h4{font:650 clamp(22px,2.6vw,28px)/1.15 var(--display);margin:0 0 8px;text-wrap:balance}
+.passo h4:focus{outline:none}
+.passo .txt p:last-child{margin:0;max-width:52ch}
+figure{margin:0}
+.passo figure{display:flex;justify-content:center}
+.amplia{display:block;line-height:0;border-radius:14px;max-width:100%;appearance:none;-webkit-appearance:none;border:0;padding:0;margin:0;background:none;color:inherit;font:inherit;text-align:inherit}
+.js .amplia{cursor:zoom-in}
+.so-js{display:none}
+.js .so-js{display:inline}
+.passo img{display:block;width:min(100%,var(--w));height:auto;border-radius:14px;border:1px solid var(--line);background:var(--bg)}
+.js .passo{display:none}
+.js .passo.on{display:grid}
+
+.nav{display:flex;align-items:center;gap:10px;background:var(--surface)}
+.nav button{font:600 16px/1 var(--body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 16px;min-height:44px;cursor:pointer}
+.nav .prox{background:var(--cor-txt);border-color:var(--cor-txt);color:var(--sobre-cor);margin-left:auto}
+.nav button:disabled{opacity:.4;cursor:default}
+.pontos{display:flex;flex-wrap:wrap;gap:6px;flex:1;justify-content:center}
+.pontos button{width:30px;height:30px;min-height:0;padding:0;border-radius:50%;font:500 12px/1 var(--mono);color:var(--muted)}
+.pontos button[aria-current="step"]{background:var(--cor-txt);border-color:var(--cor-txt);color:var(--sobre-cor)}
+.onde-estou{display:none;margin:0;flex:1;text-align:center;font:500 13px/1.2 var(--mono);color:var(--muted);white-space:nowrap}
+
+@media (min-width:900px){
+  .papeis{grid-template-columns:repeat(3,1fr)}
+  .papel{order:1}
+  .passeio{order:2;grid-column:1 / -1;padding:22px 24px 26px}
+  .passo{grid-template-columns:minmax(0,1fr) minmax(0,540px);gap:36px;align-items:start}
+  .passo .txt{position:sticky;top:84px;padding-top:6px}
+  .nav{position:sticky;top:0;z-index:2;padding:10px 0;border-bottom:1px solid var(--line)}
+}
+@media (max-width:899px){
+  .cab{order:1} .passos{order:2}
+  .nav{order:3;position:sticky;bottom:0;z-index:2;margin:0 -18px -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);border-radius:0 0 12px 12px}
+  .pontos{display:none} .onde-estou{display:block}
+  .js .passo .num{display:none}
+  .nav button{padding:0 13px}
+}
+@media (max-width:359px){.nav{gap:6px} .nav button{padding:0 10px;font-size:15px}}
+
+.bloco{margin-top:64px}
+.bloco > p{max-width:66ch}
+.larga{margin:18px 0 0}
+.larga img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+figcaption{color:var(--muted);font-size:15px;margin-top:8px;max-width:70ch}
+.diario{list-style:none;margin:22px 0 10px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;counter-reset:lin}
+.diario li{display:grid;grid-template-columns:2em 7.5em 1fr auto auto;gap:2px 14px;align-items:baseline;padding:9px 14px;border-top:1px solid var(--line);counter-increment:lin}
+.diario li:first-child{border-top:0}
+.diario li::before{content:counter(lin);font:500 13px/1.4 var(--mono);color:var(--muted)}
+.diario .q{font-weight:600;color:var(--cor-txt)}
+.diario small{color:var(--muted);font-size:inherit}
+.diario .h,.diario .l{font:500 13px/1.4 var(--mono);color:var(--muted);white-space:nowrap}
+.diario .l::before{content:"seal "}
+@media (max-width:640px){
+  .diario li{grid-template-columns:2em 1fr auto}
+  .diario .q{grid-column:2 / -1}
+  .diario .o{grid-column:2 / -1}
+  .diario .h{grid-column:2}
+  .diario .l{grid-column:3}
+}
+.nota{color:var(--muted);font-size:15.5px}
+.limites ul{margin:10px 0 0;padding-left:20px;max-width:70ch}
+.limites li{margin-bottom:8px}
+.creditos p{font-size:15.5px;max-width:74ch}
+.creditos code{font:500 13.5px var(--mono)}
+
+.zoom{border:0;padding:0;margin:0;width:100vw;max-width:100vw;height:100vh;height:100dvh;max-height:100dvh;background:rgba(10,16,15,.94);overflow:auto;overscroll-behavior:contain}
+.zoom::backdrop{background:rgba(10,16,15,.94)}
+.zoom .palco{width:max-content;min-width:100%;padding:64px 12px 20px}
+.zoom img{display:block;margin:0 auto;height:auto;border-radius:8px;background:#f3f5f4}
+.zoom .fecha{position:fixed;top:10px;right:12px;z-index:1;font:600 16px/1 var(--body);min-height:44px;padding:0 16px;border-radius:8px;border:1px solid rgba(255,255,255,.45);background:rgba(10,16,15,.85);color:#fff;cursor:pointer}
+.zoom .fecha:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+footer{margin-top:64px;border-top:1px solid var(--line);padding:22px 0 44px;color:var(--muted);font-size:15px}
+footer p{margin:0 0 6px}
+</style>
+<script>document.documentElement.className='js';</script>
+</head>
+<body>
+<div class="w">
+<header class="topo">
+  <a href="../../">De Olho na Pele</a>
+  <span class="selo">demonstration</span>
+</header>
+
+<main>
+<section class="abre">
+  <h1>The SoLiz platform in three screens</h1>
+  <p class="lede">The patient shows the skin lesion with a mobile phone. The nursing team at the health post checks it and decides where it goes. The doctor assesses it remotely and decides. Here you follow an invented case through the three screens, step by step.</p>
+  <p class="norte">This platform is only a guide for building your own. It can and should be adapted to your reality. Whether for a scientific study or just to use the panel, it can be taken apart for each situation. It is written in a language that is easy to rearrange. Make the most of it, and make your service a reference in skin cancer triage.</p>
+  <p class="aviso"><b>This is a research demonstration.</b> The patient, the doctors and the municipality shown on the screens are invented. The screens on this page are images: nothing you do here is sent or stored. The program does not give a diagnosis and has not yet been used with patients.</p>
+  <nav class="trilho" aria-labelledby="t-trilho">
+    <h2 id="t-trilho">The path of a case</h2>
+    <ol>
+<li data-quem="paciente"><a href="#paciente"><span class="n">1</span><b>Patient</b><span class="f">shows the lesion and sends it</span></a></li>
+<li data-quem="enfermagem"><a href="#enfermagem"><span class="n">2</span><b>Nursing</b><span class="f">checks the person and gives the destination</span></a></li>
+<li data-quem="medico"><a href="#medico"><span class="n">3</span><b>Doctor</b><span class="f">takes it from the queue and decides</span></a></li>
+<li data-quem="enfermagem"><a href="#enfermagem"><span class="n">4</span><b>Nursing</b><span class="f">receives the report and notifies</span></a></li>
+<li data-quem="paciente"><a href="#paciente"><span class="n">5</span><b>Patient</b><span class="f">receives the notice</span></a></li>
+    </ol>
+  </nav>
+</section>
+
+<section class="telas" id="telas" aria-labelledby="t-telas">
+  <h2 id="t-telas">See each screen</h2>
+  <p class="sub">Choose one of the three to see it step by step.</p>
+  <div class="papeis">
+<article class="papel" data-quem="paciente"><h3>Patient</h3><p class="onde">app on the phone</p><p class="resumo">The person shows the lesion from home, in plain words. There is no need to know the name of anything.</p><ul><li>Points to the picture that looks most like the lesion, or says that none looks like it.</li><li>Tells the story of the lesion: whether it grew, changed, bleeds, itches.</li><li>Takes the photo with a dot sticker beside it, which serves as a measure, and points in the photo to which one is the lesion.</li><li>Receives a submission code and follows each step.</li></ul><p class="acao"><a class="abrir" href="#paciente" aria-controls="paciente">See the app, step by step</a></p></article>
+<section class="passeio" id="paciente" data-quem="paciente" data-depois="enfermagem" data-depois-rotulo="Now the nursing screen" aria-labelledby="t-paciente">
+<div class="cab"><h3 id="t-paciente">The patient app</h3><p class="quantos">15 steps.<span class="so-js"> Tap an image to enlarge it.</span></p></div>
+<ol class="passos">
+<li class="passo"><div class="txt"><p class="num"><span>1</span> of 15</p><h4 tabindex="-1">Registration and acceptance</h4><p>The person gives name, SUS card (the Brazilian public health card), CPF (the Brazilian tax number) and date of birth. Before going on, they read who will see their data and what for, and give their acceptance.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-01.webp" width="390" height="844" style="--w:390px" alt="Welcome screen of the app, with the registration fields and the beginning of the text about the use of the data." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>2</span> of 15</p><h4 tabindex="-1">What they want to show</h4><p>The person chooses what to show. In this demonstration only the spot or mole path is open. Someone with more than one lesion shows one at a time.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-02.webp" width="390" height="844" style="--w:390px" alt="Screen with the question “What do you want to show?” and the option “A spot or a mole” chosen." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>3</span> of 15</p><h4 tabindex="-1">The picture that looks like it</h4><p>The person looks at eight photos and taps the one that looks most like their lesion. They can also say that none looks like it. Two of the eight appear here.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-03.webp" width="346" height="243" style="--w:346px" alt="Two of the eight pictures: a dark, round mole, chosen, and a brown mole with a jagged edge." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>4</span> of 15</p><h4 tabindex="-1">Questions for that picture</h4><p>Each picture brings its own questions. For a dark, round mole, the questions about shape and edge help little. The app asks others: whether it is the darkest of all, whether it appeared out of nowhere, whether it is the only one like that.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-04.webp" width="390" height="844" style="--w:390px" alt="Screen with questions about the mole pointed to, each with the answers Yes, No and I don’t know." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>5</span> of 15</p><h4 tabindex="-1">The place on the body</h4><p>The person taps the drawing, at the place closest to where the lesion is. In this case, the upper back.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-05.webp" width="390" height="844" style="--w:390px" alt="Drawing of a body seen from behind, with the upper back marked." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>6</span> of 15</p><h4 tabindex="-1">The appearance, with examples</h4><p>Three questions about appearance: the halves, the edge and the colours. Each one comes with two example photos and accepts an answer in doubt, such as “I think they are the same”.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-06.webp" width="390" height="844" style="--w:390px" alt="Screen asking whether the two halves of the spot are the same, with two example photos and four answers." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>7</span> of 15</p><h4 tabindex="-1">The story of the lesion</h4><p>Only the person knows the story of the lesion: whether it grew, changed colour or shape, how long it has been there, whether it bleeds, itches or hurts. When they do not know, they answer “I don’t know”.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-07.webp" width="390" height="844" style="--w:390px" alt="Screen with questions about what changed in the lesion and how long it has been there." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>8</span> of 15</p><h4 tabindex="-1">The measure</h4><p>So that the size can be measured in the photo, the person sticks a yellow 12 mm dot sticker beside the lesion, the kind sold in stationery shops. They can also use an ordinary ruler or go on without a measure.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-08.webp" width="390" height="844" style="--w:390px" alt="Screen with three options for measuring: yellow dot sticker, ordinary ruler or none." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>9</span> of 15</p><h4 tabindex="-1">The photo</h4><p>The app shows how the photo should look: the dot sticker beside the lesion, not touching it, close up, without zoom and in good light. In this demonstration the photo is simulated: an example photo appears in place of the person’s photo.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-09.webp" width="390" height="844" style="--w:390px" alt="Screen with a drawing showing the lesion and the yellow dot sticker beside it, and the guidance for the photo." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>10</span> of 15</p><h4 tabindex="-1">Pointing in the photo</h4><p>There may be more than one similar thing in the photo. The person marks which one is their lesion with an arrow or a circle, and the marking goes along to the doctor.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-10.webp" width="390" height="844" style="--w:390px" alt="Example photo of a dark mole, with the yellow dot sticker beside it and a blue arrow pointing to the mole." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>11</span> of 15</p><h4 tabindex="-1">In their own words</h4><p>An optional space for the person to tell whatever they find important. If there is strong pain, bleeding or pus, the app tells them to go to the health post the same day, without waiting.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-11.webp" width="390" height="844" style="--w:390px" alt="Screen with a free-text field, where “My daughter asked me to show this mole.” is written, and a warning for strong pain, bleeding or pus." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>12</span> of 15</p><h4 tabindex="-1">Questions about the person</h4><p>They are asked only once and apply to everything the person shows: sun, sunburns, skin cancer in the family, moles on the body, smoking, drinking.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-12.webp" width="390" height="844" style="--w:390px" alt="Screen with questions about the person, such as “Does your skin burn easily in the sun?”." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>13</span> of 15</p><h4 tabindex="-1">The skin tone</h4><p>The person compares their skin with ten tones, looking at a part of the body that does not get sun. It is the Monk scale, which is open source.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-13.webp" width="390" height="844" style="--w:390px" alt="Screen with ten squares of skin tones, from the lightest to the darkest, with the third one chosen." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>14</span> of 15</p><h4 tabindex="-1">Done</h4><p>The submission receives a code. With it the health post confirms that the submission arrived intact, and the person follows three steps: sent, checked by the health post, assessed by the doctor. The app does not give a diagnosis.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-14.webp" width="390" height="844" style="--w:390px" alt="The “Done!” screen, with the submission code 1E4D-8046 and the step “Sent” marked." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>15</span> of 15</p><h4 tabindex="-1">The notice arrives</h4><p>After the nursing team and the doctor have done their part, the notice from the health post appears in the app. If the lesion changes, the person taps “It changed, I want to tell you” and the case reopens with the nursing team.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/paciente-15.webp" width="390" height="844" style="--w:390px" alt="Screen with the three steps marked, the notice from the health post and the button “It changed, I want to tell you”." loading="lazy" decoding="async"></button></figure></li>
+</ol></section>
+<article class="papel" data-quem="enfermagem"><h3>Nursing</h3><p class="onde">at the health post</p><p class="resumo">Everything goes through the nursing team before it reaches the doctor.</p><ul><li>Checks the person only once: whether the registration is genuine and whether they want to go ahead.</li><li>Gives each lesion a destination and releases the submission to the queue.</li><li>Receives the report back and notifies the patient. Communicates the referral, never the diagnosis.</li><li>Carries out what the doctor asked for: a new photo, a test, a biopsy.</li></ul><p class="acao"><a class="abrir" href="#enfermagem" aria-controls="enfermagem">See the nursing screen</a></p></article>
+<section class="passeio" id="enfermagem" data-quem="enfermagem" data-depois="medico" data-depois-rotulo="Now the doctor" aria-labelledby="t-enfermagem">
+<div class="cab"><h3 id="t-enfermagem">The nursing screen</h3><p class="quantos">9 steps.<span class="so-js"> Tap an image to enlarge it.</span></p></div>
+<ol class="passos">
+<li class="passo"><div class="txt"><p class="num"><span>1</span> of 9</p><h4 tabindex="-1">What needs action</h4><p>The panel gathers what is waiting for the nursing team: people with a new case, reports that came back, biopsies to schedule, requests for a dermatoscope photo, referrals and claims. The numbers are invented.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-01.webp" width="540" height="588" style="--w:540px" alt="Panel with six boxes: pre-triage, reports that came back, biopsies to schedule, level 2 capture, referrals and open claims." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>2</span> of 9</p><h4 tabindex="-1">The submission arrives from the app</h4><p>The submission arrives with the same code the patient received, and the screen checks the log. The nursing team sees the person once, with the risk factors they reported. One person is one registration, and each lesion is a case.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-02.webp" width="623" height="318" style="--w:623px" alt="Strip “Came from the app”, with the submission code 1E4D-8046, and the box of the person with the risk factors." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>3</span> of 9</p><h4 tabindex="-1">The two filters</h4><p>Before anything else, two checks per person. Is the registration genuine and from the municipality? Does the person want the assessment, knowing that it may lead to tests and a biopsy? The decision is the person’s.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-03.webp" width="623" height="448" style="--w:623px" alt="Pre-triage box with two questions: whether the person is real and from the municipality, and whether they want the assessment." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>4</span> of 9</p><h4 tabindex="-1">What the patient sent</h4><p>Each lesion comes with the note about the place on the body, the sentence the person wrote, the photo and the answers. In the demonstration the photo is a drawing, because the real photo is not yet sent.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-04.webp" width="583" height="749" style="--w:583px" alt="Case box with the location note, the patient’s sentence, a drawing in place of the photo and the answers." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>5</span> of 9</p><h4 tabindex="-1">The destination of each lesion</h4><p>The nursing team chooses where each lesion goes. Here, the dermatologist queue. Keeping it with the nursing team is allowed only when the lesion has no sign and the photo has been checked. In this case the option appears blocked, because the spot has a sign.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-05.webp" width="593" height="349" style="--w:593px" alt="Four possible destinations, with “Dermatologist queue” chosen, and the button “Release batch”." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>6</span> of 9</p><h4 tabindex="-1">The submission goes to the queue</h4><p>Once the submission is released, the doctor takes the person and reports case by case. If a new lesion from the same person arrives, the nursing team decides whether to attach it to the submission or release a new one. A case already with the doctor is not touched.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-06.webp" width="480" height="336" style="--w:480px" alt="Window “Submission released”, explaining what happens in the queue." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>7</span> of 9</p><h4 tabindex="-1">The report comes back</h4><p>The report comes back to the nursing team. What the doctor asked for becomes a task, with who asked, when and for which case. Here: a new photo of the same lesion in three months.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-07.webp" width="540" height="528" style="--w:540px" alt="Task box with the doctor’s request for a new photo in three months, and the nursing actions, with “Notify the patient” highlighted." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>8</span> of 9</p><h4 tabindex="-1">Notifying the patient</h4><p>The nursing team notifies the patient through the app, in plain language. It communicates the referral. The diagnosis is communicated by the doctor.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-08.webp" width="480" height="387" style="--w:480px" alt="Window “Notify the patient”, with the message ready and the reminder that the one who communicates a diagnosis is the doctor." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>9</span> of 9</p><h4 tabindex="-1">The timeline</h4><p>Everything that happened with the person stays in order, with the time. In the demonstration the steps fall within the same minute. In a real case they take days.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/enfermagem-09.webp" width="540" height="580" style="--w:540px" alt="The person’s timeline, with ten steps, from the case that came in through the app to the patient notified." loading="lazy" decoding="async"></button></figure></li>
+</ol></section>
+<article class="papel" data-quem="medico"><h3>Doctor</h3><p class="onde">assesses remotely</p><p class="resumo">The doctor sees the whole case on one screen and decides.</p><ul><li>Takes the next case in the queue. There is no choosing: the doctor receives the one with the highest priority.</li><li>Sees in separate blocks what the patient described, what the lesion went through and the person’s risk factors.</li><li>Decides the management or asks for what is missing: another photo, a test, a question to the patient.</li><li>The decision goes back to the nursing team, which carries it out.</li></ul><p class="acao"><a class="abrir" href="#medico" aria-controls="medico">See the doctor’s screen</a></p></article>
+<section class="passeio" id="medico" data-quem="medico" data-depois="ligadas" data-depois-rotulo="The three screens linked" aria-labelledby="t-medico">
+<div class="cab"><h3 id="t-medico">The doctor’s screen</h3><p class="quantos">8 steps.<span class="so-js"> Tap an image to enlarge it.</span></p></div>
+<ol class="passos">
+<li class="passo"><div class="txt"><p class="num"><span>1</span> of 8</p><h4 tabindex="-1">The blind queue</h4><p>The doctor does not choose the case. The system hands over the highest-priority one that is waiting, so that nobody jumps the queue and no easy case goes ahead of a serious one.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/medico-01.webp" width="410" height="364" style="--w:410px" alt="Box “Blind distribution”, with the button “Take next”." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>2</span> of 8</p><h4 tabindex="-1">The case</h4><p>At the top, the note about the place on the body and where the case came from. In this demonstration the colour arrives green because the rule that proposes the colour is not yet written in the program. The screen tells the doctor: it is a proposal, the decision is theirs.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/medico-02.webp" width="410" height="571" style="--w:410px" alt="Top of the case screen: the location note, the name of the invented patient, the label “Proposal green” and the text explaining where the case came from." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>3</span> of 8</p><h4 tabindex="-1">The photo and the patient’s marking</h4><p>The photo arrives with the marking the patient made, showing which one is the lesion. If needed, the doctor asks for a dermatoscope photo. In the demonstration the photo is a drawing.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/medico-03.webp" width="398" height="419" style="--w:398px" alt="Box “Photos of this case”, with a drawing in place of the photo and the explanation that the blue arrow is the patient’s marking." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>4</span> of 8</p><h4 tabindex="-1">What the patient described</h4><p>In separate blocks: the appearance the patient pointed to and what the lesion went through. Each answer appears as it was given. The name of the picture pointed to is that of the reference photo the patient chose. It is not a diagnosis of the case.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/medico-04.webp" width="396" height="1155" style="--w:396px" alt="Box with the picture pointed to, the place, the answers about appearance and the list of what the lesion went through." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>5</span> of 8</p><h4 tabindex="-1">The person’s risk factors</h4><p>Collected once, they apply to all of the person’s cases. They stay in a separate block, without mixing with the answers about the lesion. The screen also warns that the check between the description and the photo is not yet done.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/medico-05.webp" width="396" height="756" style="--w:396px" alt="List of the person’s risk factors and the warning that the check between the description and the photo is not yet done." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>6</span> of 8</p><h4 tabindex="-1">The decision</h4><p>The doctor decides the management: reassure and advise, watch over time, recommend a biopsy or refer to another specialty. If something is missing, the doctor asks for it: a dermatoscope photo, a test, a task for the health post or a message to the patient.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/medico-06.webp" width="410" height="745" style="--w:410px" alt="Box “Your decision”, with four kinds of management and four possible requests." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>7</span> of 8</p><h4 tabindex="-1">Watching over time</h4><p>In the demonstration, the management chosen was to watch over time. The health post calls the patient for a new photo of the same lesion in three months, and whoever takes the case later sees today’s photo and report side by side.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/medico-07.webp" width="390" height="350" style="--w:390px" alt="Window “Watch over time — this case”, with the period of three months." loading="lazy" decoding="async"></button></figure></li>
+<li class="passo"><div class="txt"><p class="num"><span>8</span> of 8</p><h4 tabindex="-1">The timeline of the case</h4><p>The case carries the submission code and the checked log. The doctor sees who did what before them.</p></div><figure><button type="button" class="amplia" aria-label="Enlarge the image"><img src="img/medico-08.webp" width="410" height="422" style="--w:410px" alt="Timeline of the case, with the submission code 1E4D-8046 and three steps by the nursing team." loading="lazy" decoding="async"></button></figure></li>
+</ol></section>
+  </div>
+</section>
+
+<section class="bloco" id="ligadas" aria-labelledby="t-ligadas">
+  <h2 id="t-ligadas">The three screens linked</h2>
+  <p>The three screens exchange a record of the case. Each step is written in a log of the submission, with a seal calculated from the previous line. The patient receives the submission code, and with it the health post confirms that the submission arrived intact.</p>
+  <p>The seal shows whether someone changed a line afterwards. It does not prevent anyone from changing it.</p>
+  <figure class="larga">
+    <button type="button" class="amplia" data-grande="img/tres-telas.webp" aria-label="Enlarge the image of the three screens"><img src="img/tres-telas-1440.webp" srcset="img/tres-telas-1440.webp 1440w, img/tres-telas.webp 2880w" sizes="(min-width:1112px) 1080px, calc(100vw - 32px)" width="1440" height="810" loading="lazy" decoding="async" alt="The three screens side by side: the patient app with the notice from the health post, the nursing screen with the person open, and the doctor’s screen back at the queue. Below, the log of the submission."></button>
+    <figcaption>The three screens after the notice reached the patient. Below, the log of submission 1E4D-8046, with 12 lines checked.<span class="so-js"> Tap the image to enlarge it.</span></figcaption>
+  </figure>
+  <ol class="diario" aria-label="Log of submission 1E4D-8046">
+<li data-quem="paciente"><span class="q">patient</span><span class="o">submission created<small>: 1 lesion</small></span><span class="h">21:30:00</span><span class="l">1e4d8046</span></li>
+<li data-quem="paciente"><span class="q">patient</span><span class="o">acceptance of data use<small>, with the optional acceptance for the study</small></span><span class="h">21:30:00</span><span class="l">34374d8d</span></li>
+<li data-quem="enfermagem"><span class="q">nursing</span><span class="o">record opened</span><span class="h">21:30:05</span><span class="l">99b75659</span></li>
+<li data-quem="enfermagem"><span class="q">nursing</span><span class="o">person checked<small>: the two filters</small></span><span class="h">21:30:05</span><span class="l">4b872fca</span></li>
+<li data-quem="enfermagem"><span class="q">nursing</span><span class="o">destination given<small>: dermatologist queue</small></span><span class="h">21:30:05</span><span class="l">c972353b</span></li>
+<li data-quem="enfermagem"><span class="q">nursing</span><span class="o">batch released<small> to the dermatologist queue</small></span><span class="h">21:30:05</span><span class="l">e4ee18dd</span></li>
+<li data-quem="medico"><span class="q">doctor</span><span class="o">record opened</span><span class="h">21:30:07</span><span class="l">d6eafd62</span></li>
+<li data-quem="medico"><span class="q">doctor</span><span class="o">case taken</span><span class="h">21:30:07</span><span class="l">211a6e2e</span></li>
+<li data-quem="medico"><span class="q">doctor</span><span class="o">report<small>: watch over time, 3 months</small></span><span class="h">21:30:10</span><span class="l">235a9a31</span></li>
+<li data-quem="medico"><span class="q">doctor</span><span class="o">request<small>: new photo of this lesion in 3 months</small></span><span class="h">21:30:10</span><span class="l">d38b073e</span></li>
+<li data-quem="enfermagem"><span class="q">nursing</span><span class="o">record opened</span><span class="h">21:30:12</span><span class="l">d62f2092</span></li>
+<li data-quem="enfermagem"><span class="q">nursing</span><span class="o">notice to the patient<small>, through the app</small></span><span class="h">21:30:12</span><span class="l">4956906c</span></li>
+  </ol>
+  <p class="nota">The whole run took 12 seconds because it was done by a demonstration script. In a real case, each step takes hours or days.</p>
+</section>
+
+<section class="bloco limites" id="limites" aria-labelledby="t-limites">
+  <h2 id="t-limites">What this demonstration is not</h2>
+  <ul>
+    <li>It is not a health service, it is not a medical device and it does not give a diagnosis.</li>
+    <li>It has not been used with patients and is not meant for real data.</li>
+    <li>The photo is simulated. The app shows an example photo in place of the person’s photo, and the nursing and doctor’s screens show a drawing.</li>
+    <li>The program that measures the lesion in the photo is not connected to these screens.</li>
+    <li>The priority colour is not yet calculated. The rule is not written in the program, and the case that comes from the app is released as green.</li>
+    <li>The three screens talk to each other inside the same device. To work between devices, the health service’s server is still missing.</li>
+    <li>Only the spot or mole path is open.</li>
+    <li>The platform was built in Portuguese, for Brazil. The English on the screens and on this page was written by an artificial intelligence (Fable). No clinician and no native speaker has reviewed it.</li>
+  </ul>
+</section>
+
+<section class="bloco creditos" id="creditos" aria-labelledby="t-creditos">
+  <h2 id="t-creditos">Photos and credits</h2>
+  <p>The SoLiz platform was developed by Fabio da Camara Oliveira Ferreira, Fable Sicômoro Lacre and Otsu Paquímetro. Fabio is a nurse. Fable and Otsu are two artificial intelligences that work with him. They decide nothing: the decisions and the responsibility are Fabio’s. De Olho na Pele (“an eye on the skin”) is the name the patient sees in the app.</p>
+  <p>The lesion photos that appear on the screens come from the <a href="https://www.isic-archive.com/">ISIC Archive</a> (International Skin Imaging Collaboration). They were cropped, and one of them appears with the yellow dot sticker and the app’s arrow on top. Pictures: <code>ISIC_3971184</code> (Hospital Italiano de Buenos Aires, <a href="https://creativecommons.org/licenses/by/4.0/deed.en">CC BY</a>) and <code>ISIC_2222766</code> (Memorial Sloan Kettering Cancer Center, CC BY). Examples of halves: <code>ISIC_0788010</code> (Memorial Sloan Kettering Cancer Center, CC BY) and <code>ISIC_0024292</code> (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a>). The licences are the ones recorded in the app.</p>
+  <p>The ten skin tones are from the Monk Skin Tone scale. The typefaces of the page are Fraunces, Source Sans 3 and IBM Plex Mono, under an open licence (SIL Open Font License).</p>
+</section>
+</main>
+
+<footer>
+  <p><a href="../../">De Olho na Pele</a>, by Fabio da Camara Oliveira Ferreira.</p>
+  <p>Page published on 16 November 2026. <a href="../" lang="pt-BR" hreflang="pt-BR">Versão em português</a>.</p>
+</footer>
+</div>
+
+<dialog class="zoom" id="zoom" aria-label="Enlarged image">
+  <button type="button" class="fecha">Close</button>
+  <div class="palco"><img alt=""></div>
+</dialog>
+
+<script>
+(function () {
+  var passeios = [].slice.call(document.querySelectorAll('.passeio'));
+  var botoes = [].slice.call(document.querySelectorAll('.abrir'));
+  var ids = passeios.map(function (p) { return p.id; });
+  var semMov = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function estreito() { return window.matchMedia && matchMedia('(max-width: 899px)').matches; }
+  function rola(el) { el.scrollIntoView({ behavior: semMov ? 'auto' : 'smooth', block: 'start' }); }
+
+  botoes.forEach(function (b) { b.dataset.abrir = b.textContent; b.setAttribute('role', 'button'); b.setAttribute('aria-expanded', 'false'); });
+
+  function abre(id, rolar) {
+    var alvo = null;
+    passeios.forEach(function (p) { var on = p.id === id; p.classList.toggle('aberto', on); if (on) alvo = p; });
+    botoes.forEach(function (b) { var on = b.getAttribute('aria-controls') === id; b.setAttribute('aria-expanded', on ? 'true' : 'false'); b.textContent = on ? 'Close the step by step' : b.dataset.abrir; });
+    if (alvo) { alvo._vai(0, false); if (rolar !== false) rola(alvo); }
+    try { history.replaceState(null, '', alvo ? '#' + id : location.pathname + location.search); } catch (e) {}
+  }
+
+  passeios.forEach(function (p) {
+    var passos = [].slice.call(p.querySelectorAll('.passo')), n = passos.length, atual = 0;
+    var nav = document.createElement('div'); nav.className = 'nav';
+    var ant = document.createElement('button'); ant.type = 'button'; ant.className = 'ant'; ant.textContent = 'Back';
+    var prox = document.createElement('button'); prox.type = 'button'; prox.className = 'prox';
+    var pontos = document.createElement('div'); pontos.className = 'pontos'; pontos.setAttribute('role', 'group'); pontos.setAttribute('aria-label', 'Go to a step');
+    var onde = document.createElement('p'); onde.className = 'onde-estou'; onde.setAttribute('aria-live', 'polite');
+    passos.forEach(function (li, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = i + 1;
+      b.setAttribute('aria-label', 'Step ' + (i + 1) + ': ' + li.querySelector('h4').textContent);
+      b.addEventListener('click', function () { vai(i, true); });
+      pontos.appendChild(b);
+    });
+    nav.appendChild(ant); nav.appendChild(pontos); nav.appendChild(onde); nav.appendChild(prox);
+    p.insertBefore(nav, p.querySelector('.passos'));
+
+    function vai(i, foco) {
+      atual = Math.max(0, Math.min(n - 1, i));
+      passos.forEach(function (li, k) { li.classList.toggle('on', k === atual); });
+      [].forEach.call(pontos.children, function (b, k) { if (k === atual) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+      ant.disabled = atual === 0;
+      prox.textContent = atual === n - 1 ? p.dataset.depoisRotulo : 'Next';
+      onde.textContent = (atual + 1) + ' of ' + n;
+      var seguinte = passos[atual + 1];
+      if (seguinte) { var im = seguinte.querySelector('img'); if (im && !im.dataset.pre) { im.dataset.pre = '1'; var pre = new Image(); pre.src = im.getAttribute('src'); } }
+      if (foco) {
+        try { passos[atual].querySelector('h4').focus({ preventScroll: true }); } catch (e) {}
+        if (estreito() || p.getBoundingClientRect().top < 0) rola(p);
+      }
+    }
+    p._vai = vai;
+    ant.addEventListener('click', function () { vai(atual - 1, true); });
+    prox.addEventListener('click', function () {
+      if (atual < n - 1) { vai(atual + 1, true); return; }
+      var d = p.dataset.depois;
+      if (ids.indexOf(d) >= 0) abre(d); else { var el = document.getElementById(d); if (el) rola(el); }
+    });
+    p.addEventListener('keydown', function (ev) {
+      if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+      if (ev.key === 'ArrowRight') { ev.preventDefault(); prox.click(); }
+      if (ev.key === 'ArrowLeft' && !ant.disabled) { ev.preventDefault(); ant.click(); }
+    });
+    vai(0, false);
+  });
+
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest ? ev.target.closest('a[href^="#"]') : null; if (!a) return;
+    var id = a.getAttribute('href').slice(1); if (ids.indexOf(id) < 0) return;
+    ev.preventDefault();
+    if (a.classList.contains('abrir') && a.getAttribute('aria-expanded') === 'true') abre('', false); else abre(id);
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== ' ' && ev.key !== 'Spacebar') return;
+    var a = ev.target.closest ? ev.target.closest('a.abrir') : null; if (a) { ev.preventDefault(); a.click(); }
+  });
+
+  // ampliar dentro da página: nenhuma imagem abre sozinha em outra aba
+  var zoom = document.getElementById('zoom');
+  if (zoom && zoom.showModal) {
+    var zimg = zoom.querySelector('img');
+    var fecha = function () { if (zoom.open) zoom.close(); };
+    var mede = function () {
+      if (!zimg.naturalWidth) return;
+      var larg = document.documentElement.clientWidth;
+      zimg.style.width = Math.min(zimg.naturalWidth, Math.max(larg - 24, 2 * larg)) + 'px';
+    };
+    zimg.addEventListener('load', mede);
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('.amplia') : null; if (!b) return;
+      var im = b.querySelector('img'); if (!im) return;
+      ev.preventDefault();
+      zimg.removeAttribute('src'); zimg.style.width = '';
+      zimg.alt = im.alt;
+      zimg.src = b.getAttribute('data-grande') || im.currentSrc || im.src;
+      zoom.showModal(); zoom.scrollTop = 0; zoom.scrollLeft = 0; mede();
+    });
+    zoom.querySelector('.fecha').addEventListener('click', fecha);
+    zoom.addEventListener('click', function (ev) { if (ev.target === zoom || ev.target.classList.contains('palco')) fecha(); });
+    zoom.addEventListener('close', function () { zimg.removeAttribute('src'); });
+  }
+
+  var h = location.hash.slice(1);
+  if (ids.indexOf(h) >= 0) abre(h);
+})();
+</script>
+</body>
+</html>
