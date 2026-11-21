@@ -442,6 +442,13 @@ p.body{font-size:14px;color:var(--mute);text-align:center;line-height:1.6;margin
 .rcb-ref:first-child{border-top:none}
 .rcb-ref b{color:#1c6a5c}
 .rcb-sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:5px;border:1px solid rgba(0,0,0,.15)}
+/* v74: escore do caso no resumo final (como no painel do medico: "X de N" + barra) */
+.rcb-esc{display:flex;align-items:center;gap:14px;background:#FBFAF7;border:1px solid #e3e0d6;border-radius:14px;padding:12px 14px;margin:6px 0 8px}
+.rcb-big{font-size:30px;font-weight:800;line-height:1;letter-spacing:-1px;white-space:nowrap;color:#1c6a5c}
+.rcb-big small{font-size:15px;font-weight:700;color:#7a7061;letter-spacing:0}
+.rcb-qual{flex:1;min-width:0}.rcb-qual b{font-size:14px;display:block;color:#2c2a24}.rcb-qual span{font-size:12px;color:#5f5e5a;display:block;line-height:1.35}
+.rcb-faixa{height:8px;border-radius:6px;background:#EAE5DA;overflow:hidden;margin-top:7px}.rcb-faixa i{display:block;height:100%;border-radius:6px;background:#1c6a5c}
+.rcb-kv.rcb-kv-sim span:last-child{color:#9a2b17}
 </style>
 </head>
 <body>
@@ -5480,6 +5487,10 @@ var RCB_T={
   eDica:'O E é acompanhado no tempo. No painel, o médico pode pedir uma nova foto da mesma lesão, por exemplo em 3 meses, e quem avaliar depois vê as duas lado a lado.',
   chip:{pres:'presente',prov:'provável',aus:'ausente',ausp:'provavelmente ausente',nr:'sem resposta',ns:'não sabe',foto:'na foto',sem:'sem outras pintas'},
   placarAB:'Sinais do ABCDE marcados pelo paciente:', de:'de', contaAcho:'(conta também os “acho que”; o D vem da foto)',
+  escAB:['ABCDE','instrumento do ramo mancha · respondido pelo paciente, conferido pela enfermagem'], escEFG:['EFG','sinais do melanoma nodular · respondido pelo paciente'],
+  escNota:'Conta também os “acho que”. O D só entra quando o programa mede a foto com a bolinha; nesta demonstração ele não está ligado, por isso o D fica sem marcar.',
+  escFat:['Fatores de risco para câncer de pele','pele que queima fácil, sol na vida, queimadura com bolha, câncer de pele na família, muitas pintas'],
+  naoSomam:'Escores de instrumentos diferentes não se somam: o ABCDE e o EFG são da lesão; os fatores de risco são da pessoa.',
   efgT:'Sinais que o ABCDE não pega',
   efgE:['Elevada','saltada, para fora da pele'], efgF:['Firme','dura ao apertar'], efgG:['Cresce','cresceu ou mudou nos últimos meses'],
   efgDica:'O EFG serve para o melanoma nodular, que costuma ser simétrico, de uma cor só e de borda regular, e por isso escapa do ABCD.',
@@ -5521,6 +5532,10 @@ var RCB_T={
   eDica:'The E is followed over time. In the panel, the doctor can ask for a new photo of the same lesion, for example in 3 months, and whoever assesses it later sees both side by side.',
   chip:{pres:'present',prov:'likely',aus:'absent',ausp:'probably absent',nr:'no answer',ns:'doesn’t know',foto:'on the photo',sem:'no other moles'},
   placarAB:'ABCDE signs marked by the patient:', de:'of', contaAcho:'(“I think” answers count too; the D comes from the photo)',
+  escAB:['ABCDE','instrument for the spot or mole branch · answered by the patient, checked by the nursing team'], escEFG:['EFG','signs of nodular melanoma · answered by the patient'],
+  escNota:'“I think” answers count too. The D only counts when the program measures the photo with the dot; in this demo it is not connected, so the D stays unmarked.',
+  escFat:['Risk factors for skin cancer','skin that burns easily, sun over a lifetime, blistering sunburn, skin cancer in the family, many moles'],
+  naoSomam:'Scores from different instruments are never added together: ABCDE and EFG belong to the lesion; the risk factors belong to the person.',
   efgT:'Signs that ABCDE misses',
   efgE:['Elevated','raised, sticking out of the skin'], efgF:['Firm','hard when pressed'], efgG:['Growing','grew or changed in recent months'],
   efgDica:'EFG is for nodular melanoma, which is often symmetric, one color and with a regular border, and so slips past ABCD.',
@@ -5555,6 +5570,10 @@ function _rcbEsc(o){ if(!o||!o.v) return 'nr'; var v=o.v, p=/\?$/.test(v), pos=/
 function _rcbLinha(T,letra,par,resp,chip){
   return '<div class="rcb-l"><div class="rcb-le">'+letra+'</div><div class="rcb-lc"><b>'+par[0]+'</b> <span class="rcb-oq">· '+par[1]+'</span><div class="rcb-r">'+resp+'</div></div>'
     +(chip?'<span class="rcb-c '+(chip==='foto'?'rcb-foto-c':'rcb-'+chip)+'">'+T.chip[chip]+'</span>':'')+'</div>';
+}
+function _rcbEscore(T,par,n,tot){
+  var pc=tot?Math.round(n/tot*100):0;
+  return '<div class="rcb-esc"><div class="rcb-big">'+n+'<small> '+T.de+' '+tot+'</small></div><div class="rcb-qual"><b>'+par[0]+'</b><span>'+par[1]+'</span><div class="rcb-faixa"><i style="width:'+pc+'%"></i></div></div></div>';
 }
 function _rcbMarcas(ap){
   return (ap||[]).map(function(m){
@@ -5591,15 +5610,15 @@ function _rcbCaso(T,c,i,q6){
   var ev=[V(0),V(1),V(2),V(3)], tempo=V(4);
   var eChip = ev.some(_rcbSim)?'pres':(ev.every(function(x){return x==null;})?'nr':(ev.every(_rcbNao)?'aus':'ns'));
   var eTxt = ev.map(function(x,k){ return T.eCurto[k]+': '+_rcbE(x==null?'—':x); }).join(' · ')+(tempo?(' · '+T.eCurto[4]+': '+_rcbE(tempo)):'');
-  h+='<div class="rcb-st">'+T.abcdeT+'</div><div>';
+  var nAB=[a,b,cc,eChip].filter(function(x){return x==='pres'||x==='prov';}).length;
+  h+='<div class="rcb-st">'+T.abcdeT+'</div>'+_rcbEscore(T,T.escAB,nAB,5)+'<div>';
   h+=_rcbLinha(T,'A',T.A,_rcbE(tr.assimetria?tr.assimetria.txt:'—'),a);
   h+=_rcbLinha(T,'B',T.B,_rcbE(tr.borda?tr.borda.txt:'—'),b);
   h+=_rcbLinha(T,'C',T.C,_rcbE(tr.cor?tr.cor.txt:'—'),cc);
   h+=_rcbLinha(T,'D',T.D,T.dRes,'foto');
   h+=_rcbLinha(T,'E',T.E,eTxt,eChip);
   h+='</div>';
-  var nAB=[a,b,cc,eChip].filter(function(x){return x==='pres'||x==='prov';}).length;
-  h+='<div class="rcb-placar"><b>'+T.placarAB+' '+nAB+' '+T.de+' 4</b> '+T.contaAcho+'</div>';
+  h+='<div class="rcb-oq" style="margin-top:4px">'+T.escNota+'</div>';
   h+='<div class="rcb-dica">'+T.eDica+'</div>';
   /* EFG + patinho feio */
   var sup=tr.superficie||null;
@@ -5608,14 +5627,14 @@ function _rcbCaso(T,c,i,q6){
   var bg=c.blocoGeral||{};
   var eG = (_rcbSim(V(0))||_rcbSim(bg.cresceuOuMudou))?'pres':((V(0)==null&&bg.cresceuOuMudou==null)?'nr':(_rcbNao(V(0))?'aus':'ns'));
   var pfx=V(10), pfC=(pfx==null)?'nr':(_rcbSim(pfx)?'pres':(_rcbNao(pfx)?'aus':'sem'));
-  h+='<div class="rcb-st">'+T.efgT+'</div><div>';
+  var nEFG=[eE,eF,eG].filter(function(x){return x==='pres';}).length;
+  h+='<div class="rcb-st">'+T.efgT+'</div>'+_rcbEscore(T,T.escEFG,nEFG,3)+'<div>';
   h+=_rcbLinha(T,'E',T.efgE,_rcbE(sup||'—'),eE);
   h+=_rcbLinha(T,'F',T.efgF,fx==null?T.naoPerg:_rcbE(fx),eF);
   h+=_rcbLinha(T,'G',T.efgG,_rcbE(V(0)||bg.cresceuOuMudou||'—'),eG);
   h+=_rcbLinha(T,'🦆',T.pf,_rcbE(pfx||'—'),pfC);
   h+='</div>';
-  var nEFG=[eE,eF,eG].filter(function(x){return x==='pres';}).length;
-  h+='<div class="rcb-placar"><b>'+T.placarEFG+' '+nEFG+' '+T.de+' 3</b></div><div class="rcb-dica">'+T.efgDica+'</div>';
+  h+='<div class="rcb-dica">'+T.efgDica+'</div>';
   /* figura apontada */
   h+='<div class="rcb-st">'+T.figT+'</div>';
   if(c.fotoCa>=1){
@@ -5658,12 +5677,13 @@ function _rcbMonta(T){
   h+='</div>';
   /* fatores de risco */
   var fr=(P.anamnese&&P.anamnese.respostas)||P.fatores||{}, rows='';
-  q7.forEach(function(q){ if(fr[q]!=null) rows+=kv(_rcbE(q),_rcbE(fr[q])); });
+  var nFat=[0,1,2,3,4].filter(function(k){ return q7[k] && _rcbSim(fr[q7[k]]); }).length;
+  q7.forEach(function(q,k){ if(fr[q]!=null){ var pesa=(k<=4||k===10)&&_rcbSim(fr[q]); rows+='<div class="rcb-kv'+(pesa?' rcb-kv-sim':'')+'"><span>'+_rcbE(q)+'</span><span>'+_rcbE(fr[q])+'</span></div>'; } });
   var mk=P.monk, mkTxt='—';
   if(typeof mk==='number'){ var sw=document.querySelectorAll('.monkgrid b')[mk-1]; mkTxt='<span class="rcb-sw" style="background:'+(sw?sw.style.background:'#ccc')+'"></span>'+mk+' '+T.de10; }
   else if(mk) mkTxt=T.monkNs;
   rows+=kv(T.monk,mkTxt);
-  h+='<div class="rcb-card"><div class="rcb-h">'+T.fatT+'</div>'+(rows||'<div class="rcb-oq">'+T.semFat+'</div>')+'</div>';
+  h+='<div class="rcb-card"><div class="rcb-h">'+T.fatT+'</div>'+_rcbEscore(T,T.escFat,nFat,5)+(rows||'<div class="rcb-oq">'+T.semFat+'</div>')+'<div class="rcb-oq" style="margin-top:8px">'+T.naoSomam+'</div></div>';
   /* referencias */
   h+='<div class="rcb-card"><div class="rcb-h">'+T.refT+'</div>'+T.refs.map(function(r){return '<div class="rcb-ref"><b>'+r[0]+'</b> — '+r[1]+'</div>';}).join('')+'</div>';
   return h;
