@@ -409,6 +409,39 @@ p.body{font-size:14px;color:var(--mute);text-align:center;line-height:1.6;margin
 .ap-cheia #palcoAp{border:none!important;border-radius:4px!important;flex:none}
 .ap-cheia .bandeja-ap{margin-top:10px!important;background:#1e1d1b!important;border-color:#3a3833!important;padding:8px!important;justify-content:center;gap:18px!important;flex:none}
 .ap-cheia #btApontar{margin-top:10px;flex:none}
+/* v72: aviso so no computador / galeria so no celular */
+.so-pc{display:none}
+@media (hover:hover) and (pointer:fine){ .so-pc{display:block} .so-cel{display:none!important} }
+/* v72: tela "o que o medico e a enfermagem recebem" */
+.rcb-card{border:1px solid #e3e0d6;border-radius:14px;padding:12px;margin:12px 0;background:#fff}
+.rcb-h{font-weight:700;font-size:15px;margin:0 0 2px;color:#2c2a24}
+.rcb-hs{font-size:12px;color:#7a7061;margin-bottom:8px}
+.rcb-st{font-weight:700;font-size:13.5px;color:#1c6a5c;margin:14px 0 6px;text-transform:none}
+.rcb-foto{position:relative;margin:0 auto;aspect-ratio:4/3;background:#111;border-radius:10px;overflow:hidden}
+.rcb-foto img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.rcb-off .rcb-m{display:none}
+.rcb-dica{font-size:12.5px;line-height:1.45;color:#3d3a33;background:#eef6f2;border-radius:10px;padding:9px 11px;margin:8px 0 0}
+.rcb-l{display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-top:1px solid #efece4}
+.rcb-l:first-child{border-top:none}
+.rcb-le{flex:none;width:26px;height:26px;border-radius:8px;background:#1c6a5c;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.rcb-lc{flex:1;min-width:0;font-size:13px;line-height:1.4;color:#2c2a24}
+.rcb-oq{color:#7a7061;font-size:12px}
+.rcb-r{color:#3d3a33;margin-top:2px}
+.rcb-c{flex:none;font-size:11px;font-weight:700;border-radius:999px;padding:3px 8px;white-space:nowrap;margin-top:2px}
+.rcb-pres{background:#fde2dc;color:#9a2b17}.rcb-prov{background:#fdf0d5;color:#7d5200}
+.rcb-aus,.rcb-ausp{background:#e3f3ea;color:#1d6b45}.rcb-nr,.rcb-ns{background:#efede8;color:#5f5e5a}.rcb-foto-c{background:#e6eefb;color:#1e4f9e}
+.rcb-placar{font-size:12.5px;color:#3d3a33;background:#f6f4ef;border-radius:8px;padding:7px 10px;margin-top:6px}
+.rcb-al{margin:0;padding:0;list-style:none}
+.rcb-al li{font-size:13px;line-height:1.4;padding:6px 0 6px 22px;position:relative;border-top:1px solid #efece4}
+.rcb-al li:first-child{border-top:none}
+.rcb-al li:before{content:"!";position:absolute;left:0;top:7px;width:15px;height:15px;border-radius:50%;background:#e8590c;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.rcb-kv{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:6px 0;border-top:1px solid #efece4}
+.rcb-kv:first-child{border-top:none}
+.rcb-kv span:first-child{color:#5f5e5a}.rcb-kv span:last-child{text-align:right;font-weight:600;color:#2c2a24}
+.rcb-ref{font-size:12px;line-height:1.45;padding:6px 0;border-top:1px solid #efece4;color:#3d3a33}
+.rcb-ref:first-child{border-top:none}
+.rcb-ref b{color:#1c6a5c}
+.rcb-sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:5px;border:1px solid rgba(0,0,0,.15)}
 </style>
 </head>
 <body>
@@ -2582,7 +2615,7 @@ fill="#e8c4a4" stroke="#c69a76" stroke-width="1.8"/>
 • Os dois na mesma foto, bem no meio<br>
 • Foto de cima, com boa luz, sem sombra
 </div>
-<input type="file" id="demoCam" accept="image/*" capture="environment" style="display:none" onchange="demoFotoEscolhida(this)"><div class="shutter" onclick="demoAbrirCamera()" title="Abrir a câmera"><i></i></div><p style="text-align:center;font-size:12.5px;color:#5F5E5A;margin:6px 0 0">Toque no botão redondo para abrir a câmera do seu celular. A foto fica só no seu aparelho: nada é enviado.</p><button class="btnlink" style="margin-top:4px" onclick="DEMO_FOTO=null;irApontar()">Não quero tirar agora — usar a foto de exemplo</button>
+<input type="file" id="demoCam" accept="image/*" capture="environment" style="display:none" onchange="demoFotoEscolhida(this)"><div class="shutter" onclick="demoAbrirCamera()" title="Abrir a câmera"><i></i></div><p class="so-cel" style="text-align:center;font-size:12.5px;color:#5F5E5A;margin:6px 0 0">Toque no botão redondo para abrir a câmera do seu celular. A foto fica só no seu aparelho: nada é enviado.</p><p class="so-pc" style="text-align:center;font-size:12.5px;color:#5F5E5A;margin:6px 0 0">No computador, o botão redondo abre as suas pastas: escolha uma foto que você já tem. A foto fica só no seu aparelho: nada é enviado.</p><input type="file" id="demoGal" accept="image/*" style="display:none" onchange="demoFotoEscolhida(this)"><button class="btnlink so-cel" style="margin-top:4px" onclick="demoAbrirGaleria()">Escolher uma foto que já tirei</button><button class="btnlink" style="margin-top:4px" onclick="DEMO_FOTO=null;irApontar()">Não quero tirar agora — usar a foto de exemplo</button>
 <p class="legend" id="m9legend">Exemplo de como a foto deve ficar. O marcador é a régua.</p>
 </section>
 <section class="screen" data-step="10">
@@ -2595,8 +2628,16 @@ fill="#e8c4a4" stroke="#c69a76" stroke-width="1.8"/>
 </div>
 <div class="spacer"></div>
 <p class="legend">Este aplicativo não dá diagnóstico. Quem avalia e decide é sempre o médico.</p>
-<div id="demoEnvio" style="border:1px solid #e3e0d6;border-radius:14px;padding:14px;margin:6px 0 12px;text-align:left"><div style="font-size:12.5px;color:#7a7061">Código do seu envio</div><div id="demoCodigo" style="font:700 26px/1.2 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;margin:2px 0 4px">----</div><div style="font-size:12px;color:#7a7061;margin-bottom:10px">Guarde este código. Com ele o posto confirma que o seu envio chegou inteiro.</div><div class="demoSt" data-i="0" style="display:flex;gap:8px;align-items:center;font-size:13.5px;margin:5px 0"><b style="width:12px;height:12px;border-radius:50%;background:#1D9E75;display:inline-block"></b><span style="flex:1">Enviado</span><small class="demoH"></small></div><div class="demoSt" data-i="1" style="display:flex;gap:8px;align-items:center;font-size:13.5px;margin:5px 0;color:#9a978f"><b style="width:12px;height:12px;border-radius:50%;border:2px solid #c9c6bd;box-sizing:border-box;display:inline-block"></b><span style="flex:1">A equipe do posto conferiu</span><small class="demoH"></small></div><div class="demoSt" data-i="2" style="display:flex;gap:8px;align-items:center;font-size:13.5px;margin:5px 0;color:#9a978f"><b style="width:12px;height:12px;border-radius:50%;border:2px solid #c9c6bd;box-sizing:border-box;display:inline-block"></b><span style="flex:1">O médico avaliou</span><small class="demoH"></small></div><div id="demoAviso" style="display:none;margin-top:10px;background:#f4f1e8;border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.4"><div style="font-size:11.5px;color:#7a7061;margin-bottom:3px">Posto de saúde · <span class="demoH2"></span></div>Olá! Sua avaliação foi concluída pelo médico. Passe na UBS Central para conversarmos sobre o resultado e os próximos passos. Estamos à disposição.</div><p style="font-size:12px;color:#6b4e00;background:#fff4d6;border-radius:8px;padding:8px 10px;margin:12px 0 0">Demonstração: nada saiu do seu aparelho. No serviço de verdade, a enfermagem confere e o médico avalia à distância.</p><button id="demoSimula" class="btnlink" style="margin-top:6px" onclick="demoSimular()">Ver como fica quando a equipe responder (simulação)</button></div><button class="btn" onclick="go('formas')">Mostrar mais alguma coisa</button>
+<div id="demoEnvio" style="border:1px solid #e3e0d6;border-radius:14px;padding:14px;margin:6px 0 12px;text-align:left"><div style="font-size:12.5px;color:#7a7061">Código do seu envio</div><div id="demoCodigo" style="font:700 26px/1.2 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;margin:2px 0 4px">----</div><div style="font-size:12px;color:#7a7061;margin-bottom:10px">Guarde este código. Com ele o posto confirma que o seu envio chegou inteiro.</div><div class="demoSt" data-i="0" style="display:flex;gap:8px;align-items:center;font-size:13.5px;margin:5px 0"><b style="width:12px;height:12px;border-radius:50%;background:#1D9E75;display:inline-block"></b><span style="flex:1">Enviado</span><small class="demoH"></small></div><div class="demoSt" data-i="1" style="display:flex;gap:8px;align-items:center;font-size:13.5px;margin:5px 0;color:#9a978f"><b style="width:12px;height:12px;border-radius:50%;border:2px solid #c9c6bd;box-sizing:border-box;display:inline-block"></b><span style="flex:1">A equipe do posto conferiu</span><small class="demoH"></small></div><div class="demoSt" data-i="2" style="display:flex;gap:8px;align-items:center;font-size:13.5px;margin:5px 0;color:#9a978f"><b style="width:12px;height:12px;border-radius:50%;border:2px solid #c9c6bd;box-sizing:border-box;display:inline-block"></b><span style="flex:1">O médico avaliou</span><small class="demoH"></small></div><div id="demoAviso" style="display:none;margin-top:10px;background:#f4f1e8;border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.4"><div style="font-size:11.5px;color:#7a7061;margin-bottom:3px">Posto de saúde · <span class="demoH2"></span></div>Olá! Sua avaliação foi concluída pelo médico. Passe na UBS Central para conversarmos sobre o resultado e os próximos passos. Estamos à disposição.</div><p style="font-size:12px;color:#6b4e00;background:#fff4d6;border-radius:8px;padding:8px 10px;margin:12px 0 0">Demonstração: nada saiu do seu aparelho. No serviço de verdade, a enfermagem confere e o médico avalia à distância.</p><button id="demoSimula" class="btnlink" style="margin-top:6px" onclick="demoSimular()">Ver como fica quando a equipe responder (simulação)</button></div><button class="btn" onclick="irRecebido()">Ver o que o médico e a enfermagem recebem</button>
+<button class="btn" onclick="go('formas')">Mostrar mais alguma coisa</button>
 <button class="btnlink" onclick="restart()">Recomeçar a demonstração do zero (apaga tudo)</button>
+</section>
+<section class="screen" data-step="recebido">
+<div class="q" id="rcbTit"></div>
+<div class="qsub" id="rcbSub"></div>
+<div id="rcbConteudo"></div>
+<div class="spacer"></div>
+<button class="btn" id="rcbVolta" onclick="go(10)"></button>
 </section>
 </div>
 <script>
@@ -4247,6 +4288,7 @@ function arquivar(){
     try{ c.caroco=JSON.parse(JSON.stringify(CAROCO_E)); }catch(e){ c.caroco=null; }
     c.laudoCaroco=laudoCarocoTexto(); }
   if(c.tipo==='mancha'){ c.tronco=coletarTroncoMancha(); }  /* v55 */
+  c.obs=((document.getElementById('obsTxt')||{}).value||'').trim();   /* v72 */
   CASOS.push(c);
   /* texto da tela de confirmação */
   document.getElementById('arqTxt').innerHTML=(c.recaptura?'Nova foto de <b>':'<b>')+rotulo(c)+'</b><br>guardada em '+c.data+' às '+c.hora+'.';
@@ -4884,6 +4926,7 @@ ligarRegioes();
 
 var DEMO_FOTO=null;
 function demoAbrirCamera(){ var i=document.getElementById('demoCam'); if(i){ i.value=''; i.click(); } }
+function demoAbrirGaleria(){ var i=document.getElementById('demoGal'); if(i){ i.value=''; i.click(); } }  /* v72 */
 function demoFotoEscolhida(inp){
   var f=inp.files&&inp.files[0]; if(!f) return;
   if(DEMO_FOTO){ try{ URL.revokeObjectURL(DEMO_FOTO); }catch(e){} }
@@ -4956,6 +4999,9 @@ function irApontar(){
   setTimeout(function(){ if(window.ap_init) ap_init(); }, 60);
 }
 function apontarOk(){
+  if(CASO_ATUAL){ var _fd=document.getElementById('fotoDemo'), _pa=document.getElementById('palcoAp');   /* v72: para o resumo final */
+    CASO_ATUAL.fotoSrc=_fd?_fd.src:null; CASO_ATUAL.fotoFit=_fd?(_fd.style.objectFit||'cover'):'cover';
+    CASO_ATUAL.palcoRatio=(_pa&&_pa.clientHeight)?(_pa.clientWidth/_pa.clientHeight):(4/3); CASO_ATUAL.fotoPropria=!!DEMO_FOTO; }
   /* 28/08: GRAVA o apontamento do paciente como CAMADA SEPARADA da foto.
      Coordenadas em PORCENTAGEM (nao pixel) para escalar em qualquer tela.
      O medico LIGA e DESLIGA por cima da foto limpa; ele NAO corrige.
@@ -5358,6 +5404,230 @@ function prosseguirPec(foto){
   document.getElementById('m1q').textContent='Onde fica a sua mancha ou pinta?';
   go('m1');
 }
+
+/* ===== v72 (21/11/2026): tela final "o que o medico e a enfermagem recebem" =====
+   So demonstracao. Mostra, em tabela, o que o aplicativo juntou de cada lesao:
+   foto + marcacao do paciente (camada que liga/desliga), medida, respostas alinhadas ao
+   ABCDE, EFG e patinho feio, alertas, conferencia da enfermagem, fatores de risco e as
+   referencias de cada sinal. Nao soma pontos para cor de prioridade (a regra nao esta
+   escrita) e nao usa nenhum numero do motor de imagem. */
+var RCB_LANG='pt';
+var RCB_T={
+ pt:{
+  tit:'O que o médico e a enfermagem recebem',
+  sub:'Demonstração: este é o resumo do que você acabou de enviar, do jeito que chega à equipe. O aplicativo não dá diagnóstico e ainda não soma pontos para dar uma cor de prioridade: quem decide é o médico.',
+  les:'Lesão', env:'enviada em', as:'às',
+  fotoT:'A foto e a marcação do paciente', fotoEx:'foto de exemplo do aplicativo', fotoSua:'foto tirada pelo paciente',
+  esconde:'Esconder a marcação do paciente', mostra:'Mostrar a marcação do paciente',
+  camada:'No painel do médico, a marcação feita pelo paciente (círculo, círculo achatado ou seta) chega como uma camada por cima da foto, e o médico liga e desliga. Assim ele sabe exatamente qual mancha ou pinta deve avaliar, mesmo quando há outras na foto, e depois olha a foto limpa para laudar. A marcação não altera a foto.',
+  semMarca:'O paciente não marcou nada na foto.',
+  medT:'Medida', med:{bolinha:'bolinha amarela de 12 mm ao lado da lesão',regua:'régua comum ao lado da lesão',nada:'sem marcador: a foto vale, mas fica sem medida em milímetros'},
+  medDica:'A bolinha tem tamanho conhecido, então na foto ela vira a régua. Com ela o programa calcula quantos milímetros a lesão tem (o D do ABCDE) e, comparando fotos ao longo do tempo, se ela cresceu (o E). Nesta demonstração, o programa que mede a foto não está ligado.',
+  abcdeT:'As respostas do paciente, alinhadas ao ABCDE',
+  A:['Assimetria','as duas metades são diferentes'], B:['Borda','beirada recortada, com dentes'], C:['Cor','mais de uma cor dentro'],
+  D:['Diâmetro','tamanho; no critério clássico, chama atenção acima de 6 mm'], E:['Evolução','mudou nos últimos meses: tamanho, cor, forma, ou é nova'],
+  dRes:'Não é perguntado ao paciente: vem da foto, medida com a bolinha.',
+  eCurto:['cresceu','mudou de cor','mudou de forma','é nova','há quanto tempo'],
+  eDica:'O E é acompanhado no tempo. No painel, o médico pode pedir uma nova foto da mesma lesão, por exemplo em 3 meses, e quem avaliar depois vê as duas lado a lado.',
+  chip:{pres:'presente',prov:'provável',aus:'ausente',ausp:'provavelmente ausente',nr:'sem resposta',ns:'não sabe',foto:'na foto',sem:'sem outras pintas'},
+  placarAB:'Sinais do ABCDE marcados pelo paciente:', de:'de', contaAcho:'(conta também os “acho que”; o D vem da foto)',
+  efgT:'Sinais que o ABCDE não pega',
+  efgE:['Elevada','saltada, para fora da pele'], efgF:['Firme','dura ao apertar'], efgG:['Cresce','cresceu ou mudou nos últimos meses'],
+  efgDica:'O EFG serve para o melanoma nodular, que costuma ser simétrico, de uma cor só e de borda regular, e por isso escapa do ABCD.',
+  pf:['Patinho feio','diferente das outras pintas da própria pessoa'],
+  placarEFG:'Sinais do EFG marcados pelo paciente:', naoPerg:'não foi perguntado (só aparece se a lesão for saltada)',
+  figT:'Figura parecida apontada pelo paciente', figNenhuma:'Nenhuma figura se parece com a lesão. Isso não afasta nada.',
+  figNota:'É a foto de referência que o paciente escolheu como parecida. Não é diagnóstico do caso.',
+  pecT:'Perguntas próprias dessa figura:', pecSim:'“Sim” em', pecDe:'de 4',
+  geralT:'Sinais gerais:', geral:['sangra fácil','fecha, forma casquinha e abre','cresceu ou mudou'],
+  alT:'Alertas para o médico e para a enfermagem', alNenhum:'Nenhum alerta marcado pelas respostas.',
+  al:{acral:'Palma, planta do pé ou unha: local que merece atenção especial.',cego:'Ponto cego: a pessoa não vê nem fotografa sozinha esse lugar. A foto precisa de ajuda.',zonaH:'Zona H: pelo local escolhido, é uma região em que o tratamento pede mais cuidado.',sangra:'Sangra, já sangrou ou é uma ferida que não cicatriza.',casca:'Fecha, forma casquinha e abre de novo.',evol:'Mudou nos últimos meses (o E do ABCDE).',nova:'É nova: apareceu nos últimos meses.',efg:'Elevada, firme e crescendo (EFG completo).',pf:'Diferente das outras pintas (patinho feio).',unha:'Unha: chamar ao posto para uma foto com aparelho de aumento.',obs:'O paciente escreveu:'},
+  enfT:'Para a enfermagem conferir',
+  enf:{pessoa:'Pessoa',anos:'anos',sexo:{M:'masculino',F:'feminino'},docs:'Cartão SUS e CPF',inf:'informados',ninf:'não informados',lgpd:'Autorização de uso dos dados',sim:'sim',estudo:'Estudo científico (opcional)',estS:'aceitou',estN:'não aceitou',estNr:'não respondeu',destino:'Destino depois da conferência',destTxt:'fila do médico, pela prioridade',codigo:'Código do envio',lesoes:'Lesões enviadas',semNome:'sem nome'},
+  fatT:'Fatores de risco da pessoa (valem para todos os casos dela)', monk:'Tom de pele (escala Monk)', monkNs:'não tem certeza', de10:'de 10', semFat:'Sem respostas.',
+  refT:'De onde vem cada sinal',
+  refs:[['ABCD','Friedman, Rigel e Kopf. CA: A Cancer Journal for Clinicians, 1985.'],
+        ['E (evolução)','Abbasi e colaboradores. JAMA, 2004;292(22):2771–2776. Propuseram ampliar o ABCD para ABCDE.'],
+        ['EFG','Mar, Chamberlain, Kelly, Murray e Thompson. Medical Journal of Australia, 2017;207(8):348–350.'],
+        ['Patinho feio','Grob e Bonerandi. Archives of Dermatology, 1998. Concordância entre observadores: Scope e colaboradores, Archives of Dermatology, 2008;144(1):58–64.'],
+        ['Tom de pele','Escala Monk (Monk Skin Tone Scale): Ellis Monk, SocArXiv, 2023, doi 10.31235/osf.io/pdf4c. Licença CC BY 4.0.'],
+        ['Bolinha de 12 mm','Marcador do projeto De Olho na Pele: um objeto de tamanho conhecido na foto. Não vem de referência externa.']],
+  volta:'Voltar'
+ },
+ en:{
+  tit:'What the doctor and the nursing team receive',
+  sub:'Demo: this is a summary of what you just sent, the way it reaches the team. The app does not give a diagnosis and does not yet add up points into a priority color: the doctor decides.',
+  les:'Lesion', env:'sent on', as:'at',
+  fotoT:'The photo and the patient’s marking', fotoEx:'the app’s example photo', fotoSua:'photo taken by the patient',
+  esconde:'Hide the patient’s marking', mostra:'Show the patient’s marking',
+  camada:'In the doctor’s panel, the marking made by the patient (circle, flattened circle or arrow) arrives as a layer on top of the photo, and the doctor switches it on and off. So the doctor knows exactly which spot or mole to assess, even when there are others in the photo, and then looks at the clean photo to report. The marking does not change the photo.',
+  semMarca:'The patient did not mark anything on the photo.',
+  medT:'Scale', med:{bolinha:'12 mm yellow dot sticker next to the lesion',regua:'ordinary ruler next to the lesion',nada:'no marker: the photo counts, but has no measurement in millimetres'},
+  medDica:'The dot has a known size, so in the photo it becomes the ruler. With it the program works out how many millimetres the lesion measures (the D of ABCDE) and, comparing photos over time, whether it has grown (the E). In this demo, the program that measures the photo is not connected.',
+  abcdeT:'The patient’s answers, lined up with ABCDE',
+  A:['Asymmetry','the two halves are different'], B:['Border','jagged edge, with notches'], C:['Color','more than one color inside'],
+  D:['Diameter','size; in the classic criterion, larger than 6 mm draws attention'], E:['Evolving','changed in recent months: size, color, shape, or it is new'],
+  dRes:'Not asked of the patient: it comes from the photo, measured with the dot.',
+  eCurto:['grew','changed color','changed shape','is new','how long'],
+  eDica:'The E is followed over time. In the panel, the doctor can ask for a new photo of the same lesion, for example in 3 months, and whoever assesses it later sees both side by side.',
+  chip:{pres:'present',prov:'likely',aus:'absent',ausp:'probably absent',nr:'no answer',ns:'doesn’t know',foto:'on the photo',sem:'no other moles'},
+  placarAB:'ABCDE signs marked by the patient:', de:'of', contaAcho:'(“I think” answers count too; the D comes from the photo)',
+  efgT:'Signs that ABCDE misses',
+  efgE:['Elevated','raised, sticking out of the skin'], efgF:['Firm','hard when pressed'], efgG:['Growing','grew or changed in recent months'],
+  efgDica:'EFG is for nodular melanoma, which is often symmetric, one color and with a regular border, and so slips past ABCD.',
+  pf:['Ugly duckling','different from the person’s other moles'],
+  placarEFG:'EFG signs marked by the patient:', naoPerg:'not asked (only shown if the lesion is raised)',
+  figT:'Similar picture chosen by the patient', figNenhuma:'No picture looks like the lesion. That rules nothing out.',
+  figNota:'This is the reference photo the patient picked as similar. It is not a diagnosis of the case.',
+  pecT:'Questions specific to that picture:', pecSim:'“Yes” to', pecDe:'of 4',
+  geralT:'General signs:', geral:['bleeds easily','closes, scabs and reopens','grew or changed'],
+  alT:'Alerts for the doctor and the nursing team', alNenhum:'No alert raised by the answers.',
+  al:{acral:'Palm, sole of the foot or nail: a site that needs special attention.',cego:'Blind spot: the person cannot see or photograph this place alone. The photo needs help.',zonaH:'H zone: from the site chosen, an area where treatment calls for extra care.',sangra:'Bleeds, has bled, or is a sore that does not heal.',casca:'Closes, forms a scab and opens again.',evol:'Changed in recent months (the E of ABCDE).',nova:'It is new: appeared in recent months.',efg:'Elevated, firm and growing (full EFG).',pf:'Different from the other moles (ugly duckling).',unha:'Nail: call the person to the health center for a photo with a magnifying device.',obs:'The patient wrote:'},
+  enfT:'For the nursing team to check',
+  enf:{pessoa:'Person',anos:'years old',sexo:{M:'male',F:'female'},docs:'SUS card and CPF',inf:'provided',ninf:'not provided',lgpd:'Permission to use the data',sim:'yes',estudo:'Scientific study (optional)',estS:'agreed',estN:'did not agree',estNr:'no answer',destino:'Destination after checking',destTxt:'doctor’s queue, by priority',codigo:'Submission code',lesoes:'Lesions sent',semNome:'no name'},
+  fatT:'The person’s risk factors (they apply to all of this person’s cases)', monk:'Skin tone (Monk scale)', monkNs:'not sure', de10:'of 10', semFat:'No answers.',
+  refT:'Where each sign comes from',
+  refs:[['ABCD','Friedman, Rigel and Kopf. CA: A Cancer Journal for Clinicians, 1985.'],
+        ['E (evolving)','Abbasi and colleagues. JAMA, 2004;292(22):2771–2776. They proposed expanding ABCD to ABCDE.'],
+        ['EFG','Mar, Chamberlain, Kelly, Murray and Thompson. Medical Journal of Australia, 2017;207(8):348–350.'],
+        ['Ugly duckling','Grob and Bonerandi. Archives of Dermatology, 1998. Agreement between observers: Scope and colleagues, Archives of Dermatology, 2008;144(1):58–64.'],
+        ['Skin tone','Monk Skin Tone Scale: Ellis Monk, SocArXiv, 2023, doi 10.31235/osf.io/pdf4c. CC BY 4.0 licence.'],
+        ['12 mm dot','A marker of the De Olho na Pele project: an object of known size in the photo. It does not come from an external reference.']],
+  volta:'Back'
+ }
+};
+PROG['recebido']=100;
+function _rcbE(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function _rcbSim(x){ return x==='Sim'||x==='Yes'; }
+function _rcbNao(x){ return x==='Não'||x==='No'; }
+function _rcbQs(st){ return [].map.call(document.querySelectorAll('[data-step="'+st+'"] .vq'),function(q){return q.textContent.trim();}); }
+function _rcbYN(x){ if(x==null||x==='') return 'nr'; if(_rcbSim(x)) return 'pres'; if(_rcbNao(x)) return 'aus'; return 'ns'; }
+function _rcbEsc(o){ if(!o||!o.v) return 'nr'; var v=o.v, p=/\?$/.test(v), pos=/^(dif|pic|var)/.test(v); return pos?(p?'prov':'pres'):(p?'ausp':'aus'); }
+function _rcbLinha(T,letra,par,resp,chip){
+  return '<div class="rcb-l"><div class="rcb-le">'+letra+'</div><div class="rcb-lc"><b>'+par[0]+'</b> <span class="rcb-oq">· '+par[1]+'</span><div class="rcb-r">'+resp+'</div></div>'
+    +(chip?'<span class="rcb-c '+(chip==='foto'?'rcb-foto-c':'rcb-'+chip)+'">'+T.chip[chip]+'</span>':'')+'</div>';
+}
+function _rcbMarcas(ap){
+  return (ap||[]).map(function(m){
+    var w=(m.tipo==='seta')?m.tam*1.7:m.tam, ar=(m.tipo==='elip')?(1/(m.ach||0.6)):1;
+    var rot=(m.tipo!=='circ'&&m.ang)?' rotate('+m.ang+'deg)':'';
+    var cls=(m.tipo==='circ')?'ap-circ':((m.tipo==='elip')?'ap-elip':'ap-seta');
+    var inner=(m.tipo==='seta')?'<svg viewBox="0 0 100 100" style="width:100%;height:100%;display:block;filter:drop-shadow(0 0 1.5px rgba(0,0,0,.55)) drop-shadow(0 0 1px rgba(255,255,255,.9))"><g stroke="#1E78E6" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M88 12 L34 66"/><path d="M22 78 L40 74 L26 60 Z" fill="#1E78E6"/></g></svg>':'';
+    return '<div class="rcb-m ap-marca '+cls+'" style="position:absolute;left:'+m.x+'%;top:'+m.y+'%;width:'+w+'%;aspect-ratio:'+ar+';transform:translate(-50%,-50%)'+rot+'">'+inner+'<div class="ap-num">'+m.ordem+'</div></div>';
+  }).join('');
+}
+function rcbToggle(bt,i){
+  var T=RCB_T[RCB_LANG], f=document.getElementById('rcbFoto'+i); if(!f) return;
+  var off=f.classList.toggle('rcb-off'); bt.textContent=off?T.mostra:T.esconde;
+}
+function _rcbCaso(T,c,i,q6){
+  var h='', tr=c.tronco||{}, viv=tr.vivencia||{}, ac=c.achadoLocal||{}, fl=ac.flags||[];
+  var V=function(k){ return q6[k]?viv[q6[k]]:null; };
+  var loc=(typeof rotulo==='function')?rotulo(c):(c.local||'');
+  h+='<div class="rcb-card"><div class="rcb-h">'+T.les+' '+c.id+' · '+_rcbE(loc)+'</div><div class="rcb-hs">'+T.env+' '+_rcbE(c.data||'')+' '+T.as+' '+_rcbE(c.hora||'')+'</div>';
+  /* foto + camada */
+  if(c.fotoSrc){
+    var r=c.palcoRatio||4/3, wpc=(r<0.75)?Math.round(r/0.75*100):100;
+    h+='<div class="rcb-st">'+T.fotoT+' <span class="rcb-oq">('+(c.fotoPropria?T.fotoSua:T.fotoEx)+')</span></div>';
+    h+='<div class="rcb-foto" id="rcbFoto'+i+'" style="aspect-ratio:'+r+';width:'+wpc+'%"><img src="'+c.fotoSrc+'" alt="" style="object-fit:'+(c.fotoFit||'cover')+'">'+_rcbMarcas(c.apontamentos)+'</div>';
+    if(c.apontamentos&&c.apontamentos.length) h+='<button class="btnlink" style="margin-top:6px" onclick="rcbToggle(this,'+i+')">'+T.esconde+'</button>';
+    else h+='<div class="rcb-oq" style="margin-top:6px">'+T.semMarca+'</div>';
+    h+='<div class="rcb-dica">'+T.camada+'</div>';
+  }
+  /* medida */
+  var mk=c.marcador||null;
+  h+='<div class="rcb-st">'+T.medT+'</div><div class="rcb-r" style="font-size:13px">'+(mk&&T.med[mk]?T.med[mk]:T.chip.nr)+'</div><div class="rcb-dica">'+T.medDica+'</div>';
+  /* ABCDE */
+  var a=_rcbEsc(tr.assimetria), b=_rcbEsc(tr.borda), cc=_rcbEsc(tr.cor);
+  var ev=[V(0),V(1),V(2),V(3)], tempo=V(4);
+  var eChip = ev.some(_rcbSim)?'pres':(ev.every(function(x){return x==null;})?'nr':(ev.every(_rcbNao)?'aus':'ns'));
+  var eTxt = ev.map(function(x,k){ return T.eCurto[k]+': '+_rcbE(x==null?'—':x); }).join(' · ')+(tempo?(' · '+T.eCurto[4]+': '+_rcbE(tempo)):'');
+  h+='<div class="rcb-st">'+T.abcdeT+'</div><div>';
+  h+=_rcbLinha(T,'A',T.A,_rcbE(tr.assimetria?tr.assimetria.txt:'—'),a);
+  h+=_rcbLinha(T,'B',T.B,_rcbE(tr.borda?tr.borda.txt:'—'),b);
+  h+=_rcbLinha(T,'C',T.C,_rcbE(tr.cor?tr.cor.txt:'—'),cc);
+  h+=_rcbLinha(T,'D',T.D,T.dRes,'foto');
+  h+=_rcbLinha(T,'E',T.E,eTxt,eChip);
+  h+='</div>';
+  var nAB=[a,b,cc,eChip].filter(function(x){return x==='pres'||x==='prov';}).length;
+  h+='<div class="rcb-placar"><b>'+T.placarAB+' '+nAB+' '+T.de+' 4</b> '+T.contaAcho+'</div>';
+  h+='<div class="rcb-dica">'+T.eDica+'</div>';
+  /* EFG + patinho feio */
+  var sup=tr.superficie||null;
+  var eE = !sup?'nr':(/Saltada|Raised/.test(sup)?'pres':(/Plana|Flat/.test(sup)?'aus':'ns'));
+  var fx=V(9), eF=(fx==null)?'nr':_rcbYN(fx);
+  var bg=c.blocoGeral||{};
+  var eG = (_rcbSim(V(0))||_rcbSim(bg.cresceuOuMudou))?'pres':((V(0)==null&&bg.cresceuOuMudou==null)?'nr':(_rcbNao(V(0))?'aus':'ns'));
+  var pfx=V(10), pfC=(pfx==null)?'nr':(_rcbSim(pfx)?'pres':(_rcbNao(pfx)?'aus':'sem'));
+  h+='<div class="rcb-st">'+T.efgT+'</div><div>';
+  h+=_rcbLinha(T,'E',T.efgE,_rcbE(sup||'—'),eE);
+  h+=_rcbLinha(T,'F',T.efgF,fx==null?T.naoPerg:_rcbE(fx),eF);
+  h+=_rcbLinha(T,'G',T.efgG,_rcbE(V(0)||bg.cresceuOuMudou||'—'),eG);
+  h+=_rcbLinha(T,'🦆',T.pf,_rcbE(pfx||'—'),pfC);
+  h+='</div>';
+  var nEFG=[eE,eF,eG].filter(function(x){return x==='pres';}).length;
+  h+='<div class="rcb-placar"><b>'+T.placarEFG+' '+nEFG+' '+T.de+' 3</b></div><div class="rcb-dica">'+T.efgDica+'</div>';
+  /* figura apontada */
+  h+='<div class="rcb-st">'+T.figT+'</div>';
+  if(c.fotoCa>=1){
+    var tt=document.querySelector('#cardCa'+c.fotoCa+' > div > div');
+    h+='<div class="rcb-r" style="font-size:13px"><b>'+_rcbE(tt?tt.textContent:('#'+c.fotoCa))+'</b></div><div class="rcb-oq">'+T.figNota+'</div>';
+    var d=(typeof PEC_DEFS!=='undefined')?PEC_DEFS[c.fotoCa]:null;
+    if(d && c[d.placarKey]!=null) h+='<div class="rcb-placar">'+T.pecT+' '+T.pecSim+' '+c[d.placarKey]+' '+T.pecDe+'</div>';
+    if(c.blocoGeral) h+='<div class="rcb-placar">'+T.geralT+' '+[bg.sangraFacil,bg.casquinhaVolta,bg.cresceuOuMudou].map(function(x,k){return T.geral[k]+': '+_rcbE(x||'—');}).join(' · ')+'</div>';
+  } else h+='<div class="rcb-r" style="font-size:13px">'+T.figNenhuma+'</div>';
+  /* alertas */
+  var al=[], raiz=(ac.regiao||c.local||'')+' '+(c.local||'');
+  var zk=tr.zhm||{}, zSim=function(re){ for(var k in zk){ if(re.test(k)&&_rcbSim(zk[k])) return true; } return false; };
+  if(/Mão \/ palma|Pé \/ planta|Unha/.test(raiz)) al.push(T.al.acral);
+  if(fl.indexOf('cegoCaptura')>=0 || /Nuca|Couro|Costas|Atrás da orelha/.test(raiz)) al.push(T.al.cego);
+  if(fl.indexOf('zonaH')>=0) al.push(T.al.zonaH);
+  if(_rcbSim(V(5))||_rcbSim(V(8))||_rcbSim(bg.sangraFacil)||zSim(/Sangra|bleed/i)) al.push(T.al.sangra);
+  if(_rcbSim(bg.casquinhaVolta)||zSim(/casquinha|scab/i)) al.push(T.al.casca);
+  if(eChip==='pres') al.push(T.al.evol);
+  if(_rcbSim(V(3))) al.push(T.al.nova);
+  if(nEFG===3) al.push(T.al.efg);
+  if(pfC==='pres') al.push(T.al.pf);
+  if(/Unha/.test(raiz)||c.tipo==='unha') al.push(T.al.unha);
+  if(c.obs) al.push(T.al.obs+' “'+_rcbE(c.obs)+'”');
+  h+='<div class="rcb-st">'+T.alT+'</div>'+(al.length?'<ul class="rcb-al"><li>'+al.join('</li><li>')+'</li></ul>':'<div class="rcb-oq">'+T.alNenhum+'</div>');
+  h+='</div>';
+  return h;
+}
+function _rcbMonta(T){
+  var h='', q6=_rcbQs('6'), q7=_rcbQs('7'), P=window.PERFIL||{};
+  CASOS.forEach(function(c,i){ h+=_rcbCaso(T,c,i,q6); });
+  /* enfermagem */
+  var re=document.getElementById('retornoEstudo'), est=(re&&/\bsim\b/.test(re.className))?T.enf.estS:((re&&/\bnao\b/.test(re.className))?T.enf.estN:T.enf.estNr);
+  var cod=document.getElementById('demoCodigo');
+  var kv=function(k,v){ return '<div class="rcb-kv"><span>'+k+'</span><span>'+v+'</span></div>'; };
+  h+='<div class="rcb-card"><div class="rcb-h">'+T.enfT+'</div>';
+  h+=kv(T.enf.pessoa,_rcbE(P.nome||T.enf.semNome)+(P.idade!=null&&P.idade!==''?(', '+_rcbE(P.idade)+' '+T.enf.anos):'')+(P.sexo&&T.enf.sexo[P.sexo]?(', '+T.enf.sexo[P.sexo]):''));
+  h+=kv(T.enf.docs,(P.sus||P.cpf)?T.enf.inf:T.enf.ninf);
+  h+=kv(T.enf.lgpd,T.enf.sim)+kv(T.enf.estudo,est)+kv(T.enf.lesoes,String(CASOS.length));
+  h+=kv(T.enf.destino,T.enf.destTxt)+kv(T.enf.codigo,_rcbE(cod?cod.textContent:'—'));
+  h+='</div>';
+  /* fatores de risco */
+  var fr=(P.anamnese&&P.anamnese.respostas)||P.fatores||{}, rows='';
+  q7.forEach(function(q){ if(fr[q]!=null) rows+=kv(_rcbE(q),_rcbE(fr[q])); });
+  var mk=P.monk, mkTxt='—';
+  if(typeof mk==='number'){ var sw=document.querySelectorAll('.monkgrid b')[mk-1]; mkTxt='<span class="rcb-sw" style="background:'+(sw?sw.style.background:'#ccc')+'"></span>'+mk+' '+T.de10; }
+  else if(mk) mkTxt=T.monkNs;
+  rows+=kv(T.monk,mkTxt);
+  h+='<div class="rcb-card"><div class="rcb-h">'+T.fatT+'</div>'+(rows||'<div class="rcb-oq">'+T.semFat+'</div>')+'</div>';
+  /* referencias */
+  h+='<div class="rcb-card"><div class="rcb-h">'+T.refT+'</div>'+T.refs.map(function(r){return '<div class="rcb-ref"><b>'+r[0]+'</b> — '+r[1]+'</div>';}).join('')+'</div>';
+  return h;
+}
+function irRecebido(){
+  var T=RCB_T[RCB_LANG];
+  document.getElementById('rcbTit').textContent=T.tit;
+  document.getElementById('rcbSub').textContent=T.sub;
+  document.getElementById('rcbVolta').textContent=T.volta;
+  document.getElementById('rcbConteudo').innerHTML=_rcbMonta(T);
+  go('recebido');
+}
+
 </script>
 </body>
 </html>
