@@ -2615,7 +2615,7 @@ fill="#e8c4a4" stroke="#c69a76" stroke-width="1.8"/>
 • Os dois na mesma foto, bem no meio<br>
 • Foto de cima, com boa luz, sem sombra
 </div>
-<input type="file" id="demoCam" accept="image/*" capture="environment" style="display:none" onchange="demoFotoEscolhida(this)"><div class="shutter" onclick="demoAbrirCamera()" title="Abrir a câmera"><i></i></div><p class="so-cel" style="text-align:center;font-size:12.5px;color:#5F5E5A;margin:6px 0 0">Toque no botão redondo para abrir a câmera do seu celular. A foto fica só no seu aparelho: nada é enviado.</p><p class="so-pc" style="text-align:center;font-size:12.5px;color:#5F5E5A;margin:6px 0 0">No computador, o botão redondo abre as suas pastas: escolha uma foto que você já tem. A foto fica só no seu aparelho: nada é enviado.</p><input type="file" id="demoGal" accept="image/*" style="display:none" onchange="demoFotoEscolhida(this)"><button class="btnlink so-cel" style="margin-top:4px" onclick="demoAbrirGaleria()">Escolher uma foto que já tirei</button><button class="btnlink" style="margin-top:4px" onclick="DEMO_FOTO=null;irApontar()">Não quero tirar agora — usar a foto de exemplo</button>
+<input type="file" id="demoCam" accept="image/*" capture="environment" style="display:none" onchange="demoFotoEscolhida(this)"><div class="shutter" onclick="demoAbrirCamera()" title="Abrir a câmera"><i></i></div><p class="so-cel" style="text-align:center;font-size:12.5px;color:#5F5E5A;margin:6px 0 0">Toque no botão redondo para abrir a câmera do seu celular. A foto fica só no seu aparelho: nada é enviado.</p><p class="so-pc" style="text-align:center;font-size:12.5px;color:#5F5E5A;margin:6px 0 0">No computador, o botão redondo abre as suas pastas: escolha uma foto que você já tem. A foto fica só no seu aparelho: nada é enviado.</p><input type="file" id="demoGal" accept="image/*" style="display:none" onchange="demoFotoEscolhida(this)"><button class="btnlink so-cel" style="margin-top:4px" onclick="demoAbrirGaleria()">Escolher uma foto que já tirei</button><div id="demoFotoErro" style="display:none;margin:10px 0 2px;background:#fdecea;border-left:4px solid #c0392b;border-radius:8px;padding:9px 12px;font-size:13px;line-height:1.4;color:#5a1d16"></div><button class="btnlink" style="margin-top:4px" onclick="DEMO_FOTO=null;irApontar()">Não quero tirar agora — usar a foto de exemplo</button>
 <p class="legend" id="m9legend">Exemplo de como a foto deve ficar. O marcador é a régua.</p>
 </section>
 <section class="screen" data-step="10">
@@ -4928,10 +4928,39 @@ var DEMO_FOTO=null;
 function demoAbrirCamera(){ var i=document.getElementById('demoCam'); if(i){ i.value=''; i.click(); } }
 function demoAbrirGaleria(){ var i=document.getElementById('demoGal'); if(i){ i.value=''; i.click(); } }  /* v72 */
 function demoFotoEscolhida(inp){
+  /* v73: a foto e aberta antes de ir para a tela de apontar. Se o navegador nao consegue
+     mostrar o arquivo (ex.: HEIC, TIFF), avisa aqui mesmo, com o nome e o tipo do arquivo.
+     Fotos muito grandes ou de outros formatos que o navegador abre viram JPG de ate 2400 px.
+     A URL antiga nao e revogada aqui: a lesao anterior ainda usa a foto no resumo final. */
   var f=inp.files&&inp.files[0]; if(!f) return;
-  if(DEMO_FOTO){ try{ URL.revokeObjectURL(DEMO_FOTO); }catch(e){} }
-  DEMO_FOTO=URL.createObjectURL(f);
-  irApontar();
+  var er=document.getElementById('demoFotoErro'); if(er) er.style.display='none';
+  var url=URL.createObjectURL(f), im=new Image();
+  var vai=function(src){ DEMO_FOTO=src; irApontar(); };
+  im.onload=function(){
+    var W=im.naturalWidth, H=im.naturalHeight; if(!W||!H){ im.onerror(); return; }
+    var k=Math.min(1,2400/Math.max(W,H));
+    if(k<1 || !/^image\/(jpeg|png|webp)$/i.test(f.type||'')){
+      try{
+        var cv=document.createElement('canvas'); cv.width=Math.max(1,Math.round(W*k)); cv.height=Math.max(1,Math.round(H*k));
+        var cx=cv.getContext('2d'); cx.fillStyle='#ffffff'; cx.fillRect(0,0,cv.width,cv.height); cx.drawImage(im,0,0,cv.width,cv.height);
+        cv.toBlob(function(bl){ if(bl){ URL.revokeObjectURL(url); vai(URL.createObjectURL(bl)); } else vai(url); },'image/jpeg',0.9);
+        return;
+      }catch(e){}
+    }
+    vai(url);
+  };
+  im.onerror=function(){ try{ URL.revokeObjectURL(url); }catch(e){} demoFotoErro(f); };
+  im.src=url;
+}
+function demoFotoErro(f){
+  var en=(typeof RCB_LANG!=='undefined' && RCB_LANG==='en');
+  var er=document.getElementById('demoFotoErro'); if(!er) return;
+  var nome=String(f&&f.name||'').replace(/[&<>"]/g,''), tipo=String(f&&f.type||'?').replace(/[&<>"]/g,'');
+  er.innerHTML = en
+    ? '<b>I could not open this file as a photo.</b> The browser cannot show some formats, such as HEIC (iPhone photos copied to a computer) and TIFF. Choose a JPG or PNG photo, or use the example photo.<br><span style="font-size:11.5px;color:#7a7061">File: '+nome+' · type: '+tipo+'</span>'
+    : '<b>N\u00e3o consegui abrir esse arquivo como foto.</b> O navegador n\u00e3o mostra alguns formatos, como HEIC (fotos de iPhone copiadas para o computador) e TIFF. Escolha uma foto em JPG ou PNG, ou use a foto de exemplo.<br><span style="font-size:11.5px;color:#7a7061">Arquivo: '+nome+' \u00b7 tipo: '+tipo+'</span>';
+  er.style.display='';
+  try{ er.scrollIntoView({block:'center'}); }catch(e){}
 }
 /* v71: ajusta a caixa da tela cheia ao formato exato da foto da pessoa */
 function apAjusta(){
