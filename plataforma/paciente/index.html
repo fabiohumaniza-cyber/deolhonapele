@@ -2563,7 +2563,7 @@ fill="#e8c4a4" stroke="#c69a76" stroke-width="1.8"/>
 • Os dois na mesma foto, bem no meio<br>
 • Foto de cima, com boa luz, sem sombra
 </div>
-<div class="shutter" onclick="irApontar()"><i></i></div>
+<input type="file" id="demoCam" accept="image/*" capture="environment" style="display:none" onchange="demoFotoEscolhida(this)"><div class="shutter" onclick="demoAbrirCamera()" title="Abrir a câmera"><i></i></div><p style="text-align:center;font-size:12.5px;color:#5F5E5A;margin:6px 0 0">Toque no botão redondo para abrir a câmera do seu celular. A foto fica só no seu aparelho: nada é enviado.</p><button class="btnlink" style="margin-top:4px" onclick="DEMO_FOTO=null;irApontar()">Não quero tirar agora — usar a foto de exemplo</button>
 <p class="legend" id="m9legend">Exemplo de como a foto deve ficar. O marcador é a régua.</p>
 </section>
 <section class="screen" data-step="10">
@@ -4822,6 +4822,7 @@ function enableNext(screen){
   if(btn) btn.disabled=false;
 }
 function restart(){
+  if(typeof DEMO_FOTO!=='undefined' && DEMO_FOTO){ try{ URL.revokeObjectURL(DEMO_FOTO); }catch(e){} DEMO_FOTO=null; }
   CASOS=[];CASO_ATUAL=null;PERFIL={};RESP={};LABIO_ALERTA={mudou:false,naoSara:false,demorando:false};ANAMNESE_FEITA=false;RAMO=null;desenhaArquivadas();
   document.querySelectorAll('.opt,.textopt,.nv,.check,.vbtns b,.sexrow b,.monkgrid b').forEach(function(o){o.classList.remove('sel');o.classList.remove('msel')});
   document.querySelectorAll('[data-next], .btn[id^="btnU"], .btn[id^="btnC"], .btn[id^="btnL"]').forEach(function(b){b.disabled=true});
@@ -4862,6 +4863,14 @@ ligarCorpo();
 ligarDedos();
 ligarRegioes();
 
+var DEMO_FOTO=null;
+function demoAbrirCamera(){ var i=document.getElementById('demoCam'); if(i){ i.value=''; i.click(); } }
+function demoFotoEscolhida(inp){
+  var f=inp.files&&inp.files[0]; if(!f) return;
+  if(DEMO_FOTO){ try{ URL.revokeObjectURL(DEMO_FOTO); }catch(e){} }
+  DEMO_FOTO=URL.createObjectURL(f);
+  irApontar();
+}
 function irApontar(){
   go('lab_apontar');
   var ap=document.getElementById('apProgresso');
@@ -4899,6 +4908,10 @@ function irApontar(){
   if(lg) lg.textContent = ehMancha
     ? 'foto de exemplo — aponte a sua mancha ou pinta'
     : 'foto de exemplo — aponte a ferida com a seta ou o círculo';
+  var bol=document.getElementById('bolinhaDemo');
+  if(fd && DEMO_FOTO){ fd.src=DEMO_FOTO; fd.style.objectFit='contain'; if(bol) bol.style.display='none';
+    if(lg) lg.textContent='a sua foto — aponte a sua mancha ou pinta'; var pa=document.getElementById('palcoAp'); if(pa) pa.style.background='#1e1d1b'; }
+  else { if(fd) fd.style.objectFit='cover'; if(bol) bol.style.display=''; var pa2=document.getElementById('palcoAp'); if(pa2) pa2.style.background='#c9a48f'; }
   setTimeout(function(){ if(window.ap_init) ap_init(); }, 60);
 }
 function apontarOk(){
