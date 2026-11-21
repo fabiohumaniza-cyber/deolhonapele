@@ -92,6 +92,11 @@ h2{font:500 clamp(24px,3.2vw,30px)/1.2 var(--display);margin:0 0 6px;text-wrap:b
 .abrir{display:block;text-align:center;font:600 16px/1.25 var(--body);text-decoration:none;background:var(--cor-txt);color:var(--sobre-cor);border-radius:8px;padding:13px 14px}
 .abrir:hover{filter:brightness(1.08)}
 .abrir[aria-expanded="true"]{background:none;color:var(--cor-txt);box-shadow:inset 0 0 0 2px var(--cor)}
+.papel .acao.navega{margin:auto 0 10px}
+.papel .navega + .acao{margin:0}
+.navegar{display:block;text-align:center;font:600 16px/1.25 var(--body);text-decoration:none;color:var(--cor-txt);box-shadow:inset 0 0 0 2px var(--cor);border-radius:8px;padding:11px 14px}
+.navegar:hover{background:var(--bg)}
+.nota-navega{display:block;color:var(--muted);font-size:14px;line-height:1.35;margin-top:6px}
 
 .passeio{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--cor);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:10px}
 .js .passeio:not(.aberto){display:none}
@@ -241,7 +246,7 @@ footer p{margin:0 0 6px}
 <li class="passo"><div class="txt"><p class="num"><span>8</span> de 9</p><h4 tabindex="-1">Avisar o paciente</h4><p>A enfermagem avisa o paciente pelo aplicativo, em linguagem simples. Ela comunica o encaminhamento. O diagnóstico, quem comunica é o médico.</p></div><figure><button type="button" class="amplia" aria-label="Ampliar a imagem"><img src="img/enfermagem-08.webp" width="480" height="387" style="--w:480px" alt="Janela “Avisar o paciente”, com a mensagem pronta e o lembrete de que quem comunica diagnóstico é o médico." loading="lazy" decoding="async"></button></figure></li>
 <li class="passo"><div class="txt"><p class="num"><span>9</span> de 9</p><h4 tabindex="-1">A linha do tempo</h4><p>Tudo o que aconteceu com a pessoa fica em ordem, com a hora. Na demonstração os passos caem no mesmo minuto. Num caso de verdade são dias.</p></div><figure><button type="button" class="amplia" aria-label="Ampliar a imagem"><img src="img/enfermagem-09.webp" width="540" height="580" style="--w:540px" alt="Linha do tempo da pessoa, com dez passos, do caso que entrou pelo aplicativo até o paciente avisado." loading="lazy" decoding="async"></button></figure></li>
 </ol></section>
-<article class="papel" data-quem="medico"><h3>Médico</h3><p class="onde">avalia à distância</p><p class="resumo">O médico vê o caso inteiro numa tela e decide.</p><ul><li>Assume o próximo caso da fila. Não escolhe: recebe o de maior prioridade.</li><li>Vê em blocos separados o que o paciente descreveu, o que a lesão viveu e os fatores de risco da pessoa.</li><li>Decide a conduta ou pede o que falta: outra foto, um exame, uma pergunta ao paciente.</li><li>A decisão volta para a enfermagem, que executa.</li></ul><p class="acao"><a class="abrir" href="#medico" aria-controls="medico">Ver a tela do médico</a></p></article>
+<article class="papel" data-quem="medico"><h3>Médico</h3><p class="onde">avalia à distância</p><p class="resumo">O médico vê o caso inteiro numa tela e decide.</p><ul><li>Assume o próximo caso da fila. Não escolhe: recebe o de maior prioridade.</li><li>Vê em blocos separados o que o paciente descreveu, o que a lesão viveu e os fatores de risco da pessoa.</li><li>Decide a conduta ou pede o que falta: outra foto, um exame, uma pergunta ao paciente.</li><li>A decisão volta para a enfermagem, que executa.</li></ul><p class="acao navega"><a class="navegar" href="https://fabiohumaniza-cyber.github.io/soliz-panel/" target="_blank" rel="noopener">Navegar no painel do médico</a><span class="nota-navega">Abre numa aba nova. Lá o painel roda com imagens públicas do ISIC, não com o caso inventado desta página.</span></p><p class="acao"><a class="abrir" href="#medico" aria-controls="medico">Ver a tela do médico</a></p></article>
 <section class="passeio" id="medico" data-quem="medico" data-depois="ligadas" data-depois-rotulo="As três telas ligadas" aria-labelledby="t-medico">
 <div class="cab"><h3 id="t-medico">A tela do médico</h3><p class="quantos">8 passos.<span class="so-js"> Toque numa imagem para ampliar.</span></p></div>
 <ol class="passos">
