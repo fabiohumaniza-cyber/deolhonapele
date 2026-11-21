@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>De Olho na Pele · demonstração</title>
 <meta name="robots" content="noindex">
 <style>
@@ -391,6 +391,14 @@ p.body{font-size:14px;color:var(--mute);text-align:center;line-height:1.6;margin
   .zl{fill:#FFD666;stroke:#BE8C0A;stroke-width:1.4;cursor:pointer;transition:fill .12s}
   .zl:hover{fill:#FFC42E}
   .zl.sel{fill:#2e9e6b;stroke:#1c6a5c}
+
+/* v69 (21/11): no celular o aplicativo ocupa a tela inteira e o fim de cada tela (o botao verde) nao fica escondido
+   atras da barra do navegador: altura pela tela visivel (dvh) e folga para a barra de baixo do aparelho. */
+@media (max-width:520px){
+  body{padding:0;align-items:stretch;min-height:100vh;min-height:100dvh}
+  .phone{max-width:none;height:100vh;height:100dvh;border-radius:0;box-shadow:none}
+  .screen{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+}
 </style>
 </head>
 <body>
