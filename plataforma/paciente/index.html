@@ -4917,9 +4917,13 @@ function irApontar(){
     ? 'foto de exemplo — aponte a sua mancha ou pinta'
     : 'foto de exemplo — aponte a ferida com a seta ou o círculo';
   var bol=document.getElementById('bolinhaDemo');
-  if(fd && DEMO_FOTO){ fd.src=DEMO_FOTO; fd.style.objectFit='contain'; if(bol) bol.style.display='none';
-    if(lg) lg.textContent='a sua foto — aponte a sua mancha ou pinta'; var pa=document.getElementById('palcoAp'); if(pa) pa.style.background='#1e1d1b'; }
-  else { if(fd) fd.style.objectFit='cover'; if(bol) bol.style.display=''; var pa2=document.getElementById('palcoAp'); if(pa2) pa2.style.background='#c9a48f'; }
+  var pa=document.getElementById('palcoAp'); if(pa) pa.style.flex='none';  /* v70: a tela nao espreme a foto */
+  if(fd && DEMO_FOTO){
+    /* v70: a foto da pessoa aparece grande, no formato dela (em pe ou deitada), e nao miuda numa caixa deitada */
+    fd.onload=function(){ if(pa && fd.naturalWidth && fd.naturalHeight){ var r=fd.naturalWidth/fd.naturalHeight; pa.style.aspectRatio=String(Math.max(r,0.75)); } };
+    fd.src=DEMO_FOTO; fd.style.objectFit='contain'; if(bol) bol.style.display='none';
+    if(lg) lg.textContent='a sua foto — aponte a sua mancha ou pinta'; if(pa) pa.style.background='#1e1d1b'; }
+  else { if(fd){ fd.onload=null; fd.style.objectFit='cover'; } if(bol) bol.style.display=''; if(pa){ pa.style.background='#c9a48f'; pa.style.aspectRatio='4/3'; } }
   setTimeout(function(){ if(window.ap_init) ap_init(); }, 60);
 }
 function apontarOk(){
