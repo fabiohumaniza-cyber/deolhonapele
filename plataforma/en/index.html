@@ -186,6 +186,14 @@ footer p{margin:0 0 6px}
 .paideia p{font-size:16px;line-height:1.55;margin:0 0 10px}
 .paideia .paideia-ref{font-size:13.5px;line-height:1.5;color:var(--muted);margin:10px 0 0;border-top:1px solid var(--line);padding-top:10px}
 .paideia a{color:var(--accent)}
+/* 21/11/2026: logo SoLiz ao lado do bloco Paideia (se o editor pedir, remover a figura .marca) */
+.paideia-linha{display:flex;gap:32px;align-items:center;margin:18px 0}
+.paideia-linha .paideia{margin:0;flex:1 1 auto}
+.marca{flex:0 0 280px;margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 18px 18px;text-align:center}
+.marca img{display:block;width:150px;height:auto;margin:0 auto}
+.marca .marca-tag{display:block;margin-top:12px;font-family:var(--body);font-size:15px;letter-spacing:.32em;text-transform:uppercase;color:#7d838a}
+.marca figcaption{margin-top:10px;font-size:14px;line-height:1.4;color:#4a5550}
+@media (max-width:900px){.paideia-linha{flex-direction:column;align-items:stretch;gap:14px}.marca{flex:none;align-self:center;width:250px}}
 </style>
 <script>document.documentElement.className='js';</script>
 </head>
@@ -200,12 +208,19 @@ footer p{margin:0 0 6px}
 <section class="abre">
   <h1>The SoLiz platform in three screens</h1>
   <p class="lede">The patient shows the skin lesion with a mobile phone. The nursing team at the health post checks it and decides where it goes. The doctor assesses it remotely and decides. Here you follow an invented case through the three screens, step by step.</p>
+  <div class="paideia-linha">
   <aside class="paideia" aria-labelledby="t-paideia">
   <h2 id="t-paideia">Built on the Paideia method</h2>
   <p>SoLiz is organised around the <b>Paideia method</b>, also called the <b>Wheel method</b> (<i lang="pt-BR">Método da Roda</i>), created within Brazil’s public health system (SUS) by the Brazilian public-health scholar <b>Gastão Wagner de Sousa Campos</b>. The name comes from <i>paideia</i>, the ancient Greek ideal of education: forming the whole person, not only training a skill. In the Wheel, care and decisions are shared. The people involved sit in a circle, decide together and learn from each other, instead of orders flowing only from the top.</p>
   <p>In SoLiz the wheel has three people holding hands: the <b>patient</b>, who learns to look at their own skin and shows it in plain words; the <b>nursing team</b>, who checks the case and decides where it goes; and the <b>doctor</b>, who assesses it remotely and decides. Every decision goes back around the wheel to the patient.</p>
   <p class="paideia-ref"><b>References.</b> Campos GWS. <i lang="pt-BR">Um método para análise e co-gestão de coletivos</i> [A method for the analysis and co-management of collectives: the Wheel method]. São Paulo: Hucitec; 2000. · Campos GWS. <span lang="pt-BR">O anti-Taylor: sobre a invenção de um método para co-governar instituições de saúde produzindo liberdade e compromisso</span>. <i>Cad Saúde Pública</i>. 1998;14(4):863–870. <a href="https://doi.org/10.1590/S0102-311X1998000400029">doi:10.1590/S0102-311X1998000400029</a> · Campos GWS, Figueiredo MD, Pereira Júnior N, Castro CP. <span lang="pt-BR">A aplicação da metodologia Paideia no apoio institucional, no apoio matricial e na clínica ampliada</span>. <i>Interface (Botucatu)</i>. 2014;18(Supl 1):983–995. <a href="https://doi.org/10.1590/1807-57622013.0324">doi:10.1590/1807-57622013.0324</a> · Jaeger W. <i>Paideia: the ideals of Greek culture</i>. Translated by G. Highet. Oxford: Blackwell; 1939.</p>
 </aside>
+  <figure class="marca">
+    <img src="img/soliz-logo.webp" width="235" height="383" alt="SoLiz logo: three linked loops, three people holding hands">
+    <span class="marca-tag">Skin health</span>
+    <figcaption>Patient, doctor and health team, holding hands.</figcaption>
+  </figure>
+  </div>
   <p class="norte">This platform is only a guide for building your own. It can and should be adapted to your reality. Whether for a scientific study or just to use the panel, it can be taken apart for each situation. It is written in a language that is easy to rearrange. Make the most of it, and make your service a reference in skin cancer triage.</p>
   <p class="aviso"><b>This is a research demonstration.</b> The patient, the doctors and the municipality shown on the screens are invented. The screens on this page are images: nothing you do here is sent or stored. The program does not give a diagnosis and has not yet been used with patients.</p>
   <nav class="trilho" aria-labelledby="t-trilho">
